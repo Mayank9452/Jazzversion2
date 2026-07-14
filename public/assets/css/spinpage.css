@@ -1,0 +1,63 @@
+.spin-page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.wheel-wrapper {
+  position: relative;
+  display: inline-block;
+}
+
+.wheel-pointer {
+  width: 0;
+  height: 0;
+  border-left: 15px solid transparent;
+  border-right: 15px solid transparent;
+  border-bottom: 25px solid white;
+  position: absolute;
+  top: -25px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 2;
+}
+
+.center-overlay {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: red;
+  color: white;
+  font-weight: bold;
+  text-align: center;
+  padding: 40px 20px;
+  border-radius: 10px;
+  cursor: pointer;
+  z-index: 3;
+  font-size: 28px;
+  line-height: 1.2;
+}
+
+.pass-btn {
+  margin-top: 20px;
+  background: red;
+  color: white;
+  border: none;
+  padding: 10px 40px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.result-text {
+  margin-top: 15px;
+  font-weight: bold;
+  color: green;
+}
+
+.loading-text {
+  text-align: center;
+  margin-top: 40px;
+  font-size: 18px;
+}

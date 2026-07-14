@@ -1,0 +1,23 @@
+@font-face {
+  font-family: 'FuturaBookBT';
+  src: url('/assets/font/FuturaBookBT.woff2') format('woff2'),
+       url('/assets/font/FuturaBookBT.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'FuturaMediumBT';
+  src: url('/assets/font/FuturaMediumBT.woff2') format('woff2'),
+       url('/assets/font/FuturaMediumBT.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'FuturaLightBT';
+  src: url('/assets/font/FuturaLightBT.woff2') format('woff2'),
+       url('/assets/font/FuturaLightBT.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}

@@ -1,0 +1,161 @@
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Navigation, Pagination, Autoplay } from "swiper/modules";
+import "swiper/css";
+import "swiper/css/navigation";
+import "swiper/css/pagination";
+
+import SectionLabel from "./SectionLabel";
+import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { Gamepad2, Play, Clock, Trophy } from "lucide-react";
+import { useTheme } from "next-themes";
+
+interface DailyTournament {
+    dailyTournaments: any;
+}
+
+const getGameImage = (gameName: string, defaultImage: string, index: number) => {
+    const name = gameName?.toLowerCase() || "";
+    if (name.includes("alien galaxy war")) {
+        return "/assets/images/Alien Galaxy.png";
+    }
+    if (name.includes("stick monkey")) {
+        return "/assets/images/Stick Monkey.png";
+    }
+    const images = ["/assets/images/01.png", "/assets/images/02.png", "/assets/images/03.png"];
+    return images[index % images.length];
+};
+
+const DailyTournamentNewTesting: React.FC<DailyTournament> = ({
+    dailyTournaments,
+}) => {
+    const navigate = useNavigate();
+    const { resolvedTheme } = useTheme();
+    const isDark = resolvedTheme === "dark";
+
+    const [countdowns, setCountdowns] = useState<Record<string, string>>({});
+
+    const handleGameClick = (game: any) => {
+        navigate("/tournamentPage", {
+            state: { tournament_id: game?.tournament_id },
+        });
+    };
+
+    const calculateCountdown = (endTime: string) => {
+        const end = new Date(endTime).getTime();
+        const now = Date.now();
+        const diff = end - now;
+        if (diff <= 0) return "00 : 00 : 00 : 00";
+
+        const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+        const minutes = Math.floor((diff / (1000 * 60)) % 60);
+        const seconds = Math.floor((diff / 1000) % 60);
+
+        const pad = (num: number) => String(num).padStart(2, "0");
+
+        return `${pad(days)} : ${pad(hours)} : ${pad(minutes)} : ${pad(seconds)}`;
+    };
+
+    useEffect(() => {
+        const timer = setInterval(() => {
+            const updated: Record<string, string> = {};
+            dailyTournaments?.forEach((t: any) => {
+                updated[t.tournament_id] = calculateCountdown(t.tournament_end);
+            });
+            setCountdowns(updated);
+        }, 1000);
+        return () => clearInterval(timer);
+    }, [dailyTournaments]);
+
+    return (
+        <>
+            {dailyTournaments && dailyTournaments?.length > 0 && (
+                <div className="rounded-2xl">
+                    <div className="mb-1 px-1 text-center">
+                        <Swiper
+                            loop={true}
+                            centeredSlides={false}
+                            slidesPerView={2.2}
+                            spaceBetween={5}
+                            autoplay={{ delay: 3000, disableOnInteraction: false }}
+                            modules={[Pagination, Navigation, Autoplay]}
+                            className="tiny-slider-one flex justify-center items-center"
+                        >
+                            {dailyTournaments?.map((game: any, index: any) => {
+                                return (
+                                    <SwiperSlide
+                                        key={game?.tournament_id}
+                                        className="overflow-hidden cursor-pointer group"
+                                        onClick={() => handleGameClick(game)}
+                                    >
+                                        <div
+                                            className="w-full flex flex-col overflow-hidden rounded-2xl transition-all duration-200 active:scale-[0.98]"
+                                        >
+                                            {/* Game Image Banner */}
+                                            <div className="relative w-full aspect-[285/380] rounded-xl overflow-hidden shadow-sm">
+                                                <img
+                                                    src={getGameImage(game?.tournament_name, game?.tournament_game_image, index)}
+                                                    className="w-full h-full block object-cover transition-transform duration-500 group-hover:scale-105"
+                                                    alt={game?.tournament_name}
+                                                />
+                                            </div>
+
+
+                                            {/* Divider */}
+                                            <div className="border-t border-slate-200 dark:border-white/20" />
+
+                                            {/* Timer Row */}
+                                            <div className="flex items-center justify-center gap-1 py-1 pb-0">
+                                                <div className="flex items-center gap-1 px-2 py-0.5 rounded-full bg-slate-900/90 dark:bg-white/[0.08] text-white text-[11px] sm:text-[9px] font-bold font-mono tracking-tight shadow-sm whitespace-nowrap">
+                                                    <Clock className="h-2.5 w-2.5 text-white shrink-0" />
+                                                    <span>
+                                                        {countdowns[game?.tournament_id] || "Loading..."}
+                                                    </span>
+                                                </div>
+                                            </div>
+
+                                            {/* Coins & Play/Join Button Row */}
+                                            <div className="flex justify-between items-center px-1 pb-1.5 pt-1.5 border-t border-slate-100 dark:border-white/[0.04] whitespace-nowrap">
+                                                <div className="font-extrabold flex items-center gap-1 text-[10px] whitespace-nowrap shrink">
+                                                    {(!game?.fee_reward_type || game?.fee_reward_type === "1") && (
+                                                        <>
+                                                            <img
+                                                                src="/assets/images/img/gold-coin.png"
+                                                                alt="coin"
+                                                                className="w-3.5 h-3.5 object-contain shrink-0"
+                                                            />
+                                                            <span className="tracking-tight text-brand-gold-100 dark:text-brand-yellow-100 font-extrabold">
+                                                                {Number(game?.fee_prize_1).toLocaleString()} Coins
+                                                            </span>
+                                                        </>
+                                                    )}
+                                                    {game?.fee_reward_type === "2" && (
+                                                        <span className="tracking-tight text-brand-gold-100 dark:text-brand-yellow-300 font-extrabold">
+                                                            {game?.fee_prize_1} GB Data
+                                                        </span>
+                                                    )}
+                                                    {game?.fee_reward_type === "3" && (
+                                                        <span className="tracking-tight text-emerald-600 dark:text-emerald-400 font-extrabold">
+                                                            Rs {game?.fee_prize_1}
+                                                        </span>
+                                                    )}
+                                                </div>
+
+                                                <button className="font-extrabold px-2.5 py-1.5 rounded-lg bg-brand-gradient hover:brightness-110 text-brand-black-100 text-[10px] uppercase tracking-wider shadow-md pointer-events-auto active:scale-95 transition-all shrink-0">
+                                                    Join
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </SwiperSlide>
+                                );
+                            })}
+                        </Swiper>
+                    </div>
+                </div>
+            )}
+        </>
+    );
+};
+
+export default DailyTournamentNewTesting;

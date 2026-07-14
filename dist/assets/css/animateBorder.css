@@ -1,0 +1,68 @@
+/* .animated-gradient-border {
+  display: inline-block;
+  padding: 2px;
+  border-radius: 8px;
+  background: linear-gradient(270deg, #ff00cc, #3333ff, #00ffcc, #ff00cc);
+  background-size: 600% 600%;
+  animation: borderMove 6s ease infinite;
+  margin: 0 auto 12px auto;
+} */
+
+.animated-gradient-border {
+  border: 2px solid transparent;
+  /* background-image: linear-gradient(#fff, #fff),
+    linear-gradient(45deg, #00d5ff, #f4bc3f, #00d5ff); */
+  background-origin: border-box;
+  background-clip: content-box, border-box;
+  border-radius: 12px;
+  transition: transform 0.3s ease;
+}
+
+.animated-gradient-border .content-wrapper {
+  border-radius: 8px;
+  /* background: #fff; */
+  /* Solid background to separate content from border */
+  /* padding: 2px; */
+  width: 100%;
+  height: 100%;
+  font-size: 13px;
+
+}
+
+.btn {
+  font-size: 9px;
+}
+
+.games-heading {
+
+  background-color: white;
+  padding: 10px 20px 5px 20px;
+  border-radius: 6px;
+  position: relative;
+}
+
+.games-text-heading {
+  font-weight: bold;
+  font-size: 1.2rem;
+  /* animation: scaleUpDown 1.8s ease-in-out infinite; */
+  background: linear-gradient(270deg, #ff00cc, #3333ff, #00ffcc, #ff00cc);
+  background-size: 600% 600%;
+  /* -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent; */
+  color: black;
+}
+
+
+@keyframes borderMove {
+  0% {
+    background-position: 0% 50%;
+  }
+
+  50% {
+    background-position: 100% 50%;
+  }
+
+  100% {
+    background-position: 0% 50%;
+  }
+}

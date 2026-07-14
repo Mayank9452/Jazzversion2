@@ -1,0 +1,53 @@
+.coin-button {
+  position: relative;
+  border: 2px solid transparent;
+  border-radius: 12px;
+  background-clip: padding-box;
+  transition: all 0.3s ease-in-out;
+  color: white;
+  font-weight: 600;
+  z-index: 1;
+  overflow: hidden;
+}
+
+.coin-button::before {
+  content: "";
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
+  background: linear-gradient(135deg, #ffdd00, #fbb034, #ff4e50, #ffdd00);
+  background-size: 300% 300%;
+  border-radius: inherit;
+  z-index: -1;
+  animation: borderAnimation 4s linear infinite;
+}
+
+.coin-button:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 8px rgba(255, 255, 255, 0.6);
+}
+
+@keyframes borderAnimation {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+/* Optional individual button styling */
+.coin-play {
+  background-color: #ffc107;
+  color: #000;
+}
+
+.coin-reward {
+  background-color: #28a745;
+  color: #fff;
+}

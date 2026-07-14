@@ -1,0 +1,531 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* =========================================
+   Gaming Design System - Color Palette Based
+   ========================================= */
+
+@layer base {
+
+  /* ================= Fonts ================= */
+  @font-face {
+    font-family: "Futura";
+    src: url("/fonts/Futura Book BT.otf") format("opentype");
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+  }
+
+  @font-face {
+    font-family: "Futura";
+    src: url("/fonts/Futura Medium BT.otf") format("opentype");
+    font-weight: 500;
+    font-style: normal;
+    font-display: swap;
+  }
+
+  @font-face {
+    font-family: "Futura";
+    src: url("/fonts/Futura Light BT.otf") format("opentype");
+    font-weight: 300;
+    font-style: normal;
+    font-display: swap;
+  }
+
+  /* ================= Color Palette ================= */
+  :root {
+    /* Blue Colors */
+    --color-blue-dark: #0b2f5f;
+    --color-blue-500: #1a5276;
+    --color-blue-400: #2471a3;
+    --color-blue-300: #2e86c1;
+
+    /* Yellow Colors */
+    --color-yellow-primary: #fecb13;
+    --color-orange: #e67e22;
+    --color-yellow-bright: #f9e900;
+
+    /* Aqua Colors */
+    --color-aqua-primary: #80c7c5;
+    --color-aqua-dark: #5ba3a0;
+    --color-aqua-bright: #00e5d4;
+
+    /* Gray/Black Colors */
+    --color-black: #000000;
+    --color-black-alt: #1d1d1b;
+    --color-gray-dark: #4d4d4d;
+    --color-gray-medium: #888888;
+    --color-gray-light: #c0c0c0;
+
+    /* Additional Grays for Light Theme */
+    --color-gray-lighter: #e5e5e5;
+    --color-gray-lightest: #f5f5f5;
+    --color-white: #ffffff;
+
+    /* ================= Theme Tokens - Light Theme ================= */
+    --background: 0 0% 98%;
+    --foreground: 218 78% 18%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 218 78% 18%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 218 78% 18%;
+
+    /* Primary – Dark Blue */
+    --primary: 218 80% 19%;
+    --primary-foreground: 0 0% 100%;
+
+    /* Secondary – Golden Yellow */
+    --secondary: 48 99% 50%;
+    --secondary-foreground: 218 78% 18%;
+
+    /* Accent – Aqua */
+    --accent: 178 24% 51%;
+    --accent-foreground: 218 78% 18%;
+
+    /* Muted */
+    --muted: 0 0% 96%;
+    --muted-foreground: 0 0% 53%;
+
+    /* Borders & Inputs */
+    --border: 0 0% 90%;
+    --input: 0 0% 96%;
+    --ring: 218 80% 19%;
+
+    /* Destructive */
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+
+    /* Radius */
+    --radius: 1rem;
+
+    /* ================= Gradients - Light Theme ================= */
+    --gradient-primary: linear-gradient(135deg, #0b2f5f, #1a5276);
+    --gradient-secondary: linear-gradient(135deg, #fecb13, #f9e900);
+    --gradient-accent: linear-gradient(135deg, #80c7c5, #00e5d4);
+    --gradient-primary-accent: linear-gradient(135deg, #0b2f5f, #80c7c5);
+    --gradient-yellow-orange: linear-gradient(135deg, #fecb13, #e67e22);
+
+    /* ================= Glass Effects ================= */
+    --glass-bg: hsla(218, 80%, 19%, 0.1);
+    --glass-bg-light: hsla(218, 80%, 19%, 0.05);
+    --glass-border: hsla(218, 80%, 19%, 0.2);
+
+    /* ================= Shadows ================= */
+    --shadow-sm: 0 1px 2px 0 rgba(11, 47, 95, 0.05);
+    --shadow-md: 0 4px 6px -1px rgba(11, 47, 95, 0.1);
+    --shadow-lg: 0 10px 15px -3px rgba(11, 47, 95, 0.1);
+    --shadow-glow: 0 0 20px rgba(11, 47, 95, 0.3);
+    --shadow-glow-yellow: 0 0 20px rgba(254, 203, 19, 0.3);
+    --shadow-glow-aqua: 0 0 20px rgba(128, 199, 197, 0.3);
+
+    /* ================= Transitions ================= */
+    --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-bounce: all 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+
+    /* ================= Sidebar ================= */
+    --sidebar-background: 0 0% 98%;
+    --sidebar-foreground: 218 78% 18%;
+    --sidebar-primary: 218 80% 19%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 178 24% 51%;
+    --sidebar-accent-foreground: 218 78% 18%;
+    --sidebar-border: 0 0% 90%;
+    --sidebar-ring: 218 80% 19%;
+  }
+
+  /* ================= Dark Theme ================= */
+  .dark {
+    /* Dark Theme - Inverted */
+    --background: 218 40% 10%;
+    --foreground: 0 0% 95%;
+
+    --card: 218 35% 15%;
+    --card-foreground: 0 0% 95%;
+
+    --popover: 218 35% 15%;
+    --popover-foreground: 0 0% 95%;
+
+    /* Primary – Light Aqua */
+    --primary: 178 100% 45%;
+    --primary-foreground: 218 40% 10%;
+
+    /* Secondary – Yellow */
+    --secondary: 48 99% 50%;
+    --secondary-foreground: 218 40% 10%;
+
+    /* Accent – Light Aqua */
+    --accent: 178 100% 40%;
+    --accent-foreground: 218 40% 10%;
+
+    /* Muted */
+    --muted: 218 30% 25%;
+    --muted-foreground: 0 0% 70%;
+
+    /* Borders & Inputs */
+    --border: 218 30% 25%;
+    --input: 218 30% 25%;
+    --ring: 178 100% 45%;
+
+    /* Destructive */
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 218 40% 10%;
+
+    /* ================= Gradients - Dark Theme ================= */
+    --gradient-primary: linear-gradient(135deg, #2e86c1, #00e5d4);
+    --gradient-secondary: linear-gradient(135deg, #fecb13, #f9e900);
+    --gradient-accent: linear-gradient(135deg, #00e5d4, #80c7c5);
+    --gradient-primary-accent: linear-gradient(135deg, #2e86c1, #00e5d4);
+    --gradient-yellow-orange: linear-gradient(135deg, #fecb13, #e67e22);
+
+    /* ================= Glass Effects - Dark Theme ================= */
+    --glass-bg: hsla(0, 0%, 100%, 0.1);
+    --glass-bg-light: hsla(0, 0%, 100%, 0.05);
+    --glass-border: hsla(0, 0%, 100%, 0.15);
+
+    /* ================= Shadows - Dark Theme ================= */
+    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.3);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
+    --shadow-glow: 0 0 20px rgba(0, 229, 212, 0.4);
+    --shadow-glow-yellow: 0 0 20px rgba(254, 203, 19, 0.4);
+    --shadow-glow-aqua: 0 0 20px rgba(0, 229, 212, 0.4);
+
+    /* ================= Sidebar - Dark Theme ================= */
+    --sidebar-background: 218 35% 15%;
+    --sidebar-foreground: 0 0% 95%;
+    --sidebar-primary: 178 100% 45%;
+    --sidebar-primary-foreground: 218 40% 10%;
+    --sidebar-accent: 48 99% 50%;
+    --sidebar-accent-foreground: 218 40% 10%;
+    --sidebar-border: 218 30% 25%;
+    --sidebar-ring: 178 100% 45%;
+  }
+
+  /* ================= Base Styles ================= */
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground overflow-x-hidden;
+    font-family: "Futura", sans-serif;
+  }
+}
+
+html {
+  font-family: theme('fontFamily.sans');
+}
+
+/* =========================================
+   Utilities
+   ========================================= */
+@layer utilities {
+
+  /* Gradient Classes - Light & Dark Aware */
+  .gradient-primary {
+    background: var(--gradient-primary);
+  }
+
+  .gradient-secondary {
+    background: var(--gradient-secondary);
+  }
+
+  .gradient-accent {
+    background: var(--gradient-accent);
+  }
+
+  .gradient-primary-accent {
+    background: var(--gradient-primary-accent);
+  }
+
+  .gradient-yellow-orange {
+    background: var(--gradient-yellow-orange);
+  }
+
+  /* Text Gradients */
+  .text-gradient-primary {
+    background: var(--gradient-primary);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  .text-gradient-secondary {
+    background: var(--gradient-secondary);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  .text-gradient-accent {
+    background: var(--gradient-accent);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  /* Color Utility Classes */
+  .text-blue-dark {
+    color: #0b2f5f;
+  }
+
+  .text-yellow-primary {
+    color: #fecb13;
+  }
+
+  .text-aqua-primary {
+    color: #80c7c5;
+  }
+
+  .bg-blue-dark {
+    background-color: #0b2f5f;
+  }
+
+  .bg-blue-500 {
+    background-color: #1a5276;
+  }
+
+  .bg-blue-400 {
+    background-color: #2471a3;
+  }
+
+  .bg-blue-300 {
+    background-color: #2e86c1;
+  }
+
+  .bg-yellow-primary {
+    background-color: #fecb13;
+  }
+
+  .bg-yellow-bright {
+    background-color: #f9e900;
+  }
+
+  .bg-orange {
+    background-color: #e67e22;
+  }
+
+  .bg-aqua-primary {
+    background-color: #80c7c5;
+  }
+
+  .bg-aqua-dark {
+    background-color: #5ba3a0;
+  }
+
+  .bg-aqua-bright {
+    background-color: #00e5d4;
+  }
+
+  /* Glass Cards */
+  .glass-card {
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    backdrop-filter: blur(20px);
+  }
+
+  .glass-card-light {
+    background: var(--glass-bg-light);
+    border: 1px solid var(--glass-border);
+    backdrop-filter: blur(20px);
+  }
+
+  /* Glow Effects */
+  .glow-primary {
+    box-shadow: var(--shadow-glow);
+  }
+
+  .glow-yellow {
+    box-shadow: var(--shadow-glow-yellow);
+  }
+
+  .glow-aqua {
+    box-shadow: var(--shadow-glow-aqua);
+  }
+
+  .shadow-sm {
+    box-shadow: var(--shadow-sm);
+  }
+
+  .shadow-md {
+    box-shadow: var(--shadow-md);
+  }
+
+  .shadow-lg {
+    box-shadow: var(--shadow-lg);
+  }
+
+  /* Transitions */
+  .transition-smooth {
+    transition: var(--transition-smooth);
+  }
+
+  .transition-bounce {
+    transition: var(--transition-bounce);
+  }
+
+  /* Mobile Container */
+  .mobile-container {
+    max-width: 480px;
+    margin: 0 auto;
+    min-height: 100vh;
+    position: relative;
+  }
+
+  /* Border Colors */
+  .border-blue-dark {
+    border-color: #0b2f5f;
+  }
+
+  .border-yellow-primary {
+    border-color: #fecb13;
+  }
+
+  .border-aqua-primary {
+    border-color: #80c7c5;
+  }
+
+  /* Ring Colors */
+  .ring-blue-dark {
+    --tw-ring-color: #0b2f5f;
+  }
+
+  .ring-aqua-bright {
+    --tw-ring-color: #00e5d4;
+  }
+
+  .ring-yellow-primary {
+    --tw-ring-color: #fecb13;
+  }
+
+}
+
+/* =========================================
+   Components
+   ========================================= */
+@layer components {
+
+  /* Buttons */
+  .btn-primary {
+    @apply text-white font-semibold px-6 py-3 rounded-lg transition-smooth;
+    background: linear-gradient(135deg, #0b2f5f, #1a5276);
+  }
+
+  .btn-primary:hover {
+    background: linear-gradient(135deg, #1a5276, #2471a3);
+    box-shadow: var(--shadow-glow);
+  }
+
+  .btn-primary:active {
+    transform: scale(0.95);
+  }
+
+  .btn-secondary {
+    @apply text-gray-900 font-semibold px-6 py-3 rounded-lg transition-smooth;
+    background: linear-gradient(135deg, #fecb13, #f9e900);
+  }
+
+  .btn-secondary:hover {
+    background: linear-gradient(135deg, #f9e900, #e67e22);
+    box-shadow: var(--shadow-glow-yellow);
+  }
+
+  .btn-secondary:active {
+    transform: scale(0.95);
+  }
+
+  .btn-accent {
+    @apply text-gray-900 font-semibold px-6 py-3 rounded-lg transition-smooth;
+    background: linear-gradient(135deg, #80c7c5, #00e5d4);
+  }
+
+  .btn-accent:hover {
+    background: linear-gradient(135deg, #00e5d4, #5ba3a0);
+    box-shadow: var(--shadow-glow-aqua);
+  }
+
+  .btn-accent:active {
+    transform: scale(0.95);
+  }
+
+  /* Loader */
+  .loader {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 4px solid var(--border);
+    border-top-color: #0b2f5f;
+    animation: spin 1s linear infinite;
+  }
+
+  .dark .loader {
+    border: 4px solid var(--border);
+    border-top-color: #00e5d4;
+  }
+
+  @keyframes spin {
+    to {
+      transform: rotate(360deg);
+    }
+  }
+
+  /* Input Fields */
+  .input-primary {
+    @apply rounded-lg px-4 py-2 transition-smooth;
+    background-color: var(--input);
+    border: 2px solid var(--border);
+    color: var(--foreground);
+  }
+
+  .input-primary:focus {
+    outline: none;
+    border-color: #0b2f5f;
+    box-shadow: var(--shadow-glow);
+  }
+
+  .dark .input-primary:focus {
+    border-color: #00e5d4;
+    box-shadow: var(--shadow-glow-aqua);
+  }
+
+  /* Card Component */
+  .card-primary {
+    @apply rounded-lg p-4 transition-smooth;
+    background-color: var(--card);
+    border: 1px solid var(--border);
+    box-shadow: var(--shadow-md);
+  }
+
+  .card-primary:hover {
+    box-shadow: var(--shadow-lg);
+  }
+
+  /* Badge Component */
+  .badge-primary {
+    @apply inline-flex items-center px-3 py-1 rounded-full text-sm font-semibold;
+    background-color: #0b2f5f;
+    color: #ffffff;
+  }
+
+  .badge-secondary {
+    @apply inline-flex items-center px-3 py-1 rounded-full text-sm font-semibold;
+    background-color: #fecb13;
+    color: #0b2f5f;
+  }
+
+  .badge-accent {
+    @apply inline-flex items-center px-3 py-1 rounded-full text-sm font-semibold;
+    background-color: #80c7c5;
+    color: #ffffff;
+  }
+
+  /* Divider */
+  .divider {
+    @apply my-4;
+    border-top: 1px solid var(--border);
+  }
+
+}
