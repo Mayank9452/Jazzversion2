@@ -32,7 +32,7 @@ export const LeaderboardJoinPopup: React.FC<LeaderboardJoinPopupProps> = ({
                         animate={{ scale: 1, opacity: 1, y: 0 }}
                         exit={{ scale: 0.9, opacity: 0, y: 30 }}
                         transition={{ type: "spring", damping: 20, stiffness: 300 }}
-                        className="bg-gradient-to-b from-[#1b1b1b75] to-[#0c0d14] border border-white/30 w-full max-w-sm rounded-[28px] p-6 shadow-2xl relative overflow-hidden text-white z-10 flex flex-col items-center text-center"
+                        className="bg-gradient-to-b from-[#1b1b1b00] to-[#0c0d14] border border-white/30 w-full max-w-sm rounded-[28px] p-6 shadow-2xl relative overflow-hidden text-white z-10 flex flex-col items-center text-center"
                     >
                         {/* Golden/Cyan glowing circle in background */}
                         <div className="absolute -top-16 -left-16 w-32 h-32 bg-[#ffc200]/10 rounded-full blur-3xl pointer-events-none" />
@@ -41,13 +41,13 @@ export const LeaderboardJoinPopup: React.FC<LeaderboardJoinPopupProps> = ({
                         {/* Top Close Button */}
                         <button
                             onClick={onClose}
-                            className="absolute top-4 right-4 w-8 h-8 rounded-full bg-white/5 hover:bg-white/10 active:scale-95 transition-all flex items-center justify-center text-white/70 hover:text-white border-none cursor-pointer"
+                            className="absolute top-4 right-4 w-8 h-8 rounded-full bg-white/20 hover:bg-white/10 active:scale-95 transition-all flex items-center justify-center text-white/70 hover:text-white border-2 border-yellow-main cursor-pointer"
                         >
                             <X className="w-4 h-4" />
                         </button>
 
                         <div className="w-16 h-16 rounded-2xl  flex items-center justify-center shadow-lg shadow-amber-500/5 mb-4 mt-2">
-                            <img src="/assets/images/img/trophy.png" className="w-16 h-16 object-contain" alt="Trophy" />
+                            <img src="/assets/images/trophy_lock.png" className="w-20 h-20 object-contain" alt="Trophy" />
                         </div>
 
                         {/* Message Title & Subtitle */}
@@ -66,7 +66,7 @@ export const LeaderboardJoinPopup: React.FC<LeaderboardJoinPopupProps> = ({
                                         onJoin();
                                         onClose();
                                     }}
-                                    className="w-full py-3 bg-gradient-to-r from-[#ffd43f] to-[#ffb800] hover:from-[#ffe066] hover:to-[#ffd014] text-[#0b2f5f] font-black uppercase text-xs rounded-xl shadow-lg active:scale-95 transition-transform border-none cursor-pointer"
+                                    className="text-base h-12 w-full bg-gradient-to-r from-[#ffd43f] to-[#ffb800] hover:from-[#ffe066] hover:to-[#ffd014] text-[#0b2f5f] font-bold rounded-2xl shadow-lg shadow-pink-900/20 border-t border-white/20 transition-all active:scale-95"
                                 >
                                     Play Tournament
                                 </button>

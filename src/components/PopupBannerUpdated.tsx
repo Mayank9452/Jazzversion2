@@ -8,18 +8,13 @@ import { useLanguage } from "./context/LanguageContext";
 
 const PopupBannerUpdated = () => {
   const [isVisible, setIsVisible] = useState(false);
-  const { t } = useLanguage();
 
   useEffect(() => {
-    const shown = sessionStorage.getItem("popupBannerShown");
-    if (!shown) {
-      setIsVisible(true);
-    }
+    setIsVisible(true);
   }, []);
 
   const handleClose = () => {
     setIsVisible(false);
-    sessionStorage.setItem("popupBannerShown", "true");
   };
 
   return (
@@ -40,7 +35,7 @@ const PopupBannerUpdated = () => {
             exit={{ opacity: 0, y: 30, scale: 0.95 }}
             transition={{ duration: 0.3, ease: "easeOut" }}
             onClick={(e) => e.stopPropagation()}
-            className="relative gradient-popup-premium backdrop-blur-md rounded-[2.5rem] max-w-sm w-[85%] p-6 border border-white/20 shadow-[0_20px_50px_rgba(0,0,0,0.5)] flex flex-col items-center gap-4 overflow-hidden will-change-transform"
+            className="relative dark:bg-[#00000094] backdrop-blur-md rounded-[2.5rem] max-w-sm w-[85%] p-6 border border-white/20 shadow-[0_20px_50px_rgba(0,0,0,0.5)] flex flex-col items-center gap-4 overflow-hidden will-change-transform"
           >
             {/* Glowing Corner Accents */}
             <div className="absolute top-0 left-0 w-12 h-12 border-t-2 border-l-2 border-yellow-500 rounded-tl-[2.5rem] pointer-events-none" />
@@ -55,7 +50,7 @@ const PopupBannerUpdated = () => {
             {/* Close Button */}
             <button
               onClick={handleClose}
-              className="absolute z-[50] top-4 right-4 w-10 h-10 rounded-full bg-white/5 hover:bg-white/10 active:scale-90 border-2 border-pink-900 flex items-center justify-center transition-all"
+              className="absolute z-[50] top-4 right-4 w-10 h-10 rounded-full bg-white/5 hover:bg-white/10 active:scale-90 border-2 border-yellow-main flex items-center justify-center transition-all"
             >
               <X className="h-5 w-5 text-white/60 hover:text-white" />
             </button>
@@ -115,22 +110,22 @@ const PopupBannerUpdated = () => {
               </div>
 
               {/* Title */}
-              <h2 className="text-xl font-bold bg-gradient-to-r from-pink-400 via-white to-pink-600 bg-clip-text text-transparent leading-tight mb-3">
-                {t.welcomeToBidblast}
+              <h2 className="text-xl font-bold text-[#ffc200] leading-tight mb-3">
+                Welcome to <br /> Gaming Premier League
               </h2>
 
               {/* Description */}
               <p className="text-sm text-blue-100 leading-relaxed mb-8">
-                {t.welcomeDescription}
+                Start Playing tournament and win amazing prizes
               </p>
 
               {/* Action Button */}
               <div className="w-full">
                 <Button
-                  className="h-12 w-full bg-gradient-to-r from-pink-600 to-rose-700 hover:from-pink-500 hover:to-rose-600 text-white font-bold rounded-2xl shadow-lg shadow-pink-900/20 border-t border-white/20 transition-all active:scale-95 text-base"
+                  className="h-12 w-full bg-gradient-to-r from-[#ffd43f] to-[#ffb800] hover:from-[#ffe066] hover:to-[#ffd014] text-[#0b2f5f] font-bold rounded-2xl shadow-lg border-t border-white/20 transition-all active:scale-95 text-base"
                   onClick={handleClose}
                 >
-                  {t.startBidding}
+                  Let's Play
                 </Button>
               </div>
             </motion.div>

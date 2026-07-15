@@ -43,18 +43,16 @@ export const HexagonalAvatarFrame = ({
       </svg>
 
       {/* Circle avatar image in center */}
-      <div className={`w-[72px] h-[72px] rounded-full overflow-hidden relative z-10 border-2 ${
-        isDark ? "bg-blue-main/30 border-blue-main/50" : "bg-blue-main/10 border-blue-main/30"
-      }`}>
+      <div className={`w-[72px] h-[72px] rounded-full overflow-hidden relative z-10 border-2 ${isDark ? "bg-blue-main/30 border-blue-main/50" : "bg-blue-main/10 border-blue-main/30"
+        }`}>
         <img src={imageUrl} alt="Avatar" className="w-full h-full object-cover" />
       </div>
 
       {/* Edit pencil icon */}
       <button
         onClick={onEditClick}
-        className={`absolute bottom-1 right-1 w-7 h-7 rounded-full bg-yellow-main flex items-center justify-center text-blue-main hover:scale-110 active:scale-95 transition-transform z-20 shadow-lg border ${
-          isDark ? "border-black-main" : "border-white"
-        }`}
+        className={`absolute bottom-1 right-1 w-7 h-7 rounded-full bg-yellow-main flex items-center justify-center text-blue-main hover:scale-110 active:scale-95 transition-transform z-20 shadow-lg border ${isDark ? "border-black-main" : "border-white"
+          }`}
       >
         <Pencil className="w-3.5 h-3.5 stroke-[2.5]" />
       </button>

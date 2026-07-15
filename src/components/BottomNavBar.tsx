@@ -314,7 +314,7 @@ export function BottomNavBar({
       id: "playWin",
       label: t.navbarPlayWin || "Play & Win",
       icon: GamepadIcon,
-      path: ["/biddingPage"],
+      path: ["/tournamentPageStatic"],
     },
     // {
     //   id: "history",
@@ -414,6 +414,7 @@ export function BottomNavBar({
                             "shadow-[0_0_20px_rgba(255,202,32,0.65)]",
                             isActive && "ring-2 ring-brand-yellow-100/60 scale-105"
                           )}
+
                         >
                           {/* Pulsing ring background glow */}
                           <div className="absolute inset-0 rounded-full bg-brand-yellow-100/20 animate-ping opacity-60 pointer-events-none scale-105" />

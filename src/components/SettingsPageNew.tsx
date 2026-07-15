@@ -9,10 +9,13 @@ import { TopBar } from "./TopBar";
 import { BottomNavBar } from "./BottomNavBar";
 import { useLanguage } from "./context/LanguageContext";
 import { useAppDispatch, useAppSelector } from "@/app/hooks";
-import { getProfileInfo } from "@/features/bidProfile/profileSlice";
+import { getProfileInfo, unsubscribeUser } from "@/features/bidProfile/profileSlice";
 import { updateProfileImageThunk } from "@/features/bidProfile/updateProfileSlice";
 import WaitLoader from "./Loader";
 import { HexagonalAvatarFrame } from "./HexagonalAvatarFrame";
+import { TopBarUpdated } from "./TopbarUpdated";
+import PopupLayoutChecker from "./PopupLayoutChecker";
+import PopupBannerUnsubscribe from "./PopupBannerUnsubscribe";
 
 export const phoneShowFormat = (phone: string | undefined): string => {
   if (!phone) return "";
@@ -212,6 +215,23 @@ export default function SettingsPageNew() {
   const [showModal, setShowModal] = useState(false);
   const [selectedAvatar, setSelectedAvatar] = useState<string>("1.png");
   const [loading, setLoading] = useState(false);
+  const [showLayoutPopup, setShowLayoutPopup] = useState(false);
+  const [showUnsubscribePopup, setShowUnsubscribePopup] = useState(false);
+
+  const confirmUnsubscribe = async () => {
+    try {
+      await dispatch(unsubscribeUser() as any).unwrap();
+    } catch (e) {
+      console.error("Unsubscribe error:", e);
+    }
+  };
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setShowLayoutPopup(true);
+    }, 1000);
+    return () => clearTimeout(timer);
+  }, []);
 
   const isDark = resolvedTheme === "dark";
 
@@ -308,9 +328,9 @@ export default function SettingsPageNew() {
             {/* Phone pill badge */}
             <div className="mb-3 flex justify-center">
               <BeveledBadge isDark={isDark} variant="grey">
-                <Phone className="w-3.5 h-3.5 text-black-v3 dark:text-white/60 flex-shrink-0" />
+                {/* <Phone className="w-3.5 h-3.5 text-black-v3 dark:text-white/60 flex-shrink-0" /> */}
                 <span className="text-sm font-bold tracking-[1.5px] select-none">
-                  {phoneShowFormat(user?.user_phone)}
+                  976xxxx876
                 </span>
               </BeveledBadge>
             </div>
@@ -347,7 +367,13 @@ export default function SettingsPageNew() {
             {menuItems.map(({ to, icon: Icon, label, sub, badge, variant, iconStyle }) => (
               <SettingsCard
                 key={to}
-                onClick={() => navigate(to)}
+                onClick={() => {
+                  if (label === "Unsubscribe") {
+                    setShowUnsubscribePopup(true);
+                  } else {
+                    navigate(to);
+                  }
+                }}
                 isDark={isDark}
                 variant={variant}
               >
@@ -439,6 +465,21 @@ export default function SettingsPageNew() {
       )}
 
       {loading && <WaitLoader isOverlay />}
+      <PopupLayoutChecker
+        isShow={showLayoutPopup}
+        onClose={() => setShowLayoutPopup(false)}
+        targetRoute="/settingsStatic"
+      />
+      <PopupBannerUnsubscribe
+        isShow={showUnsubscribePopup}
+        onClose={() => setShowUnsubscribePopup(false)}
+        onConfirm={confirmUnsubscribe}
+        confirmText="Confirm Unsubscribe"
+        data={{
+          title: "Unsubscribe",
+          description: "Do you really want to unsubscribe? You will lose access to all your play coins and leaderboard benefits.",
+        }}
+      />
       <BottomNavBar />
     </>
   );

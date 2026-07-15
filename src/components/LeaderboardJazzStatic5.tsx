@@ -1,9 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
-import { ArrowLeft, ChevronDown } from "lucide-react";
+import { ArrowLeft, ChevronDown, Award } from "lucide-react";
 import { BottomNavBar } from "./BottomNavBar";
-import PopupLayoutChecker from "./PopupLayoutChecker";
 
 /* ─────────────────────────────────────────────────────────
    MOCK DATA — swap avatarUrl for real user photos when wiring up
@@ -14,23 +13,46 @@ interface Player {
     score: number;
     avatarUrl: string;
     isCurrentUser?: boolean;
+    tier?: "diamond" | "platinum" | "gold" | "silver" | "bronze";
 }
 
 const players: Player[] = [
-    { rank: 1, msisdn: "908xxxx890", score: 96239, avatarUrl: "/assets/users/1.png" },
+    { rank: 1, msisdn: "908xxxx890", score: 10000000, avatarUrl: "/assets/users/1.png" },
     { rank: 2, msisdn: "923xxxx456", score: 84787, avatarUrl: "/assets/users/2.png" },
     { rank: 3, msisdn: "912xxxx789", score: 82139, avatarUrl: "/assets/users/3.png" },
-    { rank: 4, msisdn: "987xxxx321", score: 80857, avatarUrl: "/assets/users/4.png" },
-    { rank: 5, msisdn: "955xxxx111", score: 76128, avatarUrl: "/assets/users/5.png" },
-    { rank: 6, msisdn: "955xxxx822", score: 71667, avatarUrl: "/assets/users/6.png", isCurrentUser: true },
-    { rank: 7, msisdn: "922xxxx999", score: 68439, avatarUrl: "/assets/users/7.png" },
-    { rank: 8, msisdn: "931xxxx222", score: 66981, avatarUrl: "/assets/users/8.png" },
-    { rank: 9, msisdn: "944xxxx888", score: 50546, avatarUrl: "/assets/users/9.png" },
-    { rank: 10, msisdn: "966xxxx555", score: 43210, avatarUrl: "/assets/users/10.png" },
+    { rank: 4, msisdn: "987xxxx321", score: 80857, avatarUrl: "/assets/users/4.png", tier: "diamond" },
+    { rank: 5, msisdn: "955xxxx111", score: 76128, avatarUrl: "/assets/users/5.png", tier: "platinum" },
+    { rank: 6, msisdn: "955xxxx822", score: 71667, avatarUrl: "/assets/users/6.png", isCurrentUser: true, tier: "gold" },
+    { rank: 7, msisdn: "922xxxx999", score: 68439, avatarUrl: "/assets/users/7.png", tier: "silver" },
+    { rank: 8, msisdn: "931xxxx222", score: 66981, avatarUrl: "/assets/users/8.png", tier: "bronze" },
+    { rank: 9, msisdn: "944xxxx888", score: 50546, avatarUrl: "/assets/users/9.png", tier: "bronze" },
+    { rank: 10, msisdn: "966xxxx555", score: 43210, avatarUrl: "/assets/users/10.png", tier: "bronze" },
 ];
 
 const formatScore = (num: number) => num.toLocaleString();
 const ordinal = (n: number) => (n === 1 ? "1st" : n === 2 ? "2nd" : n === 3 ? "3rd" : `${n}th`);
+
+const getTierColor = (tier: string | undefined) => {
+    const colors = {
+        diamond: "bg-gradient-to-r from-cyan-400 to-blue-500",
+        platinum: "bg-gradient-to-r from-slate-300 to-slate-500",
+        gold: "bg-gradient-to-r from-yellow-400 to-amber-500",
+        silver: "bg-gradient-to-r from-gray-300 to-gray-400",
+        bronze: "bg-gradient-to-r from-orange-400 to-amber-700",
+    };
+    return colors[tier as keyof typeof colors] || "bg-gradient-to-r from-gray-600 to-gray-800";
+};
+
+const getTierBadge = (tier: string | undefined) => {
+    const badges = {
+        diamond: "💎",
+        platinum: "⚪",
+        gold: "🥇",
+        silver: "🥈",
+        bronze: "🏅",
+    };
+    return badges[tier as keyof typeof badges] || "🏅";
+};
 
 /* ─────────────────────────────────────────────────────────
    STAR SCORE ICON — the golden star next to each score
@@ -111,34 +133,10 @@ const PodiumSlot: React.FC<{ player: Player; place: 1 | 2 | 3 }> = ({ player, pl
    RANK COIN — gold-ringed badge used for ranks 4th and below
 ───────────────────────────────────────────────────────── */
 const RankCoin: React.FC<{ rank: number }> = ({ rank }) => {
-    if (rank >= 100) {
-        return (
-            <span className="text-[#FFCA20] font-black text-sm tracking-tight shrink-0 select-none pr-1">
-                #{rank.toLocaleString()}
-            </span>
-        );
-    }
     return (
-        <div className="relative w-11 h-11 shrink-0">
-            <svg viewBox="0 0 44 44" className="w-full h-full">
-                <defs>
-                    <linearGradient id={`coinRing${rank}`} x1="0" y1="0" x2="1" y2="1">
-                        <stop offset="0%" stopColor="#FFCA20" />
-                        <stop offset="100%" stopColor="#DFA208" />
-                    </linearGradient>
-                </defs>
-                <circle cx="22" cy="22" r="19.5" fill="#2B2B2B" stroke={`url(#coinRing${rank})`} strokeWidth="2.4" />
-                {[...Array(6)].map((_, i) => {
-                    const a = (Math.PI / 5) * i - Math.PI / 2 - 0.35;
-                    const x1 = 22 + Math.cos(a) * 20.5;
-                    const y1 = 22 + Math.sin(a) * 20.5;
-                    const x2 = 22 + Math.cos(a) * 17.5;
-                    const y2 = 22 + Math.sin(a) * 17.5;
-                    return <line key={i} x1={x1} y1={y1} x2={x2} y2={y2} stroke="#FFCA20" strokeWidth="1.4" opacity="0.5" />;
-                })}
-            </svg>
-            <span className="absolute inset-0 flex items-center justify-center text-[11px] font-bold text-white">
-                {ordinal(rank)}
+        <div className="px-2.5 py-1 rounded-lg bg-gradient-to-br from-white/[0.06] to-white/[0.02] border border-white/[0.08] shadow-[0_2px_8px_rgba(0,0,0,0.2)] flex items-center justify-center min-w-[36px] backdrop-blur-sm shrink-0 select-none">
+            <span className="text-[#FFCA20] font-black text-[13px] tracking-tight">
+                #{rank.toLocaleString()}
             </span>
         </div>
     );
@@ -153,8 +151,22 @@ const ListRow: React.FC<{ player: Player; isLast?: boolean }> = ({ player, isLas
             }`}
     >
         <div className="flex items-center gap-3 min-w-0">
-            <div className="w-11 h-11 rounded-full overflow-hidden bg-[#2B2B2B] shrink-0">
-                <img src={player.avatarUrl} alt={player.msisdn} className="w-full h-full object-cover" />
+            <div className="relative flex-shrink-0">
+                <div
+                    className={`w-11 h-11 ${getTierColor(player.tier)} rounded-lg p-0.5`}
+                >
+                    <div className="w-full h-full bg-white rounded-lg overflow-hidden flex items-center justify-center">
+                        <img
+                            src={player.avatarUrl}
+                            alt={player.msisdn}
+                            className="w-full h-full object-cover"
+                            loading="lazy"
+                        />
+                    </div>
+                </div>
+                <div className="absolute -bottom-2 -right-0.5 text-sm">
+                    🏅
+                </div>
             </div>
             <div className="min-w-0">
                 <p className="text-[14px] font-semibold text-white truncate">
@@ -175,16 +187,8 @@ const ListRow: React.FC<{ player: Player; isLast?: boolean }> = ({ player, isLas
 /* ─────────────────────────────────────────────────────────
    MAIN COMPONENT
 ───────────────────────────────────────────────────────── */
-export const LeaderboardJazzStatic4: React.FC = () => {
+export const LeaderboardJazzStatic5: React.FC = () => {
     const navigate = useNavigate();
-    const [showLayoutPopup, setShowLayoutPopup] = useState(false);
-
-    useEffect(() => {
-        const timer = setTimeout(() => {
-            setShowLayoutPopup(true);
-        }, 1000);
-        return () => clearTimeout(timer);
-    }, []);
 
     const rank1 = players.find((p) => p.rank === 1)!;
     const rank2 = players.find((p) => p.rank === 2)!;
@@ -194,13 +198,22 @@ export const LeaderboardJazzStatic4: React.FC = () => {
     return (
         <>
             <div
-                className="min-h-screen w-full flex flex-col font-sans antialiased text-white max-w-md mx-auto"
+                className="min-h-screen w-full flex flex-col font-sans antialiased text-white max-w-md mx-auto relative overflow-hidden"
                 style={{
                     background: "radial-gradient(120% 60% at 50% 0%, #2B2B2B 0%, #191919 60%, #121212 100%)",
                 }}
             >
+                {/* Background Trophy Watermark */}
+                <div className="absolute top-[18%] left-1/2 -translate-x-1/2 w-72 h-72 pointer-events-none opacity-[0.35] z-0 select-none">
+                    <img
+                        src="/assets/images/img/trophy.png"
+                        alt="Background Trophy"
+                        className="w-full h-full object-contain"
+                    />
+                </div>
+
                 {/* Header */}
-                <div className="flex items-center justify-between px-5 pt-6 pb-2">
+                <div className="flex items-center justify-between px-5 pt-6 pb-2 relative z-10">
                     <button
                         onClick={() => navigate(-1)}
                         className="w-10 h-10 rounded-full bg-white/[0.04] border border-white/[0.08] flex items-center justify-center active:scale-95 transition-transform"
@@ -211,7 +224,7 @@ export const LeaderboardJazzStatic4: React.FC = () => {
                         <img
                             src="/assets/images/img/trophy.png"
                             alt="Trophy"
-                            className="w-15 h-10 object-cover"
+                            className="w-5 h-5 object-contain"
                         />
                         Leaderboard
                     </h1>
@@ -219,7 +232,7 @@ export const LeaderboardJazzStatic4: React.FC = () => {
                 </div>
 
                 {/* User Stats Block (Rank and Best Score) - Value is yellow, label text is pure white */}
-                <div className="mx-4 mt-3 bg-[#1e2029]/80 border border-white/[0.04] rounded-2xl p-3.5 flex justify-between items-center text-xs backdrop-blur-sm select-none shadow-sm">
+                <div className="mx-4 mt-3 bg-white/[0.04] border border-white/[0.08] rounded-2xl p-3.5 flex justify-between items-center text-xs backdrop-blur-md select-none shadow-sm relative z-10">
                     <div className="flex items-center gap-2">
                         <span className="text-white font-bold">Your Rank:</span>
                         <span className="text-[#FFCA20] font-black text-sm">#6</span>
@@ -236,7 +249,7 @@ export const LeaderboardJazzStatic4: React.FC = () => {
                 </div>
 
                 {/* Podium */}
-                <div className="px-6 pt-8 pb-4 flex items-end justify-center gap-3 select-none">
+                <div className="px-6 pt-8 pb-4 flex items-end justify-center gap-3 select-none relative z-10">
                     <PodiumSlot player={rank2} place={2} />
                     <PodiumSlot player={rank1} place={1} />
                     <PodiumSlot player={rank3} place={3} />
@@ -246,17 +259,17 @@ export const LeaderboardJazzStatic4: React.FC = () => {
                 <motion.div
                     animate={{ y: [0, 3, 0] }}
                     transition={{ repeat: Infinity, duration: 1.4, ease: "easeInOut" }}
-                    className="flex justify-center -mb-1"
+                    className="flex justify-center -mb-1 relative z-10"
                 >
                     <ChevronDown className="w-5 h-5 text-[#FFCA20]" strokeWidth={3} />
                 </motion.div>
 
                 {/* List panel */}
                 <div
-                    className="flex-1 mt-2 mx-3 mb-0 rounded-t-[28px] px-4 pt-4 pb-3 overflow-y-auto backdrop-blur-md"
+                    className="flex-1 mt-2 mx-3 mb-0 rounded-t-[28px] px-4 pt-4 pb-3 overflow-y-auto backdrop-blur-md relative z-10"
                     style={{
-                        background: "var(--glass-bg-medium, rgba(25, 25, 25, 0.7))",
-                        border: "1px solid var(--glass-border, rgba(255, 255, 255, 0.08))",
+                        background: "rgba(255, 255, 255, 0.04)",
+                        border: "1px solid rgba(255, 255, 255, 0.08)",
                         borderBottom: "none",
                     }}
                 >
@@ -266,13 +279,8 @@ export const LeaderboardJazzStatic4: React.FC = () => {
                 </div>
             </div>
             <BottomNavBar />
-            <PopupLayoutChecker
-                isShow={showLayoutPopup}
-                onClose={() => setShowLayoutPopup(false)}
-                targetRoute="/leaderboardStatic5"
-            />
         </>
     );
 };
 
-export default LeaderboardJazzStatic4;
+export default LeaderboardJazzStatic5;

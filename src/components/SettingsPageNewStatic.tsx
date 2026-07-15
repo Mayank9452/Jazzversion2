@@ -10,9 +10,11 @@ import { TopBar } from "./TopBar";
 import { BottomNavBar } from "./BottomNavBar";
 import { useLanguage } from "./context/LanguageContext";
 import { useAppDispatch, useAppSelector } from "@/app/hooks";
-import { getProfileInfo } from "@/features/bidProfile/profileSlice";
+import { getProfileInfo, unsubscribeUser } from "@/features/bidProfile/profileSlice";
 import { updateProfileImageThunk } from "@/features/bidProfile/updateProfileSlice";
 import WaitLoader from "./Loader";
+import { HexagonalAvatarFrame } from "./HexagonalAvatarFrame";
+import PopupBannerUnsubscribe from "./PopupBannerUnsubscribe";
 // Helper function to format phone number
 const phoneShowFormat = (phone: string | undefined): string => {
     if (!phone) return "";
@@ -32,6 +34,17 @@ export default function SettingsPageNewStatic() {
     const [showModal, setShowModal] = useState(false);
     const [showUnsubscribeModal, setShowUnsubscribeModal] = useState(false);
     const [selectedAvatar, setSelectedAvatar] = useState<string>("1.png");
+    const [showUnsubscribePopup, setShowUnsubscribePopup] = useState(false);
+
+    const confirmUnsubscribe = async () => {
+        try {
+            await dispatch(unsubscribeUser() as any).unwrap();
+            setSubStatus("Unsubscribed");
+        } catch (e) {
+            console.error("Unsubscribe error:", e);
+            setSubStatus("Unsubscribed");
+        }
+    };
     const [loading, setLoading] = useState(false);
     // Cover image URL state & error handling (285x380 portrait gaming banner)
     const [coverImg, setCoverImg] = useState<string>("https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=600&h=800&q=80");
@@ -66,10 +79,10 @@ export default function SettingsPageNewStatic() {
     return (
         <>
             <TopBar />
-            <div className="relative bg-background text-foreground overflow-x-hidden transition-colors duration-300">
+            <div className="relative dark:bg-black text-foreground overflow-x-hidden transition-colors duration-300">
                 {/* Glow effects for glassmorphism backdrop */}
-                <div className="absolute top-[300px] -left-20 w-80 h-80 bg-purple-600/10 rounded-full blur-[120px] pointer-events-none z-0" />
-                <div className="absolute top-[600px] -right-20 w-80 h-80 bg-yellow-main/5 rounded-full blur-[120px] pointer-events-none z-0" />
+                {/* <div className="absolute top-[300px] -left-20 w-80 h-80 bg-purple-600/10 rounded-full blur-[120px] pointer-events-none z-0" />
+                <div className="absolute top-[600px] -right-20 w-80 h-80 bg-yellow-main/5 rounded-full blur-[120px] pointer-events-none z-0" /> */}
 
                 {/* Absolute Banner Background (285x380 portrait aspect ratio template) */}
                 <div className="absolute top-0 left-0 w-full aspect-[285/380] min-h-[300px] max-h-[460px] bg-neutral-900 overflow-hidden z-0">
@@ -83,7 +96,7 @@ export default function SettingsPageNewStatic() {
                         className="w-full h-full object-cover opacity-50"
                     />
                     {/* Dark gradient transitioning to background color at the bottom */}
-                    <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-background/20 to-background z-10" />
+                    <div className="absolute inset-0 bg-[#000000b8] z-10" />
                 </div>
 
                 {/* Foreground Content Container */}
@@ -113,22 +126,12 @@ export default function SettingsPageNewStatic() {
                     </div>
 
                     {/* Profile Picture Section */}
-                    <div className="mt-8 flex flex-col items-center">
-                        <div
-                            onClick={() => setShowModal(true)}
-                            className="relative w-24 h-24 rounded-full border-4 border-[#ffbc00] shadow-2xl overflow-visible group cursor-pointer bg-brand-gradient"
-                        >
-                            <img
-                                src={`/assets/users/${selectedAvatar}`}
-                                alt="Profile avatar"
-                                className="w-full h-full object-cover rounded-full p-0.5"
-                            />
-                            <div className="absolute inset-0 rounded-full bg-black/40 opacity-0 group-hover:opacity-100 flex items-center justify-center transition-opacity duration-200">
-                                <Pencil className="w-4 h-4 text-white" />
-                            </div>
-                            {/* Active Green Badge */}
-                            <div className="absolute bottom-1 right-1 w-4.5 h-4.5 bg-green-500 rounded-full border-2 border-background shadow-[0_0_8px_rgba(34,197,94,0.6)]" />
-                        </div>
+                    <div className="mt-4 flex flex-col items-center">
+                        <HexagonalAvatarFrame
+                            imageUrl={`/assets/users/${selectedAvatar}`}
+                            onEditClick={() => setShowModal(true)}
+                            isDark={isDark}
+                        />
                     </div>
 
                     {/* User Name & Details Section */}
@@ -141,88 +144,37 @@ export default function SettingsPageNewStatic() {
                             <span>{phoneShowFormat(user?.user_phone) || "959•••••••"}</span>
                         </p> */}
                     </div>
-                    {/* 3-and-2 Statistics Section */}
-                    <div className="px-4 mt-6 max-w-md mx-auto flex flex-col gap-3">
-
-                        {/* Row 1: 3 stats */}
-                        <div className="grid grid-cols-3 gap-2.5">
-                            {/* Tournament Played */}
-                            <div className={`p-3 rounded-2xl border flex flex-col items-start justify-between transition-all duration-200 relative z-10 ${isDark
-                                ? "bg-white/[0.03] backdrop-blur-md border-white/5 shadow-[0_4px_24px_rgba(0,0,0,0.2)]"
-                                : "bg-white/40 backdrop-blur-md border-black/5 shadow-sm"
-                                }`}>
-                                <div className="p-1.5 rounded-xl bg-purple-500/10 text-purple-500">
-                                    <Gamepad2 className="w-4 h-4" />
-                                </div>
-                                <div className="mt-2 text-left">
-                                    <p className="text-lg font-black tracking-tight text-foreground">250</p>
-                                    <p className="text-[10px] font-bold text-muted-foreground mt-0.5 leading-tight">
-                                        Played
-                                    </p>
-                                </div>
+                    {/* Statistics Section */}
+                    <div className="px-4 mt-6 max-w-md mx-auto grid grid-cols-2 gap-2.5">
+                        {/* Total Reward Coins */}
+                        <div className={`p-3 rounded-2xl border flex items-center gap-3 transition-all duration-200 relative z-10 ${isDark
+                            ? "bg-[#ffffff14] backdrop-blur-md border-[#ffffff52] shadow-[0_4px_24px_rgba(0,0,0,0.2)]"
+                            : "bg-white/40 backdrop-blur-md border-black/5 shadow-sm"
+                            }`}>
+                            <div className="p-1.5 rounded-xl bg-amber-500/10 text-amber-500 shrink-0">
+                                <img
+                                    src="/assets/images/img/gold-coin.png"
+                                    alt="coin"
+                                    className="w-5 h-5 object-contain"
+                                />
                             </div>
-                            {/* Tournament Won */}
-                            <div className={`p-3 rounded-2xl border flex flex-col items-start justify-between transition-all duration-200 relative z-10 ${isDark
-                                ? "bg-white/[0.03] backdrop-blur-md border-white/5 shadow-[0_4px_24px_rgba(0,0,0,0.2)]"
-                                : "bg-white/40 backdrop-blur-md border-black/5 shadow-sm"
-                                }`}>
-                                <div className="p-1.5 rounded-xl bg-yellow-main/10 text-yellow-main">
-                                    <Trophy className="w-4 h-4" />
-                                </div>
-                                <div className="mt-2 text-left">
-                                    <p className="text-lg font-black tracking-tight text-foreground">145</p>
-                                    <p className="text-[10px] font-bold text-muted-foreground mt-0.5 leading-tight">
-                                        Won
-                                    </p>
-                                </div>
-                            </div>
-                            {/* Total Reward Coins */}
-                            <div className={`p-3 rounded-2xl border flex flex-col items-start justify-between transition-all duration-200 relative z-10 ${isDark
-                                ? "bg-white/[0.03] backdrop-blur-md border-white/5 shadow-[0_4px_24px_rgba(0,0,0,0.2)]"
-                                : "bg-white/40 backdrop-blur-md border-black/5 shadow-sm"
-                                }`}>
-                                <div className="p-1.5 rounded-xl bg-amber-500/10 text-amber-500">
-                                    <Coins className="w-4 h-4" />
-                                </div>
-                                <div className="mt-2 text-left">
-                                    <p className="text-lg font-black tracking-tight text-foreground">₹3256</p>
-                                    <p className="text-[10px] font-bold text-muted-foreground mt-0.5 leading-tight">
-                                        Coins
-                                    </p>
-                                </div>
+                            <div className="text-left flex flex-col justify-center leading-none">
+                                <p className="text-[10px] font-bold text-muted-foreground uppercase tracking-wide">Coins</p>
+                                <p className="text-base font-black text-foreground mt-1">₹3256</p>
                             </div>
                         </div>
-                        {/* Row 2: 2 stats */}
-                        <div className="grid grid-cols-2 gap-2.5">
-                            {/* Joined Date */}
-                            <div className={`p-3.5 rounded-2xl border flex flex-col items-start justify-between transition-all duration-200 relative z-10 ${isDark
-                                ? "bg-white/[0.03] backdrop-blur-md border-white/5 shadow-[0_4px_24px_rgba(0,0,0,0.2)]"
-                                : "bg-white/40 backdrop-blur-md border-black/5 shadow-sm"
-                                }`}>
-                                <div className="p-1.5 rounded-xl bg-emerald-500/10 text-emerald-500">
-                                    <Calendar className="w-4 h-4" />
-                                </div>
-                                <div className="mt-2 text-left">
-                                    <p className="text-sm font-black text-foreground">12 Jun 2025</p>
-                                    <p className="text-[10px] font-bold text-muted-foreground mt-0.5 leading-tight">
-                                        Joined Date
-                                    </p>
-                                </div>
+
+                        {/* Joined Date */}
+                        <div className={`p-3 rounded-2xl border flex items-center gap-3 transition-all duration-200 relative z-10 ${isDark
+                            ? "bg-[#ffffff14] backdrop-blur-md border-[#ffffff52] shadow-[0_4px_24px_rgba(0,0,0,0.2)]"
+                            : "bg-white/40 backdrop-blur-md border-black/5 shadow-sm"
+                            }`}>
+                            <div className="p-1.5 rounded-xl bg-yellow-main/10 text-yellow-main shrink-0">
+                                <Calendar className="w-4 h-4" />
                             </div>
-                            {/* Last Visit */}
-                            <div className={`p-3.5 rounded-2xl border flex flex-col items-start justify-between transition-all duration-200 relative z-10 ${isDark
-                                ? "bg-white/[0.03] backdrop-blur-md border-white/5 shadow-[0_4px_24px_rgba(0,0,0,0.2)]"
-                                : "bg-white/40 backdrop-blur-md border-black/5 shadow-sm"
-                                }`}>
-                                <div className="p-1.5 rounded-xl bg-sky-500/10 text-sky-500">
-                                    <Clock className="w-4 h-4" />
-                                </div>
-                                <div className="mt-2 text-left">
-                                    <p className="text-sm font-black text-foreground">Today</p>
-                                    <p className="text-[10px] font-bold text-muted-foreground mt-0.5 leading-tight">
-                                        Last Visit
-                                    </p>
-                                </div>
+                            <div className="text-left flex flex-col justify-center leading-none">
+                                <p className="text-[10px] font-bold text-muted-foreground uppercase tracking-wide">Joined Date</p>
+                                <p className="text-sm font-black text-foreground mt-1 whitespace-nowrap">12 Jun 2025</p>
                             </div>
                         </div>
                     </div>
@@ -233,7 +185,7 @@ export default function SettingsPageNewStatic() {
                         <button
                             onClick={() => navigate("/notification")}
                             className={`w-full p-4 flex items-center justify-between rounded-2xl border transition-all duration-200 active:scale-[0.98] group relative z-10 ${isDark
-                                ? "bg-white/[0.03] backdrop-blur-md border-white/5 shadow-[0_4px_24px_rgba(0,0,0,0.15)] hover:bg-white/[0.08] hover:border-white/10"
+                                ? "bg-[#ffffff14] backdrop-blur-md border-[#ffffff52] shadow-[0_4px_24px_rgba(0,0,0,0.15)] hover:bg-white/[0.08] hover:border-white/10"
                                 : "bg-white/40 backdrop-blur-md border-black/5 hover:bg-white/60 shadow-sm"
                                 }`}
                         >
@@ -253,7 +205,7 @@ export default function SettingsPageNewStatic() {
                         <button
                             onClick={() => navigate("/tournament-history")}
                             className={`w-full p-4 flex items-center justify-between rounded-2xl border transition-all duration-200 active:scale-[0.98] group relative z-10 ${isDark
-                                ? "bg-white/[0.03] backdrop-blur-md border-white/5 shadow-[0_4px_24px_rgba(0,0,0,0.15)] hover:bg-white/[0.08] hover:border-white/10"
+                                ? "bg-[#ffffff14] backdrop-blur-md border-[#ffffff52] shadow-[0_4px_24px_rgba(0,0,0,0.15)] hover:bg-white/[0.08] hover:border-white/10"
                                 : "bg-white/40 backdrop-blur-md border-black/5 hover:bg-white/60 shadow-sm"
                                 }`}
                         >
@@ -273,7 +225,7 @@ export default function SettingsPageNewStatic() {
                         <button
                             onClick={() => navigate("/privacy-policy")}
                             className={`w-full p-4 flex items-center justify-between rounded-2xl border transition-all duration-200 active:scale-[0.98] group relative z-10 ${isDark
-                                ? "bg-white/[0.03] backdrop-blur-md border-white/5 shadow-[0_4px_24px_rgba(0,0,0,0.15)] hover:bg-white/[0.08] hover:border-white/10"
+                                ? "bg-[#ffffff14] backdrop-blur-md border-[#ffffff52] shadow-[0_4px_24px_rgba(0,0,0,0.15)] hover:bg-white/[0.08] hover:border-white/10"
                                 : "bg-white/40 backdrop-blur-md border-black/5 hover:bg-white/60 shadow-sm"
                                 }`}
                         >
@@ -293,7 +245,7 @@ export default function SettingsPageNewStatic() {
                         <button
                             onClick={() => navigate("/terms")}
                             className={`w-full p-4 flex items-center justify-between rounded-2xl border transition-all duration-200 active:scale-[0.98] group relative z-10 ${isDark
-                                ? "bg-white/[0.03] backdrop-blur-md border-white/5 shadow-[0_4px_24px_rgba(0,0,0,0.15)] hover:bg-white/[0.08] hover:border-white/10"
+                                ? "bg-[#ffffff14] backdrop-blur-md border-[#ffffff52] shadow-[0_4px_24px_rgba(0,0,0,0.15)] hover:bg-white/[0.08] hover:border-white/10"
                                 : "bg-white/40 backdrop-blur-md border-black/5 hover:bg-white/60 shadow-sm"
                                 }`}
                         >
@@ -311,31 +263,31 @@ export default function SettingsPageNewStatic() {
                         </button>
                         {/* Unsubscribe */}
                         <button
-                            onClick={() => setShowUnsubscribeModal(true)}
+                            onClick={() => setShowUnsubscribePopup(true)}
                             className={`w-full p-4 flex items-center justify-between rounded-2xl border transition-all duration-200 active:scale-[0.98] group relative z-10 ${isDark
-                                ? "bg-red-500/[0.03] backdrop-blur-md border-red-500/10 hover:bg-red-500/[0.08]"
+                                ? "bg-[#ffffff14] backdrop-blur-md border-[#ffffff52] hover:bg-red-500/[0.08]"
                                 : "bg-red-50/40 backdrop-blur-md border-red-100 hover:bg-red-50 shadow-sm"
                                 }`}
                         >
                             <div className="flex items-center gap-3.5">
-                                <div className="p-2 rounded-xl bg-red-500/10 text-red-500">
+                                <div className="p-2 rounded-xl bg-yellow-main/10 text-yellow-main">
                                     <LogOut className="w-5 h-5" />
                                 </div>
                                 <div className="text-left">
-                                    <p className="text-sm font-bold tracking-wide text-red-500">Unsubscribe</p>
-                                    <p className="text-xs text-red-500/70 mt-0.5">Leave the gaming service</p>
+                                    <p className="text-sm font-bold tracking-wide text-yellow-main">Unsubscribe</p>
+                                    <p className="text-xs text-yellow-main/70 mt-0.5">Leave the gaming service</p>
                                 </div>
                             </div>
-                            <ChevronRight className="w-5 h-5 text-red-500/70 transition-transform duration-200 group-hover:translate-x-0.5" />
+                            <ChevronRight className="w-5 h-5 text-yellow-main/70 transition-transform duration-200 group-hover:translate-x-0.5" />
                         </button>
                     </div>
                     {/* Account Information Card */}
                     <div className="px-4 mt-6 max-w-md mx-auto">
                         <div className={`p-5 rounded-3xl border relative z-10 transition-all duration-200 ${isDark
-                            ? "bg-white/[0.03] backdrop-blur-md border-white/5 shadow-[0_4px_30px_rgba(0,0,0,0.2)]"
+                            ? "bg-[#ffffff14] backdrop-blur-md border-[#ffffff52] shadow-[0_4px_30px_rgba(0,0,0,0.2)]"
                             : "bg-white/40 backdrop-blur-md border-black/5 shadow-sm"
                             }`}>
-                            <h3 className="text-xs font-black tracking-[1.5px] uppercase text-muted-foreground mb-4">
+                            <h3 className="text-center text-xs font-black tracking-[1.5px] uppercase text-muted-foreground mb-4">
                                 Account Information
                             </h3>
 
@@ -380,7 +332,7 @@ export default function SettingsPageNewStatic() {
                                     <button
                                         onClick={() => setSubStatus(subStatus === "Subscribed" ? "Unsubscribed" : "Subscribed")}
                                         className={`px-4 py-1.5 rounded-full text-xs font-black tracking-wider border transition-all flex-shrink-0 ${subStatus === "Subscribed"
-                                            ? "bg-green-500/10 border-green-500/20 text-green-500"
+                                            ? "bg-yellow-main/10 border-yellow-main/20 text-yellow-main"
                                             : "bg-neutral-500/10 border-neutral-500/20 text-neutral-500"
                                             }`}
                                     >
@@ -437,38 +389,16 @@ export default function SettingsPageNewStatic() {
                     </div>
                 </div>
             )}
-            {/* Unsubscribe Modal */}
-            {showUnsubscribeModal && (
-                <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-                    <div className="absolute inset-0 bg-black/75 backdrop-blur-sm" onClick={() => setShowUnsubscribeModal(false)} />
-                    <div className="relative w-full max-w-sm bg-neutral-900 border border-neutral-800 rounded-3xl p-6 z-10 text-center animate-in zoom-in-95 duration-200">
-                        <div className="w-16 h-16 bg-red-500/10 rounded-full flex items-center justify-center mx-auto mb-4 text-red-500">
-                            <LogOut className="w-8 h-8 animate-pulse" />
-                        </div>
-                        <h3 className="text-lg font-bold text-white mb-2">Unsubscribe Service</h3>
-                        <p className="text-sm text-neutral-400 mb-6 leading-relaxed">
-                            Are you sure you want to unsubscribe from the gaming service? You will lose access to active tournaments and bid events.
-                        </p>
-                        <div className="flex gap-3">
-                            <button
-                                onClick={() => setShowUnsubscribeModal(false)}
-                                className="flex-1 py-3 rounded-2xl bg-neutral-800 hover:bg-neutral-700 text-white font-bold text-xs tracking-wider transition-all active:scale-95"
-                            >
-                                Cancel
-                            </button>
-                            <button
-                                onClick={() => {
-                                    setSubStatus("Unsubscribed");
-                                    setShowUnsubscribeModal(false);
-                                }}
-                                className="flex-1 py-3 rounded-2xl bg-red-600 hover:bg-red-750 text-white font-bold text-xs tracking-wider transition-all active:scale-95"
-                            >
-                                Confirm
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            )}
+            <PopupBannerUnsubscribe
+                isShow={showUnsubscribePopup}
+                onClose={() => setShowUnsubscribePopup(false)}
+                onConfirm={confirmUnsubscribe}
+                confirmText="Confirm Unsubscribe"
+                data={{
+                    title: "Unsubscribe",
+                    description: "Do you really want to unsubscribe? You will lose access to all your play coins and leaderboard benefits.",
+                }}
+            />
             {loading && <WaitLoader isOverlay />}
             <BottomNavBar />
         </>

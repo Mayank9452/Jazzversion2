@@ -149,7 +149,7 @@ const DailyTournamentMixedTesting: React.FC<DailyTournament> = ({
                                                 {rewardType === 1 && (
                                                     <div className="font-extrabold flex items-center gap-1 text-xs sm:text-[10px]">
                                                         <img
-                                                            src="/assets/images/giftkarte.webp"
+                                                            src="/assets/images/giftkarte.png"
                                                             alt="voucher"
                                                             className="w-6 h-6 object-contain"
                                                         />

@@ -30,6 +30,8 @@ import DailyTournamentNewTesting6 from "./DailyTournamentNewTesting6";
 import DailyTournamentNewTesting7 from "./DailyTournamentNewTesting7";
 import DailyTournamentMixedTesting from "./DailyTournamentMixedTesting";
 import DailyTournamentMixedTesting2 from "./DailyTournamentMixedTesting2";
+import { TopBarUpdated } from "@/components/TopbarUpdated";
+import PopupBannerUpdated from "@/components/PopupBannerUpdated";
 
 /* ─── Section Header ─────────────────────────────────────────────────────── */
 
@@ -145,7 +147,9 @@ const categories = [
   { id: "action", label: "Zombie Uprising", image: "/assets/images/Zombie Uprising.png" },
   { id: "moba", label: "Tropical Slicer", image: "/assets/images/Tropical Slicer name.png" },
   { id: "racing", label: "Road Racer", image: "/assets/images/Road Racer name.png" },
-  { id: "adventure", label: "Gogi Adventure", image: "/assets/images/gogi name.png" }
+  { id: "sports", label: "Sports", image: "/assets/images/friend cricket.png" },
+  { id: "arcade", label: "Arcade", image: "/assets/images/Alien Galaxy.png" },
+  { id: "puzzle", label: "Puzzle", image: "/assets/images/box tower.jpeg" }
 ];
 
 const trendingCategories = [
@@ -819,7 +823,7 @@ const Home = () => {
           }}
         />
 
-        <TopBar />
+        <TopBarUpdated />
 
         {loading ? (
           <LoadingSkeleton />
@@ -1179,13 +1183,13 @@ const Home = () => {
                   <TargetChallengeZone />
                 </Section>
 
-                <Section>
+                {/* <Section>
                   <SectionHeader
                     title="Target Challenge Zone Landscape"
                     icon={<Target size={15} className="text-brand-gold-100 dark:text-brand-yellow-100 fill-brand-gold-100/10 dark:fill-brand-yellow-100/10" />}
                   />
                   <TargetChallengeZoneLandscape />
-                </Section>
+                </Section> */}
 
 
 
@@ -1212,6 +1216,7 @@ const Home = () => {
       </div>
 
       <BottomNavBar />
+      <PopupBannerUpdated />
     </>
   );
 };

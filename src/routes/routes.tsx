@@ -85,6 +85,7 @@ import { useEffect } from "react";
 import { useSearchParams } from "react-router-dom";
 import LeaderboardJazzStatic2 from "@/components/LeaderboardJazzStatic2";
 import LeaderboardJazzStatic4 from "@/components/LeaderboardJazzStatic4";
+import LeaderboardJazzStatic5 from "@/components/LeaderboardJazzStatic5";
 
 const UserIdHandler = () => {
   const [searchParams] = useSearchParams();
@@ -207,6 +208,10 @@ const routes = [
   {
     path: "/leaderboardStatic4",
     element: <LeaderboardJazzStatic4 />,
+  },
+  {
+    path: "/leaderboardStatic5",
+    element: <LeaderboardJazzStatic5 />,
   },
   {
     path: "/LeaderBoard",

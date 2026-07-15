@@ -70,6 +70,15 @@ function StatusBadge({ status }: { status: string }) {
   );
 }
 
+const LOCAL_IMAGES = [
+  "/assets/images/01.png",
+  "/assets/images/02.png",
+  "/assets/images/03.png",
+  "/assets/images/4.png",
+  "/assets/images/8.png",
+  "/assets/images/9.png"
+];
+
 const TournamentHistory: React.FC = () => {
   const navigate = useNavigate();
   const { t } = useLanguage();
@@ -125,16 +134,16 @@ const TournamentHistory: React.FC = () => {
 
         {/* ── Premium Glassmorphic Header Card ── */}
         <div className="pb-4">
-          <div className="relative overflow-hidden bg-gradient-to-br from-white/70 to-white/40 dark:from-[#2B2B2B]/40 dark:to-[#191919]/30 backdrop-blur-xl border border-white/40 dark:border-white/[0.06] p-4 flex items-center justify-between gap-3 shadow-[0_8px_32px_rgba(0,0,0,0.02)] dark:shadow-[0_12px_40px_rgba(0,0,0,0.2)]">
+          <div className=" relative overflow-hidden bg-gradient-to-br from-white/70 to-white/40 dark:from-[#2B2B2B]/40 dark:to-[#191919]/30 backdrop-blur-xl border border-white/40 dark:border-white/[0.06] p-4 flex items-center justify-between gap-3 shadow-[0_8px_32px_rgba(0,0,0,0.02)] dark:shadow-[0_12px_40px_rgba(0,0,0,0.2)]">
             {/* Left side: Titles */}
-            <div className="flex justify-around items-center gap-5">
+            <div className="w-full flex justify-between items-center gap-5">
               <div>
                 <button
                   onClick={() => navigate(-1)}
-                  className="flex items-center justify-center w-8 h-8 rounded-full border border-border bg-white/40 dark:bg-card/40 hover:bg-brand-gradient hover:text-brand-black-100 transition-colors text-foreground shadow-sm"
+                  className="flex items-center justify-center w-8 h-8 rounded-full border border-yellow-main bg-white/40 dark:bg-card/40 hover:bg-brand-gradient hover:text-brand-black-100 transition-colors text-foreground shadow-sm"
                   title="Back"
                 >
-                  <ChevronLeft className="w-4.5 h-4.5" />
+                  <ChevronLeft className="w-4.5 h-4.5 text-yellow-main" />
                 </button>
               </div>
               <div >
@@ -166,40 +175,40 @@ const TournamentHistory: React.FC = () => {
               {
                 val: tournaments.length.toString(),
                 label: "Played",
-                color: "blue",
-                icon: <Gamepad2 className="w-3.5 h-3.5 text-[#3b82f6]" />,
-                lineColor: "bg-[#3b82f6]",
-                iconBg: "bg-[#1d4ed8]/20 border border-[#3b82f6]/30",
+                color: "gold",
+                icon: <Gamepad2 className="w-6 h-6 text-yellow-main" />,
+                lineColor: "bg-yellow-main",
+                iconBg: "bg-yellow-main/20 border border-yellow-main/30",
                 valColor: "text-slate-800 dark:text-white"
               },
               {
                 val: totalCoins.toLocaleString(),
                 label: "Coins",
                 color: "gold",
-                icon: <Coins className="w-3.5 h-3.5 text-yellow-main" />,
+                icon: <Coins className="w-6 h-6 text-yellow-main" />,
                 lineColor: "bg-yellow-main",
-                iconBg: "bg-[#a16207]/20 border border-yellow-main/30",
+                iconBg: "bg-yellow-main/20 border border-yellow-main/30",
                 valColor: "text-slate-800 dark:text-white"
               },
               {
                 val: totalVouchers.toString(),
                 label: "Voucher",
-                color: "purple",
-                icon: <Gift className="w-3.5 h-3.5 text-[#a855f7]" />,
-                lineColor: "bg-[#a855f7]",
-                iconBg: "bg-[#6b21a8]/20 border border-[#a855f7]/30",
+                color: "gold",
+                icon: <Gift className="w-6 h-6 text-yellow-main" />,
+                lineColor: "bg-yellow-main",
+                iconBg: "bg-yellow-main/20 border border-yellow-main/30",
                 valColor: "text-slate-800 dark:text-white"
               },
               {
                 val: totalTalktime.toString(),
                 label: "Talktime",
-                color: "emerald",
-                icon: <Award className="w-3.5 h-3.5 text-[#10b981]" />,
-                lineColor: "bg-[#10b981]",
-                iconBg: "bg-[#047857]/20 border border-[#10b981]/30",
+                color: "gold",
+                icon: <Award className="w-6 h-6 text-yellow-main" />,
+                lineColor: "bg-yellow-main",
+                iconBg: "bg-yellow-main/20 border border-yellow-main/30",
                 valColor: "text-slate-800 dark:text-white"
               },
-            ].map(({ val, label, icon, lineColor, iconBg, valColor }) => {
+            ].map(({ val, label, icon, lineColor, valColor }) => {
               const statCardBg = isDark
                 ? "bg-gradient-to-br from-[#2b2b2b6e] to-[#2b2b2b6e] backdrop-blur-xl"
                 : "bg-gradient-to-br from-white/75 to-white/35 backdrop-blur-xl shadow-[0_8px_32px_rgba(31,38,135,0.03)]";
@@ -208,10 +217,10 @@ const TournamentHistory: React.FC = () => {
               return (
                 <div
                   key={label}
-                  className={`relative overflow-hidden rounded-2xl ${statCardBorder} ${statCardBg} pt-2.5 pb-2 px-1 flex flex-col items-center justify-between min-h-[85px] shadow-[0_8px_32px_rgba(0,0,0,0.02)] dark:shadow-[0_12px_40px_rgba(0,0,0,0.15)]`}
+                  className={`relative overflow-hidden rounded-2xl ${statCardBorder} ${statCardBg} pt-2 pb-3 px-1 flex flex-col items-center justify-center min-h-[90px] shadow-[0_8px_32px_rgba(0,0,0,0.02)] dark:shadow-[0_12px_40px_rgba(0,0,0,0.15)] gap-1`}
                 >
-                  {/* Top: Glowing Circular Icon */}
-                  <div className={`w-8 h-8 rounded-full flex items-center justify-center  mb-1`}>
+                  {/* Top: Circular Icon */}
+                  <div className="w-8 h-8 rounded-full flex items-center justify-center mb-1">
                     {icon}
                   </div>
 
@@ -221,12 +230,12 @@ const TournamentHistory: React.FC = () => {
                   </span>
 
                   {/* Bottom: Label */}
-                  <span className="text-[9px] sm:text-[10px] font-black text-slate-400 dark:text-slate-400 uppercase tracking-wider mt-1">
+                  <span className="text-[10px] sm:text-[10px] font-black text-slate-400 dark:text-slate-400 uppercase tracking-wider">
                     {label}
                   </span>
 
                   {/* Underline Decoration */}
-                  <div className={`absolute bottom-0 w-6 h-[2px] ${lineColor} rounded-full`} />
+                  <div className={`absolute bottom-0 left-1/2 -translate-x-1/2 w-6 h-[2px] ${lineColor} rounded-full`} />
                 </div>
               );
             })}
@@ -303,26 +312,23 @@ const TournamentHistory: React.FC = () => {
                       {/* Left: Standard Rounded Rectangle Game Cover */}
                       <div className="relative w-24 h-24 sm:w-28 sm:h-28 flex-shrink-0">
                         <img
-                          src={item.game_image ? `https://jazzgplapi.gamenow.com.pk/uploads/webp/suggested_games/${item.game_image}` : "/assets/images/logo.png"}
+                          src={LOCAL_IMAGES[index % LOCAL_IMAGES.length]}
                           alt={item.tournament_name}
-                          className="w-full h-full object-cover rounded-xl border border-white/[0.08] shadow-md transition-transform duration-500 hover:scale-105"
+                          className="w-full h-full object-contain rounded-xl border border-white/2 border-r-2 border-r-yellow-main shadow-md transition-transform duration-500 hover:scale-105"
                           loading="lazy"
-                          onError={(e) => {
-                            (e.target as HTMLImageElement).src = "/assets/images/logo.png";
-                          }}
                         />
                       </div>
 
                       {/* Right: Info details */}
                       <div className="flex-1 flex flex-col justify-between min-w-0">
                         <div className="flex items-start justify-between gap-2">
-                          <div className="min-w-0 flex flex-col gap-1.5 text-[10px] sm:text-xs text-slate-600 dark:text-white font-semibold tracking-wide">
+                          <div className="min-w-0 flex flex-col gap-1.5 text-[11px] sm:text-xs text-slate-600 dark:text-white font-semibold tracking-wide">
                             <div className="flex items-center gap-1.5 truncate">
-                              <Calendar className="w-3.5 h-3.5 text-slate-400 dark:text-white/50 flex-shrink-0" />
+                              <Calendar className="w-3.5 h-3.5 text-yellow-main flex-shrink-0" />
                               <span>Starts: {startDateText} | {startTimeText}</span>
                             </div>
                             <div className="flex items-center gap-1.5 truncate">
-                              <Calendar className="w-3.5 h-3.5 text-slate-400 dark:text-white/50 flex-shrink-0" />
+                              <Calendar className="w-3.5 h-3.5 text-yellow-main flex-shrink-0" />
                               <span>Ends: {endDateText} | {endTimeText}</span>
                             </div>
                           </div>
@@ -337,29 +343,29 @@ const TournamentHistory: React.FC = () => {
                         <div className="flex items-center justify-between gap-2">
                           <div className="flex-1 grid grid-cols-2 gap-2">
                             <div className="flex flex-col">
-                              <span className="text-[10px] sm:text-[11px] font-black text-slate-400 dark:text-slate-200  leading-none mb-1">
+                              <span className="text-[11px] sm:text-[11px] font-black text-slate-400 dark:text-slate-200  leading-none mb-1">
                                 Rank
                               </span>
-                              <span className="text-sm sm:text-base font-bold text-[#14b8a6] dark:text-[#80c7c5] tracking-wide">
+                              <span className="text-sm sm:text-base font-bold text-[#14b8a6] dark:text-yellow-main tracking-wide">
                                 #{rank}
                               </span>
                             </div>
 
                             <div className="flex flex-col min-w-0">
-                              <span className="text-[10px] sm:text-[11px] font-bold text-slate-200 dark:text-slate-200  leading-none mb-1">
+                              <span className="text-[11px] sm:text-[11px] font-bold text-slate-200 dark:text-slate-200  leading-none mb-1">
                                 Reward
                               </span>
                               <div className="flex items-center gap-1">
                                 {String(item.fee_reward_type || item.reward_type) === "2" ? (
                                   <>
-                                    <Gift className="w-4 h-4 text-purple-500 flex-shrink-0" />
+                                    <Gift className="w-4 h-4 text-yellow-main flex-shrink-0" />
                                     <span className="text-xs sm:text-sm font-black text-purple-600 dark:text-purple-400 leading-none truncate">
                                       {prize} Voucher
                                     </span>
                                   </>
                                 ) : String(item.fee_reward_type || item.reward_type) === "3" ? (
                                   <>
-                                    <Award className="w-4 h-4 text-emerald-500 flex-shrink-0" />
+                                    <Award className="w-4 h-4 text-yellow-main flex-shrink-0" />
                                     <span className="text-xs sm:text-sm font-black text-emerald-600 dark:text-emerald-400 leading-none truncate">
                                       Rs {prize}
                                     </span>
@@ -387,10 +393,10 @@ const TournamentHistory: React.FC = () => {
                           </div>
 
                           <div className="flex flex-col">
-                            <span className="text-[10px] sm:text-[11px] font-black text-slate-400 dark:text-slate-200  leading-none mb-1">
+                            <span className="text-[11px] sm:text-[11px] font-black text-slate-400 dark:text-slate-200  leading-none mb-1">
                               Category
                             </span>
-                            <span className="text-sm sm:text-base font-bold text-[#14b8a6] dark:text-[#80c7c5] tracking-wide">
+                            <span className="text-sm sm:text-base font-bold text-[#14b8a6] dark:text-yellow-main tracking-wide">
                               Arcade
                             </span>
                           </div>
@@ -408,8 +414,8 @@ const TournamentHistory: React.FC = () => {
                 animate={{ opacity: 1, scale: 1 }}
                 className="mt-6 bg-black/[0.01] dark:bg-[#2B2B2B]/20 backdrop-blur-sm border border-slate-200/50 dark:border-white/[0.06] rounded-2xl p-8 text-center shadow-sm dark:shadow-none"
               >
-                <div className="w-14 h-14 bg-slate-100 dark:bg-black/35 backdrop-blur-md border border-slate-200 dark:border-white/20 text-slate-400 dark:text-slate-300 rounded-[14px] flex items-center justify-center mx-auto mb-4">
-                  <Gamepad2 className="w-7 h-7" />
+                <div className="w-14 h-14 bg-slate-100 dark:bg-black/35 backdrop-blur-md border border-slate-200 dark:border-white/20 text-yellow-main rounded-[14px] flex items-center justify-center mx-auto mb-4">
+                  <Gamepad2 className="w-7 h-7 text-yellow-main" />
                 </div>
                 <h3 className="text-[13px] font-black text-slate-800 dark:text-white uppercase tracking-[1px] mb-2">
                   {t.noTournaments || "No Tournament History"}

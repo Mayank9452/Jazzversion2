@@ -2,7 +2,7 @@ import React from "react";
 import { Autoplay, EffectCoverflow } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { useNavigate } from "react-router-dom";
-import { Target, Play } from "lucide-react";
+import { Target, Play, Phone } from "lucide-react";
 import { useTheme } from "next-themes";
 
 // Import Swiper styles for coverflow
@@ -22,36 +22,36 @@ const targetGames: TargetGame[] = [
         id: "1",
         name: "Zombie Uprising",
         image: "/assets/images/4.png",
-        target: "30,000",
-        prize: "10K Coins",
+        target: "30000",
+        prize: "100000 Coins",
     },
     {
         id: "2",
         name: "Alien Galaxy War",
         image: "/assets/images/6.png",
-        target: "25,000",
-        prize: "5K Coins",
+        target: "25000",
+        prize: "Rs 100000 Voucher",
     },
     {
         id: "3",
         name: "Tropical Slicer",
         image: "/assets/images/9.png",
-        target: "45,000",
-        prize: "15K Coins",
+        target: "45000",
+        prize: "Rs 100000 Topup",
     },
     {
         id: "4",
         name: "Box Tower",
         image: "/assets/images/box tower.jpeg",
-        target: "35,000",
-        prize: "8K Coins",
+        target: "35000",
+        prize: "100000 Coins",
     },
     {
         id: "5",
         name: "Knife Ninja",
         image: "/assets/images/knife ninja.jpeg",
-        target: "40,000",
-        prize: "12K Coins",
+        target: "40000",
+        prize: "Rs 100000 Voucher",
     },
 ];
 
@@ -65,7 +65,7 @@ export const TargetChallengeZone: React.FC = () => {
     };
 
     return (
-        <div className="mb-6 overflow-visible">
+        <div className="mb-6 overflow-visible mt-2">
             {/* Carousel Slider with 3D Coverflow Effect */}
             <div className="w-full overflow-visible">
                 <Swiper
@@ -73,14 +73,14 @@ export const TargetChallengeZone: React.FC = () => {
                     grabCursor={true}
                     centeredSlides={true}
                     loop={true}
-                    slidesPerView={2.2}
+                    slidesPerView={2.5}
                     spaceBetween={0}
                     autoplay={{
                         delay: 3000,
                         disableOnInteraction: false,
                     }}
                     coverflowEffect={{
-                        rotate: 20,       // Angle of rotation for side slides
+                        rotate: 0,       // Angle of rotation for side slides
                         stretch: -10,     // Overlap of cards (negative pulls them closer)
                         depth: 50,       // Z-depth pushing side cards back
                         modifier: 1,      // Effect multiplier
@@ -89,7 +89,8 @@ export const TargetChallengeZone: React.FC = () => {
                     modules={[Autoplay, EffectCoverflow]}
                     className="w-full flex justify-center items-center overflow-visible"
                 >
-                    {targetGames.map((game) => {
+                    {targetGames.map((game, index) => {
+                        const rewardType = index % 3; // 0 = Coins, 1 = Voucher, 2 = Topup
                         return (
                             <SwiperSlide
                                 key={game.id}
@@ -100,7 +101,7 @@ export const TargetChallengeZone: React.FC = () => {
                                 {({ isActive }) => (
                                     <div
                                         className={`w-full flex flex-col transition-all duration-500 ease-out ${isActive
-                                            ? "opacity-100 scale-105"
+                                            ? "opacity-100 scale-110"
                                             : "opacity-90 scale-[1]"
                                             }`}
                                     >
@@ -136,6 +137,42 @@ export const TargetChallengeZone: React.FC = () => {
                                                 <Target className="h-4 w-4 text-white shrink-0" />
                                                 <span>Target: {game.target}</span>
                                             </div>
+                                        </div>
+
+                                        {/* Reward Row */}
+                                        <div className="flex justify-center items-center px-2 py-1.5 mt-1 bg-slate-100/80 dark:bg-white/[0.03] border border-slate-200/60 dark:border-white/[0.04] rounded-xl whitespace-nowrap min-h-[36px]">
+                                            {rewardType === 0 && (
+                                                <div className="font-extrabold flex items-center gap-0.5 text-sm sm:text-xs">
+                                                    <img
+                                                        src="/assets/images/img/gold-coin.png"
+                                                        alt="coin"
+                                                        className="w-5 h-5 object-contain"
+                                                    />
+                                                    <span className="tracking-wide text-slate-800 dark:text-brand-yellow-100 font-bold">
+                                                        {game.prize}
+                                                    </span>
+                                                </div>
+                                            )}
+                                            {rewardType === 1 && (
+                                                <div className="font-extrabold flex items-center gap-0.5 text-xs sm:text-[10px]">
+                                                    <img
+                                                        src="/assets/images/giftkarte.webp"
+                                                        alt="voucher"
+                                                        className="w-6 h-6 object-contain"
+                                                    />
+                                                    <span className="tracking-wide text-slate-800 dark:text-brand-yellow-100 font-bold">
+                                                        {game.prize}
+                                                    </span>
+                                                </div>
+                                            )}
+                                            {rewardType === 2 && (
+                                                <div className="font-extrabold flex items-center gap-1 text-xs sm:text-[10px]">
+                                                    <Phone className="h-3.5 w-3.5 text-brand-gold-100 dark:text-brand-yellow-100 shrink-0" />
+                                                    <span className="tracking-wide text-slate-800 dark:text-brand-yellow-100 font-bold">
+                                                        {game.prize}
+                                                    </span>
+                                                </div>
+                                            )}
                                         </div>
                                     </div>
                                 )}
