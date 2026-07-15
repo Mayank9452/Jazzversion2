@@ -30,7 +30,7 @@ import DailyTournamentNewTesting6 from "./DailyTournamentNewTesting6";
 import DailyTournamentNewTesting7 from "./DailyTournamentNewTesting7";
 import DailyTournamentMixedTesting from "./DailyTournamentMixedTesting";
 import DailyTournamentMixedTesting2 from "./DailyTournamentMixedTesting2";
-import { TopBarUpdated } from "@/components/TopbarUpdated";
+import { TopBarUpdated } from "@/components/TopBarUpdated";
 import PopupBannerUpdated from "@/components/PopupBannerUpdated";
 
 /* ─── Section Header ─────────────────────────────────────────────────────── */

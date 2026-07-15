@@ -13,7 +13,7 @@ import { getProfileInfo, unsubscribeUser } from "@/features/bidProfile/profileSl
 import { updateProfileImageThunk } from "@/features/bidProfile/updateProfileSlice";
 import WaitLoader from "./Loader";
 import { HexagonalAvatarFrame } from "./HexagonalAvatarFrame";
-import { TopBarUpdated } from "./TopbarUpdated";
+import { TopBarUpdated } from "./TopBarUpdated";
 import PopupLayoutChecker from "./PopupLayoutChecker";
 import PopupBannerUnsubscribe from "./PopupBannerUnsubscribe";
 
