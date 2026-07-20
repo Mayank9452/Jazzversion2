@@ -14,7 +14,9 @@ import {
     X,
     Play,
     Gamepad2,
-    Users
+    Users,
+    Award,
+    PhoneCall
 } from "lucide-react";
 import { useTheme } from "next-themes";
 import { fetchLiveTournament, playLiveTournament } from "@/apiServices/igplApi";
@@ -27,6 +29,19 @@ const HeroTournamentPageStatic: React.FC = () => {
     const location = useLocation();
     const navigate = useNavigate();
     const { theme } = useTheme();
+
+    const [isDarkTheme, setIsDarkTheme] = useState(true);
+
+    useEffect(() => {
+        const isDark = document.documentElement.classList.contains("dark");
+        setIsDarkTheme(isDark);
+
+        const observer = new MutationObserver(() => {
+            setIsDarkTheme(document.documentElement.classList.contains("dark"));
+        });
+        observer.observe(document.documentElement, { attributes: true, attributeFilter: ["class"] });
+        return () => observer.disconnect();
+    }, []);
 
     // Retrieve tournament ID from router state
     const stateData = location.state as { tournament_id: any; fromMixedTesting2?: boolean } | null;
@@ -83,11 +98,11 @@ const HeroTournamentPageStatic: React.FC = () => {
                     game_screen: "1" // Portrait
                 },
                 rewardRanksList: [
-                    { rank: "1", prize: "5,000" },
-                    { rank: "2", prize: "2,500" },
-                    { rank: "3", prize: "1,200" },
-                    { rank: "4 - 10", prize: "500" },
-                    { rank: "11 - 50", prize: "100" }
+                    { rank: "1", prize: "5,000", type: "topup" },
+                    { rank: "2", prize: "2,500", type: "voucher" },
+                    { rank: "3", prize: "1,200", type: "coins" },
+                    { rank: "4 - 10", prize: "500", type: "coins" },
+                    { rank: "11 - 50", prize: "100", type: "coins" }
                 ]
             };
             setLiveTournamentData(mockData);
@@ -211,9 +226,9 @@ const HeroTournamentPageStatic: React.FC = () => {
     return (
         <>
             {/* <TopBar /> */}
-            <div className="bg-[#0c0f1d] text-foreground transition-colors duration-300 max-w-md mx-auto relative shadow-2xl overflow-y-auto overflow-x-hidden">
+            <div className={`transition-colors duration-300 max-w-[480px] mx-auto min-h-screen w-full relative shadow-2xl overflow-y-auto overflow-x-hidden ${isDarkTheme ? "bg-[#191919] text-white" : "bg-[#f8f9fa] text-slate-800"}`}>
                 {/* Full Screen Background Ambient Blur */}
-                {!loading && (
+                {!loading && isDarkTheme && (
                     <div className="absolute inset-0 z-0 pointer-events-none">
                         <img
                             src="/assets/images/02.png"
@@ -229,7 +244,7 @@ const HeroTournamentPageStatic: React.FC = () => {
                         <motion.div
                             initial={{ opacity: 1 }}
                             exit={{ opacity: 0 }}
-                            className="absolute inset-0 bg-[#0c0f1d] z-50 flex flex-col p-4 space-y-6"
+                            className={`absolute inset-0 z-50 flex flex-col p-4 space-y-6 ${isDarkTheme ? "bg-[#191919]" : "bg-[#f8f9fa]"}`}
                         >
                             {/* Header placeholder */}
                             <div className="relative aspect-[16/10] bg-muted/40 rounded-2xl animate-pulse flex items-center justify-between p-4">
@@ -255,7 +270,7 @@ const HeroTournamentPageStatic: React.FC = () => {
                             {/* Leaderboard panel placeholder */}
                             <div className="h-16 bg-muted/25 rounded-2xl" />
                             {/* Table placeholder */}
-                            <div className="h-40 bg-[#12162a]/20 rounded-2xl" />
+                            <div className="h-40 bg-muted/20 rounded-2xl" />
                         </motion.div>
                     )}
                 </AnimatePresence>
@@ -269,7 +284,10 @@ const HeroTournamentPageStatic: React.FC = () => {
                         className="w-full flex flex-col relative z-10"
                     >
                         {/* 1. Complete Image Banner Header - Full Width, Native Aspect ratio */}
-                        <div className="relative w-full aspect-[285/380] bg-slate-950 flex items-center justify-center border-b border-white/10">
+                        <div
+                            className={`relative w-full aspect-[285/380] flex items-center justify-center border-b ${isDarkTheme ? "bg-[#191919] border-white/10" : "bg-[#fffbeb] border-slate-100"}`}
+                            style={{ background: isDarkTheme ? "" : "radial-gradient(circle, rgba(254,203,19,0.15) 0%, rgba(255,255,255,1) 70%)" }}
+                        >
                             {/* Complete Image */}
                             <img
                                 src="/assets/images/02.png"
@@ -280,12 +298,12 @@ const HeroTournamentPageStatic: React.FC = () => {
                             <div className="absolute inset-x-0 top-0 p-3 flex items-center justify-between z-20 w-full">
                                 <button
                                     onClick={handleClickBack}
-                                    className="w-10 h-10 rounded-xl bg-black/60 backdrop-blur-md border border-white/10 hover:bg-black/75 active:scale-95 transition-all flex items-center justify-center text-white shadow-md pointer-events-auto cursor-pointer shrink-0"
+                                    className={`w-10 h-10 rounded-xl flex items-center justify-center shadow-md active:scale-95 transition-all pointer-events-auto cursor-pointer shrink-0 ${isDarkTheme ? "bg-black/60 backdrop-blur-md border border-white/10 text-white hover:bg-black/75" : "bg-white border border-slate-200 text-slate-700 hover:bg-slate-50"}`}
                                 >
                                     <ArrowLeft className="w-5 h-5" />
                                 </button>
 
-                                <h2 className="text-base font-extrabold text-white drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)] text-center px-2 truncate max-w-[200px] select-none">
+                                <h2 className={`text-base font-black text-center px-2 truncate max-w-[200px] select-none ${isDarkTheme ? "text-white drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]" : "text-slate-800"}`}>
                                     {info?.game_name || "Pistol Bottle Battle"}
                                 </h2>
 
@@ -295,16 +313,28 @@ const HeroTournamentPageStatic: React.FC = () => {
 
                         {/* Glassmorphic Content overlapping the bottom 20% of the image header container */}
                         <div className="px-2 -mt-[58%] relative z-20 space-y-5">
-                            <div className="rounded-3xl bg-slate-900/60 dark:bg-black/60 backdrop-blur-[2px] border border-white/20 shadow-2xl p-5 space-y-5 relative">
+                            <div className={`rounded-3xl border shadow-xl p-5 space-y-5 relative ${isDarkTheme ? "bg-[#252525]/90 border-white/[0.08] text-white" : "bg-white border-slate-100 text-slate-800"}`}>
                                 {/* Play Button floating on top right, overlapping bottom of image banner header */}
-                                <button
+                                <motion.button
                                     onClick={handlePlayLiveTournament}
-                                    className="absolute -top-6 right-6 h-10 px-4 rounded-[2rem] bg-gradient-to-r from-[#ffd43f] to-[#ffb800] text-[#0b2f5f] hover:brightness-110 active:scale-95 transition-all flex items-center justify-center gap-1 z-30 cursor-pointer border-none font-black text-base"
-                                    style={{ animationDuration: "3s" }}
+                                    className={`absolute -top-6 right-6 h-10 px-5 rounded-full bg-gradient-to-r from-[#ffca20] to-[#dfa208] text-[#191919] hover:brightness-110 active:scale-95 transition-all flex items-center justify-center gap-1.5 z-30 cursor-pointer border font-black text-sm shadow-md ${isDarkTheme ? "border-white/20" : "border-yellow-main/20"}`}
+                                    animate={{
+                                        scale: [0.95, 1.05, 0.95]
+                                    }}
+                                    transition={{
+                                        duration: 1.6,
+                                        repeat: Infinity,
+                                        ease: "easeInOut"
+                                    }}
+                                // style={{
+                                //     transformPerspective: 1000,
+                                //     backfaceVisibility: "hidden",
+                                //     WebkitFontSmoothing: "subpixel-antialiased"
+                                // }}
                                 >
                                     <Play className="w-4 h-4 fill-current stroke-[2.5]" />
                                     <span>Play</span>
-                                </button>
+                                </motion.button>
 
                                 {/* Title (Centered) */}
                                 {/* <div className="flex justify-center items-center border-b border-white/5 pb-3">
@@ -314,18 +344,18 @@ const HeroTournamentPageStatic: React.FC = () => {
                                 </div> */}
 
                                 {/* Stats Grid row (Prize Pool, Leaderboard, Players Joined) */}
-                                <div className="grid grid-cols-3 gap-1 bg-[#12162a]/65 backdrop-blur-md border border-white/5 rounded-2xl p-2 text-center">
+                                <div className={`grid grid-cols-3 gap-1 rounded-2xl p-2 text-center border ${isDarkTheme ? "bg-[#1f1f1f] border-white/[0.05]" : "bg-[#f8f9fa] border-slate-200/50"}`}>
                                     {/* Prize Pool Column */}
                                     <div className="flex flex-col items-center justify-center">
-                                        <Trophy className="w-4 h-4 text-[#ffc200] mb-1" />
-                                        <span className="text-sm font-black text-[#ffc200]">10000</span>
-                                        <span className="text-xs text-white/50 font-bold mt-0.5">Prize Pool</span>
+                                        <Trophy className="w-4 h-4 text-[#dfa208] mb-1" />
+                                        <span className={`text-sm font-black ${isDarkTheme ? "text-[#ffca20]" : "text-[#dfa208]"}`}>10,000</span>
+                                        <span className={`text-[10px] font-bold mt-0.5 ${isDarkTheme ? "text-white/50" : "text-slate-500"}`}>Prize Pool</span>
                                     </div>
                                     {/* Leaderboard Column */}
                                     <button
                                         onClick={() => {
                                             if (fromMixedTesting2) {
-                                                navigate("/leaderboardPageStatic");
+                                                navigate("/leaderboardStatic");
                                             } else {
                                                 if (joined) {
                                                     navigateToLeaderBoard();
@@ -334,46 +364,42 @@ const HeroTournamentPageStatic: React.FC = () => {
                                                 }
                                             }
                                         }}
-                                        className="flex flex-col items-center justify-center border-x border-white/5 w-full hover:bg-white/5 active:scale-95 transition-all py-1 border-none bg-transparent cursor-pointer"
+                                        className={`flex flex-col items-center justify-center border-x w-full active:scale-95 transition-all py-1 border-none bg-transparent cursor-pointer ${isDarkTheme ? "border-white/5 hover:bg-white/5" : "border-slate-200/50 hover:bg-slate-200/50"}`}
                                     >
-                                        <img src="/assets/images/img/trophy.png" className="w-9 h-9 object-contain mb-1" alt="Leaderboard" />
-                                        <span className="text-xs text-white/50 font-bold mt-0.5">Leaderboard</span>
+                                        <img src="/assets/images/img/trophy.png" className="w-8 h-8 object-contain mb-1" alt="Leaderboard" />
+                                        <span className={`text-[10px] font-bold mt-0.5 ${isDarkTheme ? "text-white/50" : "text-slate-500"}`}>Leaderboard</span>
                                     </button>
                                     {/* Players Joined Column */}
                                     <div className="flex flex-col items-center justify-center">
-                                        <Users className="w-4 h-4 text-[#ffc200] mb-1" />
-                                        <span className="text-sm font-black text-white">200</span>
-                                        <span className="text-xs text-white/50 font-bold mt-0.5">Players Joined</span>
+                                        <Users className={`w-4 h-4 mb-1 ${isDarkTheme ? "text-white" : "text-slate-700"}`} />
+                                        <span className={`text-sm font-black ${isDarkTheme ? "text-white" : "text-slate-800"}`}>200</span>
+                                        <span className={`text-[10px] font-bold mt-0.5 ${isDarkTheme ? "text-white/50" : "text-slate-500"}`}>Players Joined</span>
                                     </div>
                                 </div>
 
                                 {/* Full-width Tournament Timer Badge */}
-                                <div className="bg-[#12162a]/65 backdrop-blur-md border border-white/5 rounded-2xl p-2.5 flex items-center justify-between px-3">
-                                    <div className="flex items-center gap-1 text-xs text-white/80 shrink-0">
-                                        <Clock className="w-3.5 h-3.5 text-[#ffc200]" />
-                                        <span className="font-bold">Ends In</span>
+                                <div className={`border rounded-2xl p-3.5 flex flex-col items-center justify-center gap-2.5 ${isDarkTheme ? "bg-[#1f1f1f] border-white/[0.05]" : "bg-[#f8f9fa] border-slate-200/50"}`}>
+                                    <div className="flex items-center gap-1 text-sm font-bold">
+                                        <Clock className="w-4 h-4 text-[#dfa208]" />
+                                        <span className={isDarkTheme ? "text-white/80" : "text-slate-700"}>Ends In</span>
                                     </div>
-                                    <div className="flex items-center gap-0.5 text-base font-black text-white font-mono">
-                                        <span className="bg-white/5 px-2 py-2 rounded border border-white/5">{timeLeft.days}d</span>
-                                        <span className="text-white/40 mx-0.5">:</span>
-                                        <span className="bg-white/5 px-2 py-2 rounded border border-white/5">{timeLeft.hours}h</span>
-                                        <span className="text-white/40 mx-0.5">:</span>
-                                        <span className="bg-white/5 px-2 py-2 rounded border border-white/5">{timeLeft.minutes}m</span>
-                                        <span className="text-white/40 mx-0.5">:</span>
-                                        <span className="bg-white/5 px-2 py-2 rounded border border-white/5 text-[#ffc200]">{timeLeft.seconds}s</span>
+                                    <div className="flex items-center gap-0.5 text-base font-black font-mono">
+                                        <span className={`px-2.5 py-1.5 rounded border ${isDarkTheme ? "bg-white/5 border-white/5 text-white" : "bg-white border-slate-200/80 text-slate-800"}`}>{timeLeft.days}d</span>
+                                        <span className={isDarkTheme ? "text-white/40 mx-0.5" : "text-slate-400 mx-0.5"}>:</span>
+                                        <span className={`px-2.5 py-1.5 rounded border ${isDarkTheme ? "bg-white/5 border-white/5 text-white" : "bg-white border-slate-200/80 text-slate-800"}`}>{timeLeft.hours}h</span>
+                                        <span className={isDarkTheme ? "text-white/40 mx-0.5" : "text-slate-400 mx-0.5"}>:</span>
+                                        <span className={`px-2.5 py-1.5 rounded border ${isDarkTheme ? "bg-white/5 border-white/5 text-white" : "bg-white border-slate-200/80 text-slate-800"}`}>{timeLeft.minutes}m</span>
+                                        <span className={isDarkTheme ? "text-white/40 mx-0.5" : "text-slate-400 mx-0.5"}>:</span>
+                                        <span className={`animate-pulse px-2.5 py-1.5 rounded border-2 ${isDarkTheme ? "bg-white/5 border-yellow-main/50 text-[#ffca20]" : "bg-[#fff9e6] border-[#dfa208]/30 text-[#dfa208]"}`}>{timeLeft.seconds}s</span>
                                     </div>
                                 </div>
 
                                 {/* About Tournament Description & How to Play */}
                                 <div className="space-y-1.5">
-                                    <h3 className="text-xs font-black uppercase text-[#ffc200] tracking-wider">How to Play</h3>
-                                    <div className="text-xs text-white/80 leading-relaxed font-medium bg-[#12162a]/40 border border-white/5 rounded-2xl p-3.5 space-y-3">
-                                        {/* <p>
-                                            {(info?.game_description !== "" && formatGameHelp(info?.game_description)) || "An arcade shooting game where you target and break bottles. Test your accuracy!"}
-                                        </p> */}
+                                    <h3 className={`text-xs font-black uppercase tracking-wider ${isDarkTheme ? "text-[#ffca20]" : "text-[#dfa208]"}`}>How to Play</h3>
+                                    <div className={`text-xs leading-relaxed font-medium border rounded-2xl p-3.5 ${isDarkTheme ? "bg-[#1f1f1f]/50 border-white/[0.05] text-white/70" : "bg-white border-slate-100 text-slate-600 shadow-sm"}`}>
                                         <div className="">
-                                            {/* <span className="text-[10px] font-black uppercase tracking-wider text-[#ffc200] block mb-1">Gameplay Instructions</span> */}
-                                            <p className="text-white/70 text-xs">
+                                            <p className={isDarkTheme ? "text-white/70 text-xs" : "text-slate-600 text-xs"}>
                                                 {(info?.game_help !== "" && formatGameHelp(info?.game_help)) || "Tap to aim at the target bottles. Release to shoot. Hit golden bottles to get double points. Avoid shooting the bombs! You have 60 seconds to score as high as possible."}
                                             </p>
                                         </div>
@@ -382,46 +408,28 @@ const HeroTournamentPageStatic: React.FC = () => {
 
                                 {/* Standings rankings card */}
                                 <div className="space-y-1.5">
-                                    <h3 className="text-xs font-black uppercase text-[#ffc200] tracking-wider">Your Rank</h3>
-                                    <div className="bg-[#12162a]/55 border border-white/5 rounded-2xl p-3 flex items-center justify-between">
+                                    <h3 className={`text-xs font-black uppercase tracking-wider ${isDarkTheme ? "text-[#ffca20]" : "text-[#dfa208]"}`}>Your Rank</h3>
+                                    <div className={`border rounded-2xl p-3 flex items-center justify-between ${isDarkTheme ? "bg-[#1f1f1f]/50 border-white/[0.05]" : "bg-white border-slate-100 shadow-sm"}`}>
                                         <div className="flex items-center gap-3">
                                             <div className="w-10 h-10 rounded-xl flex items-center justify-center">
-                                                {/* <Trophy className="w-5 h-5 text-[#ffc200]" /> */}
                                                 <img src="/assets/images/img/trophy.png" className="w-10 h-10 object-contain" alt="Leaderboard" />
                                             </div>
                                             <div className="flex flex-col">
-                                                <span className="text-[10px] text-white/50 font-bold uppercase tracking-wider">Your Position</span>
-                                                <span className="text-xs font-black text-white mt-0.5">
+                                                <span className={`text-[10px] font-bold uppercase tracking-wider ${isDarkTheme ? "text-white/50" : "text-slate-400"}`}>Your Position</span>
+                                                <span className={`text-xs font-black mt-0.5 ${isDarkTheme ? "text-white" : "text-slate-800"}`}>
                                                     {fromMixedTesting2 ? "4" : (joined ? `Rank #${liveTournamentData?.myRank || 4}` : "Not Joined")}
                                                 </span>
                                             </div>
                                         </div>
-                                        {/* {joined ? (
-                                            <button
-                                                onClick={navigateToLeaderBoard}
-                                                className="px-3 py-2 bg-white/10 hover:bg-white/20 rounded-xl text-[9px] font-bold text-[#ffc200] uppercase tracking-wider flex items-center gap-0.5 transition-colors cursor-pointer border-none"
-                                            >
-                                                Leaderboard
-                                                <ChevronRight className="w-3.5 h-3.5" />
-                                            </button>
-                                        ) : (
-                                            <button
-                                                onClick={() => setIsLeaderboardPopupOpen(true)}
-                                                className="w-8 h-8 rounded-lg bg-white/5 hover:bg-white/10 flex items-center justify-center border border-white/10 active:scale-95 transition-all cursor-pointer"
-                                                title="View Leaderboard"
-                                            >
-                                                <img src="/assets/images/img/trophy.png" className="w-5 h-5 object-contain" alt="Leaderboard" />
-                                            </button>
-                                        )} */}
                                         <button
                                             onClick={() => {
                                                 if (fromMixedTesting2) {
-                                                    navigate("/leaderboardPageStatic");
+                                                    navigate("/leaderboardStatic");
                                                 } else {
                                                     setIsLeaderboardPopupOpen(true);
                                                 }
                                             }}
-                                            className="px-3 py-2 bg-white/10 hover:bg-white/20 rounded-xl text-xs font-bold text-[#ffc200] tracking-[0.5px] flex items-center gap-0.5 transition-colors cursor-pointer border-none"
+                                            className={`px-4 py-2 border rounded-xl text-xs font-black tracking-[0.5px] flex items-center gap-1.5 transition-all cursor-pointer ${isDarkTheme ? "bg-white/10 border-transparent hover:bg-white/20 text-[#ffca20]" : "bg-[#fffbeb] border-[#dfa208]/30 hover:bg-[#fff7d6] text-[#dfa208]"}`}
                                         >
                                             Leaderboard
                                             {fromMixedTesting2 ? (
@@ -436,24 +444,26 @@ const HeroTournamentPageStatic: React.FC = () => {
                                 {/* Rewards Rank payouts */}
                                 {liveTournamentData?.rewardRanksList?.length > 0 && (
                                     <div className="space-y-1.5">
-                                        <h3 className="text-xs font-black uppercase text-[#ffc200] tracking-wider">Reward Distribution</h3>
-                                        <div className="border border-white/5 rounded-2xl overflow-hidden bg-[#12162a]/45 divide-y divide-white/5">
+                                        <h3 className={`text-xs font-black uppercase tracking-wider ${isDarkTheme ? "text-[#ffca20]" : "text-[#dfa208]"}`}>Rewards</h3>
+                                        <div className={`border rounded-2xl overflow-hidden ${isDarkTheme ? "bg-[#1f1f1f]/45 border-white/[0.05] divide-y divide-white/5" : "bg-white border-slate-100 divide-y divide-slate-100 shadow-sm"}`}>
                                             {liveTournamentData.rewardRanksList.map((item: any, idx: number) => {
                                                 const isTopThree = idx < 3;
                                                 const rankTextClass =
-                                                    idx === 0 ? "text-[#ffc200] font-black" :
-                                                        idx === 1 ? "text-slate-300 font-black" :
-                                                            idx === 2 ? "text-amber-600 font-black" : "text-white/80 font-semibold";
+                                                    idx === 0 ? (isDarkTheme ? "text-[#ffca20] font-black" : "text-[#dfa208] font-black") :
+                                                        idx === 1 ? (isDarkTheme ? "text-slate-300 font-black" : "text-slate-500 font-black") :
+                                                            idx === 2 ? (isDarkTheme ? "text-amber-600 font-black" : "text-amber-700 font-black") :
+                                                                (isDarkTheme ? "text-white/80 font-semibold" : "text-slate-700 font-semibold");
 
                                                 return (
                                                     <div
                                                         key={idx}
-                                                        className="px-4 py-2.5 flex items-center justify-between hover:bg-white/5 transition-colors duration-150"
+                                                        className={`px-4 py-2.5 flex items-center justify-between transition-colors duration-150 ${isDarkTheme ? "hover:bg-white/5" : "hover:bg-slate-50"}`}
                                                     >
                                                         <div className="flex items-center gap-2">
                                                             {isTopThree && (
-                                                                <span className={`text-xs ${idx === 0 ? "text-[#ffc200]" :
-                                                                    idx === 1 ? "text-slate-300" : "text-amber-600"
+                                                                <span className={`text-xs ${idx === 0 ? (isDarkTheme ? "text-[#ffca20]" : "text-[#dfa208]") :
+                                                                    idx === 1 ? (isDarkTheme ? "text-slate-300" : "text-slate-400") :
+                                                                        (isDarkTheme ? "text-amber-600" : "text-amber-700")
                                                                     }`}>
                                                                     ●
                                                                 </span>
@@ -464,16 +474,45 @@ const HeroTournamentPageStatic: React.FC = () => {
                                                         </div>
 
                                                         <div className="flex items-center gap-1.5">
-                                                            <span className="text-xs font-extrabold text-white">
-                                                                {item?.prize}
-                                                            </span>
-                                                            <img
-                                                                src="/assets/images/img/gold-coin.png"
-                                                                width="14"
-                                                                height="14"
-                                                                alt="Coin"
-                                                                className="object-contain"
-                                                            />
+                                                            {item?.type === "topup" ? (
+                                                                <>
+
+                                                                    <PhoneCall className="w-3.5 h-3.5 text-yellow-main flex-shrink-0" />
+                                                                    <span className={`text-xs font-extrabold ${isDarkTheme ? "text-white" : "text-slate-800"}`}>
+                                                                        Rs {item?.prize}
+                                                                    </span>
+                                                                </>
+                                                            ) : item?.type === "voucher" ? (
+                                                                <>
+
+                                                                    <img
+                                                                        src="/assets/images/giftkarte.png"
+                                                                        width="22"
+                                                                        height="22"
+                                                                        alt="Voucher"
+                                                                        className="object-contain"
+                                                                    />
+
+                                                                    <span className={`text-xs font-extrabold ${isDarkTheme ? "text-white" : "text-slate-800"}`}>
+                                                                        {item?.prize}
+                                                                    </span>
+                                                                </>
+                                                            ) : (
+                                                                <>
+
+                                                                    <img
+                                                                        src="/assets/images/img/gold-coin.png"
+                                                                        width="14"
+                                                                        height="14"
+                                                                        alt="Coin"
+                                                                        className="object-contain"
+                                                                    />
+
+                                                                    <span className={`text-xs font-extrabold ${isDarkTheme ? "text-white" : "text-slate-800"}`}>
+                                                                        {item?.prize}
+                                                                    </span>
+                                                                </>
+                                                            )}
                                                         </div>
                                                     </div>
                                                 );

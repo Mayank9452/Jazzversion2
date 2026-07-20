@@ -74,59 +74,80 @@ export function TopBarUpdated() {
                 <div
                     className="bg-brand-black-100 border-b border-white/[0.08] h-[70px] flex items-center justify-between px-4 w-full transition-colors duration-300 relative z-10"
                 >
-                    {/* Hamburger Button */}
-                    <button
-                        onClick={() => setSidebarOpen(true)}
-                        className="w-9 h-9 rounded-xl flex items-center justify-center border border-white/10 bg-white/[0.03] hover:bg-white/5 active:scale-95 transition-all text-white shrink-0"
-                        title="Open Navigation"
-                    >
-                        <Menu className="w-5 h-5" />
-                    </button>
+                    {/* Left Section: Navigation Toggler & Coins Chip */}
+                    <div className="flex items-center gap-2 relative z-20">
+                        {/* Hamburger Button */}
+                        <button
+                            onClick={() => setSidebarOpen(true)}
+                            className="w-9 h-9 rounded-xl flex items-center justify-center border border-white/10 bg-white/[0.03] hover:bg-white/5 active:scale-95 transition-all text-white shrink-0"
+                            title="Open Navigation"
+                        >
+                            <Menu className="w-5 h-5" />
+                        </button>
 
-                    {/* Logo */}
-                    <Link to="/" className="flex items-center">
-                        <img
-                            src="/assets/images/img/gamenow.png"
-                            alt="GameNow Logo"
-                            className="w-[80px] object-contain transition-transform duration-300 hover:scale-105"
-                        />
-                    </Link>
-
-                    {/* Reward Coins Chip */}
-                    <div
-                        onClick={handleRedeem}
-                        className="flex items-center gap-2 h-12 px-3 rounded-xl border border-brand-gold-100/30 bg-brand-gold-100/5 hover:bg-brand-gold-100/10 transition-all shadow-inner cursor-pointer shrink-0"
-                        title="Redeem Coins"
-                    >
-                        <img src="/assets/images/img/gold-coin.png" className="w-6 h-6 object-contain animate-pulse" alt="Reward Coins" />
-                        <div className="flex flex-col text-start justify-center">
-                            <span className="text-white text-xs font-black leading-none">250000</span>
-                            <span className="text-[10px] font-black uppercase tracking-wider text-brand-gold-200 leading-none mt-0.5">Coins</span>
+                        {/* Reward Coins Chip (Left Side, Smaller Layout) */}
+                        <div
+                            onClick={handleRedeem}
+                            className="flex flex-col items-center justify-center h-12 px-3.5 rounded-lg border border-brand-gold-100/30 bg-brand-gold-100/5 hover:bg-brand-gold-100/10 transition-all shadow-inner cursor-pointer shrink-0"
+                            title="Redeem Coins"
+                        >
+                            {/* Top Row: Coin Icon and Coins Text */}
+                            <div className="flex items-center gap-1">
+                                <img src="/assets/images/img/gold-coin.png" className="w-3.5 h-3.5 object-contain animate-pulse" alt="Reward Coins" />
+                                <span className="text-[8px] font-black uppercase tracking-wider text-brand-gold-200 leading-none">Coins</span>
+                            </div>
+                            {/* Bottom Row: Value */}
+                            <span className="text-white text-[11px] font-black leading-none mt-1">
+                                {user_reward_coins == 0 ? 250000 : user_reward_coins}
+                            </span>
                         </div>
                     </div>
 
-                    {/* Theme Toggler */}
-                    <button
-                        onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-                        className="w-9 h-9 rounded-xl flex items-center justify-center border border-white/10 bg-white/[0.03] hover:bg-white/5 active:scale-95 transition-all text-white shrink-0"
-                        title={theme === "dark" ? "Switch to Light Mode" : "Switch to Dark Mode"}
-                    >
-                        {mounted && theme === "dark" ? (
-                            <Sun className="h-4.5 w-4.5 text-brand-yellow-100 drop-shadow-[0_0_8px_rgba(255,202,32,0.5)]" />
-                        ) : (
-                            <Moon className="h-4.5 w-4.5 text-white" />
-                        )}
-                    </button>
+                    {/* Center Section: Absolutely Centered Logo */}
+                    <div className="absolute left-1/2 -translate-x-1/2 z-10 flex items-center justify-center">
+                        <Link to="/" className="flex items-center">
+                            <img
+                                src="/assets/images/img/gamenow.png"
+                                alt="GameNow Logo"
+                                className="w-[75px] object-contain transition-transform duration-300 hover:scale-105"
+                            />
+                        </Link>
+                    </div>
 
-                    {/* Notification Bell */}
-                    <button
-                        onClick={() => navigate("/notification")}
-                        className="relative w-9 h-9 rounded-xl flex items-center justify-center border border-white/10 bg-white/[0.03] hover:bg-white/5 active:scale-95 transition-all text-white shrink-0"
-                        title="Notifications"
-                    >
-                        <Bell className="h-4.5 w-4.5" />
-                        <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-brand-yellow-100 rounded-full border border-brand-black-100 shadow-md animate-pulse" />
-                    </button>
+                    {/* Right Section: Toggles & Actions */}
+                    <div className="flex items-center gap-2 relative z-20">
+                        {/* Profile Image Avatar */}
+                        <button
+                            onClick={() => navigate("/settings")}
+                            className="w-9 h-9 rounded-full overflow-hidden border border-white/10 bg-white/[0.03] hover:bg-white/5 active:scale-95 transition-all shrink-0"
+                            title="My Account"
+                        >
+                            <img src={`/assets/users/${avatar}`} alt="Avatar" className="w-full h-full object-cover" />
+                        </button>
+
+                        {/* Theme Toggler */}
+                        <button
+                            onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+                            className="w-9 h-9 rounded-xl flex items-center justify-center border border-white/10 bg-white/[0.03] hover:bg-white/5 active:scale-95 transition-all text-white shrink-0"
+                            title={theme === "dark" ? "Switch to Light Mode" : "Switch to Dark Mode"}
+                        >
+                            {mounted && theme === "dark" ? (
+                                <Sun className="h-4.5 w-4.5 text-brand-yellow-100 drop-shadow-[0_0_8px_rgba(255,202,32,0.5)]" />
+                            ) : (
+                                <Moon className="h-4.5 w-4.5 text-white" />
+                            )}
+                        </button>
+
+                        {/* Notification Bell */}
+                        <button
+                            onClick={() => navigate("/notification")}
+                            className="relative w-9 h-9 rounded-xl flex items-center justify-center border border-white/10 bg-white/[0.03] hover:bg-white/5 active:scale-95 transition-all text-white shrink-0"
+                            title="Notifications"
+                        >
+                            <Bell className="h-4.5 w-4.5" />
+                            <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-brand-yellow-100 rounded-full border border-brand-black-100 shadow-md animate-pulse" />
+                        </button>
+                    </div>
                 </div>
             </div>
 
@@ -203,12 +224,23 @@ export function TopBarUpdated() {
 
                             <li>
                                 <Link
-                                    to="/"
+                                    to="/spinandwin"
                                     onClick={() => setSidebarOpen(false)}
                                     className="flex items-center gap-3 px-3 py-2.5 rounded-xl text-left text-white/80 hover:text-white hover:bg-white/5 transition-all font-semibold text-sm"
                                 >
                                     <RotateCw className="h-4.5 w-4.5 text-brand-gold-100 dark:text-brand-yellow-100" />
                                     Spin & Win
+                                </Link>
+                            </li>
+
+                            <li>
+                                <Link
+                                    to="/games"
+                                    onClick={() => setSidebarOpen(false)}
+                                    className="flex items-center gap-3 px-3 py-2.5 rounded-xl text-left text-white/80 hover:text-white hover:bg-white/5 transition-all font-semibold text-sm"
+                                >
+                                    <Gamepad2 className="h-4.5 w-4.5 text-brand-gold-100 dark:text-brand-yellow-100" />
+                                    Play More Games
                                 </Link>
                             </li>
 

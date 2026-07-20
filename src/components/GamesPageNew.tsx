@@ -1,25 +1,26 @@
 import React, { useEffect, useState, useMemo, useCallback } from "react";
 import {
   Gamepad2, Zap, Play, Compass, Flame, Map,
-  Puzzle, Flag, ChevronRight, Search, Bell, Trophy, Bolt
+  Puzzle, Flag, ChevronRight, ChevronLeft, Trophy, Bolt,
+  Star, Crown, Sparkles, TrendingUp, HelpCircle
 } from "lucide-react";
-import { TopBar } from "./TopBar";
 import { BottomNavBar } from "./BottomNavBar";
 import { useLanguage } from "./context/LanguageContext";
 import { useAppSelector } from "@/app/hooks";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useTheme } from "next-themes";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Autoplay, Pagination } from "swiper/modules";
+import { Autoplay } from "swiper/modules";
 import "swiper/css";
-import "swiper/css/pagination";
 import { fetchGamesPageCategories, playGameApi, randomGames } from "@/apiServices/igplApi";
 import { getSubscriptionUIState } from "@/utils/subscriptionUtils";
 import PopupBannerUnsubscribe from "./PopupBannerUnsubscribe";
 import LowBalancePopup from "./LowBalancePopup";
 import GameViewerNew from "./GameViewerNew";
 import WaitLoader from "./Loader";
+
+// ─── Play Store UI Constants (Locked to Brand Color Palette) ─────────────────
 
 const ICON_MAP: Record<string, React.ElementType> = {
   Action: Zap,
@@ -29,247 +30,290 @@ const ICON_MAP: Record<string, React.ElementType> = {
   "Sports & Racing": Flag,
 };
 
-const BANNERS = [
-  "https://jazzgplapi.gamenow.com.pk/uploads/webp/640X360/4.webp",
-  "https://jazzgplapi.gamenow.com.pk/uploads/webp/640X360/7.webp",
-  "https://jazzgplapi.gamenow.com.pk/uploads/webp/640X360/86.webp"
-];
+// Gradients restricted to brand black, gray, yellow, and gold colors only
+const GENRE_GRADIENTS: Record<string, string> = {
+  Action: "from-[#DFA208] to-[#FFCA20]", // Gold to Yellow
+  Adventure: "from-[#2B2B2B] to-[#DFA208]", // Dark Gray to Gold
+  Arcade: "from-[#3D3D3D] to-[#FFD34B]", // Medium Gray to Yellow
+  "Puzzle & Logic": "from-[#DFA208] to-[#2B2B2B]", // Gold to Dark Gray
+  "Sports & Racing": "from-[#FFCA20] to-[#E6B53A]", // Yellow to Mid Gold
+  Default: "from-[#2B2B2B] to-[#3D3D3D]", // Gray shades
+};
 
-// ─── Accent line ──────────────────────────────────────────────────────────────
-function AccentLine() {
+// Deterministic mock data generators for Google Play Store style info
+const getMockRating = (gameId: number) => {
+  const seed = (gameId * 7) % 10;
+  return (4.0 + seed * 0.1).toFixed(1);
+};
+
+const getMockSize = (gameId: number) => {
+  const seed = (gameId * 13) % 80;
+  return `${seed + 15} MB`;
+};
+
+const getMockDownloads = (gameId: number) => {
+  const seed = (gameId * 17) % 5;
+  const suffixes = ["100K+", "500K+", "1M+", "5M+", "10M+"];
+  return suffixes[seed];
+};
+
+// ─── Sub-Components ────────────────────────────────────────────────────────────
+
+// 1. Hero Spotlight Slide (Landscape card with content description)
+function PlayStoreHeroCard({ game, onPlay }: { game: any; onPlay: () => void }) {
+  const rating = getMockRating(game?.game_id || 1);
   return (
-    <div className="h-px bg-gradient-to-r from-transparent via-[#0b2f5f]/20 dark:via-[#80c7c5] to-transparent opacity-40 mx-4" />
-  );
-}
-
-// ─── Section header ──────────────────────────────────────────────────────────
-function SectionHeader({
-  icon: Icon,
-  title,
-  variant = "gold",
-  onViewAll,
-}: {
-  icon: React.ElementType;
-  title: string;
-  variant?: "gold" | "aqua";
-  onViewAll?: () => void;
-}) {
-  const isGold = variant === "gold";
-  return (
-    <div className="flex items-center justify-between mb-2.5">
-      <div className="flex items-center gap-2">
-        <div
-          className={`w-7 h-7 rounded-lg flex items-center justify-center ${isGold
-            ? "bg-[#fecb13]/15 border border-[#fecb13]/30 text-[#b28200] dark:bg-[#fecb13]/10 dark:border-[#fecb13]/25 dark:text-[#fecb13]"
-            : "bg-[#80c7c5]/20 border border-[#80c7c5]/40 text-[#076866] dark:bg-[#80c7c5]/10 dark:border-[#80c7c5]/25 dark:text-[#80c7c5]"
-            }`}
-        >
-          <Icon className="w-3.5 h-3.5" />
-        </div>
-        <span className="text-[13px] font-black tracking-[1.5px] uppercase text-[#0b2f5f] dark:text-white">
-          {title}
-        </span>
-      </div>
-      {/* {onViewAll && (
-        <button
-          onClick={onViewAll}
-          className="flex items-center gap-1 text-[9px] font-bold tracking-[1px] uppercase text-[#076866] border border-[#80c7c5]/40 bg-[#80c7c5]/10 rounded-md px-2.5 py-1.5 active:scale-95 transition-transform dark:text-[#80c7c5] dark:border-[#80c7c5]/25 dark:bg-[#80c7c5]/07"
-        >
-          View All <ChevronRight className="w-3 h-3" />
-        </button>
-      )} */}
-    </div>
-  );
-}
-
-// ─── Category header bar ─────────────────────────────────────────────────────
-function CategoryBar({
-  icon: Icon,
-  name,
-  onViewAll,
-}: {
-  icon: React.ElementType;
-  name: string;
-  onViewAll: () => void;
-}) {
-  return (
-    <div className="relative flex items-center justify-between bg-white border border-slate-200 dark:bg-[#0d2540] dark:border-[#1a3a5c] rounded-xl px-4 py-2.5 mb-3 overflow-hidden shadow-sm dark:shadow-none">
-      <div className="absolute left-0 top-0 bottom-0 w-[3px] bg-[#fecb13] rounded-none" />
-      <div className="flex items-center gap-2.5">
-        <Icon className="w-4 h-4 text-[#b28200] dark:text-[#fecb13]" />
-        <span className="text-[12px] font-black tracking-[1.5px] uppercase text-[#0b2f5f] dark:text-white">
-          {name}
-        </span>
-      </div>
-      <div className="absolute -right-1.5 top-1.5 z-20 flex flex-col items-end">
-        <button
-          onClick={onViewAll}
-          className="font-black px-3 py-1 rounded-l-md text-[9px] tracking-wider uppercase bg-[#fecb13] hover:bg-[#e0b20f] dark:bg-[#f59e0b] dark:hover:bg-[#d97706] text-[#07192e] dark:text-white transition-all shadow-md active:scale-95 duration-150"
-        >
-          View All
-        </button>
-        {/* Ribbon fold triangle */}
-        <div className="w-1.5 h-1.5 bg-[#b28200] dark:bg-[#92400e] [clip-path:polygon(0_0,_100%_0,_0_100%)]" />
-      </div>
-    </div>
-  );
-}
-
-// ─── Featured card ────────────────────────────────────────────────────────────
-function FeaturedCard({
-  game,
-  index,
-  onPlay,
-}: {
-  game: any;
-  index: number;
-  onPlay: () => void;
-}) {
-  const { theme } = useTheme();
-  const isDark = theme === "dark";
-
-  // Ornate card theme styling matching TournamentHistory
-  const cardBg = isDark ? "bg-gradient-to-br from-[#121316] via-[#090a0c] to-[#121316]" : "bg-gradient-to-br from-[#fcfaf5] via-[#f7f2e4] to-[#fcfaf5]";
-  const cardBorder = isDark ? "border-[#9a7e4e]" : "border-[#b09668]";
-  const studdedLine = isDark ? "border-[#e6c687]/20" : "border-[#b09668]/30";
-  const shadowFilter = isDark ? "shadow-[0_6px_16px_rgba(0,0,0,0.6)]" : "shadow-[0_4px_10px_rgba(176,150,104,0.08)]";
-  const trendTagBg = "bg-black/70 border border-[#d4b27a]/40 text-[#ffe596]";
-  const playButtonBg = "bg-[#fecb13] text-[#07192e] shadow-[0_0_8px_rgba(254,203,19,0.55)]";
-
-  return (
-    <motion.div
-      whileTap={{ scale: 0.96 }}
+    <div
       onClick={onPlay}
-      className={`relative overflow-hidden rounded-xl border-[3px] ${cardBorder} cursor-pointer transition-all duration-300 ${cardBg} ${shadowFilter}`}
+      className="relative aspect-[16/9] w-full rounded-2xl overflow-hidden cursor-pointer shadow-md group transition-all active:scale-[0.98] duration-200"
     >
-      {/* Inner gold dashed studded line */}
-      <div className={`absolute inset-0 pointer-events-none border border-dashed ${studdedLine} m-0.5 rounded-[9px] z-10`} />
+      <img
+        src={game?.game_image_url}
+        alt={game?.game_name}
+        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+      />
+      {/* Dark Overlay Gradient */}
+      <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent flex flex-col justify-end p-4" />
 
-      {/* Corner Rubies / Gemstones in gold bezels */}
-      <div className="absolute top-0.5 left-0.5 w-3 h-3 flex items-center justify-center pointer-events-none z-20">
-        <div
-          className="w-1.5 h-1.5 rounded-full border border-[#e6c687]/50 shadow-[0_0_3px_#ff0000]"
-          style={{ background: 'radial-gradient(circle at 35% 35%, #ff5c5c 0%, #b30000 60%, #540000 100%)' }}
-        />
-      </div>
-      <div className="absolute top-0.5 right-0.5 w-3 h-3 flex items-center justify-center pointer-events-none z-20">
-        <div
-          className="w-1.5 h-1.5 rounded-full border border-[#e6c687]/50 shadow-[0_0_3px_#ff0000]"
-          style={{ background: 'radial-gradient(circle at 35% 35%, #ff5c5c 0%, #b30000 60%, #540000 100%)' }}
-        />
-      </div>
-      <div className="absolute bottom-0.5 left-0.5 w-3 h-3 flex items-center justify-center pointer-events-none z-20">
-        <div
-          className="w-1.5 h-1.5 rounded-full border border-[#e6c687]/50 shadow-[0_0_3px_#ff0000]"
-          style={{ background: 'radial-gradient(circle at 35% 35%, #ff5c5c 0%, #b30000 60%, #540000 100%)' }}
-        />
-      </div>
-      <div className="absolute bottom-0.5 right-0.5 w-3 h-3 flex items-center justify-center pointer-events-none z-20">
-        <div
-          className="w-1.5 h-1.5 rounded-full border border-[#e6c687]/50 shadow-[0_0_3px_#ff0000]"
-          style={{ background: 'radial-gradient(circle at 35% 35%, #ff5c5c 0%, #b30000 60%, #540000 100%)' }}
-        />
+      {/* Floating Play Button (Yellow-main fill) */}
+      <div className="absolute top-3 right-3 w-8 h-8 rounded-full bg-yellow-main backdrop-blur-md border-2 border-white flex items-center justify-center text-black shadow-lg hover:scale-105 transition-all">
+        <Play className="w-4 h-4 fill-current ml-0.5" />
       </div>
 
-      {/* Thumbnail */}
-      <div className="aspect-[3/4] relative overflow-hidden m-0.5 rounded-[8px]">
+      {/* Content */}
+      <div className="absolute bottom-3.5 left-4 right-4 flex items-center gap-3">
+        <img
+          src={game?.game_image_url}
+          alt=""
+          className="w-11 h-11 rounded-xl object-cover border border-white/20 shadow-md shrink-0"
+        />
+        <div className="flex-1 min-w-0 text-start">
+          <div className="text-white font-bold text-[14px] truncate leading-tight">
+            {game?.game_name}
+          </div>
+          <div className="flex items-center gap-2 mt-0.5 text-slate-300 text-[10px]">
+            <span className="font-semibold text-white/90">{game?.category_name || "Hot Picks"}</span>
+            {/* <span>•</span>
+            <div className="flex items-center text-[#FFCA20] gap-0.5">
+              <Star className="w-2.5 h-2.5 fill-current" />
+              <span className="font-bold text-white/90">{rating}</span>
+            </div> */}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// 2. Play Store App Card (Rounded 1:1 Icon - Theme Aware)
+function PlayStoreAppCard({ game, onPlay }: { game: any; onPlay: () => void }) {
+  const rating = getMockRating(game?.game_id || 1);
+  const size = getMockSize(game?.game_id || 1);
+  return (
+    <div
+      onClick={onPlay}
+      className="w-[100px] flex flex-col cursor-pointer transition-transform active:scale-95 duration-150 shrink-0"
+    >
+      <div className="w-[100px] h-[100px] rounded-[22px] overflow-hidden relative shadow-sm border border-slate-200/80 bg-white/90 dark:bg-[#2B2B2B] dark:border-[#3D3D3D]">
         <img
           src={game?.game_image_url}
           alt={game?.game_name}
           className="w-full h-full object-cover"
         />
-        {/* Play icon bottom right */}
-        <div className={`absolute bottom-3 right-3 w-8 h-8 rounded-full flex items-center justify-center z-10 active:scale-90 transition-transform ${playButtonBg}`}>
-          <Play className="w-3.5 h-3.5 fill-current ml-0.5" />
-        </div>
-        {/* Trend tag */}
-        <div className={`absolute top-2.5 left-2.5 flex items-center gap-1 rounded-md px-2 py-0.5 z-10 text-[8px] font-black tracking-wider uppercase ${trendTagBg}`}>
-          <Flame className="w-2.5 h-2.5" />
-          <span>
-            {index % 2 === 0 ? "Trending" : "Popular"}
-          </span>
-        </div>
-        {/* Bottom fade */}
-        <div className="absolute inset-x-0 bottom-0 h-14 bg-gradient-to-t from-black/50 to-transparent pointer-events-none" />
-      </div>
-    </motion.div>
-  );
-}
-
-// ─── Game grid card ──────────────────────────────────────────────────────────
-function GameCard({
-  game,
-  index,
-  onPlay,
-  aspectClass = "aspect-[4/3]",
-}: {
-  game: any;
-  index: number;
-  onPlay: () => void;
-  aspectClass?: string;
-}) {
-  const { theme } = useTheme();
-  const isDark = theme === "dark";
-
-  // Ornate card theme styling matching TournamentHistory (scaled slightly for grids)
-  const cardBg = isDark ? "bg-gradient-to-br from-[#121316] via-[#090a0c] to-[#121316]" : "bg-gradient-to-br from-[#fcfaf5] via-[#f7f2e4] to-[#fcfaf5]";
-  const cardBorder = isDark ? "border-[#9a7e4e]" : "border-[#b09668]";
-  const studdedLine = isDark ? "border-[#e6c687]/15" : "border-[#b09668]/25";
-  const shadowFilter = isDark ? "shadow-[0_4px_10px_rgba(0,0,0,0.5)]" : "shadow-[0_2.5px_8px_rgba(176,150,104,0.06)]";
-  const playButtonBg = "bg-[#fecb13] text-[#07192e] shadow-[0_0_6px_rgba(254,203,19,0.45)]";
-
-  return (
-    <motion.div
-      whileTap={{ scale: 0.96 }}
-      onClick={onPlay}
-      className={`relative overflow-hidden rounded-lg border-2 ${cardBorder} cursor-pointer transition-all duration-300 ${cardBg} ${shadowFilter}`}
-    >
-      {/* Inner gold dashed studded line */}
-      <div className={`absolute inset-0 pointer-events-none border border-dashed ${studdedLine} m-0.5 rounded-[5px] z-10`} />
-
-      {/* Tiny Corner Rubies / Gemstones in gold bezels */}
-      <div className="absolute top-0.5 left-0.5 w-2 h-2 flex items-center justify-center pointer-events-none z-20">
-        <div
-          className="w-1 h-1 rounded-full border border-[#e6c687]/40 shadow-[0_0_2px_#ff0000]"
-          style={{ background: 'radial-gradient(circle at 35% 35%, #ff5c5c 0%, #b30000 60%, #540000 100%)' }}
-        />
-      </div>
-      <div className="absolute top-0.5 right-0.5 w-2 h-2 flex items-center justify-center pointer-events-none z-20">
-        <div
-          className="w-1 h-1 rounded-full border border-[#e6c687]/40 shadow-[0_0_2px_#ff0000]"
-          style={{ background: 'radial-gradient(circle at 35% 35%, #ff5c5c 0%, #b30000 60%, #540000 100%)' }}
-        />
-      </div>
-      <div className="absolute bottom-0.5 left-0.5 w-2 h-2 flex items-center justify-center pointer-events-none z-20">
-        <div
-          className="w-1 h-1 rounded-full border border-[#e6c687]/40 shadow-[0_0_2px_#ff0000]"
-          style={{ background: 'radial-gradient(circle at 35% 35%, #ff5c5c 0%, #b30000 60%, #540000 100%)' }}
-        />
-      </div>
-      <div className="absolute bottom-0.5 right-0.5 w-2 h-2 flex items-center justify-center pointer-events-none z-20">
-        <div
-          className="w-1 h-1 rounded-full border border-[#e6c687]/40 shadow-[0_0_2px_#ff0000]"
-          style={{ background: 'radial-gradient(circle at 35% 35%, #ff5c5c 0%, #b30000 60%, #540000 100%)' }}
-        />
-      </div>
-
-      <div className={`${aspectClass} relative overflow-hidden m-0.5 rounded-[5px]`}>
-        <img
-          src={game?.game_image_url || "/placeholder.png"}
-          alt={game?.game_name}
-          className="w-full h-full object-cover"
-        />
-        {/* Play icon bottom right */}
-        <div className={`absolute bottom-2 right-2 w-6 h-6 rounded-full flex items-center justify-center z-10 ${playButtonBg}`}>
+        {/* <div className="absolute inset-0 bg-black/5 hover:bg-black/0 transition-colors" /> */}
+        {/* Play Icon Badge */}
+        <div className="absolute bottom-1.5 right-1.5 w-6 h-6 rounded-full bg-white/90 dark:bg-yellow-main backdrop-blur-sm flex items-center justify-center text-slate-800 dark:text-black border border-slate-200 dark:border-white">
           <Play className="w-2.5 h-2.5 fill-current ml-0.5" />
         </div>
-        <div className="absolute inset-x-0 bottom-0 h-8 bg-gradient-to-t from-black/50 to-transparent pointer-events-none" />
       </div>
-    </motion.div>
+      {/* <div className="text-[11px] font-bold text-slate-800 dark:text-slate-200 mt-2 truncate w-full leading-tight text-start">
+        {game?.game_name}
+      </div> */}
+      {/* <div className="flex items-center gap-1 mt-0.5 text-[9px] text-slate-500 dark:text-[#BDBDBD] font-semibold justify-start">
+        <span>{rating}</span>
+        <Star className="w-2.5 h-2.5 text-[#FFCA20] fill-current" />
+        <span>•</span>
+        <span className="truncate max-w-[40px]">{size}</span>
+      </div> */}
+    </div>
   );
 }
 
-// ─── Main page ────────────────────────────────────────────────────────────────
+// 3. Promoted Promo Card (Large landscape banner with footer details - Theme Aware)
+function PlayStorePromotedBanner({ game, onPlay }: { game: any; onPlay: () => void }) {
+  const rating = getMockRating(game?.game_id || 1);
+  const downloads = getMockDownloads(game?.game_id || 1);
+  return (
+    <div
+      onClick={onPlay}
+      className="mx-2 my-2.5 overflow-hidden rounded-2xl border border-slate-200 dark:border-[#3D3D3D] bg-white dark:bg-[#2B2B2B] shadow-sm dark:shadow-md hover:shadow-md dark:hover:shadow-lg transition-all cursor-pointer"
+    >
+      <div className="aspect-[21/9] w-full relative overflow-hidden">
+        <img src={`https://jazzgplapi.gamenow.com.pk/uploads/webp/640X360/${game?.game_image}`} alt="" className="w-full h-full object-cover" />
+        {/* <div className="absolute top-2.5 left-2.5 bg-white/95 dark:bg-[#191919]/90 text-slate-800 dark:text-white text-[8px] font-black tracking-widest uppercase px-2 py-0.5 rounded-md border border-slate-200 dark:border-[#3D3D3D]">
+          Featured Promo
+        </div> */}
+      </div>
+      <div className="p-2 flex items-center justify-between gap-3 bg-white dark:bg-[#2B2B2B]">
+        <div className="flex items-center gap-2.5 min-w-0 text-start">
+          <img src={game?.game_image_url} alt="" className="w-10 h-10 rounded-[12px] object-cover shrink-0 border border-slate-200 dark:border-[#3D3D3D]" />
+          <div className="min-w-0">
+            <div className="text-slate-800 dark:text-white font-bold text-[13px] truncate leading-tight">
+              {game?.game_name}
+            </div>
+            <p className="text-[10px] text-slate-500 dark:text-[#BDBDBD] mt-0.5 truncate">
+              {game?.category_name || "Instant Play"}
+            </p>
+          </div>
+        </div>
+        <button className="bg-yellow-main border-2 border-white text-black font-black text-[10px] uppercase tracking-wider px-3.5 py-2 rounded-full active:scale-95 transition-transform shrink-0 shadow-sm flex items-center gap-1">
+          <Play className="w-2.5 h-2.5 fill-current ml-0.5" /> Play
+        </button>
+      </div>
+    </div>
+  );
+}
+
+// 4. Top Charts Item (Numbered rank row - Theme Aware)
+function PlayStoreRankItem({ rank, game, onPlay }: { rank: number; game: any; onPlay: () => void }) {
+  const imageUrl = game?.game_image
+    ? `http://jazzgplapi.gamenow.com.pk/uploads/webp/suggested_games/${game.game_image}`
+    : game?.game_image_url;
+
+  return (
+    <div
+      onClick={onPlay}
+      className="aspect-[285/380] w-full rounded-2xl overflow-hidden border border-slate-200 dark:border-[#3D3D3D]/40 shadow-sm dark:shadow-md cursor-pointer relative shrink-0 dark:border-[#FFCA20]/30"
+    >
+      <img src={imageUrl} alt="" className="w-full h-full object-cover" />
+      <button
+        className="absolute bottom-2 right-2 z-10 w-7 h-7 rounded-full flex items-center justify-center bg-brand-gradient hover:brightness-110 text-brand-black-100 shadow-md active:scale-90 transition-all shrink-0 pointer-events-auto dark:border-2 border-white"
+        aria-label="Play Game"
+      >
+        <Play className="h-3.5 w-3.5 fill-brand-black-100 text-brand-black-100 ml-0.5" />
+      </button>
+    </div>
+  );
+}
+
+// 5. Premium App Card (VIP Tag - Theme Aware)
+function PlayStorePremiumCard({ game, onPlay }: { game: any; onPlay: () => void }) {
+  const rating = getMockRating(game?.game_id || 1);
+  return (
+    <div
+      onClick={onPlay}
+      className="bg-white/90 border border-slate-200/80 shadow-md hover:shadow-lg dark:bg-[#2B2B2B] dark:border-[#FFCA20]/20 rounded-2xl overflow-hidden transition-all p-2 cursor-pointer relative"
+    >
+      {/* <div className="absolute top-2 left-2 bg-gradient-to-r from-[#FFCA20] to-[#DFA208] text-[#191919] text-[8px] font-black px-2 py-0.5 rounded-md flex items-center gap-0.5 shadow-sm z-10">
+        <Crown className="w-2.5 h-2.5 fill-current" />
+        <span>VIP</span>
+      </div> */}
+      <div className="aspect-[4/3] rounded-xl overflow-hidden bg-slate-100 dark:bg-[#191919] border border-slate-200 dark:border-[#3D3D3D]">
+        <img src={game?.game_image_url} alt="" className="w-full h-full object-cover" />
+      </div>
+      <div className="text-[12px] font-bold text-slate-800 dark:text-white mt-2.5 truncate text-start">
+        {game?.game_name}
+      </div>
+      <button
+        // onClick={(e) => {
+        //   e.stopPropagation();
+        //   handleGameClick(game);
+        // }}
+        className="absolute bottom-2 right-2 z-10 w-7 h-7 rounded-full flex items-center justify-center bg-brand-gradient hover:brightness-110 text-brand-black-100 shadow-md active:scale-90 transition-all shrink-0 pointer-events-auto dark:border-2 border-white"
+        aria-label="Play Game"
+      >
+        <Play className="h-3.5 w-3.5 fill-brand-black-100 text-brand-black-100 ml-0.5" />
+      </button>
+      {/* <div className="flex items-center justify-between mt-1 text-start">
+        <span className="text-[10px] text-slate-500 dark:text-[#BDBDBD] font-medium truncate max-w-[70%]">
+          {game?.category_name || "Premium"}
+        </span>
+        <div className="flex items-center gap-0.5 text-[10px] font-bold text-[#FFCA20]">
+          <Star className="w-2.5 h-2.5 fill-current" />
+          <span>{rating}</span>
+        </div>
+      </div> */}
+    </div>
+  );
+}
+
+// 6. Play Store 3-Game Vertical Column Item (Management Simulators layout - Theme Aware)
+function PlayStoreColumnItem({ game, onPlay }: { game: any; onPlay: () => void }) {
+  const rating = getMockRating(game?.game_id || 1);
+  const size = getMockSize(game?.game_id || 1);
+  const mockDesc = game?.game_name ? `Enjoy the thrill of ${game.game_name} directly in your browser!` : "Top rated simulator game.";
+  return (
+    <div onClick={onPlay} className="flex items-center gap-2 cursor-pointer py-1.5 select-none hover:bg-black/[0.02] dark:hover:bg-white/[0.02] bg-white/95  shadow-sm dark:bg-[#292929] rounded-xl px-2 transition-colors relative">
+      <img
+        src={game?.game_image_url}
+        alt=""
+        className="w-20 h-20 rounded-[14px] object-cover border border-slate-200  shrink-0"
+      />
+      <div className="flex-1 min-w-0 text-start pl-0.5 pr-8">
+        <div className="text-[12.5px] font-bold text-slate-800 dark:text-white truncate leading-snug">
+          {game?.game_name}
+        </div>
+        <p className="text-[10px] text-slate-500 dark:text-[#BDBDBD] truncate leading-normal mt-0.5">
+          {game?.category_name || "Premium"}
+        </p>
+      </div>
+      <button
+        className="absolute bottom-2 right-2 z-10 w-7 h-7 rounded-full flex items-center justify-center bg-brand-gradient hover:brightness-110 text-brand-black-100 shadow-md active:scale-90 transition-all shrink-0 pointer-events-auto dark:border-2 border-white"
+        aria-label="Play Game"
+      >
+        <Play className="h-3.5 w-3.5 fill-brand-black-100 text-brand-black-100 ml-0.5" />
+      </button>
+    </div>
+  );
+}
+
+// 7. Play Store Landscape App Card (Run, jump, run! layout - Theme Aware)
+function PlayStoreLandscapeCard({ game, onPlay }: { game: any; onPlay: () => void }) {
+  const rating = getMockRating(game?.game_id || 1);
+  const size = getMockSize(game?.game_id || 1);
+  return (
+    <div onClick={onPlay} className="flex flex-col cursor-pointer select-none bg-white/95 border border-slate-200/80 shadow-md dark:border-b dark:border-x-0 dark:border-t-0 dark:border-slate-800 dark:bg-[#292929] rounded-xl p-1 dark:p-0 relative dark:shadow-none">
+      <div className="aspect-[16/9] w-full rounded-2xl overflow-hidden border border-slate-200 dark:border-[#3D3D3D] relative bg-slate-100 dark:bg-[#2B2B2B]">
+        <img
+          src={game?.game_image_url}
+          alt=""
+          className="w-full h-full object-cover"
+        />
+        {/* Play Icon overlay */}
+        <div className="absolute inset-0 bg-black/10 flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity">
+          <div className="w-10 h-10 rounded-full bg-white/80 dark:bg-[#191919]/80 flex items-center justify-center text-slate-800 dark:text-white border border-slate-200 dark:border-[#3D3D3D]">
+            <Play className="w-3.5 h-3.5 fill-current ml-0.5" />
+          </div>
+        </div>
+      </div>
+      <div className="flex items-center justify-between gap-2.5 my-2 text-start mx-2">
+        <div className="flex items-center gap-2.5 min-w-0 flex-1">
+          <img
+            src={game?.game_image_url}
+            alt=""
+            className="w-9 h-9 rounded-lg object-cover shrink-0 border border-slate-200 dark:border-[#3D3D3D] mt-0.5"
+          />
+          <div className="min-w-0 flex-1">
+            <div className="text-[12px] font-bold text-slate-800 dark:text-white truncate leading-tight">
+              {game?.game_name}
+            </div>
+            <p className="text-[9.5px] text-slate-500 dark:text-[#BDBDBD] truncate leading-tight mt-0.5">
+              {game?.category_name || "Action"} • Run & gun
+            </p>
+          </div>
+        </div>
+
+        {/* Play icon rounded button on bottom right */}
+        <div className="w-7 h-7 rounded-full flex items-center justify-center bg-yellow-main border-2 border-white text-black shadow-md hover:scale-105 active:scale-90 transition-transform shrink-0">
+          <Play className="w-3 h-3 fill-current ml-0.5" />
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// ─── Main Component ────────────────────────────────────────────────────────────
+
 export default function GamesPageNew() {
   const navigate = useNavigate();
   const location = useLocation();
@@ -286,6 +330,10 @@ export default function GamesPageNew() {
   const [showNotSubscribed, setShowNotSubscribed] = useState(false);
   const [showLowBalance, setShowLowBalance] = useState(false);
 
+  // States
+  const [chartFilter, setChartFilter] = useState<"top_free" | "trending">("top_free");
+  const [selectedCategoryDetail, setSelectedCategoryDetail] = useState<any | null>(null);
+
   const userInfo = homeData?.data?.userInfo;
   const dValidTill = homeData?.data?.dValidTill;
   const subUIState = useMemo(
@@ -293,8 +341,11 @@ export default function GamesPageNew() {
     [userInfo, dValidTill]
   );
 
+  const avatar = userInfo?.user_profile_img ? `${userInfo.user_profile_img}.png` : "9.png";
+
+  // Load API Data
   useEffect(() => {
-    const load = async () => {
+    const loadSafe = async () => {
       setLoading(true);
       try {
         const [catRes, randRes] = await Promise.all([
@@ -302,11 +353,7 @@ export default function GamesPageNew() {
           randomGames(),
         ]);
         if (catRes?.status && catRes?.categoriesList?.length > 0) {
-          const listWithBanners = catRes.categoriesList.map((cat: any) => ({
-            ...cat,
-            bannerUrl: BANNERS[Math.floor(Math.random() * BANNERS.length)],
-          }));
-          setCategories(listWithBanners);
+          setCategories(catRes.categoriesList);
         }
         if (randRes?.status) setRandomGamesData(randRes?.data);
       } catch (e) {
@@ -315,9 +362,10 @@ export default function GamesPageNew() {
         setLoading(false);
       }
     };
-    load();
+    loadSafe();
   }, []);
 
+  // Handle query parameter scroll logic
   useEffect(() => {
     if (!loading && categories.length > 0 && scrollToCategory) {
       const matchedCat = categories.find((cat: any) => {
@@ -330,16 +378,49 @@ export default function GamesPageNew() {
       });
 
       if (matchedCat) {
-        const element = document.getElementById(`category-${matchedCat.category_id}`);
-        if (element) {
-          setTimeout(() => {
-            element.scrollIntoView({ behavior: "smooth", block: "start" });
-          }, 150);
-        }
+        setSelectedCategoryDetail(matchedCat);
+        window.scrollTo({ top: 0, behavior: "smooth" });
       }
     }
   }, [loading, categories, scrollToCategory]);
 
+  // Extract all unique games
+  const allGames = useMemo(() => {
+    const list: any[] = [];
+    const ids = new Set<number>();
+
+    // Add category games
+    categories.forEach((cat) => {
+      (cat.games || []).forEach((game: any) => {
+        if (!ids.has(game.game_id)) {
+          ids.add(game.game_id);
+          list.push({ ...game, category_name: cat.category_name });
+        }
+      });
+    });
+
+    // Add random/hot games
+    (randomGamesData?.usergamesList || []).forEach((game: any) => {
+      const gId = game.game_id || game.report_game_id;
+      if (gId && !ids.has(gId)) {
+        ids.add(gId);
+        list.push({ ...game, game_id: gId, category_name: "Hot Pick" });
+      }
+    });
+
+    return list;
+  }, [categories, randomGamesData]);
+
+  // Top Free & Trending computed lists for Top Charts
+  const topFreeChartsList = useMemo(() => {
+    return allGames.slice(0, 5);
+  }, [allGames]);
+
+  const trendingChartsList = useMemo(() => {
+    return [...allGames].reverse().slice(0, 5);
+  }, [allGames]);
+
+  // Game Launch Trigger
   const handleGameLaunch = useCallback(
     async (game: any) => {
       const isSuspend =
@@ -371,181 +452,376 @@ export default function GamesPageNew() {
 
   return (
     <>
-      <TopBar />
+      {/* Theme Aware Viewport Container with Soft Light Gradient and Glassmorphism blobs */}
+      <div className="w-full max-w-[480px] mx-auto min-h-screen bg-gradient-to-tr from-[#f8fafc] via-[#f1f5f9] to-[#e2e8f0] dark:from-[#191919] dark:to-[#191919] text-slate-800 dark:text-white pb-8 border-x border-slate-200 dark:border-[#3D3D3D]/30 shadow-xl dark:shadow-2xl relative flex flex-col transition-colors duration-300 overflow-hidden">
+        {/* Ambient background glow effects for light theme glassmorphism layout (hidden in dark mode) */}
+        <div className="absolute top-[15%] -left-20 w-72 h-72 bg-[#FFCA20]/8 rounded-full blur-[90px] pointer-events-none z-0 dark:hidden" />
+        <div className="absolute bottom-[25%] -right-20 w-72 h-72 bg-blue-500/8 rounded-full blur-[90px] pointer-events-none z-0 dark:hidden" />
 
-      <div className="bg-[#f8fafc] dark:bg-[#07192e] text-slate-800 dark:text-white pb-5">
-
-        <AccentLine />
-
-        {/* ── Hero ── */}
-        <div className="px-4 pt-5 pb-4">
-
-          <h1 className="text-[26px] font-black text-[#0b2f5f] dark:text-white leading-tight tracking-wide mb-1">
-            Explore &<br />
-            <span className="text-[#076866] dark:text-[#80c7c5]">Play Games</span>
-          </h1>
-          <p className="text-[10px] font-bold tracking-[0.5px] uppercase text-slate-500 dark:text-[#4a7a9b] mb-4">
-            No downloads · Instant play · Win rewards
-          </p>
-
-          <div className="grid grid-cols-3 gap-2.5">
-            {[
-              { val: `${randomGamesData?.usergamesList?.length || 0}+`, label: "Hot Picks" },
-              { val: `${categories.length || 0}`, label: "Genres" },
-              { val: "Live", label: "Status" },
-            ].map(({ val, label }) => (
-              <div
-                key={label}
-                className="bg-white border border-slate-200 dark:bg-[#0d2540] dark:border-[#1a3a5c] rounded-xl py-2.5 text-center shadow-sm dark:shadow-none"
-              >
-                <span className="block text-[18px] font-black text-[#b28200] dark:text-[#fecb13] tracking-wide leading-none">
-                  {val}
-                </span>
-                <span className="block text-[9px] font-bold text-slate-500 dark:text-[#4a7a9b] tracking-[1px] uppercase mt-1">
-                  {label}
-                </span>
+        {/* ─── Solid Black Header (Remains same in light & dark theme matching TournamentHistory structure) ─── */}
+        <div className="sticky top-0 z-[99] mb-3 bg-[#191919] transition-colors duration-300">
+          <div className="relative overflow-hidden bg-[#191919] border-b border-white/10 p-2 flex items-center justify-between gap-3 shadow-[0_8px_32px_rgba(0,0,0,0.2)]">
+            <div className="w-full flex justify-between items-center gap-5">
+              <div>
+                <button
+                  onClick={() => {
+                    if (selectedCategoryDetail) {
+                      setSelectedCategoryDetail(null);
+                    } else {
+                      navigate(-1);
+                    }
+                  }}
+                  className="flex items-center justify-center w-8 h-8 rounded-full border border-yellow-main bg-white/10 hover:bg-brand-gradient hover:text-brand-black-100 transition-colors text-white shadow-sm"
+                  title="Back"
+                >
+                  <ChevronLeft className="w-4.5 h-4.5 text-yellow-main" />
+                </button>
               </div>
-            ))}
+              <div className="flex-1 text-center">
+                <h1 className="text-base sm:text-lg font-black tracking-wide uppercase text-white leading-tight">
+                  Play Free Games
+                </h1>
+              </div>
+              {/* Right side: Profile avatar in rounded-xl container matching TournamentHistory style */}
+              <div
+                onClick={() => navigate("/profile")}
+                className="w-10 h-10 flex-shrink-0 flex items-center justify-center bg-yellow-main/5 rounded-xl shadow-[0_0_15px_rgba(254,203,19,0.15)] border border-[#fecb13]/25 cursor-pointer overflow-hidden active:scale-95 transition-all hover:scale-105"
+              >
+                <img
+                  src={`/assets/users/${avatar}`}
+                  className="w-full h-full object-cover"
+                  alt="Avatar"
+                  onError={(e) => {
+                    (e.target as HTMLImageElement).src = "/assets/users/9.png";
+                  }}
+                />
+              </div>
+            </div>
           </div>
         </div>
 
-        <AccentLine />
+        {/* ─── MAIN CONTENT RENDERING ─── */}
+        <div className="pt-1 flex-1">
+          <AnimatePresence mode="wait">
 
-        {/* ── Hot Picks slider ── */}
-        {randomGamesData?.usergamesList?.length > 0 && (
-          <div className="pt-4 pb-2">
-            <div className="px-4 mb-3">
-              <SectionHeader
-                icon={Flame}
-                title="Hot Picks"
-                variant="gold"
-                onViewAll={() =>
-                  navigate("/games/viewAll", {
-                    state: { title: "Hot Picks", categoryId: 0 },
-                  })
-                }
-              />
-            </div>
-            <Swiper
-              loop
-              slidesPerView={2.3}
-              spaceBetween={10}
-              autoplay={{ delay: 3000, disableOnInteraction: false }}
-              modules={[Autoplay, Pagination]}
-              className="!px-4"
-            >
-              {randomGamesData.usergamesList.map((game: any, i: number) => (
-                <SwiperSlide key={game.report_game_id || i}>
-                  <FeaturedCard
-                    game={game}
-                    index={i}
-                    onPlay={() => handleGameLaunch(game)}
-                  />
-                </SwiperSlide>
-              ))}
-            </Swiper>
-          </div>
-        )}
+            {selectedCategoryDetail ? (
+              /* Detail view of a clicked Category */
+              <motion.div
+                key="category_detail"
+                initial={{ opacity: 0, x: 15 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: -15 }}
+                className="space-y-4 px-4"
+              >
+                <div className="flex items-center gap-3 bg-white dark:bg-[#2B2B2B] border border-slate-200 dark:border-[#3D3D3D] p-3 rounded-2xl shadow-sm text-start">
+                  <button
+                    onClick={() => setSelectedCategoryDetail(null)}
+                    className="w-8 h-8 rounded-xl bg-slate-100 dark:bg-[#191919]/60 flex items-center justify-center text-slate-700 dark:text-slate-200 font-bold active:scale-95 transition-transform border border-slate-200 dark:border-[#3D3D3D]"
+                  >
+                    <ChevronLeft className="w-5 h-5" />
+                  </button>
+                  <div>
+                    <div className="text-[13px] font-black uppercase tracking-wider text-slate-800 dark:text-white">
+                      {selectedCategoryDetail.category_name}
+                    </div>
+                    <p className="text-[10px] text-slate-500 dark:text-[#BDBDBD] font-semibold uppercase tracking-wider">
+                      {selectedCategoryDetail.games?.length || 0} Games Available
+                    </p>
+                  </div>
+                </div>
 
-        {/* ── Category sections ── */}
-        <div className="pt-2 space-y-6 pb-4">
-          {categories.length > 0 ? (
-            categories.map((cat, catIdx) => {
-              const Icon = ICON_MAP[cat.category_name] || Compass;
-              const games = (cat.games || []).slice(0, 6);
-              
-              if (games.length === 0) return null;
+                <div className="grid grid-cols-3 gap-y-4 gap-x-2">
+                  {(selectedCategoryDetail.games || []).map((game: any, i: number) => (
+                    <div key={game.game_id || i} className="flex justify-center">
+                      <PlayStoreAppCard
+                        game={{ ...game, category_name: selectedCategoryDetail.category_name }}
+                        onPlay={() => handleGameLaunch({ ...game, category_name: selectedCategoryDetail.category_name })}
+                      />
+                    </div>
+                  ))}
+                </div>
+              </motion.div>
+            ) : (
+              /* Single Unified Scroll Feed (Theme Aware) - No Heading Elements */
+              <motion.div
+                key="unified_feed"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                className="space-y-6"
+              >
+                {/* 1. Hero Spotlight Carousel */}
+                {randomGamesData?.usergamesList?.length > 0 && (
+                  <div className="px-4">
+                    <Swiper
+                      loop={randomGamesData.usergamesList.length > 2}
+                      slidesPerView={1.3}
+                      centeredSlides={true}
+                      spaceBetween={12}
+                      autoplay={{ delay: 4000, disableOnInteraction: false }}
+                      modules={[Autoplay]}
+                    >
+                      {randomGamesData.usergamesList.map((game: any, i: number) => (
+                        <SwiperSlide key={game.game_id || game.report_game_id || i}>
+                          <PlayStoreHeroCard
+                            game={{ ...game, game_id: game.game_id || game.report_game_id }}
+                            onPlay={() => handleGameLaunch({ ...game, game_id: game.game_id || game.report_game_id })}
+                          />
+                        </SwiperSlide>
+                      ))}
+                    </Swiper>
+                  </div>
+                )}
 
-              // Alternating layouts: 0 = 3x3 grid, 1 = slider, 2 = 2x2 grid
-              const layoutType = catIdx % 3;
-
-              return (
-                <div key={cat.category_id} id={`category-${cat.category_id}`}>
-                  <div className="px-2">
-                    <CategoryBar
-                      icon={Icon}
-                      name={cat.category_name}
-                      onViewAll={() =>
-                        navigate("/games/viewAll", {
-                          state: { title: cat.category_name, categoryId: cat.category_id },
-                        })
-                      }
-                    />
-
-                    {/* 3x3 layout (3 columns grid showing up to 6 games) */}
-                    {layoutType === 0 && (
-                      <div className="grid grid-cols-3 gap-2">
-                        {games.map((game: any, i: number) => (
-                          <GameCard
-                            key={game.game_id}
+                {/* 2. Suggested For You Row */}
+                {allGames.length > 0 && (
+                  <div>
+                    {/* Commented Out Suggested Heading for Clean View */}
+                    {/*
+                    <div className="flex justify-between items-center px-4 mb-3">
+                      <div className="text-[14px] font-black uppercase tracking-wider text-slate-800 dark:text-white flex items-center gap-1.5">
+                        <Sparkles className="w-4 h-4 text-[#FFCA20] fill-current" /> Suggested for you
+                      </div>
+                    </div>
+                    */}
+                    <div
+                      className="overflow-hidden w-full px-4 pb-2.5 flex"
+                      style={{
+                        // maskImage: "linear-gradient(to right, transparent, white 8%, white 92%, transparent)",
+                        // WebkitMaskImage: "linear-gradient(to right, transparent, white 8%, white 92%, transparent)"
+                      }}
+                    >
+                      <motion.div
+                        className="flex gap-2 shrink-0"
+                        animate={{ x: ["0%", "-50%"] }}
+                        transition={{
+                          ease: "linear",
+                          duration: 25,
+                          repeat: Infinity,
+                        }}
+                        style={{
+                          width: "max-content",
+                          willChange: "transform"
+                        }}
+                      >
+                        {allGames.slice(0, 10).concat(allGames.slice(0, 10)).map((game, i) => (
+                          <PlayStoreAppCard
+                            key={`${game.game_id || i}-${i}`}
                             game={game}
-                            index={i}
                             onPlay={() => handleGameLaunch(game)}
-                            aspectClass="aspect-[4/3]"
                           />
                         ))}
-                      </div>
-                    )}
+                      </motion.div>
+                    </div>
+                  </div>
+                )}
 
-                    {/* Slider layout (up to 6 games) */}
-                    {layoutType === 1 && (
-                      <div className="mt-1">
-                        <Swiper
-                          loop={games.length > 2}
-                          slidesPerView={2.4}
-                          spaceBetween={10}
-                          autoplay={{ delay: 3000, disableOnInteraction: false }}
-                          modules={[Autoplay]}
-                          className="!px-0"
+                {/* 3. Premium Mini Grid */}
+                {allGames.length > 0 && (
+                  <div>
+                    {/* Commented Out Premium Heading for Clean View */}
+                    {/*
+                    <div className="flex justify-between items-center px-4 mb-3">
+                      <div className="text-[14px] font-black uppercase tracking-wider text-slate-800 dark:text-white flex items-center gap-1.5">
+                        <Crown className="w-4 h-4 text-[#FFCA20] fill-current" /> Premium Games
+                      </div>
+                    </div>
+                    */}
+                    <div className="grid grid-cols-2 gap-2.5 px-2">
+                      {allGames.slice(0, 4).map((game, i) => (
+                        <PlayStorePremiumCard
+                          key={game.game_id || i}
+                          game={game}
+                          onPlay={() => handleGameLaunch(game)}
+                        />
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                {/* 4. Top Charts Section (Mini Charts Block) */}
+                {allGames.length > 0 && (
+                  <div className="space-y-3">
+                    {/* Commented Out Top Charts Heading for Clean View */}
+                    {/*
+                    <div className="flex justify-between items-center px-4">
+                      <div className="text-[14px] font-black uppercase tracking-wider text-slate-800 dark:text-white flex items-center gap-1.5">
+                        <TrendingUp className="w-4 h-4 text-[#FFCA20]" /> Top Charts
+                      </div>
+                    </div>
+                    */}
+
+                    {/* Sub-Filter toggle background (Brand Colors - Theme Aware) */}
+                    {/* <div className="flex justify-end px-4 mb-3">
+                      <div className="flex gap-1 bg-slate-200 dark:bg-[#2B2B2B] p-0.5 rounded-full border border-slate-300 dark:border-[#3D3D3D]">
+                        <button
+                          onClick={() => setChartFilter("top_free")}
+                          className={`px-3 py-1 rounded-full text-[9px] font-black uppercase transition-all ${chartFilter === "top_free"
+                            ? "bg-gradient-to-r from-[#FFCA20] to-[#DFA208] text-[#191919] shadow-sm font-black"
+                            : "text-slate-600 dark:text-[#BDBDBD] hover:text-slate-800 dark:hover:text-white"
+                            }`}
                         >
-                          {games.map((game: any, i: number) => (
-                            <SwiperSlide key={game.game_id || i}>
-                              <GameCard
-                                game={game}
-                                index={i}
-                                onPlay={() => handleGameLaunch(game)}
-                                aspectClass="aspect-[4/3]"
+                          Free
+                        </button>
+                        <button
+                          onClick={() => setChartFilter("trending")}
+                          className={`px-3 py-1 rounded-full text-[9px] font-black uppercase transition-all ${chartFilter === "trending"
+                            ? "bg-gradient-to-r from-[#FFCA20] to-[#DFA208] text-[#191919] shadow-sm font-black"
+                            : "text-slate-600 dark:text-[#BDBDBD] hover:text-slate-800 dark:hover:text-white"
+                            }`}
+                        >
+                          Trending
+                        </button>
+                      </div>
+                    </div> */}
+
+                    <div className="px-2 w-full">
+                      <Swiper
+                        spaceBetween={8}
+                        slidesPerView={2.5}
+                        centeredSlides={false}
+                        className="w-full"
+                      >
+                        {(chartFilter === "top_free" ? topFreeChartsList : trendingChartsList).map((game, idx) => (
+                          <SwiperSlide key={game.game_id || idx}>
+                            <PlayStoreRankItem
+                              rank={idx + 1}
+                              game={game}
+                              onPlay={() => handleGameLaunch(game)}
+                            />
+                          </SwiperSlide>
+                        ))}
+                      </Swiper>
+                    </div>
+                  </div>
+                )}
+
+
+
+                {/* 5. Dynamic Alternating Category highlights */}
+                {categories.map((cat, catIdx) => {
+                  const games = cat.games || [];
+                  if (games.length === 0) return null;
+
+                  const layoutType = catIdx % 3;
+
+                  return (
+                    <div key={cat.category_id} className="pt-1">
+                      {/* Commented Out Dynamic Highlights Title Row */}
+                      {/*
+                      <div className="flex justify-between items-center px-4 mb-3">
+                        <div className="text-[14px] font-black uppercase tracking-wider text-slate-800 dark:text-white flex items-center gap-1.5 text-start">
+                          {cat.category_name} Highlights
+                        </div>
+                        <button
+                          onClick={() => setSelectedCategoryDetail(cat)}
+                          className="p-1 hover:bg-slate-100 dark:hover:bg-[#2B2B2B] rounded-full text-slate-500 dark:text-slate-300"
+                        >
+                          <ChevronRight className="w-4.5 h-4.5" />
+                        </button>
+                      </div>
+                      */}
+
+                      {/* Layout 0: 3-Game Columns stacked snaps (Management Simulators layout!) */}
+                      {layoutType === 0 && (
+                        <div className="flex gap-2 overflow-x-auto scrollbar-none ms-2 px-2 pb-2 w-full snap-x snap-mandatory">
+                          {(() => {
+                            const chunks = [];
+                            const limitGames = games.slice(0, 9);
+                            for (let i = 0; i < limitGames.length; i += 3) {
+                              chunks.push(limitGames.slice(i, i + 3));
+                            }
+                            return chunks.map((chunk, chunkIdx) => (
+                              <div key={chunkIdx} className="flex flex-col gap-3.5 w-[200px] shrink-0 snap-start">
+                                {chunk.map((g: any, i: number) => (
+                                  <PlayStoreColumnItem
+                                    key={g.game_id || i}
+                                    game={g}
+                                    onPlay={() => handleGameLaunch(g)}
+                                  />
+                                ))}
+                              </div>
+                            ));
+                          })()}
+                        </div>
+                      )}
+
+                      {/* Layout 1: Landscape swipe row (Run, jump, run! layout) */}
+                      {layoutType === 1 && (
+                        <Swiper
+                          slidesPerView={1.5}
+                          spaceBetween={12}
+                          slidesOffsetBefore={16}
+                          slidesOffsetAfter={16}
+                          autoplay={{ delay: 4000, disableOnInteraction: false }}
+                          modules={[Autoplay]}
+                          className="w-full"
+                        >
+                          {games.map((g: any, i: number) => (
+                            <SwiperSlide key={g.game_id || i}>
+                              <PlayStoreLandscapeCard
+                                game={{ ...g, category_name: cat.category_name }}
+                                onPlay={() => handleGameLaunch(g)}
                               />
                             </SwiperSlide>
                           ))}
                         </Swiper>
-                      </div>
-                    )}
+                      )}
 
-                    {/* 2x2 layout (2 columns grid showing up to 6 games) */}
-                    {layoutType === 2 && (
-                      <div className="grid grid-cols-2 gap-3">
-                        {games.map((game: any, i: number) => (
-                          <GameCard
-                            key={game.game_id}
-                            game={game}
-                            index={i}
-                            onPlay={() => handleGameLaunch(game)}
-                            aspectClass="aspect-[16/9]"
+                      {/* Layout 2: Single Promo Card followed by mini scroll */}
+                      {layoutType === 2 && (
+                        <div>
+                          <PlayStorePromotedBanner
+                            game={games[0]}
+                            onPlay={() => handleGameLaunch(games[0])}
                           />
-                        ))}
-                      </div>
-                    )}
-                  </div>
-                </div>
-              );
-            })
-          ) : (
-            !loading && (
-              <div className="mx-4 py-12 text-center border border-slate-200 dark:border-[#1a3a5c] rounded-2xl bg-white dark:bg-[#0d2540] shadow-sm dark:shadow-none">
-                <Gamepad2 className="w-10 h-10 text-slate-300 dark:text-[#1e4a7a] mx-auto mb-3" />
-                <p className="text-[11px] font-bold uppercase tracking-wider text-slate-400 dark:text-[#4a7a9b]">
-                  No games available
-                </p>
-              </div>
-            )
-          )}
+                          {games.length > 1 && (
+                            <div
+                              className="overflow-hidden w-full px-2 mt-6 pb-1 flex"
+                              style={{
+                                // maskImage: "linear-gradient(to right, transparent, white 8%, white 92%, transparent)",
+                                // WebkitMaskImage: "linear-gradient(to right, transparent, white 8%, white 92%, transparent)"
+                              }}
+                            >
+                              <motion.div
+                                className="flex gap-2 shrink-0"
+                                animate={{ x: ["0%", "-50%"] }}
+                                transition={{
+                                  ease: "linear",
+                                  duration: 20,
+                                  repeat: Infinity,
+                                }}
+                                style={{
+                                  width: "max-content",
+                                  willChange: "transform"
+                                }}
+                              >
+                                {games.slice(1, 6).concat(games.slice(1, 6)).map((g: any, i: number) => (
+                                  <PlayStoreAppCard
+                                    key={`${g.game_id || i}-${i}`}
+                                    game={g}
+                                    onPlay={() => handleGameLaunch(g)}
+                                  />
+                                ))}
+                              </motion.div>
+                            </div>
+                          )}
+                        </div>
+                      )}
+                    </div>
+                  );
+                })}
+              </motion.div>
+            )}
+
+          </AnimatePresence>
         </div>
 
       </div>
 
       <BottomNavBar />
 
+      {/* Game Play Frame Overlay */}
       {selectedGame && (
         <GameViewerNew
           fromGame
@@ -562,6 +838,7 @@ export default function GamesPageNew() {
 
       {loading && <WaitLoader isOverlay />}
 
+      {/* Subscription Requirement Popup */}
       <PopupBannerUnsubscribe
         isShow={showNotSubscribed}
         onClose={() => setShowNotSubscribed(false)}
@@ -575,6 +852,7 @@ export default function GamesPageNew() {
         }}
       />
 
+      {/* Low Balance Popup */}
       <LowBalancePopup
         visible={showLowBalance}
         onClose={() => setShowLowBalance(false)}

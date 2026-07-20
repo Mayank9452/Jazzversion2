@@ -235,7 +235,7 @@ const CategoryNavigationTesting = ({ categoriesList = categories }: { categories
             <div
               key={`${cat.id}-${index}`}
               onClick={() => handleCategoryClick(cat.id, cat.label)}
-              className="flex flex-col items-center cursor-pointer group transition-transform duration-300 active:scale-95"
+              className="flex flex-col items-center cursor-pointer group transition-transform duration-300 active:scale-95 "
             >
               {/* Premium Image Card Container */}
               <div
@@ -244,7 +244,7 @@ const CategoryNavigationTesting = ({ categoriesList = categories }: { categories
                 <img
                   src={imageUrl}
                   alt={cat.label}
-                  className="w-full h-full object-cover rounded-[2rem] transition-transform duration-500 group-hover:scale-110"
+                  className="w-full h-full object-cover rounded-[2rem] transition-transform duration-500 group-hover:scale-110 "
                 />
               </div>
 

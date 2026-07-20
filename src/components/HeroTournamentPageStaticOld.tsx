@@ -8,6 +8,7 @@ import {
     Trophy,
     ChevronRight,
     Lock,
+    Unlock,
     Coins,
     AlertCircle,
     X,
@@ -22,14 +23,15 @@ import { TopBar } from "./TopBar";
 import { BottomNavBar } from "./BottomNavBar";
 import LeaderboardJoinPopup from "./LeaderboardJoinPopup";
 
-const HeroTournamentPageStaticOld: React.FC = () => {
+const HeroTournamentPageStatic: React.FC = () => {
     const location = useLocation();
     const navigate = useNavigate();
     const { theme } = useTheme();
 
     // Retrieve tournament ID from router state
-    const stateData = location.state as { tournament_id: any } | null;
+    const stateData = location.state as { tournament_id: any; fromMixedTesting2?: boolean } | null;
     const tournament_id = stateData?.tournament_id;
+    const fromMixedTesting2 = stateData?.fromMixedTesting2 || false;
 
     // Local state variables
     const [loading, setLoading] = useState<boolean>(true);
@@ -287,18 +289,23 @@ const HeroTournamentPageStaticOld: React.FC = () => {
                                     {info?.game_name || "Pistol Bottle Battle"}
                                 </h2>
 
-                                <button
-                                    onClick={handlePlayLiveTournament}
-                                    className="w-10 h-10 rounded-xl bg-gradient-to-r from-[#ffd43f] to-[#ffb800] text-[#0b2f5f] hover:brightness-110 active:scale-95 transition-all flex items-center justify-center shadow-lg pointer-events-auto cursor-pointer shrink-0"
-                                >
-                                    <Play className="w-5 h-5 fill-current stroke-[2.5]" />
-                                </button>
+                                <div className="w-10" />
                             </div>
                         </div>
 
                         {/* Glassmorphic Content overlapping the bottom 20% of the image header container */}
                         <div className="px-2 -mt-[58%] relative z-20 space-y-5">
-                            <div className="rounded-3xl bg-slate-900/60 dark:bg-black/60 backdrop-blur-[2px] border border-white/20 shadow-2xl p-5 space-y-5">
+                            <div className="rounded-3xl bg-slate-900/60 dark:bg-black/60 backdrop-blur-[2px] border border-white/20 shadow-2xl p-5 space-y-5 relative">
+                                {/* Play Button floating on top right, overlapping bottom of image banner header */}
+                                <button
+                                    onClick={handlePlayLiveTournament}
+                                    className="absolute -top-6 right-6 h-10 px-4 rounded-[2rem] bg-gradient-to-r from-[#ffd43f] to-[#ffb800] text-[#0b2f5f] hover:brightness-110 active:scale-95 transition-all flex items-center justify-center gap-1 z-30 cursor-pointer border-none font-black text-base"
+                                    style={{ animationDuration: "3s" }}
+                                >
+                                    <Play className="w-4 h-4 fill-current stroke-[2.5]" />
+                                    <span>Play</span>
+                                </button>
+
                                 {/* Title (Centered) */}
                                 {/* <div className="flex justify-center items-center border-b border-white/5 pb-3">
                                     <h2 className="text-xl font-black text-white text-center drop-shadow-md">
@@ -317,10 +324,14 @@ const HeroTournamentPageStaticOld: React.FC = () => {
                                     {/* Leaderboard Column */}
                                     <button
                                         onClick={() => {
-                                            if (joined) {
-                                                navigateToLeaderBoard();
+                                            if (fromMixedTesting2) {
+                                                navigate("/leaderboardPageStatic");
                                             } else {
-                                                setIsLeaderboardPopupOpen(true);
+                                                if (joined) {
+                                                    navigateToLeaderBoard();
+                                                } else {
+                                                    setIsLeaderboardPopupOpen(true);
+                                                }
                                             }
                                         }}
                                         className="flex flex-col items-center justify-center border-x border-white/5 w-full hover:bg-white/5 active:scale-95 transition-all py-1 border-none bg-transparent cursor-pointer"
@@ -330,7 +341,7 @@ const HeroTournamentPageStaticOld: React.FC = () => {
                                     </button>
                                     {/* Players Joined Column */}
                                     <div className="flex flex-col items-center justify-center">
-                                        <Users className="w-4 h-4 text-emerald-400 mb-1" />
+                                        <Users className="w-4 h-4 text-[#ffc200] mb-1" />
                                         <span className="text-sm font-black text-white">200</span>
                                         <span className="text-xs text-white/50 font-bold mt-0.5">Players Joined</span>
                                     </div>
@@ -374,17 +385,18 @@ const HeroTournamentPageStaticOld: React.FC = () => {
                                     <h3 className="text-xs font-black uppercase text-[#ffc200] tracking-wider">Your Rank</h3>
                                     <div className="bg-[#12162a]/55 border border-white/5 rounded-2xl p-3 flex items-center justify-between">
                                         <div className="flex items-center gap-3">
-                                            <div className="w-10 h-10 rounded-xl bg-[#ffc200]/10 flex items-center justify-center">
-                                                <Trophy className="w-5 h-5 text-[#ffc200]" />
+                                            <div className="w-10 h-10 rounded-xl flex items-center justify-center">
+                                                {/* <Trophy className="w-5 h-5 text-[#ffc200]" /> */}
+                                                <img src="/assets/images/img/trophy.png" className="w-10 h-10 object-contain" alt="Leaderboard" />
                                             </div>
                                             <div className="flex flex-col">
                                                 <span className="text-[10px] text-white/50 font-bold uppercase tracking-wider">Your Position</span>
                                                 <span className="text-xs font-black text-white mt-0.5">
-                                                    {joined ? `Rank #${liveTournamentData?.myRank || 4}` : "Not Joined"}
+                                                    {fromMixedTesting2 ? "4" : (joined ? `Rank #${liveTournamentData?.myRank || 4}` : "Not Joined")}
                                                 </span>
                                             </div>
                                         </div>
-                                        {joined ? (
+                                        {/* {joined ? (
                                             <button
                                                 onClick={navigateToLeaderBoard}
                                                 className="px-3 py-2 bg-white/10 hover:bg-white/20 rounded-xl text-[9px] font-bold text-[#ffc200] uppercase tracking-wider flex items-center gap-0.5 transition-colors cursor-pointer border-none"
@@ -400,14 +412,31 @@ const HeroTournamentPageStaticOld: React.FC = () => {
                                             >
                                                 <img src="/assets/images/img/trophy.png" className="w-5 h-5 object-contain" alt="Leaderboard" />
                                             </button>
-                                        )}
+                                        )} */}
+                                        <button
+                                            onClick={() => {
+                                                if (fromMixedTesting2) {
+                                                    navigate("/leaderboardPageStatic");
+                                                } else {
+                                                    setIsLeaderboardPopupOpen(true);
+                                                }
+                                            }}
+                                            className="px-3 py-2 bg-white/10 hover:bg-white/20 rounded-xl text-xs font-bold text-[#ffc200] tracking-[0.5px] flex items-center gap-0.5 transition-colors cursor-pointer border-none"
+                                        >
+                                            Leaderboard
+                                            {fromMixedTesting2 ? (
+                                                <Unlock className="w-3.5 h-3" />
+                                            ) : (
+                                                <Lock className="w-3.5 h-3" />
+                                            )}
+                                        </button>
                                     </div>
                                 </div>
 
                                 {/* Rewards Rank payouts */}
                                 {liveTournamentData?.rewardRanksList?.length > 0 && (
                                     <div className="space-y-1.5">
-                                        <h3 className="text-xs font-black uppercase text-[#ffc200] tracking-wider">Reward Distribution</h3>
+                                        <h3 className="text-xs font-black uppercase text-[#ffc200] tracking-wider">Rewards</h3>
                                         <div className="border border-white/5 rounded-2xl overflow-hidden bg-[#12162a]/45 divide-y divide-white/5">
                                             {liveTournamentData.rewardRanksList.map((item: any, idx: number) => {
                                                 const isTopThree = idx < 3;
@@ -552,4 +581,4 @@ const HeroTournamentPageStaticOld: React.FC = () => {
     );
 };
 
-export default HeroTournamentPageStaticOld;
+export default HeroTournamentPageStatic;

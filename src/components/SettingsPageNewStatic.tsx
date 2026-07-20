@@ -15,6 +15,7 @@ import { updateProfileImageThunk } from "@/features/bidProfile/updateProfileSlic
 import WaitLoader from "./Loader";
 import { HexagonalAvatarFrame } from "./HexagonalAvatarFrame";
 import PopupBannerUnsubscribe from "./PopupBannerUnsubscribe";
+import { TopBarUpdated } from "./TopBarUpdated";
 // Helper function to format phone number
 const phoneShowFormat = (phone: string | undefined): string => {
     if (!phone) return "";
@@ -78,11 +79,11 @@ export default function SettingsPageNewStatic() {
     const avatars = Array.from({ length: 15 }, (_, i) => `${i + 1}.png`);
     return (
         <>
-            <TopBar />
-            <div className="relative dark:bg-black text-foreground overflow-x-hidden transition-colors duration-300">
-                {/* Glow effects for glassmorphism backdrop */}
-                {/* <div className="absolute top-[300px] -left-20 w-80 h-80 bg-purple-600/10 rounded-full blur-[120px] pointer-events-none z-0" />
-                <div className="absolute top-[600px] -right-20 w-80 h-80 bg-yellow-main/5 rounded-full blur-[120px] pointer-events-none z-0" /> */}
+            <TopBarUpdated />
+            <div className="relative bg-[#F8F9FA] dark:bg-black text-foreground overflow-x-hidden min-h-screen pb-16 transition-colors duration-300">
+                {/* Glow effects for glassmorphism backdrop (hidden in dark mode) */}
+                <div className="absolute top-[300px] -left-20 w-80 h-80 bg-purple-600/10 rounded-full blur-[120px] pointer-events-none z-0 dark:hidden" />
+                <div className="absolute top-[600px] -right-20 w-80 h-80 bg-yellow-main/5 rounded-full blur-[120px] pointer-events-none z-0 dark:hidden" />
 
                 {/* Absolute Banner Background (285x380 portrait aspect ratio template) */}
                 <div className="absolute top-0 left-0 w-full aspect-[285/380] min-h-[300px] max-h-[460px] bg-neutral-900 overflow-hidden z-0">
@@ -95,34 +96,22 @@ export default function SettingsPageNewStatic() {
                         alt="Cover banner"
                         className="w-full h-full object-cover opacity-50"
                     />
-                    {/* Dark gradient transitioning to background color at the bottom */}
-                    <div className="absolute inset-0 bg-[#000000b8] z-10" />
+                    {/* Theme-aware overlay over cover image */}
+                    <div className={`absolute inset-0 z-10 ${isDark 
+                        ? "bg-[#000000b8]" 
+                        : "bg-gradient-to-b from-white/20 via-white/50 to-[#F8F9FA]"
+                        }`} 
+                    />
                 </div>
 
                 {/* Foreground Content Container */}
                 <div className="relative z-10">
                     {/* Navigation and Top Bar Icons */}
                     <div className="pt-4 px-4 flex items-center justify-center">
-                        {/* <button
-                            onClick={() => navigate(-1)}
-                            className="flex items-center justify-center text-white bg-black/40 hover:bg-black/60 w-9 h-9 rounded-full backdrop-blur-md transition-all active:scale-95"
-                        >
-                            <ArrowLeft className="w-5 h-5" />
-                        </button> */}
-                        <h1 className="text-white font-bold text-base tracking-wider select-none">
+                        <h1 className="font-extrabold text-base tracking-wider select-none text-slate-800 dark:text-white relative flex flex-col items-center">
                             {t?.myProfile || "My Profile"}
+                            <span className="w-8 h-1 bg-[#fecb13] mt-1.5 rounded-full" />
                         </h1>
-                        {/* <div className="flex items-center gap-2">
-                            <button className="flex items-center justify-center text-white bg-black/40 hover:bg-black/60 w-9 h-9 rounded-full backdrop-blur-md transition-all active:scale-95">
-                                <MessageSquare className="w-5 h-5" />
-                            </button>
-                            <button
-                                onClick={() => setShowModal(true)}
-                                className="flex items-center justify-center text-white bg-black/40 hover:bg-black/60 w-9 h-9 rounded-full backdrop-blur-md transition-all active:scale-95"
-                            >
-                                <Pencil className="w-5 h-5" />
-                            </button>
-                        </div> */}
                     </div>
 
                     {/* Profile Picture Section */}
@@ -139,19 +128,15 @@ export default function SettingsPageNewStatic() {
                         <h2 className="text-xl font-black tracking-wide text-foreground">
                             <span>{phoneShowFormat(user?.user_phone) || "959xxxx879"}</span>
                         </h2>
-                        {/* <p className="text-xs font-semibold text-muted-foreground mt-1 flex items-center gap-1.5">
-                            <Phone className="w-3.5 h-3.5 flex-shrink-0" />
-                            <span>{phoneShowFormat(user?.user_phone) || "959•••••••"}</span>
-                        </p> */}
                     </div>
                     {/* Statistics Section */}
                     <div className="px-4 mt-6 max-w-md mx-auto grid grid-cols-2 gap-2.5">
                         {/* Total Reward Coins */}
                         <div className={`p-3 rounded-2xl border flex items-center gap-3 transition-all duration-200 relative z-10 ${isDark
                             ? "bg-[#ffffff14] backdrop-blur-md border-[#ffffff52] shadow-[0_4px_24px_rgba(0,0,0,0.2)]"
-                            : "bg-white/40 backdrop-blur-md border-black/5 shadow-sm"
+                            : "bg-white border-slate-100 shadow-[0_8px_24px_rgba(0,0,0,0.03)]"
                             }`}>
-                            <div className="p-1.5 rounded-xl bg-amber-500/10 text-amber-500 shrink-0">
+                            <div className={`p-2 shrink-0 ${isDark ? "rounded-xl bg-amber-500/10" : "rounded-full bg-[#FFF9E6]"}`}>
                                 <img
                                     src="/assets/images/img/gold-coin.png"
                                     alt="coin"
@@ -167,9 +152,9 @@ export default function SettingsPageNewStatic() {
                         {/* Joined Date */}
                         <div className={`p-3 rounded-2xl border flex items-center gap-3 transition-all duration-200 relative z-10 ${isDark
                             ? "bg-[#ffffff14] backdrop-blur-md border-[#ffffff52] shadow-[0_4px_24px_rgba(0,0,0,0.2)]"
-                            : "bg-white/40 backdrop-blur-md border-black/5 shadow-sm"
+                            : "bg-white border-slate-100 shadow-[0_8px_24px_rgba(0,0,0,0.03)]"
                             }`}>
-                            <div className="p-1.5 rounded-xl bg-yellow-main/10 text-yellow-main shrink-0">
+                            <div className={`p-2 shrink-0 ${isDark ? "rounded-xl bg-yellow-main/10 text-yellow-main" : "rounded-full bg-[#FFF9E6] text-yellow-main"}`}>
                                 <Calendar className="w-4 h-4" />
                             </div>
                             <div className="text-left flex flex-col justify-center leading-none">
@@ -178,114 +163,12 @@ export default function SettingsPageNewStatic() {
                             </div>
                         </div>
                     </div>
-                    {/* Navigation Menu Links */}
-                    <div className="px-4 mt-6 max-w-md mx-auto flex flex-col gap-3">
 
-                        {/* Notifications */}
-                        <button
-                            onClick={() => navigate("/notification")}
-                            className={`w-full p-4 flex items-center justify-between rounded-2xl border transition-all duration-200 active:scale-[0.98] group relative z-10 ${isDark
-                                ? "bg-[#ffffff14] backdrop-blur-md border-[#ffffff52] shadow-[0_4px_24px_rgba(0,0,0,0.15)] hover:bg-white/[0.08] hover:border-white/10"
-                                : "bg-white/40 backdrop-blur-md border-black/5 hover:bg-white/60 shadow-sm"
-                                }`}
-                        >
-                            <div className="flex items-center gap-3.5">
-                                <div className={`p-2 rounded-xl transition-colors duration-200 ${isDark ? "bg-yellow-main/5 text-yellow-main group-hover:bg-yellow-main/10" : "bg-yellow-main/10 text-yellow-v1"
-                                    }`}>
-                                    <Bell className="w-5 h-5" />
-                                </div>
-                                <div className="text-left">
-                                    <p className="text-sm font-bold tracking-wide text-foreground">Notifications</p>
-                                    <p className="text-xs text-muted-foreground mt-0.5">Bids & game updates</p>
-                                </div>
-                            </div>
-                            <ChevronRight className="w-5 h-5 text-muted-foreground transition-transform duration-200 group-hover:translate-x-0.5" />
-                        </button>
-                        {/* Tournament History */}
-                        <button
-                            onClick={() => navigate("/tournament-history")}
-                            className={`w-full p-4 flex items-center justify-between rounded-2xl border transition-all duration-200 active:scale-[0.98] group relative z-10 ${isDark
-                                ? "bg-[#ffffff14] backdrop-blur-md border-[#ffffff52] shadow-[0_4px_24px_rgba(0,0,0,0.15)] hover:bg-white/[0.08] hover:border-white/10"
-                                : "bg-white/40 backdrop-blur-md border-black/5 hover:bg-white/60 shadow-sm"
-                                }`}
-                        >
-                            <div className="flex items-center gap-3.5">
-                                <div className={`p-2 rounded-xl transition-colors duration-200 ${isDark ? "bg-yellow-main/5 text-yellow-main group-hover:bg-yellow-main/10" : "bg-yellow-main/10 text-yellow-v1"
-                                    }`}>
-                                    <Trophy className="w-5 h-5" />
-                                </div>
-                                <div className="text-left">
-                                    <p className="text-sm font-bold tracking-wide text-foreground">Tournament History</p>
-                                    <p className="text-xs text-muted-foreground mt-0.5">Your past match records</p>
-                                </div>
-                            </div>
-                            <ChevronRight className="w-5 h-5 text-muted-foreground transition-transform duration-200 group-hover:translate-x-0.5" />
-                        </button>
-                        {/* Privacy Policy */}
-                        <button
-                            onClick={() => navigate("/privacy-policy")}
-                            className={`w-full p-4 flex items-center justify-between rounded-2xl border transition-all duration-200 active:scale-[0.98] group relative z-10 ${isDark
-                                ? "bg-[#ffffff14] backdrop-blur-md border-[#ffffff52] shadow-[0_4px_24px_rgba(0,0,0,0.15)] hover:bg-white/[0.08] hover:border-white/10"
-                                : "bg-white/40 backdrop-blur-md border-black/5 hover:bg-white/60 shadow-sm"
-                                }`}
-                        >
-                            <div className="flex items-center gap-3.5">
-                                <div className={`p-2 rounded-xl transition-colors duration-200 ${isDark ? "bg-yellow-main/5 text-yellow-main group-hover:bg-yellow-main/10" : "bg-yellow-main/10 text-yellow-v1"
-                                    }`}>
-                                    <Shield className="w-5 h-5" />
-                                </div>
-                                <div className="text-left">
-                                    <p className="text-sm font-bold tracking-wide text-foreground">Privacy Policy</p>
-                                    <p className="text-xs text-muted-foreground mt-0.5">Guidelines & user rules</p>
-                                </div>
-                            </div>
-                            <ChevronRight className="w-5 h-5 text-muted-foreground transition-transform duration-200 group-hover:translate-x-0.5" />
-                        </button>
-                        {/* Terms & Conditions */}
-                        <button
-                            onClick={() => navigate("/terms")}
-                            className={`w-full p-4 flex items-center justify-between rounded-2xl border transition-all duration-200 active:scale-[0.98] group relative z-10 ${isDark
-                                ? "bg-[#ffffff14] backdrop-blur-md border-[#ffffff52] shadow-[0_4px_24px_rgba(0,0,0,0.15)] hover:bg-white/[0.08] hover:border-white/10"
-                                : "bg-white/40 backdrop-blur-md border-black/5 hover:bg-white/60 shadow-sm"
-                                }`}
-                        >
-                            <div className="flex items-center gap-3.5">
-                                <div className={`p-2 rounded-xl transition-colors duration-200 ${isDark ? "bg-yellow-main/5 text-yellow-main group-hover:bg-yellow-main/10" : "bg-yellow-main/10 text-yellow-v1"
-                                    }`}>
-                                    <FileText className="w-5 h-5" />
-                                </div>
-                                <div className="text-left">
-                                    <p className="text-sm font-bold tracking-wide text-foreground">Terms & Conditions</p>
-                                    <p className="text-xs text-muted-foreground mt-0.5">User agreement documentation</p>
-                                </div>
-                            </div>
-                            <ChevronRight className="w-5 h-5 text-muted-foreground transition-transform duration-200 group-hover:translate-x-0.5" />
-                        </button>
-                        {/* Unsubscribe */}
-                        <button
-                            onClick={() => setShowUnsubscribePopup(true)}
-                            className={`w-full p-4 flex items-center justify-between rounded-2xl border transition-all duration-200 active:scale-[0.98] group relative z-10 ${isDark
-                                ? "bg-[#ffffff14] backdrop-blur-md border-[#ffffff52] hover:bg-red-500/[0.08]"
-                                : "bg-red-50/40 backdrop-blur-md border-red-100 hover:bg-red-50 shadow-sm"
-                                }`}
-                        >
-                            <div className="flex items-center gap-3.5">
-                                <div className="p-2 rounded-xl bg-yellow-main/10 text-yellow-main">
-                                    <LogOut className="w-5 h-5" />
-                                </div>
-                                <div className="text-left">
-                                    <p className="text-sm font-bold tracking-wide text-yellow-main">Unsubscribe</p>
-                                    <p className="text-xs text-yellow-main/70 mt-0.5">Leave the gaming service</p>
-                                </div>
-                            </div>
-                            <ChevronRight className="w-5 h-5 text-yellow-main/70 transition-transform duration-200 group-hover:translate-x-0.5" />
-                        </button>
-                    </div>
                     {/* Account Information Card */}
                     <div className="px-4 mt-6 max-w-md mx-auto">
                         <div className={`p-5 rounded-3xl border relative z-10 transition-all duration-200 ${isDark
                             ? "bg-[#ffffff14] backdrop-blur-md border-[#ffffff52] shadow-[0_4px_30px_rgba(0,0,0,0.2)]"
-                            : "bg-white/40 backdrop-blur-md border-black/5 shadow-sm"
+                            : "bg-white border-slate-100 shadow-[0_8px_24px_rgba(0,0,0,0.03)]"
                             }`}>
                             <h3 className="text-center text-xs font-black tracking-[1.5px] uppercase text-muted-foreground mb-4">
                                 Account Information
@@ -299,7 +182,7 @@ export default function SettingsPageNewStatic() {
                                         <p className="text-xs text-muted-foreground mt-0.5">Your active billing cycle</p>
                                     </div>
                                     {/* Pack Selection Buttons */}
-                                    <div className="flex bg-neutral-100 dark:bg-black p-1 rounded-full border border-slate-200/50 dark:border-white/5 flex-shrink-0">
+                                    <div className={`flex p-1 rounded-full border border-slate-200/50 dark:border-white/5 flex-shrink-0 ${isDark ? "bg-black" : "bg-[#f4f4f5]"}`}>
                                         <button
                                             onClick={() => setSubPack("Daily")}
                                             className={`px-3.5 py-1.5 rounded-full text-xs font-extrabold tracking-wide transition-all ${subPack === "Daily"
@@ -332,8 +215,8 @@ export default function SettingsPageNewStatic() {
                                     <button
                                         onClick={() => setSubStatus(subStatus === "Subscribed" ? "Unsubscribed" : "Subscribed")}
                                         className={`px-4 py-1.5 rounded-full text-xs font-black tracking-wider border transition-all flex-shrink-0 ${subStatus === "Subscribed"
-                                            ? "bg-yellow-main/10 border-yellow-main/20 text-yellow-main"
-                                            : "bg-neutral-500/10 border-neutral-500/20 text-neutral-500"
+                                            ? (isDark ? "bg-yellow-main/10 border-yellow-main/20 text-yellow-main" : "bg-white border-[#fecb13] text-[#fecb13] shadow-sm")
+                                            : (isDark ? "bg-neutral-500/10 border-neutral-500/20 text-neutral-500" : "bg-white border-slate-300 text-slate-500 shadow-sm")
                                             }`}
                                     >
                                         {subStatus}
@@ -342,6 +225,113 @@ export default function SettingsPageNewStatic() {
                             </div>
                         </div>
                     </div>
+
+                    {/* Navigation Menu Links */}
+                    <div className="px-4 mt-6 max-w-md mx-auto flex flex-col gap-3">
+
+                        {/* Unsubscribe */}
+                        <button
+                            onClick={() => setShowUnsubscribePopup(true)}
+                            className={`w-full p-4 flex items-center justify-between rounded-2xl border transition-all duration-200 active:scale-[0.98] group relative z-10 ${isDark
+                                ? "bg-[#ffffff14] backdrop-blur-md border-[#ffffff52] hover:bg-red-500/[0.08]"
+                                : "bg-white border-slate-100 hover:bg-slate-50 shadow-[0_8px_24px_rgba(0,0,0,0.03)]"
+                                }`}
+                        >
+                            <div className="flex items-center gap-3.5">
+                                <div className={`p-2 rounded-xl transition-colors duration-200 ${isDark ? "bg-yellow-main/10 text-yellow-main" : "bg-[#FFF9E6] text-[#fecb13]"}`}>
+                                    <LogOut className="w-5 h-5" />
+                                </div>
+                                <div className="text-left">
+                                    <p className={`text-sm font-bold tracking-wide transition-colors duration-200 ${isDark ? "text-yellow-main" : "text-slate-800"}`}>Unsubscribe</p>
+                                    <p className={`text-xs mt-0.5 ${isDark ? "text-yellow-main/70" : "text-muted-foreground"}`}>Leave the gaming service</p>
+                                </div>
+                            </div>
+                            <ChevronRight className={`w-5 h-5 transition-transform duration-200 group-hover:translate-x-0.5 ${isDark ? "text-yellow-main/70" : "text-slate-400"}`} />
+                        </button>
+
+                        {/* Notifications */}
+                        <button
+                            onClick={() => navigate("/notification")}
+                            className={`w-full p-4 flex items-center justify-between rounded-2xl border transition-all duration-200 active:scale-[0.98] group relative z-10 ${isDark
+                                ? "bg-[#ffffff14] backdrop-blur-md border-[#ffffff52] shadow-[0_4px_24px_rgba(0,0,0,0.15)] hover:bg-white/[0.08] hover:border-white/10"
+                                : "bg-white border-slate-100 hover:bg-slate-50 shadow-[0_8px_24px_rgba(0,0,0,0.03)]"
+                                }`}
+                        >
+                            <div className="flex items-center gap-3.5">
+                                <div className={`p-2 rounded-xl transition-colors duration-200 ${isDark ? "bg-yellow-main/5 text-yellow-main group-hover:bg-yellow-main/10" : "bg-[#FFF9E6] text-[#fecb13]"
+                                    }`}>
+                                    <Bell className="w-5 h-5" />
+                                </div>
+                                <div className="text-left">
+                                    <p className="text-sm font-bold tracking-wide text-foreground">Notifications</p>
+                                    <p className="text-xs text-muted-foreground mt-0.5">Bids & game updates</p>
+                                </div>
+                            </div>
+                            <ChevronRight className="w-5 h-5 text-slate-400 dark:text-muted-foreground transition-transform duration-200 group-hover:translate-x-0.5" />
+                        </button>
+                        {/* Tournament History */}
+                        <button
+                            onClick={() => navigate("/tournament-history")}
+                            className={`w-full p-4 flex items-center justify-between rounded-2xl border transition-all duration-200 active:scale-[0.98] group relative z-10 ${isDark
+                                ? "bg-[#ffffff14] backdrop-blur-md border-[#ffffff52] shadow-[0_4px_24px_rgba(0,0,0,0.15)] hover:bg-white/[0.08] hover:border-white/10"
+                                : "bg-white border-slate-100 hover:bg-slate-50 shadow-[0_8px_24px_rgba(0,0,0,0.03)]"
+                                }`}
+                        >
+                            <div className="flex items-center gap-3.5">
+                                <div className={`p-2 rounded-xl transition-colors duration-200 ${isDark ? "bg-yellow-main/5 text-yellow-main group-hover:bg-yellow-main/10" : "bg-[#FFF9E6] text-[#fecb13]"
+                                    }`}>
+                                    <Trophy className="w-5 h-5" />
+                                </div>
+                                <div className="text-left">
+                                    <p className="text-sm font-bold tracking-wide text-foreground">Tournament History</p>
+                                    <p className="text-xs text-muted-foreground mt-0.5">Your past match records</p>
+                                </div>
+                            </div>
+                            <ChevronRight className="w-5 h-5 text-slate-400 dark:text-muted-foreground transition-transform duration-200 group-hover:translate-x-0.5" />
+                        </button>
+                        {/* Privacy Policy */}
+                        <button
+                            onClick={() => navigate("/privacy-policy")}
+                            className={`w-full p-4 flex items-center justify-between rounded-2xl border transition-all duration-200 active:scale-[0.98] group relative z-10 ${isDark
+                                ? "bg-[#ffffff14] backdrop-blur-md border-[#ffffff52] shadow-[0_4px_24px_rgba(0,0,0,0.15)] hover:bg-white/[0.08] hover:border-white/10"
+                                : "bg-white border-slate-100 hover:bg-slate-50 shadow-[0_8px_24px_rgba(0,0,0,0.03)]"
+                                }`}
+                        >
+                            <div className="flex items-center gap-3.5">
+                                <div className={`p-2 rounded-xl transition-colors duration-200 ${isDark ? "bg-yellow-main/5 text-yellow-main group-hover:bg-yellow-main/10" : "bg-[#FFF9E6] text-[#fecb13]"
+                                    }`}>
+                                    <Shield className="w-5 h-5" />
+                                </div>
+                                <div className="text-left">
+                                    <p className="text-sm font-bold tracking-wide text-foreground">Privacy Policy</p>
+                                    <p className="text-xs text-muted-foreground mt-0.5">Guidelines & user rules</p>
+                                </div>
+                            </div>
+                            <ChevronRight className="w-5 h-5 text-slate-400 dark:text-muted-foreground transition-transform duration-200 group-hover:translate-x-0.5" />
+                        </button>
+                        {/* Terms & Conditions */}
+                        <button
+                            onClick={() => navigate("/terms")}
+                            className={`w-full p-4 flex items-center justify-between rounded-2xl border transition-all duration-200 active:scale-[0.98] group relative z-10 ${isDark
+                                ? "bg-[#ffffff14] backdrop-blur-md border-[#ffffff52] shadow-[0_4px_24px_rgba(0,0,0,0.15)] hover:bg-white/[0.08] hover:border-white/10"
+                                : "bg-white border-slate-100 hover:bg-slate-50 shadow-[0_8px_24px_rgba(0,0,0,0.03)]"
+                                }`}
+                        >
+                            <div className="flex items-center gap-3.5">
+                                <div className={`p-2 rounded-xl transition-colors duration-200 ${isDark ? "bg-yellow-main/5 text-yellow-main group-hover:bg-yellow-main/10" : "bg-[#FFF9E6] text-[#fecb13]"
+                                    }`}>
+                                    <FileText className="w-5 h-5" />
+                                </div>
+                                <div className="text-left">
+                                    <p className="text-sm font-bold tracking-wide text-foreground">Terms & Conditions</p>
+                                    <p className="text-xs text-muted-foreground mt-0.5">User agreement documentation</p>
+                                </div>
+                            </div>
+                            <ChevronRight className="w-5 h-5 text-muted-foreground transition-transform duration-200 group-hover:translate-x-0.5" />
+                        </button>
+
+                    </div>
+
                 </div>
             </div>
             {/* Avatar Modal */}

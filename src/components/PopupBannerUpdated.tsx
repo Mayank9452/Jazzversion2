@@ -25,7 +25,7 @@ const PopupBannerUpdated = () => {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          className="fixed inset-0 z-[90000] flex items-center justify-center bg-black/40 backdrop-blur-[2px] will-change-transform"
+          className="fixed inset-0 z-[90000] flex items-center justify-center bg-black/40 backdrop-blur-[7px] will-change-transform"
           style={{ marginTop: "0px" }}
           onClick={handleClose}
         >
@@ -35,7 +35,7 @@ const PopupBannerUpdated = () => {
             exit={{ opacity: 0, y: 30, scale: 0.95 }}
             transition={{ duration: 0.3, ease: "easeOut" }}
             onClick={(e) => e.stopPropagation()}
-            className="relative dark:bg-[#00000094] backdrop-blur-md rounded-[2.5rem] max-w-sm w-[85%] p-6 border border-white/20 shadow-[0_20px_50px_rgba(0,0,0,0.5)] flex flex-col items-center gap-4 overflow-hidden will-change-transform"
+            className="relative bg-[#282828c2] dark:bg-[#0000002b] backdrop-blur-md rounded-[2.5rem] max-w-sm w-[85%] p-6 border border-white/20 shadow-[0_20px_50px_rgba(0,0,0,0.5)] flex flex-col items-center gap-4 overflow-hidden will-change-transform"
           >
             {/* Glowing Corner Accents */}
             <div className="absolute top-0 left-0 w-12 h-12 border-t-2 border-l-2 border-yellow-500 rounded-tl-[2.5rem] pointer-events-none" />
@@ -63,7 +63,7 @@ const PopupBannerUpdated = () => {
               className="w-full text-center relative z-10"
             >
               {/* Image Visual */}
-              <div className="relative mb-4 flex justify-center">
+              <div className="relative mb-6 flex justify-center">
                 <motion.div
                   animate={{
                     y: [-4, 4, -4],
@@ -76,13 +76,13 @@ const PopupBannerUpdated = () => {
                   }}
                   className="relative group"
                 >
-                  <div className="absolute -inset-6 bg-gradient-to-r from-pink-500/20 via-purple-500/20 to-indigo-500/20 blur-xl rounded-full opacity-80 group-hover:opacity-100 transition-opacity" />
+                  <div className="absolute -inset-6 blur-xl rounded-full opacity-80 group-hover:opacity-100 transition-opacity" />
 
-                  <div className="relative w-24 h-24">
+                  <div className="relative w-24 h-16">
                     <div className="absolute inset-0 overflow-hidden">
                       <div className="w-full h-full flex items-center justify-center relative">
                         <img
-                          src="/assets/robotavatar/4.png"
+                          src="/assets/images/gamenow.png"
                           className="w-full h-full object-cover relative z-10"
                           alt="Welcome Robot"
                           loading="lazy"
@@ -110,8 +110,9 @@ const PopupBannerUpdated = () => {
               </div>
 
               {/* Title */}
-              <h2 className="text-xl font-bold text-[#ffc200] leading-tight mb-3">
-                Welcome to <br /> Gaming Premier League
+              <h2 className="text-lg font-bold leading-tight mb-3">
+                <span className="text-white leading-relaxed">Welcome to</span> <br />
+                <span className="text-[#ffc200] leading-relaxed">GAMENOW Premier League</span>
               </h2>
 
               {/* Description */}
@@ -122,7 +123,7 @@ const PopupBannerUpdated = () => {
               {/* Action Button */}
               <div className="w-full">
                 <Button
-                  className="h-12 w-full bg-gradient-to-r from-[#ffd43f] to-[#ffb800] hover:from-[#ffe066] hover:to-[#ffd014] text-[#0b2f5f] font-bold rounded-2xl shadow-lg border-t border-white/20 transition-all active:scale-95 text-base"
+                  className="h-12 w-full bg-gradient-to-r from-[#ffd43f] to-[#ffb800] hover:from-[#ffe066] hover:to-[#ffd014] text-[#0b2f5f] font-bold rounded-2xl shadow-lg border-2 border-white transition-all active:scale-95 text-base"
                   onClick={handleClose}
                 >
                   Let's Play

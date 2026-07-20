@@ -86,6 +86,7 @@ import { useSearchParams } from "react-router-dom";
 import LeaderboardJazzStatic2 from "@/components/LeaderboardJazzStatic2";
 import LeaderboardJazzStatic4 from "@/components/LeaderboardJazzStatic4";
 import LeaderboardJazzStatic5 from "@/components/LeaderboardJazzStatic5";
+import SpinWheelUpdatedVoucher from "@/components/SpinWheelUpdatedVoucher";
 
 const UserIdHandler = () => {
   const [searchParams] = useSearchParams();
@@ -144,6 +145,10 @@ const routes = [
   {
     path: "/settings",
     element: <SettingsPageNew />,
+  },
+  {
+    path: "/spinandwin",
+    element: <SpinWheelUpdatedVoucher />,
   },
   {
     path: "/settingsStatic",

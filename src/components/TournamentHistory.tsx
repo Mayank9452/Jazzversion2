@@ -4,7 +4,8 @@ import { useNavigate } from "react-router-dom";
 import {
   Trophy, Calendar, Clock, Gift, Gamepad2,
   ChevronLeft, ChevronRight, Award, Sword, Medal,
-  CheckCircle2, XCircle, Coins
+  CheckCircle2, XCircle, Coins,
+  PhoneCall
 } from "lucide-react";
 import { TopBar } from "./TopBar";
 import { BottomNavBar } from "./BottomNavBar";
@@ -124,6 +125,15 @@ const TournamentHistory: React.FC = () => {
     return sum;
   }, 0);
 
+  const totalWins = tournaments.reduce((sum: number, t: any) => {
+    const rank = String(t.player_reward_rank || "0");
+    const prize = Number(t.player_reward_prize || 0);
+    if ((rank !== "0" && rank !== "00" && rank !== "") || prize > 0) {
+      return sum + 1;
+    }
+    return sum;
+  }, 0);
+
   return (
     <>
       {/* <TopBar /> */}
@@ -158,8 +168,9 @@ const TournamentHistory: React.FC = () => {
               </div>
 
               {/* Right side: Modern Trophy Badge */}
-              <div className="w-10 h-10 flex-shrink-0 flex items-center justify-center border border-yellow-main/60 bg-yellow-main/5 dark:bg-[#2B2B2B]/80 rounded-xl shadow-[0_0_15px_rgba(254,203,19,0.15)]">
-                <Trophy className="w-4.5 h-4.5 text-yellow-main fill-yellow-main/10" />
+              <div className="w-10 h-10 flex-shrink-0 flex items-center justify-center  bg-yellow-main/5 dark:bg-[#2B2B2B]/80 rounded-xl shadow-[0_0_15px_rgba(254,203,19,0.15)]">
+                {/* <Trophy className="w-4.5 h-4.5 text-yellow-main fill-yellow-main/10" /> */}
+                <img src="/assets/users/1.png" className="w-4.5 h-4.5 text-yellow-main fill-yellow-main/10" alt="1.png" />
               </div>
 
             </div>
@@ -170,75 +181,150 @@ const TournamentHistory: React.FC = () => {
 
         {/* ── Stats row ── */}
         {tournaments.length > 0 && (
-          <div className="grid grid-cols-4 gap-1.5 px-4 pb-2">
-            {[
-              {
-                val: tournaments.length.toString(),
-                label: "Played",
-                color: "gold",
-                icon: <Gamepad2 className="w-6 h-6 text-yellow-main" />,
-                lineColor: "bg-yellow-main",
-                iconBg: "bg-yellow-main/20 border border-yellow-main/30",
-                valColor: "text-slate-800 dark:text-white"
-              },
-              {
-                val: totalCoins.toLocaleString(),
-                label: "Coins",
-                color: "gold",
-                icon: <Coins className="w-6 h-6 text-yellow-main" />,
-                lineColor: "bg-yellow-main",
-                iconBg: "bg-yellow-main/20 border border-yellow-main/30",
-                valColor: "text-slate-800 dark:text-white"
-              },
-              {
-                val: totalVouchers.toString(),
-                label: "Voucher",
-                color: "gold",
-                icon: <Gift className="w-6 h-6 text-yellow-main" />,
-                lineColor: "bg-yellow-main",
-                iconBg: "bg-yellow-main/20 border border-yellow-main/30",
-                valColor: "text-slate-800 dark:text-white"
-              },
-              {
-                val: totalTalktime.toString(),
-                label: "Talktime",
-                color: "gold",
-                icon: <Award className="w-6 h-6 text-yellow-main" />,
-                lineColor: "bg-yellow-main",
-                iconBg: "bg-yellow-main/20 border border-yellow-main/30",
-                valColor: "text-slate-800 dark:text-white"
-              },
-            ].map(({ val, label, icon, lineColor, valColor }) => {
-              const statCardBg = isDark
-                ? "bg-gradient-to-br from-[#2b2b2b6e] to-[#2b2b2b6e] backdrop-blur-xl"
-                : "bg-gradient-to-br from-white/75 to-white/35 backdrop-blur-xl shadow-[0_8px_32px_rgba(31,38,135,0.03)]";
-              const statCardBorder = isDark ? "border border-white/[0.06]" : "border border-slate-200/50 shadow-sm";
+          <div
+            className="overflow-hidden w-full px-4 pb-2.5 flex"
+            style={{
+              maskImage: "linear-gradient(to right, transparent, white 8%, white 92%, transparent)",
+              WebkitMaskImage: "linear-gradient(to right, transparent, white 8%, white 92%, transparent)"
+            }}
+          >
+            <motion.div
+              className="flex gap-2.5 shrink-0"
+              animate={{ x: ["0%", "-50%"] }}
+              transition={{
+                ease: "linear",
+                duration: 16,
+                repeat: Infinity,
+              }}
+              style={{
+                width: "max-content",
+                willChange: "transform"
+              }}
+            >
+              {[
+                {
+                  val: tournaments.length.toString(),
+                  label: "Played",
+                  color: "gold",
+                  icon: <Gamepad2 className="w-6 h-6 text-yellow-main" />,
+                  lineColor: "bg-yellow-main",
+                  iconBg: "bg-yellow-main/20 border border-yellow-main/30",
+                  valColor: "text-slate-800 dark:text-white"
+                },
+                {
+                  val: totalWins.toString(),
+                  label: "Won",
+                  color: "gold",
+                  icon: <Trophy className="w-6 h-6 text-yellow-main" />,
+                  lineColor: "bg-yellow-main",
+                  iconBg: "bg-yellow-main/20 border border-yellow-main/30",
+                  valColor: "text-slate-800 dark:text-white"
+                },
+                {
+                  val: totalCoins.toLocaleString(),
+                  label: "Coins",
+                  color: "gold",
+                  icon: <img src="/assets/images/img/gold-coin.png" className="w-6 h-6 object-contain" alt="Coins" />,
+                  lineColor: "bg-yellow-main",
+                  iconBg: "bg-yellow-main/20 border border-yellow-main/30",
+                  valColor: "text-slate-800 dark:text-white"
+                },
+                {
+                  val: totalVouchers.toString(),
+                  label: "Voucher",
+                  color: "gold",
+                  icon: <img src="/assets/images/giftkarte.png" className="w-6 h-6 object-contain" alt="Voucher" />,
+                  lineColor: "bg-yellow-main",
+                  iconBg: "bg-yellow-main/20 border border-yellow-main/30",
+                  valColor: "text-slate-800 dark:text-white"
+                },
+                {
+                  val: totalTalktime.toString(),
+                  label: "Topup",
+                  color: "gold",
+                  icon: <PhoneCall className="w-6 h-6 text-yellow-main" />,
+                  lineColor: "bg-yellow-main",
+                  iconBg: "bg-yellow-main/20 border border-yellow-main/30",
+                  valColor: "text-slate-800 dark:text-white"
+                },
+              ].concat([
+                {
+                  val: tournaments.length.toString(),
+                  label: "Played",
+                  color: "gold",
+                  icon: <Gamepad2 className="w-6 h-6 text-yellow-main" />,
+                  lineColor: "bg-yellow-main",
+                  iconBg: "bg-yellow-main/20 border border-yellow-main/30",
+                  valColor: "text-slate-800 dark:text-white"
+                },
+                {
+                  val: totalWins.toString(),
+                  label: "Won",
+                  color: "gold",
+                  icon: <Trophy className="w-6 h-6 text-yellow-main" />,
+                  lineColor: "bg-yellow-main",
+                  iconBg: "bg-yellow-main/20 border border-yellow-main/30",
+                  valColor: "text-slate-800 dark:text-white"
+                },
+                {
+                  val: totalCoins.toLocaleString(),
+                  label: "Coins",
+                  color: "gold",
+                  icon: <img src="/assets/images/img/gold-coin.png" className="w-6 h-6 object-contain" alt="Coins" />,
+                  lineColor: "bg-yellow-main",
+                  iconBg: "bg-yellow-main/20 border border-yellow-main/30",
+                  valColor: "text-slate-800 dark:text-white"
+                },
+                {
+                  val: totalVouchers.toString(),
+                  label: "Voucher",
+                  color: "gold",
+                  icon: <img src="/assets/images/giftkarte.png" className="w-6 h-6 object-contain" alt="Voucher" />,
+                  lineColor: "bg-yellow-main",
+                  iconBg: "bg-yellow-main/20 border border-yellow-main/30",
+                  valColor: "text-slate-800 dark:text-white"
+                },
+                {
+                  val: totalTalktime.toString(),
+                  label: "Topup",
+                  color: "gold",
+                  icon: <PhoneCall className="w-6 h-6 text-yellow-main" />,
+                  lineColor: "bg-yellow-main",
+                  iconBg: "bg-yellow-main/20 border border-yellow-main/30",
+                  valColor: "text-slate-800 dark:text-white"
+                },
+              ]).map(({ val, label, icon, lineColor, valColor }, idx) => {
+                const statCardBg = isDark
+                  ? "bg-gradient-to-br from-[#2b2b2b6e] to-[#2b2b2b6e] backdrop-blur-xl"
+                  : "bg-gradient-to-br from-white/75 to-white/35 backdrop-blur-xl shadow-[0_8px_32px_rgba(31,38,135,0.03)]";
+                const statCardBorder = isDark ? "border border-white/[0.06]" : "border border-slate-200/50 shadow-sm";
 
-              return (
-                <div
-                  key={label}
-                  className={`relative overflow-hidden rounded-2xl ${statCardBorder} ${statCardBg} pt-2 pb-3 px-1 flex flex-col items-center justify-center min-h-[90px] shadow-[0_8px_32px_rgba(0,0,0,0.02)] dark:shadow-[0_12px_40px_rgba(0,0,0,0.15)] gap-1`}
-                >
-                  {/* Top: Circular Icon */}
-                  <div className="w-8 h-8 rounded-full flex items-center justify-center mb-1">
-                    {icon}
+                return (
+                  <div
+                    key={`${label}-${idx}`}
+                    className={`relative overflow-hidden rounded-2xl ${statCardBorder} ${statCardBg} pt-2 pb-3 px-1 flex flex-col items-center justify-center min-h-[90px] w-[95px] flex-shrink-0 shadow-[0_8px_32px_rgba(0,0,0,0.02)] dark:shadow-[0_12px_40px_rgba(0,0,0,0.15)] gap-1`}
+                  >
+                    {/* Top: Circular Icon */}
+                    <div className="w-8 h-8 rounded-full flex items-center justify-center mb-1">
+                      {icon}
+                    </div>
+
+                    {/* Middle: Value */}
+                    <span className={`text-sm sm:text-base font-black ${valColor} tracking-wide leading-none truncate max-w-full px-1`}>
+                      {val}
+                    </span>
+
+                    {/* Bottom: Label */}
+                    <span className="text-[10px] sm:text-[10px] font-black text-slate-400 dark:text-slate-400 uppercase tracking-wider">
+                      {label}
+                    </span>
+
+                    {/* Underline Decoration */}
+                    <div className={`absolute bottom-0 left-1/2 -translate-x-1/2 w-6 h-[2px] ${lineColor} rounded-full`} />
                   </div>
-
-                  {/* Middle: Value */}
-                  <span className={`text-sm sm:text-base font-black ${valColor} tracking-wide leading-none truncate max-w-full px-1`}>
-                    {val}
-                  </span>
-
-                  {/* Bottom: Label */}
-                  <span className="text-[10px] sm:text-[10px] font-black text-slate-400 dark:text-slate-400 uppercase tracking-wider">
-                    {label}
-                  </span>
-
-                  {/* Underline Decoration */}
-                  <div className={`absolute bottom-0 left-1/2 -translate-x-1/2 w-6 h-[2px] ${lineColor} rounded-full`} />
-                </div>
-              );
-            })}
+                );
+              })}
+            </motion.div>
           </div>
         )}
 
@@ -358,7 +444,7 @@ const TournamentHistory: React.FC = () => {
                               <div className="flex items-center gap-1">
                                 {String(item.fee_reward_type || item.reward_type) === "2" ? (
                                   <>
-                                    <Gift className="w-4 h-4 text-yellow-main flex-shrink-0" />
+                                    <img src="/assets/images/img/giftkarte.png" className="w-4 h-4 object-contain flex-shrink-0" alt="Voucher" />
                                     <span className="text-xs sm:text-sm font-black text-purple-600 dark:text-purple-400 leading-none truncate">
                                       {prize} Voucher
                                     </span>
@@ -392,14 +478,14 @@ const TournamentHistory: React.FC = () => {
 
                           </div>
 
-                          <div className="flex flex-col">
+                          {/* <div className="flex flex-col">
                             <span className="text-[11px] sm:text-[11px] font-black text-slate-400 dark:text-slate-200  leading-none mb-1">
                               Category
                             </span>
                             <span className="text-sm sm:text-base font-bold text-[#14b8a6] dark:text-yellow-main tracking-wide">
                               Arcade
                             </span>
-                          </div>
+                          </div> */}
                         </div>
                       </div>
                     </motion.div>

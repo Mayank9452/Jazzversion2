@@ -23,7 +23,7 @@ export const LeaderboardJoinPopup: React.FC<LeaderboardJoinPopupProps> = ({
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 0 }}
                         onClick={onClose}
-                        className="absolute inset-0 backdrop-blur-[2px]"
+                        className="absolute inset-0 backdrop-blur-[7px]"
                     />
 
                     {/* Popup Content Box */}
@@ -32,7 +32,7 @@ export const LeaderboardJoinPopup: React.FC<LeaderboardJoinPopupProps> = ({
                         animate={{ scale: 1, opacity: 1, y: 0 }}
                         exit={{ scale: 0.9, opacity: 0, y: 30 }}
                         transition={{ type: "spring", damping: 20, stiffness: 300 }}
-                        className="bg-gradient-to-b from-[#1b1b1b00] to-[#0c0d14] border border-white/30 w-full max-w-sm rounded-[28px] p-6 shadow-2xl relative overflow-hidden text-white z-10 flex flex-col items-center text-center"
+                        className="border-2 border-white/30 w-full max-w-sm rounded-[28px] p-6 shadow-2xl relative overflow-hidden text-white z-10 flex flex-col items-center text-center"
                     >
                         {/* Golden/Cyan glowing circle in background */}
                         <div className="absolute -top-16 -left-16 w-32 h-32 bg-[#ffc200]/10 rounded-full blur-3xl pointer-events-none" />
@@ -46,12 +46,12 @@ export const LeaderboardJoinPopup: React.FC<LeaderboardJoinPopupProps> = ({
                             <X className="w-4 h-4" />
                         </button>
 
-                        <div className="w-16 h-16 rounded-2xl  flex items-center justify-center shadow-lg shadow-amber-500/5 mb-4 mt-2">
-                            <img src="/assets/images/trophy_lock.png" className="w-20 h-20 object-contain" alt="Trophy" />
+                        <div className="w-24 h-16 rounded-2xl  flex items-center justify-center shadow-lg shadow-amber-500/5 mb-4 mt-2">
+                            <img src="/assets/images/trophy_lock.png" className="w-full object-contain" alt="Trophy" />
                         </div>
 
                         {/* Message Title & Subtitle */}
-                        <h3 className="text-base font-extrabold uppercase tracking-wider text-[#ffc200] mb-2">
+                        <h3 className="text-xl font-bold text-[#ffc200] mb-2">
                             Leaderboard Locked
                         </h3>
                         <p className="text-sm text-slate-300 font-semibold leading-relaxed px-2">

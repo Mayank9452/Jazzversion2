@@ -326,7 +326,7 @@ export function BottomNavBar({
       id: "profile",
       label: t.navbarProfile || "Profile",
       icon: ProfileIcon,
-      path: ["/settings"],
+      path: ["/settingsStatic"],
     },
   ]
 
@@ -410,8 +410,8 @@ export function BottomNavBar({
                       {isPlayWin ? (
                         <div
                           className={cn(
-                            "absolute bottom-2 w-[80px] h-[80px] rounded-full border-4 flex items-center justify-center transition-all duration-300 overflow-hidden bg-brand-gradient border-brand-black-100 hover:brightness-110",
-                            "shadow-[0_0_20px_rgba(255,202,32,0.65)]",
+                            "absolute bottom-1 w-[80px] h-[80px] rounded-full border-4 flex items-center justify-center transition-all duration-300 overflow-hidden bg-brand-gradient border-brand-black-100 dark:border-white hover:brightness-110",
+                            "shadow-[0_0_9px_rgba(255,202,32,0.65)]",
                             isActive && "ring-2 ring-brand-yellow-100/60 scale-105"
                           )}
 

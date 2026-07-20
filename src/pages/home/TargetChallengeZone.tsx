@@ -2,7 +2,7 @@ import React from "react";
 import { Autoplay, EffectCoverflow } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { useNavigate } from "react-router-dom";
-import { Target, Play, Phone } from "lucide-react";
+import { Target, Play, Phone, PhoneCall } from "lucide-react";
 import { useTheme } from "next-themes";
 
 // Import Swiper styles for coverflow
@@ -65,7 +65,7 @@ export const TargetChallengeZone: React.FC = () => {
     };
 
     return (
-        <div className="mb-6 overflow-visible mt-2">
+        <div className="mb-9 overflow-visible mt-2">
             {/* Carousel Slider with 3D Coverflow Effect */}
             <div className="w-full overflow-visible">
                 <Swiper
@@ -73,8 +73,8 @@ export const TargetChallengeZone: React.FC = () => {
                     grabCursor={true}
                     centeredSlides={true}
                     loop={true}
-                    slidesPerView={2.5}
-                    spaceBetween={0}
+                    slidesPerView={2.2}
+                    spaceBetween={3}
                     autoplay={{
                         delay: 3000,
                         disableOnInteraction: false,
@@ -101,8 +101,8 @@ export const TargetChallengeZone: React.FC = () => {
                                 {({ isActive }) => (
                                     <div
                                         className={`w-full flex flex-col transition-all duration-500 ease-out ${isActive
-                                            ? "opacity-100 scale-110"
-                                            : "opacity-90 scale-[1]"
+                                            ? "opacity-100 scale-[1.1]"
+                                            : "opacity-90 scale-[0.7]"
                                             }`}
                                     >
                                         {/* Game Image Banner */}
@@ -124,7 +124,7 @@ export const TargetChallengeZone: React.FC = () => {
                                                     e.stopPropagation();
                                                     handlePlayClick();
                                                 }}
-                                                className="absolute bottom-2 right-2 z-10 w-7 h-7 rounded-full flex items-center justify-center bg-brand-gradient hover:brightness-110 text-brand-black-100 shadow-md active:scale-90 transition-all shrink-0 pointer-events-auto"
+                                                className="absolute bottom-2 right-2 z-10 w-7 h-7 rounded-full flex items-center justify-center bg-brand-gradient hover:brightness-110 text-brand-black-100 shadow-md active:scale-90 transition-all shrink-0 pointer-events-auto dark:border-2 border-white"
                                                 aria-label="Play Game"
                                             >
                                                 <Play className="h-3.5 w-3.5 fill-brand-black-100 text-brand-black-100 ml-0.5" />
@@ -140,7 +140,7 @@ export const TargetChallengeZone: React.FC = () => {
                                         </div>
 
                                         {/* Reward Row */}
-                                        <div className="flex justify-center items-center px-2 py-1.5 mt-1 bg-slate-100/80 dark:bg-white/[0.03] border border-slate-200/60 dark:border-white/[0.04] rounded-xl whitespace-nowrap min-h-[36px]">
+                                        <div className="flex justify-center items-center px-2 py-1.5 mt-1 bg-slate-100/80 dark:bg-white/[0.03] border border-slate-200/60 dark:border-white/[0.04] rounded-xl whitespace-nowrap min-h-[36px] shadow-[inset_0_-4px_24px_rgba(0,0,0,0.2),inset_0_-2px_1px_rgba(78,78,78,1),inset_0px_0_0px_rgba(255,255,255,0.6),inset_0px_0_0px_rgba(255,255,255,0.6)]">
                                             {rewardType === 0 && (
                                                 <div className="font-extrabold flex items-center gap-0.5 text-sm sm:text-xs">
                                                     <img
@@ -156,7 +156,7 @@ export const TargetChallengeZone: React.FC = () => {
                                             {rewardType === 1 && (
                                                 <div className="font-extrabold flex items-center gap-0.5 text-xs sm:text-[10px]">
                                                     <img
-                                                        src="/assets/images/giftkarte.webp"
+                                                        src="/assets/images/giftkarte.png"
                                                         alt="voucher"
                                                         className="w-6 h-6 object-contain"
                                                     />
@@ -167,7 +167,7 @@ export const TargetChallengeZone: React.FC = () => {
                                             )}
                                             {rewardType === 2 && (
                                                 <div className="font-extrabold flex items-center gap-1 text-xs sm:text-[10px]">
-                                                    <Phone className="h-3.5 w-3.5 text-brand-gold-100 dark:text-brand-yellow-100 shrink-0" />
+                                                    <PhoneCall className="h-3.5 w-3.5 text-brand-gold-100 dark:text-brand-yellow-100 shrink-0" />
                                                     <span className="tracking-wide text-slate-800 dark:text-brand-yellow-100 font-bold">
                                                         {game.prize}
                                                     </span>

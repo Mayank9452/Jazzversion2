@@ -190,7 +190,7 @@ const HeroSliderTwoNewTesting: React.FC<HeroSliderTwoProps> = ({ heroGames, onCo
                                                 </div>
 
                                                 {/* Prize Pool & Play Button */}
-                                                <div className="flex justify-between items-center px-2.5 py-2 border-t border-slate-200/50 dark:border-white/[0.04] bg-slate-50 dark:bg-white/[0.01]">
+                                                <div className="flex justify-between items-center mx-1 px-2.5 py-2 border-t border-slate-200/50 dark:border-white/[0.04] bg-slate-50 dark:bg-white/[0.03] rounded-b-[24px] shadow-[inset_0_-4px_24px_rgba(0,0,0,0.2),inset_0_-2px_1px_rgba(78,78,78,1),inset_0px_0_0px_rgba(255,255,255,0.6),inset_0px_0_0px_rgba(255,255,255,0.6)]">
                                                     <div className="flex items-center gap-2">
                                                         <img
                                                             src="/assets/images/img/gold-coin.png"
@@ -198,8 +198,8 @@ const HeroSliderTwoNewTesting: React.FC<HeroSliderTwoProps> = ({ heroGames, onCo
                                                             alt="Coin"
                                                         />
                                                         <div>
-                                                            <div className="text-[11px] text-slate-400 dark:text-white font-bold leading-none">Prize Pool</div>
-                                                            <div className="text-sm font-black text-brand-gold-100 dark:text-brand-yellow-100 mt-1 leading-none">
+                                                            <div className="text-xs text-slate-800 dark:text-white font-bold leading-none tracking-[0.5px]">Prize Pool</div>
+                                                            <div className="text-sm font-black text-brand-gold-100 dark:text-brand-yellow-100 mt-1 tracking-[0.5px]">
                                                                 {(!game?.fee_reward_type || game?.fee_reward_type === "1") && `${Number(game?.fee_prize_1).toLocaleString()} Coins`}
                                                                 {game?.fee_reward_type === "2" && `${game?.fee_prize_1} GB Data`}
                                                                 {game?.fee_reward_type === "3" && `Rs ${game?.fee_prize_1}`}
@@ -208,7 +208,7 @@ const HeroSliderTwoNewTesting: React.FC<HeroSliderTwoProps> = ({ heroGames, onCo
                                                     </div>
 
                                                     <button
-                                                        className="px-3 py-2 rounded-xl flex items-center justify-center gap-1 bg-brand-gradient hover:brightness-110 text-brand-black-100 text-sm font-black shadow-md active:scale-90 transition-all shrink-0 pointer-events-auto "
+                                                        className="px-3 py-2 rounded-xl flex items-center justify-center gap-1 bg-brand-gradient hover:brightness-110 text-brand-black-100 text-sm font-black shadow-md active:scale-90 transition-all shrink-0 pointer-events-auto dark:border-2 border-white"
                                                         aria-label="Play Game"
                                                     >
                                                         <Play className="w-3.5 h-3.5 fill-current" />

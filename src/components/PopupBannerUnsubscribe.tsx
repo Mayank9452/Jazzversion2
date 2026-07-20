@@ -53,7 +53,7 @@ const PopupBannerUnsubscribe = ({
             exit={{ opacity: 0, y: 30, scale: 0.95 }}
             transition={{ duration: 0.3, ease: "easeOut" }}
             onClick={(e) => e.stopPropagation()}
-            className="relative dark:bg-[#00000094] backdrop-blur-md rounded-[2.5rem] max-w-sm w-[85%] p-6 border border-white/20 shadow-[0_20px_50px_rgba(0,0,0,0.5)] flex flex-col items-center gap-4 overflow-hidden will-change-transform"
+            className="relative bg-[#282828c2] dark:bg-[#00000094] backdrop-blur-md rounded-[2.5rem] max-w-sm w-[85%] p-6 border border-white/20 shadow-[0_20px_50px_rgba(0,0,0,0.5)] flex flex-col items-center gap-4 overflow-hidden will-change-transform"
           >
             {/* Glowing Corner Accents */}
             {/* Top Left */}
@@ -70,8 +70,8 @@ const PopupBannerUnsubscribe = ({
 
 
             {/* Luminous Ambient Glows (Aurora Effect) - Optimized blur */}
-            <div className="absolute top-[-20%] right-[-20%] w-[80%] h-[80%] bg-pink-500/10 blur-[60px] rounded-full pointer-events-none animate-pulse" />
-            <div className="absolute bottom-[-20%] left-[-20%] w-[80%] h-[80%] bg-blue-500/10 blur-[80px] rounded-full pointer-events-none animate-pulse" />
+            {/* <div className="absolute top-[-20%] right-[-20%] w-[80%] h-[80%] bg-pink-500/10 blur-[60px] rounded-full pointer-events-none animate-pulse" />
+            <div className="absolute bottom-[-20%] left-[-20%] w-[80%] h-[80%] bg-blue-500/10 blur-[80px] rounded-full pointer-events-none animate-pulse" /> */}
 
             {/* Close Button */}
             <button
@@ -103,7 +103,7 @@ const PopupBannerUnsubscribe = ({
                   className="relative group"
                 >
                   {/* Outer Atmosphere Glow - Reduced blur */}
-                  <div className="absolute -inset-6 bg-gradient-to-r from-pink-500/20 via-purple-500/20 to-indigo-500/20 blur-xl rounded-full opacity-80 group-hover:opacity-100 transition-opacity" />
+                  <div className="absolute -inset-6 blur-xl rounded-full opacity-80 group-hover:opacity-100 transition-opacity" />
 
                   <div className="relative w-24 h-24">
                     {/* The Container */}
@@ -153,7 +153,7 @@ const PopupBannerUnsubscribe = ({
 
               <div className="mt-8 space-y-3">
                 <Button
-                  className="text-base h-12 w-full bg-gradient-to-r from-[#ffd43f] to-[#ffb800] hover:from-[#ffe066] hover:to-[#ffd014] text-[#0b2f5f] font-bold rounded-2xl shadow-lg shadow-pink-900/20 border-t border-white/20 transition-all active:scale-95 "
+                  className="text-base h-12 w-full bg-gradient-to-r from-[#ffd43f] to-[#ffb800] hover:from-[#ffe066] hover:to-[#ffd014] text-[#0b2f5f] font-bold rounded-2xl shadow-lg shadow-pink-900/20 border-2 border-white transition-all active:scale-95 "
                   onClick={() => {
                     onConfirm?.();
                     onClose?.();

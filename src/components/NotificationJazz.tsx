@@ -117,7 +117,7 @@ export default function NotificationJazz() {
 
   const [loading, setLoading] = useState<boolean>(false);
   const [notificationPageData, setNotificationPageData] = useState<any | null>(null);
-  const [activeTab, setActiveTab] = useState<"all" | "rewards" | "system">("all");
+  const [activeTab, setActiveTab] = useState<"all" | "rewards" | "profile">("all");
 
   const fetchNotificationApi = async () => {
     setLoading(true);
@@ -253,7 +253,7 @@ export default function NotificationJazz() {
 
     return {
       icon: <Settings className={`w-5 h-5 ${isDark ? 'text-brand-gray-400 drop-shadow-[0_0_8px_rgba(117,117,117,0.3)]' : 'text-brand-gray-500'}`} />,
-      type: "SYSTEM",
+      type: "PROFILE",
       titleColor: isDark ? "text-brand-gray-400" : "text-brand-gray-500 font-extrabold",
       cardBorder: isDark
         ? "border-brand-gray-300/15 hover:border-brand-gray-300/35 shadow-[0_4px_20px_rgba(117,117,117,0.02)]"
@@ -276,7 +276,7 @@ export default function NotificationJazz() {
     return notificationPageData.list.filter((n: any) => {
       const meta = getNotificationMeta(n.notify_title, n.notify_description, isDark);
       if (activeTab === "rewards") return meta.type === "REWARD" || meta.type === "BONUS";
-      if (activeTab === "system") return meta.type === "SYSTEM" || meta.type === "ALERT";
+      if (activeTab === "profile") return meta.type === "PROFILE" || meta.type === "ALERT";
       return true;
     });
   }, [notificationPageData, activeTab, isDark]);
@@ -306,11 +306,11 @@ export default function NotificationJazz() {
               <ChevronLeft className="w-4.5 h-4.5" />
             </button>
             <span className="text-base font-black tracking-wider uppercase text-foreground">{t?.notifications || "Notifications"}</span>
-            {notificationPageData?.list?.length > 0 && (
+            {/* {notificationPageData?.list?.length > 0 && (
               <span className="inline-flex items-center justify-center px-2 py-0.5 bg-brand-gradient text-brand-black-100 text-[9px] font-black rounded-full shadow-md shadow-brand-yellow-100/20">
                 {notificationPageData.list.length}
               </span>
-            )}
+            )} */}
           </div>
           {notificationPageData?.list?.length > 0 ? (
             <button
@@ -331,7 +331,7 @@ export default function NotificationJazz() {
               {[
                 { id: "all", label: "All" },
                 { id: "rewards", label: "Rewards" },
-                { id: "system", label: "System" },
+                { id: "profile", label: "Profile" },
               ].map((tab) => {
                 const isActive = activeTab === tab.id;
                 return (

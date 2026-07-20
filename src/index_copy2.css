@@ -6,29 +6,65 @@
 
 @layer base {
 
-    /* Light (300) */
+    /* Outfit Light (300) */
     @font-face {
-        font-family: "Futura";
-        src: url("/assets/fonts/Futura Light BT.otf") format("opentype");
+        font-family: "Outfit";
+        src: url("/assets/fonts/outfit-latin-300-normal.woff2") format("woff2");
         font-weight: 300;
         font-style: normal;
         font-display: swap;
     }
 
-    /* Book (400) */
+    /* Outfit Regular (400) */
     @font-face {
-        font-family: "Futura";
-        src: url("/assets/fonts/Futura Book BT.otf") format("opentype");
+        font-family: "Outfit";
+        src: url("/assets/fonts/outfit-latin-400-normal.woff2") format("woff2");
         font-weight: 400;
         font-style: normal;
         font-display: swap;
     }
 
-    /* Medium (500) */
+    /* Outfit Medium (500) */
     @font-face {
-        font-family: "Futura";
-        src: url("/assets/fonts/Futura Medium BT.otf") format("opentype");
+        font-family: "Outfit";
+        src: url("/assets/fonts/outfit-latin-500-normal.woff2") format("woff2");
         font-weight: 500;
+        font-style: normal;
+        font-display: swap;
+    }
+
+    /* Outfit SemiBold (600) */
+    @font-face {
+        font-family: "Outfit";
+        src: url("/assets/fonts/outfit-latin-600-normal.woff2") format("woff2");
+        font-weight: 600;
+        font-style: normal;
+        font-display: swap;
+    }
+
+    /* Outfit Bold (700) */
+    @font-face {
+        font-family: "Outfit";
+        src: url("/assets/fonts/outfit-latin-700-normal.woff2") format("woff2");
+        font-weight: 700;
+        font-style: normal;
+        font-display: swap;
+    }
+
+    /* Outfit ExtraBold (800) */
+    @font-face {
+        font-family: "Outfit";
+        src: url("/assets/fonts/outfit-latin-800-normal.woff2") format("woff2");
+        font-weight: 800;
+        font-style: normal;
+        font-display: swap;
+    }
+
+    /* Outfit Black (900) */
+    @font-face {
+        font-family: "Outfit";
+        src: url("/assets/fonts/outfit-latin-900-normal.woff2") format("woff2");
+        font-weight: 900;
         font-style: normal;
         font-display: swap;
     }
@@ -289,7 +325,7 @@
 
     body {
         @apply bg-background text-foreground overflow-x-hidden;
-        font-family: "Futura", sans-serif;
+        font-family: "Outfit", sans-serif;
     }
 }
 

@@ -15,20 +15,20 @@ export const HexagonalAvatarFrame = ({
   return (
     <div className="relative w-28 h-28 flex items-center justify-center">
       {/* Outer Hexagon frame SVG */}
-      <svg className="absolute inset-0 w-full h-full filter drop-shadow-[0_0_6px_rgba(128,199,197,0.35)]" viewBox="0 0 100 100" fill="none">
+      <svg className="absolute inset-0 w-full h-full filter drop-shadow-[0_0_6px_rgba(254,203,19,0.2)]" viewBox="0 0 100 100" fill="none">
         <polygon
           points="50,3 91,26.5 91,73.5 50,97 9,73.5 9,26.5"
-          stroke="url(#avatar-grad)"
+          stroke={isDark ? "url(#avatar-grad)" : "var(--color-yellow-main)"}
           strokeWidth="2"
         />
         <polygon
           points="50,7 87,28.5 87,71.5 50,93 13,71.5 13,28.5"
-          stroke={isDark ? "var(--color-blue-main)" : "var(--color-blue-v2)"}
+          stroke={isDark ? "var(--color-blue-main)" : "var(--color-yellow-main)"}
           strokeWidth="1.5"
         />
         <polygon
           points="50,8 86,29 86,71 50,92 14,71 14,29"
-          stroke="var(--color-aqua-main)"
+          stroke={isDark ? "var(--color-aqua-main)" : "var(--color-yellow-main)"}
           strokeOpacity={0.35}
           strokeWidth="1"
           strokeDasharray="4 2"
@@ -43,7 +43,7 @@ export const HexagonalAvatarFrame = ({
       </svg>
 
       {/* Circle avatar image in center */}
-      <div className={`w-[72px] h-[72px] rounded-full overflow-hidden relative z-10 border-2 ${isDark ? "bg-blue-main/30 border-blue-main/50" : "bg-blue-main/10 border-blue-main/30"
+      <div className={`w-[72px] h-[72px] rounded-full overflow-hidden relative z-10 border-2 ${isDark ? "bg-blue-main/30 border-blue-main/50" : "bg-white border-[#fecb13]/50"
         }`}>
         <img src={imageUrl} alt="Avatar" className="w-full h-full object-cover" />
       </div>

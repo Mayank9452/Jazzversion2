@@ -1,571 +1,222 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
-import { BottomNavBar } from "./BottomNavBar";
+import { Gem, Menu } from "lucide-react";
 
-interface Player {
-    rank: number;
-    name: string;
-    score: number;
-    avatar: string;
-    isCurrentUser?: boolean;
-}
+/* ------------------------------------------------------------------ */
+/*  Data — swap this out for your real API / store data               */
+/* ------------------------------------------------------------------ */
 
-const players: Player[] = [
-    {
-        rank: 1,
-        name: "Jordyn Kenter",
-        score: 96239,
-        avatar: "/assets/users/1.png",
-    },
+const TOP_THREE = [
     {
         rank: 2,
         name: "Alena Bator",
         score: 84787,
-        avatar: "/assets/users/2.png",
+        avatar: "https://api.dicebear.com/9.x/adventurer/svg?seed=Alena&backgroundColor=b6e3f4",
+    },
+    {
+        rank: 1,
+        name: "Jordyn Kenter",
+        score: 96239,
+        avatar: "https://api.dicebear.com/9.x/adventurer/svg?seed=Jordyn&backgroundColor=ffd5a6",
     },
     {
         rank: 3,
         name: "Carl Oliver",
         score: 82139,
-        avatar: "/assets/users/3.png",
-    },
-    {
-        rank: 4,
-        name: "Davis Curtis",
-        score: 80857,
-        avatar: "/assets/users/4.png",
-    },
-    {
-        rank: 5,
-        name: "Isona Othid",
-        score: 76128,
-        avatar: "/assets/users/5.png",
-    },
-    {
-        rank: 6,
-        name: "Makenna George",
-        score: 71667,
-        avatar: "/assets/users/6.png",
-        isCurrentUser: true,
-    },
-    {
-        rank: 7,
-        name: "Kianna Batista",
-        score: 68439,
-        avatar: "/assets/users/7.png",
-    },
-    {
-        rank: 8,
-        name: "Maxith Cullep",
-        score: 66981,
-        avatar: "/assets/users/8.png",
-    },
-    {
-        rank: 9,
-        name: "Zain Dias",
-        score: 50546,
-        avatar: "/assets/users/9.png",
+        avatar: "https://api.dicebear.com/9.x/adventurer/svg?seed=Carl&backgroundColor=e0c3fc",
     },
 ];
 
-const formatScore = (value: number) => value.toLocaleString();
+const REST = [
+    { rank: 4, name: "Davis Curtis", score: 80857, avatar: "https://api.dicebear.com/9.x/adventurer/svg?seed=Davis&backgroundColor=cfe8f9" },
+    { rank: 5, name: "Isona Othid", score: 76128, avatar: "https://api.dicebear.com/9.x/adventurer/svg?seed=Isona&backgroundColor=f6d6e8" },
+    { rank: 6, name: "Makenna George", score: 71667, avatar: "https://api.dicebear.com/9.x/adventurer/svg?seed=Makenna&backgroundColor=cde7d8" },
+    { rank: 7, name: "Kianna Batista", score: 68439, avatar: "https://api.dicebear.com/9.x/adventurer/svg?seed=Kianna&backgroundColor=f9d8c2" },
+    { rank: 8, name: "Maxith Cullep", score: 66981, avatar: "https://api.dicebear.com/9.x/adventurer/svg?seed=Maxith&backgroundColor=d6d3f0" },
+    { rank: 9, name: "Zain Dias", score: 50546, avatar: "https://api.dicebear.com/9.x/adventurer/svg?seed=Zain&backgroundColor=cfe0f7" },
+];
 
-const getOrdinal = (rank: number) => {
-    if (rank === 1) return "1st";
-    if (rank === 2) return "2nd";
-    if (rank === 3) return "3rd";
-    return `${rank}th`;
-};
+/* ------------------------------------------------------------------ */
+/*  Small pieces                                                       */
+/* ------------------------------------------------------------------ */
 
-const first = players.find((p) => p.rank === 1)!;
-const second = players.find((p) => p.rank === 2)!;
-const third = players.find((p) => p.rank === 3)!;
-
-const restPlayers = players.filter((p) => p.rank > 3);
-
-/* ===========================================================
-    ICONS
-=========================================================== */
-
-const LogoIcon = ({ className = "" }: { className?: string }) => (
-    <svg
-        className={className}
-        viewBox="0 0 24 24"
-        fill="none"
-        xmlns="http://www.w3.org/2000/svg"
-    >
-        <circle
-            cx="12"
-            cy="12"
-            r="9"
-            stroke="#ff5da8"
-            strokeWidth="2"
-        />
-        <circle
-            cx="12"
-            cy="12"
-            r="5"
-            stroke="#ff5da8"
-            strokeWidth="1.6"
-        />
-    </svg>
-);
-
-const MenuIcon = ({ className = "" }: { className?: string }) => (
-    <svg
-        className={className}
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="#00E7FF"
-        strokeWidth="2.4"
-        strokeLinecap="round"
-    >
-        <line x1="4" y1="6" x2="20" y2="6" />
-        <line x1="8" y1="12" x2="20" y2="12" />
-        <line x1="12" y1="18" x2="20" y2="18" />
-    </svg>
-);
-
-const DiamondIcon = ({ className = "" }: { className?: string }) => (
-    <svg
-        className={className}
-        viewBox="0 0 20 20"
-        fill="#27D980"
-    >
-        <path d="M10 1L1 10L10 19L19 10L10 1Z" />
-    </svg>
-);
-
-/* ===========================================================
-    LAUREL BADGE
-=========================================================== */
-
-const RankBadge = ({
-    rank,
-    gold = false,
-}: {
-    rank: number;
-    gold?: boolean;
-}) => {
-    return (
-        <div className="relative w-16 h-16 flex items-center justify-center">
-
-            <svg
-                className="absolute inset-0"
-                viewBox="0 0 64 64"
-            >
-                {/* Left */}
-                <path
-                    d="M22 50
-             C10 42 9 24 22 14"
-                    stroke={gold ? "#FDBA2D" : "#D4D8E8"}
-                    strokeWidth="2.2"
-                    fill="none"
-                    strokeLinecap="round"
-                />
-
-                {/* Right */}
-                <path
-                    d="M42 50
-             C54 42 55 24 42 14"
-                    stroke={gold ? "#FDBA2D" : "#D4D8E8"}
-                    strokeWidth="2.2"
-                    fill="none"
-                    strokeLinecap="round"
-                />
-
-                {[
-                    [20, 42],
-                    [18, 35],
-                    [18, 28],
-                    [20, 21],
-                    [44, 42],
-                    [46, 35],
-                    [46, 28],
-                    [44, 21],
-                ].map(([x, y], i) => (
-                    <circle
-                        key={i}
-                        cx={x}
-                        cy={y}
-                        r="1.8"
-                        fill={gold ? "#FDBA2D" : "#D4D8E8"}
-                    />
-                ))}
-            </svg>
-
-            <div className="absolute text-white font-bold text-lg">
-                {getOrdinal(rank)}
-            </div>
-        </div>
-    );
-};
-
-/* ===========================================================
-    PODIUM CARD
-=========================================================== */
-
-interface PodiumCardProps {
-    player: Player;
-    position: 1 | 2 | 3;
+function fmt(n) {
+    return n.toLocaleString("en-US");
 }
 
-const PodiumCard: React.FC<PodiumCardProps> = ({
-    player,
-    position,
-}) => {
-    const center = position === 1;
-
-    const gradient =
-        position === 1
-            ? "from-[#E5B541] via-[#8B6428] to-[#35241A]"
-            : position === 2
-                ? "from-[#538FFF] via-[#274E91] to-[#1A1736]"
-                : "from-[#C97A2B] via-[#7D4318] to-[#261623]";
-
+/** Gold laurel-wreath medal with the rank number in the middle */
+function LaurelBadge({ rank, size = "md" }) {
+    const dims = size === "lg" ? "w-16 h-16 text-lg" : "w-11 h-11 text-sm";
     return (
-        <div className="flex flex-col items-center">
-
-            <div
-                className={`
-        relative
-        overflow-hidden
-        rounded-t-3xl
-        rounded-b-2xl
-        bg-gradient-to-b
-        ${gradient}
-        border
-        border-white/10
-        shadow-2xl
-        ${center
-                        ? "w-[118px] h-[190px]"
-                        : "w-[100px] h-[165px]"
-                    }
-      `}
-            >
-                {/* Laurel */}
-
-                <div className="absolute top-2 left-1/2 -translate-x-1/2 z-20">
-                    <RankBadge
-                        rank={player.rank}
-                        gold={position !== 2}
-                    />
-                </div>
-
-                {/* Glow */}
-
-                <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent" />
-
-                {/* Avatar */}
-
-                <div className="absolute bottom-0 left-1/2 -translate-x-1/2">
-
-                    <img
-                        src={player.avatar}
-                        alt={player.name}
-                        className={`
-            object-cover
-            ${center
-                                ? "w-[110px] h-[110px]"
-                                : "w-[95px] h-[95px]"
-                            }
-          `}
-                    />
-
-                </div>
-            </div>
-
-            <div className="mt-3 text-center">
-
-                <div
-                    className={`${center ? "text-[14px]" : "text-[13px]"
-                        } font-semibold text-white`}
-                >
-                    {player.name}
-                </div>
-
-                <div className="mt-1 flex items-center justify-center gap-1">
-
-                    <DiamondIcon className="w-3.5 h-3.5" />
-
-                    <span className="text-[#7CFFB8] font-bold">
-                        {formatScore(player.score)}
-                    </span>
-
-                </div>
-
-            </div>
-
+        <div className={`relative ${dims} flex items-center justify-center shrink-0`}>
+            <svg viewBox="0 0 100 100" className="absolute inset-0 w-full h-full">
+                <defs>
+                    <linearGradient id={`gold-${rank}`} x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" stopColor="#fde68a" />
+                        <stop offset="55%" stopColor="#f5b642" />
+                        <stop offset="100%" stopColor="#c9820f" />
+                    </linearGradient>
+                </defs>
+                {/* left branch */}
+                <g opacity="0.95">
+                    {[...Array(5)].map((_, i) => {
+                        const angle = -70 + i * 22;
+                        const rad = (angle * Math.PI) / 180;
+                        const cx = 50 + Math.cos(rad) * 34;
+                        const cy = 50 + Math.sin(rad) * 34;
+                        return (
+                            <ellipse
+                                key={`l-${i}`}
+                                cx={cx}
+                                cy={cy}
+                                rx="7"
+                                ry="3.2"
+                                transform={`rotate(${angle + 90} ${cx} ${cy})`}
+                                fill={`url(#gold-${rank})`}
+                            />
+                        );
+                    })}
+                    {[...Array(5)].map((_, i) => {
+                        const angle = 250 - i * 22;
+                        const rad = (angle * Math.PI) / 180;
+                        const cx = 50 + Math.cos(rad) * 34;
+                        const cy = 50 + Math.sin(rad) * 34;
+                        return (
+                            <ellipse
+                                key={`r-${i}`}
+                                cx={cx}
+                                cy={cy}
+                                rx="7"
+                                ry="3.2"
+                                transform={`rotate(${angle - 90} ${cx} ${cy})`}
+                                fill={`url(#gold-${rank})`}
+                            />
+                        );
+                    })}
+                </g>
+                <circle cx="50" cy="50" r="24" fill={`url(#gold-${rank})`} stroke="#8a5a05" strokeWidth="1.5" />
+            </svg>
+            <span className="relative font-bold text-[#5c3a06]" style={{ fontSize: size === "lg" ? 18 : 13 }}>
+                {rank}
+                <sup className="text-[9px]">{rank === 1 ? "st" : rank === 2 ? "nd" : rank === 3 ? "rd" : "th"}</sup>
+            </span>
         </div>
     );
-};
+}
 
-/* ===========================================================
-    MAIN COMPONENT
-=========================================================== */
+function ScorePill({ score, className = "" }) {
+    return (
+        <div className={`flex items-center gap-1 ${className}`}>
+            <Gem className="w-3.5 h-3.5 text-emerald-400" fill="currentColor" strokeWidth={0} />
+            <span className="text-emerald-400 font-semibold text-sm">{fmt(score)}</span>
+        </div>
+    );
+}
 
-export default function LeaderboardJazzStatic3() {
-    const navigate = useNavigate();
+/* ------------------------------------------------------------------ */
+/*  Podium card (top 3)                                                */
+/* ------------------------------------------------------------------ */
+
+function PodiumCard({ person }) {
+    const isFirst = person.rank === 1;
+
+    const bg = isFirst
+        ? "bg-gradient-to-b from-[#f8c94a] via-[#e8942f] to-[#a8438f]"
+        : person.rank === 2
+            ? "bg-gradient-to-b from-[#3d6fd6] via-[#2c4fa8] to-[#1b2a63]"
+            : "bg-gradient-to-b from-[#c05fd6] via-[#8a3fae] to-[#3a1f63]";
 
     return (
-        <>
+        <div className={`flex flex-col items-center ${isFirst ? "-mt-6" : "mt-6"}`}>
+            <LaurelBadge rank={person.rank} size={isFirst ? "lg" : "md"} />
             <div
-                className="
-          min-h-screen
-          max-w-md
-          mx-auto
-          relative
-          overflow-hidden
-          text-white
-          pb-28
-        "
+                className={`relative mt-[-14px] rounded-3xl ${bg} px-3 pt-6 pb-3 flex flex-col items-center shadow-lg ${isFirst ? "w-28" : "w-24"
+                    }`}
+            >
+                <div
+                    className={`rounded-full overflow-hidden ring-4 ring-white/20 bg-black/20 ${isFirst ? "w-16 h-16" : "w-12 h-12"
+                        }`}
+                >
+                    <img src={person.avatar} alt={person.name} className="w-full h-full object-cover" />
+                </div>
+                <p className="mt-2 text-white text-[11px] font-medium text-center leading-tight truncate w-full">
+                    {person.name}
+                </p>
+                <ScorePill score={person.score} className="mt-1" />
+            </div>
+        </div>
+    );
+}
+
+/* ------------------------------------------------------------------ */
+/*  List row (rank 4+)                                                 */
+/* ------------------------------------------------------------------ */
+
+function ListRow({ person }) {
+    return (
+        <div className="flex items-center gap-3 px-4 py-3">
+            <div className="w-11 h-11 rounded-full overflow-hidden shrink-0 bg-white/10">
+                <img src={person.avatar} alt={person.name} className="w-full h-full object-cover" />
+            </div>
+            <div className="flex-1 min-w-0">
+                <p className="text-white text-sm font-medium truncate">{person.name}</p>
+                <ScorePill score={person.score} className="mt-0.5" />
+            </div>
+            <LaurelBadge rank={person.rank} />
+        </div>
+    );
+}
+
+/* ------------------------------------------------------------------ */
+/*  Main screen                                                        */
+/* ------------------------------------------------------------------ */
+
+export default function Leaderboard() {
+    const [second, first, third] = TOP_THREE;
+
+    return (
+        <div className="min-h-screen w-full bg-[#120c24] flex justify-center">
+            <div
+                className="relative w-full max-w-sm min-h-screen text-white overflow-hidden"
                 style={{
                     background:
-                        "radial-gradient(circle at top,#55206F 0%,#28124B 35%,#120B27 70%,#090514 100%)",
+                        "radial-gradient(120% 60% at 50% 0%, #3a2a63 0%, #1c1435 45%, #120c24 100%)",
                 }}
             >
-                {/* Background Glow */}
-                <div className="absolute -top-44 left-1/2 -translate-x-1/2 w-[420px] h-[420px] rounded-full bg-fuchsia-500/20 blur-[120px]" />
+                {/* status bar spacer */}
+                <div className="h-10" />
 
-                {/* Header */}
-                <header className="relative z-20 flex items-center justify-between px-5 pt-6 pb-8">
-
-                    <button
-                        onClick={() => navigate(-1)}
-                        className="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center active:scale-95"
-                    >
-                        <LogoIcon className="w-6 h-6" />
+                {/* header */}
+                <div className="flex items-center justify-between px-5 pb-2">
+                    <button className="w-9 h-9 rounded-full border border-white/15 flex items-center justify-center">
+                        <div className="w-2.5 h-2.5 rounded-full border-2 border-pink-400" />
                     </button>
-
-                    <h1 className="text-xl font-bold tracking-wide">
-                        Leaderboard
-                    </h1>
-
-                    <button
-                        className="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center"
-                    >
-                        <MenuIcon className="w-6 h-6" />
+                    <h1 className="text-lg font-semibold tracking-wide">Leaderboard</h1>
+                    <button className="w-9 h-9 flex items-center justify-center text-sky-300">
+                        <Menu className="w-5 h-5" />
                     </button>
+                </div>
 
-                </header>
+                {/* podium */}
+                <div className="flex items-end justify-center gap-3 px-5 pt-6 pb-8">
+                    <PodiumCard person={second} />
+                    <PodiumCard person={first} />
+                    <PodiumCard person={third} />
+                </div>
 
-                {/* ==========================
-              PODIUM
-        =========================== */}
-
-                <section className="relative px-4">
-
-                    {/* Connected Base */}
-                    <div
-                        className="
-              absolute
-              left-4
-              right-4
-              bottom-10
-              h-[145px]
-              rounded-[34px]
-              bg-white/[0.04]
-              border
-              border-white/10
-              backdrop-blur-xl
-            "
-                    />
-
-                    <div className="relative z-10 flex items-end justify-center gap-3">
-
-                        {/* SECOND */}
-
-                        <PodiumCard
-                            player={second}
-                            position={2}
-                        />
-
-                        {/* FIRST */}
-
-                        <div className="-mb-2">
-                            <PodiumCard
-                                player={first}
-                                position={1}
-                            />
-                        </div>
-
-                        {/* THIRD */}
-
-                        <PodiumCard
-                            player={third}
-                            position={3}
-                        />
-
+                {/* list panel */}
+                <div className="relative bg-[#1a1330]/90 backdrop-blur rounded-t-[32px] pt-4 pb-6 min-h-[300px]">
+                    {/* pull handle / active tab indicator */}
+                    <div className="flex justify-center mb-3">
+                        <div className="w-16 h-1.5 rounded-full bg-emerald-400" />
                     </div>
 
-                </section>
-
-                {/* ==========================
-            LEADERBOARD CARD
-        =========================== */}
-
-                <section
-                    className="
-            relative
-            mt-10
-            rounded-t-[34px]
-            bg-white/[0.06]
-            backdrop-blur-xl
-            border-t
-            border-white/10
-            px-4
-            pt-7
-            pb-8
-          "
-                >
-
-                    {/* Green Accent */}
-
-                    <div className="absolute -top-2 left-1/2 -translate-x-1/2">
-
-                        <div className="relative">
-
-                            <div
-                                className="
-                  w-14
-                  h-1
-                  rounded-full
-                  bg-emerald-400
-                  shadow-[0_0_20px_#3AF79E]
-                "
-                            />
-
-                            <div
-                                className="
-                  absolute
-                  -top-2
-                  left-1/2
-                  -translate-x-1/2
-                  w-0
-                  h-0
-                  border-l-[8px]
-                  border-r-[8px]
-                  border-b-[10px]
-                  border-l-transparent
-                  border-r-transparent
-                  border-b-emerald-400
-                "
-                            />
-
-                        </div>
-
-                    </div>
-
-                    {/* List */}
-
-                    <div className="space-y-3 mt-3">
-
-                        {restPlayers.map((player) => (
-                            <div
-                                key={player.rank}
-                                className="
-                  flex
-                  items-center
-                  justify-between
-                  rounded-2xl
-                  border
-                  border-white/5
-                  bg-white/[0.03]
-                  px-4
-                  py-3
-                  backdrop-blur-md
-                "
-                            >
-
-                                {/* Left */}
-
-                                <div className="flex items-center gap-3">
-
-                                    <img
-                                        src={player.avatar}
-                                        alt={player.name}
-                                        className="
-                      w-12
-                      h-12
-                      rounded-full
-                      object-cover
-                      border-2
-                      border-white/10
-                    "
-                                    />
-
-                                    <div>
-
-                                        <div className="flex items-center gap-2">
-
-                                            <span className="font-semibold text-[15px]">
-                                                {player.name}
-                                            </span>
-
-                                            {player.isCurrentUser && (
-                                                <span
-                                                    className="
-                            text-[10px]
-                            uppercase
-                            px-2
-                            py-0.5
-                            rounded-full
-                            bg-emerald-500/20
-                            text-emerald-300
-                            font-bold
-                          "
-                                                >
-                                                    You
-                                                </span>
-                                            )}
-
-                                        </div>
-
-                                        <div className="flex items-center gap-1 mt-1">
-
-                                            <DiamondIcon className="w-3 h-3" />
-
-                                            <span className="text-sm font-bold text-emerald-300">
-                                                {formatScore(player.score)}
-                                            </span>
-
-                                        </div>
-
-                                    </div>
-
-                                </div>
-
-                                {/* Right */}
-
-                                <RankBadge rank={player.rank} />
-
-                            </div>
+                    <div className="divide-y divide-white/5">
+                        {REST.map((person) => (
+                            <ListRow key={person.rank} person={person} />
                         ))}
-
                     </div>
-
-                    {/* Bottom Padding */}
-                    <div className="h-6" />
-                </section>
-
-                {/* Bottom Gradient */}
-                <div
-                    className="
-            pointer-events-none
-            absolute
-            bottom-0
-            left-0
-            right-0
-            h-32
-            bg-gradient-to-t
-            from-black/50
-            to-transparent
-          "
-                />
+                </div>
             </div>
-
-            {/* Bottom Navigation */}
-            <BottomNavBar />
-        </>
+        </div>
     );
 }

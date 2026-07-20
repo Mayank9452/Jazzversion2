@@ -7,7 +7,7 @@ import "swiper/css/pagination";
 import SectionLabel from "./SectionLabel";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { Gamepad2, Play, Clock, Trophy, Phone } from "lucide-react";
+import { Gamepad2, Play, Clock, Trophy, Phone, PhoneCall } from "lucide-react";
 import { useTheme } from "next-themes";
 
 interface DailyTournament {
@@ -106,7 +106,7 @@ const DailyTournamentMixedTesting: React.FC<DailyTournament> = ({
                                                         e.stopPropagation();
                                                         handleGameClick(game);
                                                     }}
-                                                    className="absolute bottom-2 right-2 z-10 w-7 h-7 rounded-full flex items-center justify-center bg-brand-gradient hover:brightness-110 text-brand-black-100 shadow-md active:scale-90 transition-all shrink-0 pointer-events-auto"
+                                                    className="absolute bottom-2 right-2 z-10 w-7 h-7 rounded-full flex items-center justify-center bg-brand-gradient hover:brightness-110 text-brand-black-100 shadow-md active:scale-90 transition-all shrink-0 pointer-events-auto dark:border-2 border-white"
                                                     aria-label="Play Game"
                                                 >
                                                     <Play className="h-3.5 w-3.5 fill-brand-black-100 text-brand-black-100 ml-0.5" />
@@ -133,7 +133,7 @@ const DailyTournamentMixedTesting: React.FC<DailyTournament> = ({
                                             </div>
 
                                             {/* Reward Row */}
-                                            <div className="flex justify-center items-center px-2 py-1.5 mt-1 bg-slate-100/80 dark:bg-white/[0.03] border border-slate-200/60 dark:border-white/[0.04] rounded-xl whitespace-nowrap min-h-[36px]">
+                                            <div className="flex justify-center items-center px-2 py-1.5 mt-1 bg-slate-100/80 dark:bg-white/[0.03] border border-slate-200/60 dark:border-white/[0.04] rounded-xl whitespace-nowrap min-h-[36px] shadow-[inset_0_-4px_24px_rgba(0,0,0,0.2),inset_0_-2px_1px_rgba(78,78,78,1),inset_0px_0_0px_rgba(255,255,255,0.6),inset_0px_0_0px_rgba(255,255,255,0.6)]">
                                                 {rewardType === 0 && (
                                                     <div className="font-extrabold flex items-center gap-1.5 text-sm sm:text-xs">
                                                         <img
@@ -160,7 +160,7 @@ const DailyTournamentMixedTesting: React.FC<DailyTournament> = ({
                                                 )}
                                                 {rewardType === 2 && (
                                                     <div className="font-extrabold flex items-center gap-1.5 text-xs sm:text-[10px]">
-                                                        <Phone className="h-3.5 w-3.5 text-brand-gold-100 dark:text-brand-yellow-100 shrink-0" />
+                                                        <PhoneCall className="h-3.5 w-3.5 text-brand-gold-100 dark:text-brand-yellow-100 shrink-0" />
                                                         <span className="tracking-wide text-slate-800 dark:text-brand-yellow-100 font-bold">
                                                             Rs 100000 Topup
                                                         </span>
