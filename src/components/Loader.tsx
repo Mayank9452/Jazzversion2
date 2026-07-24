@@ -296,10 +296,10 @@ export default function WaitLoader({ isOverlay = false }: { isOverlay?: boolean 
               animate={{ y: 0, opacity: 1 }}
               exit={{ y: -12, opacity: 0 }}
               transition={{ duration: 0.4, ease: "easeOut" }}
-              className="text-white text-base font-extrabold tracking-[0.15em] uppercase"
+              className="text-white text-base font-bold tracking-[0.15em] "
               style={{
                 textShadow: "0 0 10px rgba(6,182,212,0.4)",
-                fontFamily: "'Atom Sans', sans-serif",
+                // fontFamily: "'Atom Sans', sans-serif",
               }}
             >
               {phrases[index]}

@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useRef } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
+import { useAppSelector } from "@/app/hooks";
 import {
     ArrowLeft,
     HelpCircle,
@@ -29,6 +30,7 @@ const HeroTournamentPageStatic: React.FC = () => {
     const location = useLocation();
     const navigate = useNavigate();
     const { theme } = useTheme();
+    const avatar = useAppSelector((state) => state.auth.user?.profile_image) || "9.png";
 
     const [isDarkTheme, setIsDarkTheme] = useState(true);
 
@@ -285,7 +287,7 @@ const HeroTournamentPageStatic: React.FC = () => {
                     >
                         {/* 1. Complete Image Banner Header - Full Width, Native Aspect ratio */}
                         <div
-                            className={`relative w-full aspect-[285/380] flex items-center justify-center border-b ${isDarkTheme ? "bg-[#191919] border-white/10" : "bg-[#fffbeb] border-slate-100"}`}
+                            className={`relative w-full aspect-[285/380] flex items-center justify-center  ${isDarkTheme ? "bg-[#191919] border-white/10" : "bg-[#fffbeb] border-slate-100"}`}
                             style={{ background: isDarkTheme ? "" : "radial-gradient(circle, rgba(254,203,19,0.15) 0%, rgba(255,255,255,1) 70%)" }}
                         >
                             {/* Complete Image */}
@@ -298,7 +300,7 @@ const HeroTournamentPageStatic: React.FC = () => {
                             <div className="absolute inset-x-0 top-0 p-3 flex items-center justify-between z-20 w-full">
                                 <button
                                     onClick={handleClickBack}
-                                    className={`w-10 h-10 rounded-xl flex items-center justify-center shadow-md active:scale-95 transition-all pointer-events-auto cursor-pointer shrink-0 ${isDarkTheme ? "bg-black/60 backdrop-blur-md border border-white/10 text-white hover:bg-black/75" : "bg-white border border-slate-200 text-slate-700 hover:bg-slate-50"}`}
+                                    className={`w-10 h-10 rounded-xl flex items-center justify-center shadow-md active:scale-95 transition-all pointer-events-auto cursor-pointer shrink-0 ${isDarkTheme ? "bg-[#32323299] backdrop-blur-md border border-white/10 text-white hover:bg-black/75" : "bg-white border border-slate-200 text-slate-700 hover:bg-slate-50"}`}
                                 >
                                     <ArrowLeft className="w-5 h-5" />
                                 </button>
@@ -307,17 +309,29 @@ const HeroTournamentPageStatic: React.FC = () => {
                                     {info?.game_name || "Pistol Bottle Battle"}
                                 </h2>
 
-                                <div className="w-10" />
+                                <div
+                                    onClick={() => navigate("/settingsStatic")}
+                                    className={`w-10 h-10 flex-shrink-0 flex items-center justify-center rounded-xl overflow-hidden border cursor-pointer active:scale-95 transition-all hover:scale-105 shadow-md ${isDarkTheme ? "bg-[#32323299] backdrop-blur-md border-white/10" : "bg-white border-slate-200"}`}
+                                >
+                                    <img
+                                        src={`/assets/users/${avatar}`}
+                                        className="w-full h-full object-cover"
+                                        alt="Avatar"
+                                        onError={(e) => {
+                                            (e.target as HTMLImageElement).src = "/assets/users/9.png";
+                                        }}
+                                    />
+                                </div>
                             </div>
                         </div>
 
                         {/* Glassmorphic Content overlapping the bottom 20% of the image header container */}
                         <div className="px-2 -mt-[58%] relative z-20 space-y-5">
-                            <div className={`rounded-3xl border shadow-xl p-5 space-y-5 relative ${isDarkTheme ? "bg-[#252525]/90 border-white/[0.08] text-white" : "bg-white border-slate-100 text-slate-800"}`}>
+                            <div className={`rounded-3xl border shadow-xl p-5 space-y-5 relative ${isDarkTheme ? "bg-[#252525]/40 border-white/[0.08] text-white" : "bg-[#ebebebcc] border-slate-100 text-slate-800"}`}>
                                 {/* Play Button floating on top right, overlapping bottom of image banner header */}
                                 <motion.button
                                     onClick={handlePlayLiveTournament}
-                                    className={`absolute -top-6 right-6 h-10 px-5 rounded-full bg-gradient-to-r from-[#ffca20] to-[#dfa208] text-[#191919] hover:brightness-110 active:scale-95 transition-all flex items-center justify-center gap-1.5 z-30 cursor-pointer border font-black text-sm shadow-md ${isDarkTheme ? "border-white/20" : "border-yellow-main/20"}`}
+                                    className={`absolute -top-6 right-6 h-10 px-5 rounded-full bg-gradient-to-r from-[#ffca20] to-[#dfa208] text-[#191919] hover:brightness-110 active:scale-95 transition-all flex items-center justify-center gap-1.5 z-30 cursor-pointer border-2 font-black text-sm shadow-md ${isDarkTheme ? "border-white" : "border-white"}`}
                                     animate={{
                                         scale: [0.95, 1.05, 0.95]
                                     }}
@@ -344,7 +358,7 @@ const HeroTournamentPageStatic: React.FC = () => {
                                 </div> */}
 
                                 {/* Stats Grid row (Prize Pool, Leaderboard, Players Joined) */}
-                                <div className={`grid grid-cols-3 gap-1 rounded-2xl p-2 text-center border ${isDarkTheme ? "bg-[#1f1f1f] border-white/[0.05]" : "bg-[#f8f9fa] border-slate-200/50"}`}>
+                                <div className={`grid grid-cols-3 gap-1 rounded-2xl p-2 text-center border ${isDarkTheme ? "bg-[#1f1f1f] border-white/[0.05]" : "bg-[#f8f9fa] border-slate-200/50 shadow-sm"}`}>
                                     {/* Prize Pool Column */}
                                     <div className="flex flex-col items-center justify-center">
                                         <Trophy className="w-4 h-4 text-[#dfa208] mb-1" />
@@ -378,7 +392,7 @@ const HeroTournamentPageStatic: React.FC = () => {
                                 </div>
 
                                 {/* Full-width Tournament Timer Badge */}
-                                <div className={`border rounded-2xl p-3.5 flex flex-col items-center justify-center gap-2.5 ${isDarkTheme ? "bg-[#1f1f1f] border-white/[0.05]" : "bg-[#f8f9fa] border-slate-200/50"}`}>
+                                <div className={`border rounded-2xl p-3.5 flex flex-col items-center justify-center gap-2.5 ${isDarkTheme ? "bg-[#1f1f1f] border-white/[0.05]" : "bg-[#f8f9fa] border-slate-200/50 shadow-sm"}`}>
                                     <div className="flex items-center gap-1 text-sm font-bold">
                                         <Clock className="w-4 h-4 text-[#dfa208]" />
                                         <span className={isDarkTheme ? "text-white/80" : "text-slate-700"}>Ends In</span>

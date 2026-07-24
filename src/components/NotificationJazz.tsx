@@ -1,15 +1,18 @@
 import React, { useEffect, useState, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
+import { useAppSelector } from "@/app/hooks";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   Bell,
   Trash2,
   ChevronLeft,
+  ArrowLeft,
   Calendar,
   Settings,
   Trophy,
   Gift,
   AlertTriangle,
+  LoaderPinwheel,
 } from "lucide-react";
 import { TopBar } from "./TopBar";
 import { BottomNavBar } from "./BottomNavBar";
@@ -114,6 +117,9 @@ export default function NotificationJazz() {
   const { t } = useLanguage();
   const { resolvedTheme } = useTheme();
   const isDark = resolvedTheme === "dark";
+  const { data: homeData } = useAppSelector((state) => state.home);
+  const userInfo = homeData?.data?.userInfo;
+  const avatar = userInfo?.user_profile_img ? `${userInfo.user_profile_img}.png` : "9.png";
 
   const [loading, setLoading] = useState<boolean>(false);
   const [notificationPageData, setNotificationPageData] = useState<any | null>(null);
@@ -183,7 +189,7 @@ export default function NotificationJazz() {
       text.includes("congratulations")
     ) {
       return {
-        icon: <Trophy className={`w-5 h-5 ${isDark ? 'text-brand-yellow-100 drop-shadow-[0_0_8px_rgba(255,202,32,0.5)]' : 'text-brand-gold-100'}`} />,
+        icon: <LoaderPinwheel className={`w-5 h-5 animate-spin ${isDark ? 'text-brand-yellow-100 drop-shadow-[0_0_8px_rgba(255,202,32,0.5)]' : 'text-brand-gold-100'}`} />,
         type: "REWARD",
         titleColor: isDark ? "text-brand-yellow-100" : "text-brand-gold-100 font-extrabold",
         cardBorder: isDark
@@ -252,9 +258,18 @@ export default function NotificationJazz() {
     }
 
     return {
-      icon: <Settings className={`w-5 h-5 ${isDark ? 'text-brand-gray-400 drop-shadow-[0_0_8px_rgba(117,117,117,0.3)]' : 'text-brand-gray-500'}`} />,
+      icon: (
+        <img
+          src={`/assets/users/${avatar}`}
+          className="w-5 h-5 rounded-full object-cover"
+          alt="Avatar"
+          onError={(e) => {
+            (e.target as HTMLImageElement).src = "/assets/users/9.png";
+          }}
+        />
+      ),
       type: "PROFILE",
-      titleColor: isDark ? "text-brand-gray-400" : "text-brand-gray-500 font-extrabold",
+      titleColor: "text-brand-yellow-100 font-extrabold",
       cardBorder: isDark
         ? "border-brand-gray-300/15 hover:border-brand-gray-300/35 shadow-[0_4px_20px_rgba(117,117,117,0.02)]"
         : "border-brand-gray-300/25 hover:border-brand-gray-300/45 shadow-sm shadow-brand-gray-300/5",
@@ -264,7 +279,7 @@ export default function NotificationJazz() {
       capsuleBg: isDark
         ? "bg-brand-gray-300/5 border border-brand-gray-300/15 text-brand-gray-400"
         : "bg-brand-gray-300/10 border border-brand-gray-300/20 text-brand-gray-500",
-      accentBar: "from-brand-gray-400 via-brand-gray-300 to-brand-black-200",
+      accentBar: "from-brand-yellow-100 via-brand-yellow-200 to-brand-gold-100",
       glowColor: "rgba(117, 117, 117, 0.15)",
       hoverShadow: "group-hover:shadow-[0_0_20px_rgba(117,117,117,0.12)]",
     };
@@ -295,36 +310,58 @@ export default function NotificationJazz() {
           }}
         />
 
-        {/* Custom Navigation Header */}
-        <div className="flex items-center justify-between px-4 py-4 relative z-10 border-b border-border bg-white/50 dark:bg-card/40 backdrop-blur-md">
-          <div className="flex items-center gap-3">
-            <button
-              onClick={() => navigate(-1)}
-              className="flex items-center justify-center w-8 h-8 rounded-full border border-border bg-white/40 dark:bg-card/40 hover:bg-brand-gradient hover:text-brand-black-100 transition-colors text-foreground shadow-sm"
-              title="Back"
-            >
-              <ChevronLeft className="w-4.5 h-4.5" />
-            </button>
-            <span className="text-base font-black tracking-wider uppercase text-foreground">{t?.notifications || "Notifications"}</span>
-            {/* {notificationPageData?.list?.length > 0 && (
-              <span className="inline-flex items-center justify-center px-2 py-0.5 bg-brand-gradient text-brand-black-100 text-[9px] font-black rounded-full shadow-md shadow-brand-yellow-100/20">
-                {notificationPageData.list.length}
-              </span>
-            )} */}
+        {/* ── Premium Glassmorphic Header Card ── */}
+        <div className="relative z-10">
+          <div className={`relative overflow-hidden p-4 flex items-center justify-between gap-3 border-b transition-all duration-300 ${isDark ? "bg-gradient-to-br from-[#2B2B2B]/40 to-[#191919]/30 border-white/[0.06] shadow-[0_12px_40px_rgba(0,0,0,0.2)]" : "bg-gradient-to-br from-white/70 to-white/40 border-slate-200/60 shadow-sm"} backdrop-blur-xl`}>
+            <div className="w-full flex justify-between items-center gap-5">
+              <div>
+                <button
+                  onClick={() => navigate(-1)}
+                  className={`w-10 h-10 rounded-xl flex items-center justify-center shadow-md active:scale-95 transition-all pointer-events-auto cursor-pointer shrink-0 ${isDark ? "bg-[#32323299] backdrop-blur-md border border-white/10 text-white hover:bg-black/75" : "bg-white border border-slate-200 text-slate-700 hover:bg-slate-50"}`}
+                  title="Back"
+                >
+                  <ArrowLeft className="w-5 h-5" />
+                </button>
+              </div>
+              <div className="flex-1 text-center">
+                <h1 className="text-base sm:text-lg font-black tracking-wide uppercase text-slate-800 dark:text-white leading-tight">
+                  {t?.notifications || "Notifications"}
+                </h1>
+                <p className="text-[11px] sm:text-xs font-bold text-slate-500 dark:text-muted-foreground mt-1 leading-none">
+                  Stay updated with your rewards & updates
+                </p>
+              </div>
+              {/* Right side: Profile avatar in rounded-xl container */}
+              <div
+                onClick={() => navigate("/settingsStatic")}
+                className={`w-10 h-10 flex-shrink-0 flex items-center justify-center rounded-xl overflow-hidden border cursor-pointer active:scale-95 transition-all hover:scale-105 shadow-md ${isDark ? "bg-[#32323299] backdrop-blur-md border-white/10" : "bg-white border-slate-200"}`}
+              >
+                <img
+                  src={`/assets/users/${avatar}`}
+                  className="w-full h-full object-cover"
+                  alt="Avatar"
+                  onError={(e) => {
+                    (e.target as HTMLImageElement).src = "/assets/users/9.png";
+                  }}
+                />
+              </div>
+            </div>
           </div>
-          {notificationPageData?.list?.length > 0 ? (
-            <button
-              onClick={clearnotificationApi}
-              className="text-xs font-black uppercase tracking-widest text-brand-gray-400 dark:text-white/60 hover:text-brand-gold-100 dark:hover:text-brand-yellow-100 transition-colors"
-            >
-              {t?.clearAll || "Clear"}
-            </button>
-          ) : (
-            <div className="w-8" />
-          )}
         </div>
 
         <div className="pt-6 px-4 max-w-md mx-auto relative z-10">
+          {/* Relocated Clear All Button */}
+          {notificationPageData?.list?.length > 0 && (
+            <div className="flex justify-end mb-4">
+              <button
+                onClick={clearnotificationApi}
+                className="text-xs font-black uppercase tracking-widest text-[#dfa208] dark:text-[#ffca20] hover:brightness-110 active:scale-95 transition-all bg-yellow-main/10 dark:bg-yellow-main/5 px-4 py-2 border border-[#dfa208]/20 rounded-xl"
+              >
+                {t?.clearAll || "Clear All"}
+              </button>
+            </div>
+          )}
+
           {/* Sliding Tab Selector */}
           {notificationPageData?.list?.length > 0 && (
             <div className="flex p-1 bg-brand-black-200/5 dark:bg-brand-black-200/40 backdrop-blur-md rounded-full border border-border/40 max-w-sm mx-auto mb-6 relative">
@@ -377,7 +414,7 @@ export default function NotificationJazz() {
                         exit={{ opacity: 0, scale: 0.95 }}
                         transition={{ duration: 0.2, delay: Math.min(index * 0.04, 0.25) }}
                         layout
-                        className={`relative w-full rounded-3xl bg-white dark:bg-card/45 backdrop-blur-md border ${meta.cardBorder} p-4 flex gap-4 transition-all duration-300 hover:translate-y-[-2px] group ${meta.hoverShadow}`}
+                        className={`relative w-full rounded-r-3xl bg-white dark:bg-card/45 backdrop-blur-md border ${meta.cardBorder} p-4 flex gap-4 transition-all duration-300 hover:translate-y-[-2px] group ${meta.hoverShadow}`}
                       >
                         {/* Left vertical Accent Bar */}
                         <div className={`absolute left-0 top-0 bottom-0 w-1 bg-gradient-to-b ${meta.accentBar} rounded-l-3xl z-10`} />
@@ -461,13 +498,13 @@ export default function NotificationJazz() {
                         : `No notifications found in ${activeTab} category.`}
                     </p>
 
-                    <button
+                    {/* <button
                       onClick={() => activeTab === "all" ? navigate("/") : setActiveTab("all")}
                       className="bg-brand-gradient text-brand-black-100 text-[10px] font-black tracking-widest uppercase rounded-full px-6 py-2.5 shadow-lg shadow-brand-yellow-100/10 hover:brightness-105 active:scale-95 transition-all inline-flex items-center gap-1.5 cursor-pointer"
                     >
                       <span>{activeTab === "all" ? (t?.backToHome || "Back To Home") : "View All"}</span>
                       <span className="font-sans text-[9px] font-black leading-none">&gt;</span>
-                    </button>
+                    </button> */}
                   </motion.div>
                 )
               )}

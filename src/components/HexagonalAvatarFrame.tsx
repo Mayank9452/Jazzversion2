@@ -43,10 +43,13 @@ export const HexagonalAvatarFrame = ({
       </svg>
 
       {/* Circle avatar image in center */}
-      <div className={`w-[72px] h-[72px] rounded-full overflow-hidden relative z-10 border-2 ${isDark ? "bg-blue-main/30 border-blue-main/50" : "bg-white border-[#fecb13]/50"
-        }`}>
+      <button
+        onClick={onEditClick}
+        className={`w-[72px] h-[72px] rounded-full overflow-hidden relative z-10 border-2 transition-transform hover:scale-105 active:scale-95 cursor-pointer ${isDark ? "bg-blue-main/30 border-blue-main/50" : "bg-white border-[#fecb13]/50"
+        }`}
+      >
         <img src={imageUrl} alt="Avatar" className="w-full h-full object-cover" />
-      </div>
+      </button>
 
       {/* Edit pencil icon */}
       <button

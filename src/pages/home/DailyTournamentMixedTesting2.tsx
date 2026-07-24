@@ -22,8 +22,18 @@ const getGameImage = (gameName: string, defaultImage: string, index: number) => 
     if (name.includes("stick monkey")) {
         return "/assets/images/Stick Monkey.png";
     }
-    const images = ["/assets/images/01.png", "/assets/images/02.png", "/assets/images/03.png"];
+    const images = [
+        "/assets/images/01.png",
+        "/assets/images/box tower.jpeg",
+        "/assets/images/02.png",
+        "/assets/images/knife ninja.jpeg"
+    ];
     return images[index % images.length];
+};
+
+const formatNumberInText = (text: string) => {
+    if (!text) return "";
+    return text.replace(/\d+/g, (match) => Number(match).toLocaleString('en-IN'));
 };
 
 const DailyTournamentMixedTesting2: React.FC<DailyTournament> = ({
@@ -71,36 +81,49 @@ const DailyTournamentMixedTesting2: React.FC<DailyTournament> = ({
         return () => clearInterval(timer);
     }, [dailyTournaments]);
 
+    const displayTournaments = dailyTournaments && dailyTournaments.length > 0
+        ? [...dailyTournaments, ...dailyTournaments].slice(0, 4)
+        : [];
+
     return (
         <>
-            {dailyTournaments && dailyTournaments?.length > 0 && (
+            {displayTournaments && displayTournaments.length > 0 && (
                 <div className="rounded-2xl">
                     <div className="mb-1 px-1 text-center">
                         <Swiper
                             loop={true}
                             centeredSlides={false}
                             slidesPerView={2}
-                            spaceBetween={5}
+                            spaceBetween={15}
                             autoplay={{ delay: 3000, disableOnInteraction: false }}
                             modules={[Pagination, Navigation, Autoplay]}
-                            className="tiny-slider-one flex justify-center items-center"
+                            className="tiny-slider-one flex justify-center items-center overflow-visible"
                         >
-                            {dailyTournaments?.slice(0, 2)?.map((game: any, index: any) => {
+                            {displayTournaments.map((game: any, index: any) => {
                                 const rewardType = index % 3; // 0 = Coins, 1 = Voucher, 2 = Topup
+                                const imageUrl = getGameImage(game?.tournament_name, game?.tournament_game_image, index);
+                                const isGlowImage = imageUrl.includes("box tower.jpeg") || imageUrl.includes("knife ninja.jpeg");
+
                                 return (
                                     <SwiperSlide
-                                        key={game?.tournament_id}
-                                        className="overflow-hidden cursor-pointer group"
+                                        key={game?.tournament_id || index}
+                                        className="overflow-visible cursor-pointer group relative"
                                         onClick={() => handleGameClick(game)}
                                     >
+                                        {/* Yellow blur glow behind the transparent/opaque banner */}
+                                        <div className="absolute top-[40%] left-[50%] -translate-x-[50%] -translate-y-[50%] w-[70%] aspect-square rounded-full bg-[#FFCA20]/25 blur-[25px] pointer-events-none z-0" />
+
                                         <div
-                                            className="w-full flex flex-col overflow-hidden rounded-2xl transition-all duration-200 active:scale-[0.98]"
+                                            className="w-full flex flex-col overflow-visible rounded-2xl transition-all duration-200 active:scale-[0.98] relative z-10"
                                         >
                                             {/* Game Image Banner */}
-                                            <div className="relative w-full aspect-[285/380] rounded-xl overflow-hidden shadow-sm">
+                                            <div className={`relative w-full aspect-[285/380] rounded-xl shadow-sm transition-all duration-300 ${isGlowImage ? "overflow-visible" : "overflow-hidden"}`}>
                                                 <img
-                                                    src={getGameImage(game?.tournament_name, game?.tournament_game_image, index)}
-                                                    className="w-full h-full block object-cover transition-transform duration-500 group-hover:scale-105"
+                                                    src={imageUrl}
+                                                    className="w-full h-full rounded-xl block object-cover transition-transform duration-500 group-hover:scale-105"
+                                                    style={isGlowImage ? {
+                                                        filter: "drop-shadow(0 0 14px rgba(255, 202, 32, 0.75))"
+                                                    } : undefined}
                                                     alt={game?.tournament_name}
                                                 />
                                                 {/* Floating Play Button on Bottom Right */}
@@ -157,7 +180,7 @@ const DailyTournamentMixedTesting2: React.FC<DailyTournament> = ({
                                                             className="w-6 h-6 object-contain"
                                                         />
                                                         <span className="tracking-wide text-slate-800 dark:text-brand-yellow-100 font-bold">
-                                                            Rs 100000 Voucher
+                                                            {formatNumberInText("Rs 100000 Voucher")}
                                                         </span>
                                                     </div>
                                                 )}
@@ -165,7 +188,7 @@ const DailyTournamentMixedTesting2: React.FC<DailyTournament> = ({
                                                     <div className="font-extrabold flex items-center gap-1.5 text-xs sm:text-[10px]">
                                                         <PhoneCall className="h-3.5 w-3.5 text-brand-gold-100 dark:text-brand-yellow-100 shrink-0" />
                                                         <span className="tracking-wide text-slate-800 dark:text-brand-yellow-100 font-bold">
-                                                            Rs 100000 Topup
+                                                            {formatNumberInText("Rs 100000 Topup")}
                                                         </span>
                                                     </div>
                                                 )}

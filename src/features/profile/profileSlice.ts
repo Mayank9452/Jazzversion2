@@ -62,11 +62,11 @@ const profileSlice = createSlice({
 
         state.error = message;
 
-        toast({
-          title: message,
-          variant: "destructive",
-          duration: 1000,
-        });
+        // toast({
+        //   title: message,
+        //   variant: "destructive",
+        //   duration: 1000,
+        // });
 
         // ✅ Handle 401 Unauthorized
         // if (errorPayload?.code === 401) {

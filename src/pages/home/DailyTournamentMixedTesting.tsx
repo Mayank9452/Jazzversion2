@@ -26,6 +26,11 @@ const getGameImage = (gameName: string, defaultImage: string, index: number) => 
     return images[index % images.length];
 };
 
+const formatNumberInText = (text: string) => {
+    if (!text) return "";
+    return text.replace(/\d+/g, (match) => Number(match).toLocaleString('en-IN'));
+};
+
 const DailyTournamentMixedTesting: React.FC<DailyTournament> = ({
     dailyTournaments,
 }) => {
@@ -147,14 +152,14 @@ const DailyTournamentMixedTesting: React.FC<DailyTournament> = ({
                                                     </div>
                                                 )}
                                                 {rewardType === 1 && (
-                                                    <div className="font-extrabold flex items-center gap-1 text-xs sm:text-[10px]">
+                                                    <div className="font-extrabold flex items-center gap-0 text-xs sm:text-[10px]">
                                                         <img
                                                             src="/assets/images/giftkarte.png"
                                                             alt="voucher"
                                                             className="w-6 h-6 object-contain"
                                                         />
                                                         <span className="tracking-wide text-slate-800 dark:text-brand-yellow-100 font-bold">
-                                                            Rs 100000 Voucher
+                                                            {formatNumberInText("Rs 100000 Voucher")}
                                                         </span>
                                                     </div>
                                                 )}
@@ -162,7 +167,7 @@ const DailyTournamentMixedTesting: React.FC<DailyTournament> = ({
                                                     <div className="font-extrabold flex items-center gap-1.5 text-xs sm:text-[10px]">
                                                         <PhoneCall className="h-3.5 w-3.5 text-brand-gold-100 dark:text-brand-yellow-100 shrink-0" />
                                                         <span className="tracking-wide text-slate-800 dark:text-brand-yellow-100 font-bold">
-                                                            Rs 100000 Topup
+                                                            {formatNumberInText("Rs 100000 Topup")}
                                                         </span>
                                                     </div>
                                                 )}

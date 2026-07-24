@@ -6,7 +6,11 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "./ui/button";
 import { useLanguage } from "./context/LanguageContext";
 
-const PopupBannerUpdated = () => {
+interface PopupBannerUpdatedProps {
+  onClose?: () => void;
+}
+
+const PopupBannerUpdated: React.FC<PopupBannerUpdatedProps> = ({ onClose }) => {
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
@@ -15,6 +19,7 @@ const PopupBannerUpdated = () => {
 
   const handleClose = () => {
     setIsVisible(false);
+    if (onClose) onClose();
   };
 
   return (

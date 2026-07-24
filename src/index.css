@@ -189,26 +189,33 @@
 
   :root {
     /* Light Theme based on brand palette */
-    --background: 0 0% 100%; /* White #FFFFFF */
-    --foreground: 0 0% 10%; /* Primary Black #191919 */
+    --background: 0 0% 100%;
+    /* White #FFFFFF */
+    --foreground: 0 0% 10%;
+    /* Primary Black #191919 */
 
     /* Card backgrounds */
-    --card: 0 0% 100%; /* White #FFFFFF */
-    --card-foreground: 0 0% 10%; /* Primary Black #191919 */
+    --card: 0 0% 100%;
+    /* White #FFFFFF */
+    --card-foreground: 0 0% 10%;
+    /* Primary Black #191919 */
 
     --popover: 0 0% 100%;
     --popover-foreground: 0 0% 10%;
 
     /* Primary and Secondary colors from brand yellow/gold guidelines */
-    --primary: 45 100% 56%; /* Yellow 100 (#FFCA20) */
+    --primary: 45 100% 56%;
+    /* Yellow 100 (#FFCA20) */
     --primary-foreground: 0 0% 10%;
 
-    --secondary: 43 96% 45%; /* Gold 100 (#DFA208) */
+    --secondary: 43 96% 45%;
+    /* Gold 100 (#DFA208) */
     --secondary-foreground: 0 0% 100%;
 
     /* Muted states & secondary elements */
     --muted: 0 0% 96%;
-    --muted-foreground: 0 0% 46%; /* Gray 400 (#757575) */
+    --muted-foreground: 0 0% 46%;
+    /* Gray 400 (#757575) */
 
     --accent: 45 100% 56%;
     --accent-foreground: 0 0% 10%;
@@ -216,7 +223,8 @@
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 98%;
 
-    --border: 0 0% 90%; /* Light gray border */
+    --border: 0 0% 90%;
+    /* Light gray border */
     --input: 0 0% 90%;
     --ring: 45 100% 56%;
 
@@ -265,26 +273,32 @@
 
   .dark {
     /* Dark Theme based on brand palette */
-    --background: 0 0% 10%; /* Primary Black #191919 */
-    --foreground: 0 0% 100%; /* White #FFFFFF */
+    --background: 0 0% 10%;
+    /* Primary Black #191919 */
+    --foreground: 0 0% 100%;
+    /* White #FFFFFF */
 
     /* Card backgrounds */
-    --card: 0 0% 17%; /* Black 200 #2B2B2B */
+    --card: 0 0% 17%;
+    /* Black 200 #2B2B2B */
     --card-foreground: 0 0% 100%;
 
     --popover: 0 0% 17%;
     --popover-foreground: 0 0% 100%;
 
     /* Primary and Secondary colors */
-    --primary: 45 100% 56%; /* Yellow 100 (#FFCA20) */
+    --primary: 45 100% 56%;
+    /* Yellow 100 (#FFCA20) */
     --primary-foreground: 0 0% 10%;
 
-    --secondary: 43 96% 45%; /* Gold 100 (#DFA208) */
+    --secondary: 43 96% 45%;
+    /* Gold 100 (#DFA208) */
     --secondary-foreground: 0 0% 100%;
 
     /* Muted states & secondary elements */
     --muted: 0 0% 17%;
-    --muted-foreground: 0 0% 46%; /* Gray 400 (#757575) */
+    --muted-foreground: 0 0% 46%;
+    /* Gray 400 (#757575) */
 
     --accent: 45 100% 56%;
     --accent-foreground: 0 0% 10%;
@@ -292,7 +306,8 @@
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 98%;
 
-    --border: 0 0% 24%; /* Gray 300 #3D3D3D */
+    --border: 0 0% 24%;
+    /* Gray 300 #3D3D3D */
     --input: 0 0% 24%;
     --ring: 45 100% 56%;
 

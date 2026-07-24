@@ -1,6 +1,6 @@
 import { useAppDispatch, useAppSelector } from "@/app/hooks"
 import { Button } from "@/components/ui/button"
-import { Coins, Trophy, Bell, FileText, Sun, Moon, RotateCw, LogOut, ShieldCheck, User, Menu, X, Play, Compass, Flag, Puzzle, Grid, Flame, Gamepad2 } from "lucide-react"
+import { Coins, Trophy, Bell, FileText, Sun, Moon, RotateCw, LogOut, ShieldCheck, User, Menu, X, Play, Compass, Flag, Puzzle, Grid, Flame, Gamepad2, LoaderPinwheel } from "lucide-react"
 import { useEffect, useState } from "react"
 import { useNavigate, Link } from "react-router-dom"
 import { useLanguage } from "./context/LanguageContext"
@@ -118,7 +118,7 @@ export function TopBarUpdated() {
                     <div className="flex items-center gap-2 relative z-20">
                         {/* Profile Image Avatar */}
                         <button
-                            onClick={() => navigate("/settings")}
+                            onClick={() => navigate("/settingsStatic")}
                             className="w-9 h-9 rounded-full overflow-hidden border border-white/10 bg-white/[0.03] hover:bg-white/5 active:scale-95 transition-all shrink-0"
                             title="My Account"
                         >
@@ -164,12 +164,12 @@ export function TopBarUpdated() {
 
                 {/* Drawer content */}
                 <div
-                    className={`absolute top-0 left-0 bottom-0 w-[75%] max-w-[320px] bg-brand-black-100 dark:bg-[#00000040] h-full shadow-2xl flex flex-col border-r border-white/20 transition-transform duration-300 ease-out transform ${sidebarOpen ? "translate-x-0" : "-translate-x-full"
+                    className={`absolute top-0 left-0 bottom-0 w-[75%] max-w-[320px] bg-[#191919ad] dark:bg-[#00000040] h-full shadow-2xl flex flex-col border-r border-white/20 transition-transform duration-300 ease-out transform ${sidebarOpen ? "translate-x-0" : "-translate-x-full"
                         }`}
                 >
                     {/* Header */}
                     <div className="flex items-center justify-between p-4 border-b border-white/10 bg-black/20">
-                        <span className="font-bold text-white text-base tracking-wide whitespace-nowrap">Gaming Premier League</span>
+                        <span className="font-bold text-white text-base whitespace-nowrap">GAMENOW Premier League</span>
                         <Button
                             variant="ghost"
                             size="icon"
@@ -213,12 +213,12 @@ export function TopBarUpdated() {
                         <ul className="list-none pl-0 space-y-1.5">
                             <li>
                                 <Link
-                                    to="/settings"
+                                    to="/settingsStatic"
                                     onClick={() => setSidebarOpen(false)}
                                     className="flex items-center gap-3 px-3 py-2.5 rounded-xl text-left text-white/80 hover:text-white hover:bg-white/5 transition-all font-semibold text-sm"
                                 >
                                     <User className="h-4.5 w-4.5 text-brand-gold-100 dark:text-brand-yellow-100" />
-                                    My Account
+                                    My Profile
                                 </Link>
                             </li>
 
@@ -228,7 +228,7 @@ export function TopBarUpdated() {
                                     onClick={() => setSidebarOpen(false)}
                                     className="flex items-center gap-3 px-3 py-2.5 rounded-xl text-left text-white/80 hover:text-white hover:bg-white/5 transition-all font-semibold text-sm"
                                 >
-                                    <RotateCw className="h-4.5 w-4.5 text-brand-gold-100 dark:text-brand-yellow-100" />
+                                    <LoaderPinwheel className="h-4.5 w-4.5 text-brand-gold-100 dark:text-brand-yellow-100" />
                                     Spin & Win
                                 </Link>
                             </li>

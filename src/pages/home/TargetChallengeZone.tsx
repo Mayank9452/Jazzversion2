@@ -55,6 +55,11 @@ const targetGames: TargetGame[] = [
     },
 ];
 
+const formatNumberInText = (text: string) => {
+    if (!text) return "";
+    return text.replace(/\d+/g, (match) => Number(match).toLocaleString('en-IN'));
+};
+
 export const TargetChallengeZone: React.FC = () => {
     const navigate = useNavigate();
     const { resolvedTheme } = useTheme();
@@ -94,22 +99,28 @@ export const TargetChallengeZone: React.FC = () => {
                         return (
                             <SwiperSlide
                                 key={game.id}
-                                className="overflow-visible cursor-pointer group"
+                                className="overflow-visible cursor-pointer group relative"
                                 // style={{ width: "200px" }}
                                 onClick={handlePlayClick}
                             >
                                 {({ isActive }) => (
                                     <div
-                                        className={`w-full flex flex-col transition-all duration-500 ease-out ${isActive
+                                        className={`w-full flex flex-col transition-all duration-500 ease-out relative ${isActive
                                             ? "opacity-100 scale-[1.1]"
                                             : "opacity-90 scale-[0.7]"
                                             }`}
                                     >
+                                        {/* Yellow blur glow behind the transparent/opaque banner */}
+                                        <div className="absolute top-[40%] left-[50%] -translate-x-[50%] -translate-y-[50%] w-[70%] aspect-square rounded-full bg-[#FFCA20]/25 blur-[25px] pointer-events-none z-0" />
+
                                         {/* Game Image Banner */}
-                                        <div className="relative w-full aspect-[285/380] rounded-xl overflow-hidden shadow-sm">
+                                        <div className="relative w-full aspect-[285/380] rounded-xl overflow-visible z-10">
                                             <img
                                                 src={game.image}
-                                                className="w-full h-full block object-cover transition-transform duration-500 group-hover:scale-105"
+                                                className="w-full h-full rounded-lg block object-cover transition-transform duration-500 group-hover:scale-105"
+                                                style={{
+                                                    filter: "drop-shadow(0 0 14px rgba(255, 202, 32, 0.75))"
+                                                }}
                                                 alt={game.name}
                                             />
 
@@ -135,7 +146,7 @@ export const TargetChallengeZone: React.FC = () => {
                                         <div className="flex items-center justify-center gap-1 py-1.5 pb-0">
                                             <div className="flex items-center gap-1 px-2 py-0.5 rounded-full bg-slate-900/90 dark:bg-white/[0.08] text-white text-xs sm:text-[9px] font-bold font-mono tracking-tight shadow-sm whitespace-nowrap">
                                                 <Target className="h-4 w-4 text-white shrink-0" />
-                                                <span>Target: {game.target}</span>
+                                                <span>Target: {formatNumberInText(game.target)}</span>
                                             </div>
                                         </div>
 
@@ -149,7 +160,7 @@ export const TargetChallengeZone: React.FC = () => {
                                                         className="w-5 h-5 object-contain"
                                                     />
                                                     <span className="tracking-wide text-slate-800 dark:text-brand-yellow-100 font-bold">
-                                                        {game.prize}
+                                                        {formatNumberInText(game.prize)}
                                                     </span>
                                                 </div>
                                             )}
@@ -161,7 +172,7 @@ export const TargetChallengeZone: React.FC = () => {
                                                         className="w-6 h-6 object-contain"
                                                     />
                                                     <span className="tracking-wide text-slate-800 dark:text-brand-yellow-100 font-bold">
-                                                        {game.prize}
+                                                        {formatNumberInText(game.prize)}
                                                     </span>
                                                 </div>
                                             )}
@@ -169,7 +180,7 @@ export const TargetChallengeZone: React.FC = () => {
                                                 <div className="font-extrabold flex items-center gap-1 text-xs sm:text-[10px]">
                                                     <PhoneCall className="h-3.5 w-3.5 text-brand-gold-100 dark:text-brand-yellow-100 shrink-0" />
                                                     <span className="tracking-wide text-slate-800 dark:text-brand-yellow-100 font-bold">
-                                                        {game.prize}
+                                                        {formatNumberInText(game.prize)}
                                                     </span>
                                                 </div>
                                             )}

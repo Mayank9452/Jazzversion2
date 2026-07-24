@@ -32,6 +32,7 @@ import DailyTournamentMixedTesting from "./DailyTournamentMixedTesting";
 import DailyTournamentMixedTesting2 from "./DailyTournamentMixedTesting2";
 import { TopBarUpdated } from "@/components/TopBarUpdated";
 import PopupBannerUpdated from "@/components/PopupBannerUpdated";
+import PopupSpinWheel from "@/components/PopupSpinWheel";
 
 /* ─── Section Header ─────────────────────────────────────────────────────── */
 
@@ -96,7 +97,7 @@ const Section: React.FC<{ children: React.ReactNode; className?: string }> = ({
 
 const SpinWinBanner: React.FC = () => (
   <Link
-    to="/spin-win"
+    to="/spinandwin"
     className="group block w-full rounded-2xl overflow-hidden border border-primary/20
                shadow-sm transition-all duration-300
                active:scale-95 hover:border-primary/40"
@@ -615,7 +616,7 @@ const CategoryNavigationIcon = () => {
 
   const handleCategoryClick = (catId: string, label: string) => {
     setActiveCategory(catId);
-    navigate("/games", { state: { scrollToCategory: label === "All Games" ? "" : label } });
+    navigate("/games");
   };
 
   return (
@@ -781,6 +782,15 @@ const Home = () => {
   const isDark = resolvedTheme === "dark";
   const [vipCountdown, setVipCountdown] = useState<string>("");
   const [premiumCountdown, setPremiumCountdown] = useState<string>("");
+  const [showSpinWheelPopup, setShowSpinWheelPopup] = useState(false);
+  const [shouldShowWelcomePopups, setShouldShowWelcomePopups] = useState(false);
+
+  useEffect(() => {
+    const hasShown = sessionStorage.getItem("hasShownWelcomePopups");
+    if (!hasShown) {
+      setShouldShowWelcomePopups(true);
+    }
+  }, []);
 
   const {
     data: jazzHomePageData,
@@ -1150,7 +1160,7 @@ const Home = () => {
                   <SectionHeader
                     title="Spin and Win"
                     icon={<Trophy size={15} className="text-brand-gold-100 dark:text-brand-yellow-100 fill-brand-gold-100/10 dark:fill-brand-yellow-100/10" />}
-                  // action={{ label: "View All", href: "/tournament-history" }}
+                  // action={{ label: "View All", href: "/spinandwin" }}
                   />
                   <SpinWinBanner />
                 </Section>
@@ -1216,7 +1226,23 @@ const Home = () => {
       </div>
 
       <BottomNavBar />
-      <PopupBannerUpdated />
+      {shouldShowWelcomePopups && (
+        <>
+          <PopupBannerUpdated
+            onClose={() => {
+              setShowSpinWheelPopup(true);
+              sessionStorage.setItem("hasShownWelcomePopups", "true");
+            }}
+          />
+          <PopupSpinWheel
+            isShow={showSpinWheelPopup}
+            onClose={() => {
+              setShowSpinWheelPopup(false);
+              setShouldShowWelcomePopups(false);
+            }}
+          />
+        </>
+      )}
     </>
   );
 };

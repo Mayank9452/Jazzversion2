@@ -3,8 +3,9 @@
 import { useEffect, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { motion, AnimatePresence } from "framer-motion";
-import { Dot, Info, Wifi, Gem, ChevronLeft } from "lucide-react";
+import { Dot, Info, Wifi, Gem, ChevronLeft, ArrowLeft } from "lucide-react";
 import { useNavigate, useParams } from "react-router-dom";
+import { useTheme } from "next-themes";
 import { cn } from "@/lib/utils";
 import { useAppDispatch, useAppSelector } from "@/app/hooks";
 import {
@@ -27,6 +28,7 @@ import ProductPopUpPageVoucher from "./ProductPopUpPageVoucher";
 import PopupBannerStaticUpdated from "./PopupBannerStaticUpdated";
 import SuccessPopUpPageUpdated from "./SuccessPopUpPageUpdated";
 import LosePopUpPage from "./LosePopUpPage";
+import RedeemSpinPopup from "./RedeemSpinPopup";
 
 dayjs.extend(utc);
 dayjs.extend(timezone);
@@ -157,6 +159,8 @@ function SpinWheelUpdatedVoucher({ }) {
     const [subscriptionPopup, setSubscriptionPopup] = useState(false);
     const [isWheelReady, setIsWheelReady] = useState(true);
     const [getPlaycoin, setPlaycoin] = useState<any>("");
+    const [showRedeemPopup, setShowRedeemPopup] = useState(false);
+    const [hasShownInitialPopup, setHasShownInitialPopup] = useState(false);
 
     const defaultSegments = ["100", "50", "200", "50", "300", "400", "450", "500", "10", "100"];
     const defaultColors = [
@@ -239,9 +243,17 @@ function SpinWheelUpdatedVoucher({ }) {
         return () => clearTimeout(timer);
     }, [noSpinsLeft]);
 
-    const spinWheel = async () => {
+    useEffect(() => {
+        if (spinCheck && spinCheck.status === false && !hasShownInitialPopup) {
+            setShowRedeemPopup(true);
+            setHasShownInitialPopup(true);
+        }
+    }, [spinCheck, hasShownInitialPopup]);
+
+    const spinWheel = async (bypassCheck: boolean | any = false) => {
+        const isBypassed = bypassCheck === true;
         setLoading(true);
-        console.log("spinWheel clicked!", { isSpinning, isWheelReady, spinCheck });
+        console.log("spinWheel clicked!", { isSpinning, isWheelReady, spinCheck, isBypassed });
         try {
             if (isSpinning || !isWheelReady) {
                 console.log("spinWheel early exit (already spinning or not ready):", { isSpinning, isWheelReady });
@@ -249,13 +261,25 @@ function SpinWheelUpdatedVoucher({ }) {
             }
 
             // 1️⃣ Check spins left from spinCheck eligibility status
-            const hasSpins = spinCheck?.status; // Eligibility status from api
+            const hasSpins = spinCheck?.status || isBypassed;
             console.log("hasSpins status from API:", hasSpins);
 
             if (!hasSpins) {
-                setNoSpinsLeft(true);
-                console.log("spinWheel exited: no spins left eligibility");
+                setShowRedeemPopup(true);
+                console.log("spinWheel exited: no spins left eligibility, showing redeem popup");
                 return;
+            }
+
+            // Deduct coins if they spun using a purchased spin
+            if (!spinCheck?.status && isBypassed) {
+                const currentCoins = Number(localStorage.getItem("playCoins") || 0);
+                if (currentCoins < 50) {
+                    alert("Insufficient coins!");
+                    return;
+                }
+                const newCoins = currentCoins - 50;
+                localStorage.setItem("playCoins", String(newCoins));
+                setPlaycoin(String(newCoins));
             }
 
             setIsWheelReady(false);
@@ -403,34 +427,33 @@ function SpinWheelUpdatedVoucher({ }) {
             <div className="absolute top-[-10%] left-[-20%] w-[70%] aspect-square rounded-full bg-yellow-main/5 blur-[120px] dark:hidden pointer-events-none" />
             <div className="absolute bottom-[-10%] right-[-20%] w-[70%] aspect-square rounded-full bg-blue-main/5 blur-[120px] dark:hidden pointer-events-none" />
 
-            {/* ── Solid Dark Header matching TopBarUpdated style ── */}
-            <div className="">
-                <div className="relative overflow-hidden bg-[#191919] border-b border-white/[0.08] p-2 flex items-center justify-between gap-3 shadow-md">
-                    {/* Col-based layout for perfect centering */}
-                    <div className="w-full grid grid-cols-3 items-center">
-                        {/* Col 1: Back Button */}
-                        <div className="flex justify-start">
+            {/* ── Premium Glassmorphic Header Card ── */}
+            <div className="pb-4 relative z-30">
+                <div className={`relative overflow-hidden p-4 flex items-center justify-between gap-3 border-b transition-all duration-300 ${isDarkTheme ? "bg-gradient-to-br from-[#2B2B2B]/40 to-[#191919]/30 border-white/[0.06] shadow-[0_12px_40px_rgba(0,0,0,0.2)]" : "bg-gradient-to-br from-white/70 to-white/40 border-slate-200/60 shadow-sm"} backdrop-blur-xl`}>
+                    <div className="w-full flex justify-between items-center gap-5">
+                        <div>
                             <button
                                 onClick={() => navigate(-1)}
-                                className="flex items-center justify-center w-8 h-8 rounded-full border border-[#ffca20] bg-white/10 hover:bg-[#ffca20] hover:text-[#191919] transition-colors text-white shadow-sm"
+                                className={`w-10 h-10 rounded-xl flex items-center justify-center shadow-md active:scale-95 transition-all pointer-events-auto cursor-pointer shrink-0 ${isDarkTheme ? "bg-[#32323299] backdrop-blur-md border border-white/10 text-white hover:bg-black/75" : "bg-white border border-slate-200 text-slate-700 hover:bg-slate-50"}`}
                                 title="Back"
                             >
-                                <ChevronLeft className="w-4.5 h-4.5 text-[#ffca20]" />
+                                <ArrowLeft className="w-5 h-5" />
                             </button>
                         </div>
-
-                        {/* Col 2: Centered Title */}
-                        <div className="flex flex-col items-center text-center">
-                            <h1 className="text-base sm:text-lg font-black tracking-wide uppercase text-white leading-tight">
+                        <div className="flex-1 text-center">
+                            <h1 className={`text-base sm:text-lg font-black tracking-wide uppercase leading-tight ${isDarkTheme ? "text-white" : "text-slate-800"}`}>
                                 Spin & Win
                             </h1>
+                            <p className="text-[11px] sm:text-xs font-bold text-slate-500 dark:text-muted-foreground mt-1 leading-none">
+                                Test your luck & win rewards
+                            </p>
                         </div>
-
-                        {/* Col 3: User Avatar */}
-                        <div className="flex justify-end">
-                            <div className="w-10 h-10 flex-shrink-0 flex items-center justify-center bg-yellow-main/5 dark:bg-[#2B2B2B]/80 rounded-xl shadow-[0_0_15px_rgba(254,203,19,0.15)] border border-yellow-main/20 overflow-hidden">
-                                <img src={`/assets/users/${avatar}`} className="w-full h-full object-cover" alt="User Avatar" />
-                            </div>
+                        {/* Right side: Modern Profile Avatar Container */}
+                        <div
+                            onClick={() => navigate("/profile")}
+                            className={`w-10 h-10 flex-shrink-0 flex items-center justify-center rounded-xl overflow-hidden border cursor-pointer active:scale-95 transition-all hover:scale-105 shadow-md ${isDarkTheme ? "bg-[#32323299] backdrop-blur-md border-white/10" : "bg-white border-slate-200"}`}
+                        >
+                            <img src={`/assets/users/${avatar}`} className="w-full h-full object-cover" alt="User Avatar" />
                         </div>
                     </div>
                 </div>
@@ -443,11 +466,11 @@ function SpinWheelUpdatedVoucher({ }) {
                         <div className="relative flex flex-col gap-2">
                             <div className="relative flex flex-col gap-0">
                                 {/* Spinner */}
-                                <div className="px-[50px] sm:px-[65px] pb-8 pt-10 relative flex flex-col gap-8">
-                                    <div className="relative mt-5 pb-[5rem]">
+                                <div className="px-[50px] sm:px-[65px] pb-4 pt-5 relative flex flex-col gap-8">
+                                    <div className="relative mt-10 pb-[2.5rem]">
                                         <div className="relative">
                                             {/* Stand */}
-                                            <div
+                                            {/* <div
                                                 className={`
                           absolute h-[100%] aspect-square top-[100%] transform -translate-x-[50%] -translate-y-[40%] start-[50%]
                           before:content-[''] before:absolute before:top-[61%] before:left-[50%] before:z-[-10]
@@ -459,10 +482,10 @@ function SpinWheelUpdatedVoucher({ }) {
                                                     alt=""
                                                     loading="lazy"
                                                 />
-                                            </div>
+                                            </div> */}
 
                                             {/* Wheel */}
-                                            <div className="h-[19rem] sm:h-80 aspect-square rounded-full shadow-[0_0_25px_35px_rgba(0,0,0,0.15)] dark:shadow-[0_0_25px_35px_rgba(0,0,0,.9)] custom-box">
+                                            <div className="h-[17rem] sm:h-80 aspect-square rounded-full shadow-[0_0_25px_35px_rgba(0,0,0,0.15)] dark:shadow-[0_0_25px_35px_rgba(0,0,0,.9)] custom-box">
                                                 <div
                                                     className={cn(
                                                         "absolute h-[6.25rem] sm:h-[8rem] z-[60] top-[0%] start-[50%] translate-x-[-45%] sm:translate-x-[-41%] translate-y-[-65%] sm:translate-y-[-58%] flex items-center justify-center",
@@ -859,6 +882,24 @@ function SpinWheelUpdatedVoucher({ }) {
                         //   <LosePopUpPage />
                         <LosePopUpPage onClose={handleLoseClose} />
                     )}
+                </AnimatePresence>
+
+                <AnimatePresence>
+                    <RedeemSpinPopup
+                        isOpen={showRedeemPopup}
+                        onClose={() => setShowRedeemPopup(false)}
+                        userCoins={getPlaycoin || 0}
+                        onRedeem={() => {
+                            const currentCoins = Number(localStorage.getItem("playCoins") || 0);
+                            if (currentCoins < 50) {
+                                alert("You need at least 50 coins to redeem a spin!");
+                                return;
+                            }
+                            setShowRedeemPopup(false);
+                            // Trigger spin
+                            spinWheel(true);
+                        }}
+                    />
                 </AnimatePresence>
 
                 <AnimatePresence>

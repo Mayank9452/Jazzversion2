@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import {
   Trophy, Calendar, Clock, Gift, Gamepad2,
   ChevronLeft, ChevronRight, Award, Sword, Medal,
+  ArrowLeft,
   CheckCircle2, XCircle, Coins,
   PhoneCall
 } from "lucide-react";
@@ -80,6 +81,14 @@ const LOCAL_IMAGES = [
   "/assets/images/9.png"
 ];
 
+const LIGHT_BANNER_GRADIENTS = [
+  "bg-gradient-to-br from-[#FFF5D6] to-[#FFE39F] border-[#FFE180] shadow-[0_4px_12px_rgba(255,202,32,0.12)]",
+  "bg-gradient-to-br from-[#E0F2FE] to-[#BAE6FD] border-[#7DD3FC] shadow-[0_4px_12px_rgba(14,165,233,0.1)]",
+  "bg-gradient-to-br from-[#F5F3FF] to-[#DDD6FE] border-[#C4B5FD] shadow-[0_4px_12px_rgba(139,92,246,0.1)]",
+  "bg-gradient-to-br from-[#FFF1F2] to-[#FECDD3] border-[#FDA4AF] shadow-[0_4px_12px_rgba(244,63,94,0.1)]",
+  "bg-gradient-to-br from-[#ECFDF5] to-[#A7F3D0] border-[#6EE7B7] shadow-[0_4px_12px_rgba(16,185,129,0.1)]"
+];
+
 const TournamentHistory: React.FC = () => {
   const navigate = useNavigate();
   const { t } = useLanguage();
@@ -144,16 +153,16 @@ const TournamentHistory: React.FC = () => {
 
         {/* ── Premium Glassmorphic Header Card ── */}
         <div className="pb-4">
-          <div className=" relative overflow-hidden bg-gradient-to-br from-white/70 to-white/40 dark:from-[#2B2B2B]/40 dark:to-[#191919]/30 backdrop-blur-xl border border-white/40 dark:border-white/[0.06] p-4 flex items-center justify-between gap-3 shadow-[0_8px_32px_rgba(0,0,0,0.02)] dark:shadow-[0_12px_40px_rgba(0,0,0,0.2)]">
+          <div className=" relative overflow-hidden bg-gradient-to-br from-white/70 to-white/40 dark:from-[#2B2B2B]/40 dark:to-[#191919]/30 backdrop-blur-xl border border-white/40 dark:border-white/[0.06] p-4 flex items-center justify-between gap-3 shadow-[0_3px_1px_rgba(0,0,0,7%)] dark:shadow-[0_12px_40px_rgba(0,0,0,0.2)]">
             {/* Left side: Titles */}
             <div className="w-full flex justify-between items-center gap-5">
               <div>
                 <button
                   onClick={() => navigate(-1)}
-                  className="flex items-center justify-center w-8 h-8 rounded-full border border-yellow-main bg-white/40 dark:bg-card/40 hover:bg-brand-gradient hover:text-brand-black-100 transition-colors text-foreground shadow-sm"
+                  className={`w-10 h-10 rounded-xl flex items-center justify-center shadow-md active:scale-95 transition-all pointer-events-auto cursor-pointer shrink-0 ${isDark ? "bg-[#32323299] backdrop-blur-md border border-white/10 text-white hover:bg-black/75" : "bg-white border border-slate-200 text-slate-700 hover:bg-slate-50"}`}
                   title="Back"
                 >
-                  <ChevronLeft className="w-4.5 h-4.5 text-yellow-main" />
+                  <ArrowLeft className="w-5 h-5" />
                 </button>
               </div>
               <div >
@@ -168,7 +177,7 @@ const TournamentHistory: React.FC = () => {
               </div>
 
               {/* Right side: Modern Trophy Badge */}
-              <div className="w-10 h-10 flex-shrink-0 flex items-center justify-center  bg-yellow-main/5 dark:bg-[#2B2B2B]/80 rounded-xl shadow-[0_0_15px_rgba(254,203,19,0.15)]">
+              <div className="w-10 h-10 flex-shrink-0 flex items-center justify-center  bg-yellow-main/5 dark:bg-[#2B2B2B]/80 rounded-xl shadow-[0_0_15px_rgba(254,203,19,0.15)]" onClick={() => navigate("/settingsStatic")}>
                 {/* <Trophy className="w-4.5 h-4.5 text-yellow-main fill-yellow-main/10" /> */}
                 <img src="/assets/users/1.png" className="w-4.5 h-4.5 text-yellow-main fill-yellow-main/10" alt="1.png" />
               </div>
@@ -297,7 +306,7 @@ const TournamentHistory: React.FC = () => {
                 const statCardBg = isDark
                   ? "bg-gradient-to-br from-[#2b2b2b6e] to-[#2b2b2b6e] backdrop-blur-xl"
                   : "bg-gradient-to-br from-white/75 to-white/35 backdrop-blur-xl shadow-[0_8px_32px_rgba(31,38,135,0.03)]";
-                const statCardBorder = isDark ? "border border-white/[0.06]" : "border border-slate-200/50 shadow-sm";
+                const statCardBorder = isDark ? "border border-white/[0.06]" : "border border-slate-200/50 shadow-[1px_1px_0px_1px_rgba(0,0,0,0.12)]";
 
                 return (
                   <div
@@ -315,12 +324,12 @@ const TournamentHistory: React.FC = () => {
                     </span>
 
                     {/* Bottom: Label */}
-                    <span className="text-[10px] sm:text-[10px] font-black text-slate-400 dark:text-slate-400 uppercase tracking-wider">
+                    <span className="text-[10px] sm:text-[10px] font-black text-muted-foreground dark:text-slate-400 uppercase tracking-wider">
                       {label}
                     </span>
 
                     {/* Underline Decoration */}
-                    <div className={`absolute bottom-0 left-1/2 -translate-x-1/2 w-6 h-[2px] ${lineColor} rounded-full`} />
+                    <div className={`absolute bottom-0 left-1/2 -translate-x-1/2 w-8 h-[4px] ${lineColor} rounded-full`} />
                   </div>
                 );
               })}
@@ -396,14 +405,32 @@ const TournamentHistory: React.FC = () => {
                       className={`relative w-full rounded-2xl overflow-hidden ${cardBg} ${cardBorder} p-3.5 ${cardTextColor} flex gap-4 transition-all duration-300 cursor-pointer hover:scale-[1.01] active:scale-[0.99] shadow-[0_8px_32px_rgba(0,0,0,0.08)] dark:shadow-[0_12px_40px_rgba(0,0,0,0.25)] hover:shadow-yellow-500/[0.05] dark:hover:shadow-yellow-500/[0.02]`}
                     >
                       {/* Left: Standard Rounded Rectangle Game Cover */}
-                      <div className="relative w-24 h-24 sm:w-28 sm:h-28 flex-shrink-0">
-                        <img
-                          src={LOCAL_IMAGES[index % LOCAL_IMAGES.length]}
-                          alt={item.tournament_name}
-                          className="w-full h-full object-contain rounded-xl border border-white/2 border-r-2 border-r-yellow-main shadow-md transition-transform duration-500 hover:scale-105"
-                          loading="lazy"
-                        />
-                      </div>
+                      {isDark ? (
+                        <div className="relative w-24 h-24 sm:w-28 sm:h-28 flex-shrink-0">
+                          <img
+                            src={LOCAL_IMAGES[index % LOCAL_IMAGES.length]}
+                            alt={item.tournament_name}
+                            className="w-full h-full object-contain rounded-xl border border-white/2 border-r-2 border-r-yellow-main shadow-md transition-transform duration-500 hover:scale-105"
+                            loading="lazy"
+                          />
+                        </div>
+                      ) : (
+                        <div className={`relative w-24 h-24 sm:w-28 sm:h-28 flex-shrink-0 overflow-visible rounded-2xl flex items-center justify-center p-1.5 transition-all duration-300 border ${LIGHT_BANNER_GRADIENTS[index % LIGHT_BANNER_GRADIENTS.length]
+                          }`}>
+                          {/* Soft yellow ambient backdrop glow */}
+                          <div className="absolute top-[50%] left-[50%] -translate-x-[50%] -translate-y-[50%] w-[90%] aspect-square rounded-full bg-[#FFCA20]/20 blur-[16px] pointer-events-none z-0" />
+
+                          <img
+                            src={LOCAL_IMAGES[index % LOCAL_IMAGES.length]}
+                            alt={item.tournament_name}
+                            className="relative z-10 w-full h-full object-contain transition-transform duration-500 hover:scale-105"
+                            style={{
+                              filter: "drop-shadow(0 0 6px rgba(255, 202, 32, 0.55))"
+                            }}
+                            loading="lazy"
+                          />
+                        </div>
+                      )}
 
                       {/* Right: Info details */}
                       <div className="flex-1 flex flex-col justify-between min-w-0">
@@ -429,7 +456,7 @@ const TournamentHistory: React.FC = () => {
                         <div className="flex items-center justify-between gap-2">
                           <div className="flex-1 grid grid-cols-2 gap-2">
                             <div className="flex flex-col">
-                              <span className="text-[11px] sm:text-[11px] font-black text-slate-400 dark:text-slate-200  leading-none mb-1">
+                              <span className="text-[13px] sm:text-[11px] font-bold text-muted-foreground dark:text-slate-200  leading-none mb-1">
                                 Rank
                               </span>
                               <span className="text-sm sm:text-base font-bold text-[#14b8a6] dark:text-yellow-main tracking-wide">
@@ -438,7 +465,7 @@ const TournamentHistory: React.FC = () => {
                             </div>
 
                             <div className="flex flex-col min-w-0">
-                              <span className="text-[11px] sm:text-[11px] font-bold text-slate-200 dark:text-slate-200  leading-none mb-1">
+                              <span className="text-[13px] sm:text-[11px] font-bold text-muted-foreground dark:text-slate-200  leading-none mb-1">
                                 Reward
                               </span>
                               <div className="flex items-center gap-1">

@@ -80,10 +80,10 @@ const jazzProfileSlice = createSlice({
         state.profileStatus = "failed";
         const errorPayload = action.payload as any;
         state.error = errorPayload?.message ?? "Error fetching profile info";
-        toast({
-          title: state.error || "Failed to fetch profile info",
-          variant: "destructive",
-        });
+        // toast({
+        //   title: state.error || "Failed to fetch profile info",
+        //   variant: "destructive",
+        // });
       })
       // Profile Images list
       .addCase(fetchJazzProfileImagesThunk.pending, (state) => {
@@ -97,10 +97,10 @@ const jazzProfileSlice = createSlice({
         state.profileImagesStatus = "failed";
         const errorPayload = action.payload as any;
         state.error = errorPayload?.message ?? "Error fetching profile images";
-        toast({
-          title: state.error || "Failed to fetch profile images",
-          variant: "destructive",
-        });
+        // toast({
+        //   title: state.error || "Failed to fetch profile images",
+        //   variant: "destructive",
+        // });
       })
       // Profile Image change
       .addCase(changeJazzProfileImageThunk.pending, (state) => {
@@ -114,10 +114,10 @@ const jazzProfileSlice = createSlice({
         state.imageChangeStatus = "failed";
         const errorPayload = action.payload as any;
         state.error = errorPayload?.message ?? "Error changing profile image";
-        toast({
-          title: state.error || "Failed to change profile image",
-          variant: "destructive",
-        });
+        // toast({
+        //   title: state.error || "Failed to change profile image",
+        //   variant: "destructive",
+        // });
       });
   },
 });

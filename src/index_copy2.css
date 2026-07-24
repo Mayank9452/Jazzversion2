@@ -152,18 +152,22 @@
         --color-aqua-v3: #86d7cf;
 
         /* Base backgrounds & text - Light Theme */
-        --background: 228 35% 97.5%; /* Soft off-white backdrop #F5F6FC */
-        --foreground: 0 0% 10%; /* Primary Black #191919 */
+        --background: 228 35% 97.5%;
+        /* Soft off-white backdrop #F5F6FC */
+        --foreground: 0 0% 10%;
+        /* Primary Black #191919 */
 
         /* Gaming card backgrounds - Light */
-        --card: 0 0% 100%; /* White #FFFFFF */
+        --card: 0 0% 100%;
+        /* White #FFFFFF */
         --card-foreground: 0 0% 10%;
 
         --popover: 0 0% 100%;
         --popover-foreground: 0 0% 10%;
 
         /* Primary and Secondary colors from brand yellow/gold guidelines */
-        --primary: 45 100% 56%; /* Yellow 100 (#FFCA20) */
+        --primary: 45 100% 56%;
+        /* Yellow 100 (#FFCA20) */
         --primary-foreground: 0 0% 10%;
 
         /* Secondary - Gold 100 (#DFA208) */
@@ -172,7 +176,8 @@
 
         /* Muted elements */
         --muted: 0 0% 96%;
-        --muted-foreground: 0 0% 46%; /* Gray 400 (#757575) */
+        --muted-foreground: 0 0% 46%;
+        /* Gray 400 (#757575) */
 
         /* Accent */
         --accent: 45 100% 56%;
@@ -222,18 +227,22 @@
 
     .dark {
         /* Base backgrounds & text - Dark Theme */
-        --background: 0 0% 10%; /* Primary Black #191919 */
-        --foreground: 0 0% 100%; /* White #FFFFFF */
+        --background: 0 0% 10%;
+        /* Primary Black #191919 */
+        --foreground: 0 0% 100%;
+        /* White #FFFFFF */
 
         /* Gaming card backgrounds - Dark */
-        --card: 0 0% 17%; /* Black 200 #2B2B2B */
+        --card: 0 0% 17%;
+        /* Black 200 #2B2B2B */
         --card-foreground: 0 0% 100%;
 
         --popover: 0 0% 17%;
         --popover-foreground: 0 0% 100%;
 
         /* Primary brand colors */
-        --primary: 45 100% 56%; /* Yellow 100 (#FFCA20) */
+        --primary: 45 100% 56%;
+        /* Yellow 100 (#FFCA20) */
         --primary-foreground: 0 0% 10%;
 
         /* Secondary - Gold 100 (#DFA208) */
@@ -242,14 +251,16 @@
 
         /* Muted elements */
         --muted: 0 0% 17%;
-        --muted-foreground: 0 0% 46%; /* Gray 400 (#757575) */
+        --muted-foreground: 0 0% 46%;
+        /* Gray 400 (#757575) */
 
         /* Accent */
         --accent: 45 100% 56%;
         --accent-foreground: 0 0% 10%;
 
         /* Borders and inputs */
-        --border: 0 0% 24%; /* Gray 300 #3D3D3D */
+        --border: 0 0% 24%;
+        /* Gray 300 #3D3D3D */
         --input: 0 0% 24%;
         --ring: 45 100% 56%;
 

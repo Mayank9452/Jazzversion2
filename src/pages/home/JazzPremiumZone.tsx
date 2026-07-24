@@ -69,7 +69,7 @@ const JazzPremiumZone: React.FC<JazzPremiumZoneProps> = ({ heroGames, onCountdow
     const [activeIndex, setActiveIndex] = useState(0);
 
     const handleGameClick = (game: HeroGames) => {
-        navigate("/tournamentPage", {
+        navigate("/tournamentPageStatic", {
             state: { tournament_id: game?.tournament_id },
         });
     };

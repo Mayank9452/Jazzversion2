@@ -1,6 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import { ChevronLeft } from "lucide-react";
+import { ChevronLeft, ArrowLeft } from "lucide-react";
 import { BottomNavBar } from "./BottomNavBar";
 import { useTheme } from "next-themes";
 
@@ -73,23 +73,44 @@ export default function TermsPageNew() {
           }}
         />
 
-        {/* Custom Navigation Header */}
-        <div className="flex items-center justify-between px-4 py-4 relative z-10 border-b border-border bg-white/50 dark:bg-card/40 backdrop-blur-md">
-          <div className="flex items-center gap-3">
-            <button
-              onClick={() => navigate(-1)}
-              className="flex items-center justify-center w-8 h-8 rounded-full border border-border bg-white/40 dark:bg-card/40 hover:bg-brand-gradient hover:text-brand-black-100 transition-colors text-foreground shadow-sm"
-              title="Back"
-            >
-              <ChevronLeft className="w-4.5 h-4.5" />
-            </button>
-            <span className="text-base font-black tracking-wider uppercase text-foreground">Terms of Use</span>
+        {/* ── Premium Glassmorphic Header Card ── */}
+        <div className="pb-4 relative z-10">
+          <div className={`relative overflow-hidden p-4 flex items-center justify-between gap-3 border-b transition-all duration-300 ${isDark ? "bg-gradient-to-br from-[#2B2B2B]/40 to-[#191919]/30 border-white/[0.06] shadow-[0_12px_40px_rgba(0,0,0,0.2)]" : "bg-gradient-to-br from-white/70 to-white/40 border-slate-200/60 shadow-sm"} backdrop-blur-xl`}>
+            <div className="w-full flex justify-between items-center gap-5">
+              <div>
+                <button
+                  onClick={() => navigate(-1)}
+                  className={`w-10 h-10 rounded-xl flex items-center justify-center shadow-md active:scale-95 transition-all pointer-events-auto cursor-pointer shrink-0 ${isDark ? "bg-[#32323299] backdrop-blur-md border border-white/10 text-white hover:bg-black/75" : "bg-white border border-slate-200 text-slate-700 hover:bg-slate-50"}`}
+                  title="Back"
+                >
+                  <ArrowLeft className="w-5 h-5" />
+                </button>
+              </div>
+              <div className="flex-1 text-center">
+                <h1 className="text-base sm:text-lg font-black tracking-wide uppercase text-slate-800 dark:text-white leading-tight">
+                  Terms of Use
+                </h1>
+                <p className="text-[11px] sm:text-xs font-bold text-slate-500 dark:text-muted-foreground mt-1 leading-none">
+                  Terms, conditions & agreement
+                </p>
+              </div>
+              <div className={`w-10 h-10 flex-shrink-0 flex items-center justify-center rounded-xl overflow-hidden border shadow-sm ${isDark ? "bg-[#2B2B2B]/80 border-[#3D3D3D]" : "bg-white border-slate-200"}`} onClick={() => navigate("/settingsStatic")}>
+                <img
+                  src="/assets/users/1.png"
+                  alt="User Avatar"
+                  className="w-full h-full object-cover"
+                />
+              </div>
+            </div>
           </div>
         </div>
 
-        <div className="pt-6 px-4 max-w-md mx-auto relative z-10">
+        <div className="px-2 max-w-md mx-auto relative z-10">
           {/* Scrollable Terms Content Card */}
-          <div className="rounded-3xl bg-white dark:bg-card/45 backdrop-blur-md border border-border p-5 shadow-lg overflow-y-auto relative text-[12px] leading-relaxed text-brand-gray-400 dark:text-white/90">
+          <div className={`rounded-3xl backdrop-blur-md p-5 shadow-lg overflow-y-auto relative text-[12px] leading-relaxed transition-all duration-300 border ${isDark
+              ? "bg-[#282828]/50 border-white/[0.06] text-white/90 shadow-[0_12px_40px_rgba(0,0,0,0.25)]"
+              : "bg-white/90 border-slate-200/60 text-slate-700 shadow-[0_8px_32px_rgba(0,0,0,0.06)]"
+            }`}>
             <div className="space-y-4">
               <p className="text-center font-bold text-brand-gold-100 dark:text-white">
                 AdvantageX Digital Pte Ltd. - Gamebox Premier League (GPL)
@@ -104,7 +125,10 @@ export default function TermsPageNew() {
                 By accessing or using the Platform (defined below) you agree to be bound by these Terms. Your agreement with us includes these Terms, (collectively "Agreement").
               </p>
 
-              <div className="p-3 bg-red-50 dark:bg-red-500/10 border border-red-200 dark:border-red-500/20 rounded-2xl text-[11px] text-red-700 dark:text-red-400 font-bold">
+              <div className={`p-3 rounded-2xl text-[11px] font-bold border transition-colors duration-300 ${isDark
+                  ? "bg-[#efc5441a] border-[#efc5441a] text-[#f8e571]"
+                  : "bg-[#FFCA20]/10 border-[#FFCA20]/25 text-[#b45309]"
+                }`}>
                 IF YOU DO NOT AGREE WITH THESE TERMS, THEN PLEASE REFRAIN FROM USING THE PLATFORM. BY ACCESSING OR USING THE PLATFORM, YOU IRREVOCABLY ACCEPT THE AGREEMENT AND AGREE TO ABIDE BY THE SAME (AS UPDATED FROM TIME TO TIME).
               </div>
 
@@ -213,7 +237,7 @@ export default function TermsPageNew() {
                         <li>You are not depositing money originating from crime and/or unauthorized activities into Your Account; and</li>
                         <li>You are not using Your Account to conduct any criminal/illegal activities.</li>
                       </ul>
-                      <strong className="block mt-2 text-red-600 dark:text-red-400">
+                      <strong className="block mt-2 text-orange-600 dark:text-orange-400 font-extrabold">
                         GPL employees and their immediate family members (spouses, domestic partners, parents, grandparents, siblings, children, and grandchildren) are not eligible to participate in Tournaments.
                       </strong>
                     </li>

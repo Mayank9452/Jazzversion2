@@ -27,6 +27,34 @@ const players: Player[] = [
 
 const formatScore = (num: number) => num.toLocaleString();
 
+const LaurelLeaf = ({
+  x,
+  y,
+  rotate,
+}: {
+  x: number;
+  y: number;
+  rotate: number;
+}) => (
+  <g transform={`translate(${x} ${y}) rotate(${rotate})`}>
+    <path
+      d="
+        M0 0
+        C4 -8 8 -16 0 -24
+        C-8 -16 -4 -8 0 0
+        Z
+      "
+      fill="#DFA208"
+    />
+    <path
+      d="M0 -2 L0 -21"
+      stroke="rgba(255,255,255,.35)"
+      strokeWidth="0.8"
+      strokeLinecap="round"
+    />
+  </g>
+);
+
 // --- Custom Laurel Badge Component with centered rank number/text ---
 const LaurelBadge: React.FC<{ rankText: string; color: string; size?: number; isDark?: boolean }> = ({ rankText, color, size = 60, isDark = true }) => {
   const numberPart = rankText.replace(/[a-z]/g, "");
@@ -44,12 +72,12 @@ const LaurelBadge: React.FC<{ rankText: string; color: string; size?: number; is
         strokeWidth="2"
         strokeLinecap="round"
         strokeLinejoin="round"
-        className="absolute inset-0 drop-shadow-[0_2px_4px_rgba(0,0,0,0.5)]"
+        className="absolute inset-0 "
       >
         {/* Left Laurel stem */}
-        <path d="M 32,80 C 12,68 12,32 42,20" />
+        {/* <path d="M 32,80 C 12,68 12,32 42,20" /> */}
         {/* Right Laurel stem */}
-        <path d="M 68,80 C 88,68 88,32 58,20" />
+        {/* <path d="M 68,80 C 88,68 88,32 58,20" /> */}
 
         {/* Bow ribbon at bottom */}
         <path d="M 44,82 C 47,79 53,79 56,82 C 58,84 54,89 50,86 C 46,89 42,84 44,82 Z" fill={color} />
@@ -57,27 +85,45 @@ const LaurelBadge: React.FC<{ rankText: string; color: string; size?: number; is
         <path d="M 54,84 C 59,88 62,92 61,93" />
 
         {/* Leaves left */}
-        <path d="M 32,80 C 28,78 25,71 30,68 C 35,65 35,73 32,80" fill={color} />
+        {/* <path d="M 32,80 C 28,78 25,71 30,68 C 35,65 35,73 32,80" fill={color} />
         <path d="M 25,73 C 19,70 18,63 24,61 C 30,59 29,67 25,73" fill={color} />
         <path d="M 20,64 C 14,60 14,53 20,51 C 26,49 25,57 20,64" fill={color} />
         <path d="M 18,54 C 13,49 14,42 20,41 C 26,40 24,48 18,54" fill={color} />
         <path d="M 19,43 C 16,37 18,30 24,31 C 30,32 26,39 19,43" fill={color} />
         <path d="M 24,33 C 23,26 27,21 32,24 C 37,27 32,33 24,33" fill={color} />
-        <path d="M 32,25 C 33,18 39,15 42,20 C 45,25 38,29 32,25" fill={color} />
+        <path d="M 32,25 C 33,18 39,15 42,20 C 45,25 38,29 32,25" fill={color} /> */}
+
+        <LaurelLeaf x={30} y={76} rotate={-80} />
+        <LaurelLeaf x={24} y={68} rotate={-60} />
+        <LaurelLeaf x={20} y={59} rotate={-40} />
+        <LaurelLeaf x={18} y={49} rotate={-20} />
+        <LaurelLeaf x={19} y={39} rotate={0} />
+        <LaurelLeaf x={23} y={30} rotate={23} />
+        <LaurelLeaf x={30} y={22} rotate={45} />
 
         {/* Leaves right */}
-        <path d="M 68,80 C 72,78 75,71 70,68 C 65,65 65,73 68,80" fill={color} />
+        {/* <path d="M 68,80 C 72,78 75,71 70,68 C 65,65 65,73 68,80" fill={color} />
         <path d="M 75,73 C 81,70 82,63 76,61 C 70,59 71,67 75,73" fill={color} />
         <path d="M 80,64 C 86,60 86,53 80,51 C 74,49 75,57 80,64" fill={color} />
         <path d="M 82,54 C 87,49 86,42 80,41 C 74,40 76,48 82,54" fill={color} />
         <path d="M 81,43 C 84,37 82,30 76,31 C 70,32 74,39 81,43" fill={color} />
         <path d="M 76,33 C 77,26 73,21 68,24 C 63,27 68,33 76,33" fill={color} />
-        <path d="M 68,25 C 67,18 61,15 58,20 C 55,25 62,29 68,25" fill={color} />
+        <path d="M 68,25 C 67,18 61,15 58,20 C 55,25 62,29 68,25" fill={color} /> */}
+        <LaurelLeaf x={70} y={76} rotate={80} />
+        <LaurelLeaf x={76} y={68} rotate={60} />
+        <LaurelLeaf x={80} y={59} rotate={40} />
+        <LaurelLeaf x={82} y={49} rotate={20} />
+        <LaurelLeaf x={81} y={39} rotate={0} />
+        <LaurelLeaf x={77} y={30} rotate={-23} />
+        <LaurelLeaf x={70} y={22} rotate={-45} />
       </svg>
       {/* Rank text centered */}
-      <div className={`font-sans font-black z-10 select-none flex flex-col items-center leading-none -mt-1 ${isDark ? "text-white drop-shadow-[0_2px_3px_rgba(0,0,0,0.85)]" : "text-slate-800"}`}>
-        <span className="text-[17px] font-black">{numberPart}</span>
-        <span className="text-[7.5px] font-black tracking-widest uppercase">{textPart}</span>
+      <div className={`font-sans font-black z-10 select-none flex flex-col items-center leading-none ${isDark ? "text-white drop-shadow-[0_2px_3px_rgba(0,0,0,0.85)]" : "text-slate-800"}`}>
+        <span className={`${textPart ? "text-[17px]" : "text-sm"} font-black`}>{numberPart}</span>
+        {textPart != null &&
+          <span className="text-[7.5px] font-black tracking-widest uppercase">{textPart}</span>
+        }
+
       </div>
     </div>
   );
@@ -108,32 +154,39 @@ export const LeaderboardJazzStatic: React.FC = () => {
     <>
 
       {/* Root viewport container supporting dark and light theme styles dynamically */}
-      <div className={`flex flex-col font-sans antialiased max-w-[480px] mx-auto min-h-screen w-full border-x shadow-2xl relative overflow-hidden transition-colors duration-300 ${isDarkTheme ? "bg-[#191919] text-white border-[#3D3D3D]/30 selection:bg-[#FFCA20]/25" : "bg-[#f8f9fa] text-slate-800 border-slate-200/50 selection:bg-[#dfa208]/15"}`}>
+      <div className={`flex flex-col max-w-[480px] mx-auto min-h-screen w-full border-x shadow-2xl relative overflow-hidden transition-colors duration-300 ${isDarkTheme ? "bg-[#191919] text-white border-[#3D3D3D]/30 selection:bg-[#FFCA20]/25" : "bg-[#f8f9fa] text-slate-800 border-slate-200/50 selection:bg-[#dfa208]/15"}`}>
 
         {/* ── Premium Glassmorphic Header Card (replicated from TournamentHistory.tsx) ── */}
-        <div className="pb-2 z-30">
-          <div className={`relative overflow-hidden p-4 flex items-center justify-between gap-3 border-b transition-all duration-300 ${isDarkTheme ? "bg-gradient-to-br from-[#2B2B2B]/40 to-[#191919]/30 border-white/[0.06] shadow-[0_12px_40px_rgba(0,0,0,0.2)]" : "bg-white border-slate-200/60 shadow-sm"}`}>
+        <div className="pb-4 z-30">
+          <div className={`relative overflow-hidden p-4 flex items-center justify-between gap-3 border-b transition-all duration-300 ${isDarkTheme ? "bg-gradient-to-br from-[#2B2B2B]/40 to-[#191919]/30 border-white/[0.06] shadow-[0_12px_40px_rgba(0,0,0,0.2)]" : "bg-gradient-to-br from-white/70 to-white/40 border-slate-200/60 shadow-sm"} backdrop-blur-xl`}>
             <div className="w-full flex justify-between items-center gap-5">
               <div>
                 <button
                   onClick={() => navigate(-1)}
-                  className={`flex items-center justify-center w-8 h-8 rounded-xl border transition-all cursor-pointer shadow-sm ${isDarkTheme ? "border-[#FFCA20] bg-[#2B2B2B]/40 hover:bg-[#FFCA20] hover:text-[#191919] text-white" : "border-slate-200 bg-white hover:bg-slate-50 text-slate-800"}`}
+                  className="w-10 h-10 rounded-xl flex items-center justify-center shadow-md active:scale-95 transition-all pointer-events-auto cursor-pointer shrink-0 bg-white border border-slate-200 text-slate-700 hover:bg-slate-50 dark:bg-[#32323299] dark:backdrop-blur-md dark:border-white/10 dark:text-white dark:hover:bg-black/75"
                   title="Back"
                 >
-                  <ChevronLeft className={`w-4.5 h-4.5 ${isDarkTheme ? "text-[#FFCA20]" : "text-slate-800"}`} />
+                  <ArrowLeft className="w-5 h-5" />
                 </button>
               </div>
-              <div className="flex-1 text-center">
-                <h1 className={`text-base sm:text-lg font-black tracking-wide uppercase leading-tight flex items-center justify-center gap-1.5 ${isDarkTheme ? "text-white" : "text-slate-800"}`}>
-                  <img
-                    src="/assets/images/img/trophy.png"
-                    alt="Trophy"
-                    className="w-10 h-8 object-contain"
-                  />
-                  Leaderboard
-                </h1>
+              <div className="flex-1 flex items-center justify-center gap-2">
+                <img
+                  src="/assets/images/img/trophy.png"
+                  alt="Trophy"
+                  className="w-10 h-8 object-contain"
+                />
+                <div className="flex flex-col text-start leading-none">
+                  <h1 className={`text-base sm:text-lg font-black tracking-wide uppercase leading-tight ${isDarkTheme ? "text-white" : "text-slate-800"}`}>
+                    Leaderboard
+                  </h1>
+                  <p className="text-[11px] sm:text-xs font-bold text-slate-500 dark:text-muted-foreground mt-0.5 leading-none">
+                    Top Player Rankings
+                  </p>
+                </div>
               </div>
-              <div className={`w-10 h-10 flex-shrink-0 flex items-center justify-center rounded-xl overflow-hidden border shadow-sm ${isDarkTheme ? "bg-[#2B2B2B]/80 border-[#3D3D3D]" : "bg-white border-slate-200"}`}>
+              <div className={`w-10 h-10 flex-shrink-0 flex items-center justify-center rounded-xl overflow-hidden border shadow-sm ${isDarkTheme ? "bg-[#2B2B2B]/80 border-[#3D3D3D]" : "bg-white border-slate-200"}`}
+                onClick={() => navigate("/settingsStatic")}
+              >
                 <img
                   src={players.find((p) => p.rank === 6)?.avatarUrl || "/assets/users/6.png"}
                   alt="User Avatar"
@@ -145,14 +198,29 @@ export const LeaderboardJazzStatic: React.FC = () => {
         </div>
 
         {/* User Stats Block (Rank and Best Score) */}
-        <div className={`mx-4 mt-3 rounded-2xl p-3.5 flex justify-between items-center text-xs select-none relative z-10 border transition-all duration-300 ${isDarkTheme ? "bg-[#313131] border-white/20 shadow-[inset_0_4px_24px_rgba(0,0,0,0.2),0_-2px_0px_rgba(255,255,255,0.7)] text-white" : "bg-white border-slate-200/60 shadow-sm text-slate-800"}`}>
+        <style>{`
+          @keyframes border-glow-pulse {
+            0%, 100% {
+              box-shadow: 0 0 10px rgba(255, 202, 32, 0.35);
+              border-color: rgba(255, 202, 32, 0.25);
+            }
+            50% {
+              box-shadow: 0 0 24px rgba(255, 202, 32, 0.85);
+              border-color: rgba(255, 202, 32, 0.85);
+            }
+          }
+          .animate-glow-pulse {
+            animation: border-glow-pulse 2.2s infinite ease-in-out;
+          }
+        `}</style>
+        <div className="mx-4 mt-3 rounded-full py-3.5 px-6 flex justify-between items-center text-xs select-none relative z-10 border bg-gradient-to-r from-[#FFCA20] to-[#E6B53A] text-slate-950 font-black animate-glow-pulse transition-all">
           <div className="flex items-center gap-2">
-            <span className={isDarkTheme ? "text-white font-bold" : "text-slate-500 font-bold"}>Your Rank:</span>
-            <span className={`font-black text-sm ${isDarkTheme ? "text-[#FFCA20]" : "text-[#dfa208]"}`}>#6</span>
+            <span className="text-slate-950/70 font-bold tracking-[0.5px] text-sm">Your Rank : </span>
+            <span className="font-black text-sm text-slate-950">#6</span>
           </div>
           <div className="flex items-center gap-2">
-            <span className={isDarkTheme ? "text-white font-bold" : "text-slate-500 font-bold"}>Best Score:</span>
-            <span className={`font-black text-sm ${isDarkTheme ? "text-[#FFCA20]" : "text-[#dfa208]"}`}>
+            <span className="text-slate-950/70 font-bold tracking-[0.5px] text-sm">Best Score : </span>
+            <span className="font-black text-sm text-slate-950">
               {formatScore(players.find((p) => p.rank === 6)?.score || 71667)}
             </span>
           </div>
@@ -257,8 +325,8 @@ export const LeaderboardJazzStatic: React.FC = () => {
               return (
                 <div
                   key={player.rank}
-                  className={`flex items-center justify-between py-3 select-none transition-all ${isCurrentUser
-                    ? isDarkTheme 
+                  className={`flex items-center justify-between py-1 select-none transition-all ${isCurrentUser
+                    ? isDarkTheme
                       ? "bg-yellow-main/30 border-2 border-[#FFCA20]/45 -mx-3 px-3 rounded-xl shadow-[0_4px_20px_rgba(0,0,0,0.3)] my-1"
                       : "bg-[#fffbeb] border-2 border-[#FFCA20]/45 -mx-3 px-3 rounded-xl shadow-sm my-1"
                     : idx === restPlayers.length - 1 ? "" : (isDarkTheme ? "border-b border-[#535151]" : "border-b border-slate-100")
@@ -291,7 +359,7 @@ export const LeaderboardJazzStatic: React.FC = () => {
 
                   {/* Right Side: Gold Wreath Badge */}
                   <div className="shrink-0 mr-1">
-                    <LaurelBadge rankText={`${player.rank}th`} color="#C5A059" size={46} isDark={isDarkTheme} />
+                    <LaurelBadge rankText={`${player.rank}`} color="#C5A059" size={50} isDark={isDarkTheme} />
                   </div>
                 </div>
               );

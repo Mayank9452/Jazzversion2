@@ -32,7 +32,7 @@ export const LeaderboardJoinPopup: React.FC<LeaderboardJoinPopupProps> = ({
                         animate={{ scale: 1, opacity: 1, y: 0 }}
                         exit={{ scale: 0.9, opacity: 0, y: 30 }}
                         transition={{ type: "spring", damping: 20, stiffness: 300 }}
-                        className="border-2 border-white/30 w-full max-w-sm rounded-[28px] p-6 shadow-2xl relative overflow-hidden text-white z-10 flex flex-col items-center text-center"
+                        className="border-2 bg-[#282828c2] dark:bg-[#0000002b]  border-white/30 w-full max-w-sm rounded-[28px] p-6 shadow-2xl relative overflow-hidden text-white z-10 flex flex-col items-center text-center"
                     >
                         {/* Golden/Cyan glowing circle in background */}
                         <div className="absolute -top-16 -left-16 w-32 h-32 bg-[#ffc200]/10 rounded-full blur-3xl pointer-events-none" />
@@ -66,7 +66,7 @@ export const LeaderboardJoinPopup: React.FC<LeaderboardJoinPopupProps> = ({
                                         onJoin();
                                         onClose();
                                     }}
-                                    className="text-base h-12 w-full bg-gradient-to-r from-[#ffd43f] to-[#ffb800] hover:from-[#ffe066] hover:to-[#ffd014] text-[#0b2f5f] font-bold rounded-2xl shadow-lg shadow-pink-900/20 border-t border-white/20 transition-all active:scale-95"
+                                    className="text-base h-12 w-full bg-gradient-to-r from-[#ffd43f] to-[#ffb800] hover:from-[#ffe066] hover:to-[#ffd014] text-[#0b2f5f] font-bold rounded-2xl shadow-lg shadow-pink-900/20 border-2 border-white transition-all active:scale-95"
                                 >
                                     Play Tournament
                                 </button>

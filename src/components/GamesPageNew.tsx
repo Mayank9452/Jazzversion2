@@ -2,7 +2,7 @@ import React, { useEffect, useState, useMemo, useCallback } from "react";
 import {
   Gamepad2, Zap, Play, Compass, Flame, Map,
   Puzzle, Flag, ChevronRight, ChevronLeft, Trophy, Bolt,
-  Star, Crown, Sparkles, TrendingUp, HelpCircle
+  Star, Crown, Sparkles, TrendingUp, HelpCircle, ArrowLeft
 } from "lucide-react";
 import { BottomNavBar } from "./BottomNavBar";
 import { useLanguage } from "./context/LanguageContext";
@@ -183,7 +183,7 @@ function PlayStoreRankItem({ rank, game, onPlay }: { rank: number; game: any; on
   return (
     <div
       onClick={onPlay}
-      className="aspect-[285/380] w-full rounded-2xl overflow-hidden border border-slate-200 dark:border-[#3D3D3D]/40 shadow-sm dark:shadow-md cursor-pointer relative shrink-0 dark:border-[#FFCA20]/30"
+      className="aspect-[285/380] w-full rounded-2xl overflow-hidden border border-slate-200 dark:border-[#ffffff38] shadow-sm dark:shadow-md cursor-pointer relative shrink-0 dark:border-[#FFCA20]/30"
     >
       <img src={imageUrl} alt="" className="w-full h-full object-cover" />
       <button
@@ -202,7 +202,7 @@ function PlayStorePremiumCard({ game, onPlay }: { game: any; onPlay: () => void 
   return (
     <div
       onClick={onPlay}
-      className="bg-white/90 border border-slate-200/80 shadow-md hover:shadow-lg dark:bg-[#2B2B2B] dark:border-[#FFCA20]/20 rounded-2xl overflow-hidden transition-all p-2 cursor-pointer relative"
+      className="bg-white/90 border border-slate-200/80 shadow-md hover:shadow-lg dark:bg-[#2B2B2B] dark:border-[#cfcfcf33] rounded-2xl overflow-hidden transition-all p-2 cursor-pointer relative"
     >
       {/* <div className="absolute top-2 left-2 bg-gradient-to-r from-[#FFCA20] to-[#DFA208] text-[#191919] text-[8px] font-black px-2 py-0.5 rounded-md flex items-center gap-0.5 shadow-sm z-10">
         <Crown className="w-2.5 h-2.5 fill-current" />
@@ -319,6 +319,8 @@ export default function GamesPageNew() {
   const location = useLocation();
   const scrollToCategory = location.state?.scrollToCategory;
   const { t } = useLanguage();
+  const { resolvedTheme } = useTheme();
+  const isDark = resolvedTheme === "dark";
   const { data: homeData } = useAppSelector((state) => state.home);
 
   const [categories, setCategories] = useState<any[]>([]);
@@ -458,9 +460,9 @@ export default function GamesPageNew() {
         <div className="absolute top-[15%] -left-20 w-72 h-72 bg-[#FFCA20]/8 rounded-full blur-[90px] pointer-events-none z-0 dark:hidden" />
         <div className="absolute bottom-[25%] -right-20 w-72 h-72 bg-blue-500/8 rounded-full blur-[90px] pointer-events-none z-0 dark:hidden" />
 
-        {/* ─── Solid Black Header (Remains same in light & dark theme matching TournamentHistory structure) ─── */}
-        <div className="sticky top-0 z-[99] mb-3 bg-[#191919] transition-colors duration-300">
-          <div className="relative overflow-hidden bg-[#191919] border-b border-white/10 p-2 flex items-center justify-between gap-3 shadow-[0_8px_32px_rgba(0,0,0,0.2)]">
+        {/* ── Premium Glassmorphic Header Card ── */}
+        <div className="sticky top-0 z-[99] mb-3 transition-colors duration-300">
+          <div className={`relative overflow-hidden p-4 flex items-center justify-between gap-3 border-b transition-all duration-300 ${isDark ? "bg-gradient-to-br from-[#2B2B2B]/40 to-[#191919]/30 border-white/[0.06] shadow-[0_12px_40px_rgba(0,0,0,0.2)]" : "bg-gradient-to-br from-white/70 to-white/40 border-slate-200/60 shadow-sm"} backdrop-blur-xl`}>
             <div className="w-full flex justify-between items-center gap-5">
               <div>
                 <button
@@ -471,21 +473,24 @@ export default function GamesPageNew() {
                       navigate(-1);
                     }
                   }}
-                  className="flex items-center justify-center w-8 h-8 rounded-full border border-yellow-main bg-white/10 hover:bg-brand-gradient hover:text-brand-black-100 transition-colors text-white shadow-sm"
+                  className={`w-10 h-10 rounded-xl flex items-center justify-center shadow-md active:scale-95 transition-all pointer-events-auto cursor-pointer shrink-0 ${isDark ? "bg-[#32323299] backdrop-blur-md border border-white/10 text-white hover:bg-black/75" : "bg-white border border-slate-200 text-slate-700 hover:bg-slate-50"}`}
                   title="Back"
                 >
-                  <ChevronLeft className="w-4.5 h-4.5 text-yellow-main" />
+                  <ArrowLeft className="w-5 h-5" />
                 </button>
               </div>
               <div className="flex-1 text-center">
-                <h1 className="text-base sm:text-lg font-black tracking-wide uppercase text-white leading-tight">
+                <h1 className="text-base sm:text-lg font-black tracking-wide uppercase text-slate-800 dark:text-white leading-tight">
                   Play Free Games
                 </h1>
+                <p className="text-[11px] sm:text-xs font-bold text-slate-500 dark:text-muted-foreground mt-1 leading-none">
+                  Explore our collection of arcade games
+                </p>
               </div>
-              {/* Right side: Profile avatar in rounded-xl container matching TournamentHistory style */}
+              {/* Right side: Profile avatar in rounded-xl container */}
               <div
                 onClick={() => navigate("/profile")}
-                className="w-10 h-10 flex-shrink-0 flex items-center justify-center bg-yellow-main/5 rounded-xl shadow-[0_0_15px_rgba(254,203,19,0.15)] border border-[#fecb13]/25 cursor-pointer overflow-hidden active:scale-95 transition-all hover:scale-105"
+                className={`w-10 h-10 flex-shrink-0 flex items-center justify-center rounded-xl overflow-hidden border cursor-pointer active:scale-95 transition-all hover:scale-105 shadow-md ${isDark ? "bg-[#32323299] backdrop-blur-md border-white/10" : "bg-white border-slate-200"}`}
               >
                 <img
                   src={`/assets/users/${avatar}`}
@@ -516,9 +521,9 @@ export default function GamesPageNew() {
                 <div className="flex items-center gap-3 bg-white dark:bg-[#2B2B2B] border border-slate-200 dark:border-[#3D3D3D] p-3 rounded-2xl shadow-sm text-start">
                   <button
                     onClick={() => setSelectedCategoryDetail(null)}
-                    className="w-8 h-8 rounded-xl bg-slate-100 dark:bg-[#191919]/60 flex items-center justify-center text-slate-700 dark:text-slate-200 font-bold active:scale-95 transition-transform border border-slate-200 dark:border-[#3D3D3D]"
+                    className="w-10 h-10 rounded-xl flex items-center justify-center shadow-md active:scale-95 transition-all pointer-events-auto cursor-pointer shrink-0 bg-white border border-slate-200 text-slate-700 hover:bg-slate-50 dark:bg-[#32323299] dark:backdrop-blur-md dark:border-white/10 dark:text-white dark:hover:bg-black/75"
                   >
-                    <ChevronLeft className="w-5 h-5" />
+                    <ArrowLeft className="w-5 h-5" />
                   </button>
                   <div>
                     <div className="text-[13px] font-black uppercase tracking-wider text-slate-800 dark:text-white">
@@ -552,7 +557,7 @@ export default function GamesPageNew() {
               >
                 {/* 1. Hero Spotlight Carousel */}
                 {randomGamesData?.usergamesList?.length > 0 && (
-                  <div className="px-4">
+                  <div className="px-2">
                     <Swiper
                       loop={randomGamesData.usergamesList.length > 2}
                       slidesPerView={1.3}
@@ -585,7 +590,7 @@ export default function GamesPageNew() {
                     </div>
                     */}
                     <div
-                      className="overflow-hidden w-full px-4 pb-2.5 flex"
+                      className="overflow-hidden w-full mx-2 px-4 pb-2.5 flex"
                       style={{
                         // maskImage: "linear-gradient(to right, transparent, white 8%, white 92%, transparent)",
                         // WebkitMaskImage: "linear-gradient(to right, transparent, white 8%, white 92%, transparent)"

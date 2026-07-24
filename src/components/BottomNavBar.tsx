@@ -256,7 +256,7 @@ type BottomNavBarProps = {
   setIsOpen?: (open: boolean) => void
 }
 
-const NAVBAR_HEIGHT = 70 // px (safe for toggle + animation)
+const NAVBAR_HEIGHT = 60 // px (safe for toggle + animation)
 
 export function BottomNavBar({
   isOpen = false,

@@ -6,6 +6,7 @@ import Home from "@/pages/home/index";
 const BiddingPage = lazy(() => import("@/components/BiddingPage"));
 const DetailsPage = lazy(() => import("@/components/DetailsPage"));
 const GamesPage = lazy(() => import("@/components/GamesPageNew"));
+const GamesPageNewTesting = lazy(() => import("@/components/GamesPageNewTesting"));
 const LeaderboardPageNew = lazy(() => import("@/components/LeaderboardPageNew"));
 const JazzLeaderboardNew = lazy(() => import("@/components/JazzLeaderboardNew"));
 const NotificationPage = lazy(() => import("@/components/NotificationJazz"));
@@ -87,6 +88,7 @@ import LeaderboardJazzStatic2 from "@/components/LeaderboardJazzStatic2";
 import LeaderboardJazzStatic4 from "@/components/LeaderboardJazzStatic4";
 import LeaderboardJazzStatic5 from "@/components/LeaderboardJazzStatic5";
 import SpinWheelUpdatedVoucher from "@/components/SpinWheelUpdatedVoucher";
+import GamesPageNew from "@/components/GamesPageNew";
 
 const UserIdHandler = () => {
   const [searchParams] = useSearchParams();
@@ -160,7 +162,7 @@ const routes = [
   },
   {
     path: "/games",
-    element: <GamesPage />,
+    element: <GamesPageNewTesting />,
   },
   {
     path: "/games/viewAll",
