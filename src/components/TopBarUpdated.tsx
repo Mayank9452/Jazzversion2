@@ -34,15 +34,15 @@ export function TopBarUpdated() {
     const { t } = useLanguage();
     const { theme, setTheme } = useTheme();
 
-    const { data: response } = useAppSelector((state) => state.home);
+    const { data: response } = useAppSelector((state) => state.jazzHome);
     const { data: profileData } = useAppSelector((state) => state.profile);
 
-    const userInfo = profileData?.data?.userInfo || response?.data?.userInfo;
-    const user_play_coins = userInfo?.user_play_coins ?? 0;
-    const user_reward_coins = userInfo?.user_reward_coins ?? response?.data?.diamonds ?? profileData?.data?.userPoints ?? 0;
+    const userInfo = response?.userInfo || response?.data?.userInfo;
+    const user_play_coins = response?.user_play_coins ?? 0;
+    const user_reward_coins = response?.user_reward_coins ?? response?.data?.diamonds ?? profileData?.data?.userPoints ?? 0;
     const user_phone = userInfo?.user_phone;
     const userName = localStorage.getItem("username") || userInfo?.user_name || "";
-    const avatar = userInfo?.user_profile_img ? `${userInfo.user_profile_img}.png` : "9.png";
+    const avatar = userInfo?.user_profile_img ? `${userInfo.user_profile_img}.png` : (localStorage.getItem("selectedAvatarImg") || "9.png");
 
     const [sidebarOpen, setSidebarOpen] = useState(false);
     const [mounted, setMounted] = useState(false);
@@ -72,7 +72,7 @@ export function TopBarUpdated() {
         <>
             <div className="sticky top-0 z-[99] w-full">
                 <div
-                    className="bg-brand-black-100 border-b border-white/[0.08] h-[70px] flex items-center justify-between px-4 w-full transition-colors duration-300 relative z-10"
+                    className="bg-brand-black-100 border-b border-white/[0.08] h-[70px] flex items-center justify-between px-2 w-full transition-colors duration-300 relative z-10"
                 >
                     {/* Left Section: Navigation Toggler & Coins Chip */}
                     <div className="flex items-center gap-2 relative z-20">
@@ -87,7 +87,7 @@ export function TopBarUpdated() {
 
                         {/* Reward Coins Chip (Left Side, Smaller Layout) */}
                         <div
-                            onClick={handleRedeem}
+                            // onClick={handleRedeem}
                             className="flex flex-col items-center justify-center h-12 px-3.5 rounded-lg border border-brand-gold-100/30 bg-brand-gold-100/5 hover:bg-brand-gold-100/10 transition-all shadow-inner cursor-pointer shrink-0"
                             title="Redeem Coins"
                         >
@@ -119,10 +119,10 @@ export function TopBarUpdated() {
                         {/* Profile Image Avatar */}
                         <button
                             onClick={() => navigate("/settingsStatic")}
-                            className="w-9 h-9 rounded-full overflow-hidden border border-white/10 bg-white/[0.03] hover:bg-white/5 active:scale-95 transition-all shrink-0"
+                            className="w-11 h-11 flex-shrink-0 flex items-center justify-center cursor-pointer active:scale-95 transition-all shrink-0"
                             title="My Account"
                         >
-                            <img src={`/assets/users/${avatar}`} alt="Avatar" className="w-full h-full object-cover" />
+                            <img src={`/assets/users/${avatar}`} alt="Avatar" className="w-full h-full object-contain" />
                         </button>
 
                         {/* Theme Toggler */}
@@ -183,7 +183,7 @@ export function TopBarUpdated() {
                     {/* Sidenav Profile */}
                     <div className="p-4 bg-gradient-to-b from-white/5 to-transparent border-b border-white/10 flex flex-col gap-3">
                         <div className="flex items-center gap-3">
-                            <div className="w-12 h-12 rounded-full overflow-hidden border border-white/10">
+                            <div className="w-20 h-20 rounded-full overflow-hidden">
                                 <img src={`/assets/users/${avatar}`} alt="Avatar" className="w-full h-full object-cover" />
                             </div>
                             <div className="flex flex-col text-start">
@@ -296,7 +296,7 @@ export function TopBarUpdated() {
                                         setSidebarOpen(false);
                                         setShowUnsubscribePopup(true);
                                     }}
-                                    className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-left text-yellow-main hover:text-rose-300 hover:bg-rose-500/10 transition-all font-semibold text-sm"
+                                    className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-left text-yellow-main hover:bg-yellow-main/10 transition-all font-semibold text-sm"
                                 >
                                     <LogOut className="h-4.5 w-4.5" />
                                     Unsubscribe

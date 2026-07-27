@@ -126,7 +126,7 @@ function SpinWheelUpdatedVoucher({ }) {
     const { spinWinInfo, spinJSON, jsonStatus, infoStatus } = useAppSelector((state) => state.jazzSpinWin);
     const spinWinData = spinJSON;
     const spinCheck = spinWinInfo;
-    const avatar = useAppSelector((state) => state?.profile?.data?.data?.user?.avatar || "1.png");
+    const avatar = useAppSelector((state) => state?.profile?.data?.data?.user?.avatar) || localStorage.getItem("selectedAvatarImg") || "9.png";
 
     const [result, setResult] = useState<any | null>(null);
     const [rotation, setRotation] = useState(0);
@@ -451,9 +451,9 @@ function SpinWheelUpdatedVoucher({ }) {
                         {/* Right side: Modern Profile Avatar Container */}
                         <div
                             onClick={() => navigate("/profile")}
-                            className={`w-10 h-10 flex-shrink-0 flex items-center justify-center rounded-xl overflow-hidden border cursor-pointer active:scale-95 transition-all hover:scale-105 shadow-md ${isDarkTheme ? "bg-[#32323299] backdrop-blur-md border-white/10" : "bg-white border-slate-200"}`}
+                            className="w-10 h-10 flex-shrink-0 flex items-center justify-center cursor-pointer active:scale-95 transition-all hover:scale-105"
                         >
-                            <img src={`/assets/users/${avatar}`} className="w-full h-full object-cover" alt="User Avatar" />
+                            <img src={`/assets/users/${avatar}`} className="w-full h-full object-contain" alt="User Avatar" />
                         </div>
                     </div>
                 </div>

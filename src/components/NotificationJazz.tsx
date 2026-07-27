@@ -119,7 +119,7 @@ export default function NotificationJazz() {
   const isDark = resolvedTheme === "dark";
   const { data: homeData } = useAppSelector((state) => state.home);
   const userInfo = homeData?.data?.userInfo;
-  const avatar = userInfo?.user_profile_img ? `${userInfo.user_profile_img}.png` : "9.png";
+  const avatar = userInfo?.user_profile_img ? `${userInfo.user_profile_img}.png` : (localStorage.getItem("selectedAvatarImg") || "9.png");
 
   const [loading, setLoading] = useState<boolean>(false);
   const [notificationPageData, setNotificationPageData] = useState<any | null>(null);
@@ -312,7 +312,7 @@ export default function NotificationJazz() {
 
         {/* ── Premium Glassmorphic Header Card ── */}
         <div className="relative z-10">
-          <div className={`relative overflow-hidden p-4 flex items-center justify-between gap-3 border-b transition-all duration-300 ${isDark ? "bg-gradient-to-br from-[#2B2B2B]/40 to-[#191919]/30 border-white/[0.06] shadow-[0_12px_40px_rgba(0,0,0,0.2)]" : "bg-gradient-to-br from-white/70 to-white/40 border-slate-200/60 shadow-sm"} backdrop-blur-xl`}>
+          <div className={`relative overflow-hidden p-2 pr-1 flex items-center justify-between gap-3 border-b transition-all duration-300 ${isDark ? "bg-gradient-to-br from-[#2B2B2B]/40 to-[#191919]/30 border-white/[0.06] shadow-[0_12px_40px_rgba(0,0,0,0.2)]" : "bg-gradient-to-br from-white/70 to-white/40 border-slate-200/60 shadow-sm"} backdrop-blur-xl`}>
             <div className="w-full flex justify-between items-center gap-5">
               <div>
                 <button
@@ -334,11 +334,11 @@ export default function NotificationJazz() {
               {/* Right side: Profile avatar in rounded-xl container */}
               <div
                 onClick={() => navigate("/settingsStatic")}
-                className={`w-10 h-10 flex-shrink-0 flex items-center justify-center rounded-xl overflow-hidden border cursor-pointer active:scale-95 transition-all hover:scale-105 shadow-md ${isDark ? "bg-[#32323299] backdrop-blur-md border-white/10" : "bg-white border-slate-200"}`}
+                className="w-16 h-16 -my-2 flex-shrink-0 flex items-center justify-center cursor-pointer active:scale-95 transition-all hover:scale-105"
               >
                 <img
                   src={`/assets/users/${avatar}`}
-                  className="w-full h-full object-cover"
+                  className="w-full h-full object-contain"
                   alt="Avatar"
                   onError={(e) => {
                     (e.target as HTMLImageElement).src = "/assets/users/9.png";

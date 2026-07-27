@@ -89,6 +89,7 @@ import LeaderboardJazzStatic4 from "@/components/LeaderboardJazzStatic4";
 import LeaderboardJazzStatic5 from "@/components/LeaderboardJazzStatic5";
 import SpinWheelUpdatedVoucher from "@/components/SpinWheelUpdatedVoucher";
 import GamesPageNew from "@/components/GamesPageNew";
+import SpinWheelUpdatedVoucher2 from "@/components/SpinWheelUpdatedVoucher2";
 
 const UserIdHandler = () => {
   const [searchParams] = useSearchParams();
@@ -150,7 +151,7 @@ const routes = [
   },
   {
     path: "/spinandwin",
-    element: <SpinWheelUpdatedVoucher />,
+    element: <SpinWheelUpdatedVoucher2 />,
   },
   {
     path: "/settingsStatic",

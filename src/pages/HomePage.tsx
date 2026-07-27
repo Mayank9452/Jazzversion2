@@ -13,6 +13,7 @@ import BidCardDemoNew from "@/components/BidCardDemoNew";
 import BiddingHammer from "@/components/BiddingHammer";
 import LowBalancePopup from "@/components/LowBalancePopup";
 import { useState, useEffect } from "react";
+import { TopBarUpdated } from "@/components/TopBarUpdated";
 export default function HomePage() {
   const { t } = useLanguage();
   const dispatch = useAppDispatch();
@@ -25,7 +26,7 @@ export default function HomePage() {
 
   return (
     <>
-      <TopBar />
+      <TopBarUpdated />
       <div className="mobile-container py-1  space-y-2">
 
         <section>

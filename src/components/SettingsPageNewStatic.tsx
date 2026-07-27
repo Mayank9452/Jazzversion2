@@ -61,6 +61,10 @@ export default function SettingsPageNewStatic() {
         if (user?.user_profile_img) {
             setSelectedAvatar(`${user.user_profile_img}.png`);
             setCurrentAvatar(`${user.user_profile_img}.png`);
+        } else {
+            const localImg = localStorage.getItem("selectedAvatarImg") || "9.png";
+            setSelectedAvatar(localImg);
+            setCurrentAvatar(localImg);
         }
     }, [user]);
     const handleSaveAvatar = async (imgUrlName: string, cost: number) => {
@@ -70,6 +74,7 @@ export default function SettingsPageNewStatic() {
             // await dispatch(updateProfileImageThunk({ profileImg: imgName })).unwrap();
             setSelectedAvatar(imgUrlName);
             setCurrentAvatar(imgUrlName);
+            localStorage.setItem("selectedAvatarImg", imgUrlName);
             setUserCoins(prev => prev - cost);
             setShowModal(false);
             // dispatch(getProfileInfo());
@@ -78,13 +83,14 @@ export default function SettingsPageNewStatic() {
             // Fallback local update if network is mock
             setSelectedAvatar(imgUrlName);
             setCurrentAvatar(imgUrlName);
+            localStorage.setItem("selectedAvatarImg", imgUrlName);
             setUserCoins(prev => prev - cost);
             setShowModal(false);
         } finally {
             setLoading(false);
         }
     };
-    const avatars = Array.from({ length: 15 }, (_, i) => `${i + 1}.png`);
+    const avatars = Array.from({ length: 22 }, (_, i) => `${i + 1}.png`);
     return (
         <>
             <TopBarUpdated />

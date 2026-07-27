@@ -75,7 +75,7 @@ export default function TermsPageNew() {
 
         {/* ── Premium Glassmorphic Header Card ── */}
         <div className="pb-4 relative z-10">
-          <div className={`relative overflow-hidden p-4 flex items-center justify-between gap-3 border-b transition-all duration-300 ${isDark ? "bg-gradient-to-br from-[#2B2B2B]/40 to-[#191919]/30 border-white/[0.06] shadow-[0_12px_40px_rgba(0,0,0,0.2)]" : "bg-gradient-to-br from-white/70 to-white/40 border-slate-200/60 shadow-sm"} backdrop-blur-xl`}>
+          <div className={`relative overflow-hidden p-2 pr-1 flex items-center justify-between gap-3 border-b transition-all duration-300 ${isDark ? "bg-gradient-to-br from-[#2B2B2B]/40 to-[#191919]/30 border-white/[0.06] shadow-[0_12px_40px_rgba(0,0,0,0.2)]" : "bg-gradient-to-br from-white/70 to-white/40 border-slate-200/60 shadow-sm"} backdrop-blur-xl`}>
             <div className="w-full flex justify-between items-center gap-5">
               <div>
                 <button
@@ -94,11 +94,16 @@ export default function TermsPageNew() {
                   Terms, conditions & agreement
                 </p>
               </div>
-              <div className={`w-10 h-10 flex-shrink-0 flex items-center justify-center rounded-xl overflow-hidden border shadow-sm ${isDark ? "bg-[#2B2B2B]/80 border-[#3D3D3D]" : "bg-white border-slate-200"}`} onClick={() => navigate("/settingsStatic")}>
+              <div className="w-16 h-16 -my-2 flex-shrink-0 flex items-center justify-center cursor-pointer active:scale-95 transition-all hover:scale-105"
+                onClick={() => navigate("/settingsStatic")}
+              >
                 <img
-                  src="/assets/users/1.png"
+                  src={`/assets/users/${localStorage.getItem("selectedAvatarImg") || "9.png"}`}
                   alt="User Avatar"
-                  className="w-full h-full object-cover"
+                  className="w-full h-full object-contain"
+                  onError={(e) => {
+                    (e.target as HTMLImageElement).src = "/assets/users/9.png";
+                  }}
                 />
               </div>
             </div>
@@ -108,8 +113,8 @@ export default function TermsPageNew() {
         <div className="px-2 max-w-md mx-auto relative z-10">
           {/* Scrollable Terms Content Card */}
           <div className={`rounded-3xl backdrop-blur-md p-5 shadow-lg overflow-y-auto relative text-[12px] leading-relaxed transition-all duration-300 border ${isDark
-              ? "bg-[#282828]/50 border-white/[0.06] text-white/90 shadow-[0_12px_40px_rgba(0,0,0,0.25)]"
-              : "bg-white/90 border-slate-200/60 text-slate-700 shadow-[0_8px_32px_rgba(0,0,0,0.06)]"
+            ? "bg-[#282828]/50 border-white/[0.06] text-white/90 shadow-[0_12px_40px_rgba(0,0,0,0.25)]"
+            : "bg-white/90 border-slate-200/60 text-slate-700 shadow-[0_8px_32px_rgba(0,0,0,0.06)]"
             }`}>
             <div className="space-y-4">
               <p className="text-center font-bold text-brand-gold-100 dark:text-white">
@@ -126,8 +131,8 @@ export default function TermsPageNew() {
               </p>
 
               <div className={`p-3 rounded-2xl text-[11px] font-bold border transition-colors duration-300 ${isDark
-                  ? "bg-[#efc5441a] border-[#efc5441a] text-[#f8e571]"
-                  : "bg-[#FFCA20]/10 border-[#FFCA20]/25 text-[#b45309]"
+                ? "bg-[#efc5441a] border-[#efc5441a] text-[#f8e571]"
+                : "bg-[#FFCA20]/10 border-[#FFCA20]/25 text-[#b45309]"
                 }`}>
                 IF YOU DO NOT AGREE WITH THESE TERMS, THEN PLEASE REFRAIN FROM USING THE PLATFORM. BY ACCESSING OR USING THE PLATFORM, YOU IRREVOCABLY ACCEPT THE AGREEMENT AND AGREE TO ABIDE BY THE SAME (AS UPDATED FROM TIME TO TIME).
               </div>

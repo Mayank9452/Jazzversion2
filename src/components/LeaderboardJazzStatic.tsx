@@ -18,7 +18,7 @@ const players: Player[] = [
   { rank: 3, msisdn: "912xxxx789", score: 82139, avatarUrl: "/assets/users/3.png", avatarBg: "from-[#2B2B2B] to-[#191919]" },
   { rank: 4, msisdn: "987xxxx321", score: 80857, avatarUrl: "/assets/users/4.png", avatarBg: "from-[#3D3D3D] to-[#2B2B2B]" },
   { rank: 5, msisdn: "955xxxx111", score: 76128, avatarUrl: "/assets/users/5.png", avatarBg: "from-[#3D3D3D] to-[#2B2B2B]" },
-  { rank: 6, msisdn: "955xxxx822", score: 71667, avatarUrl: "/assets/users/6.png", avatarBg: "from-[#2B2B2B] to-[#191919]" },
+  { rank: 6, msisdn: "955xxxx822", score: 71667, avatarUrl: "/assets/users/22.png", avatarBg: "from-[#2B2B2B] to-[#191919]" },
   { rank: 7, msisdn: "922xxxx999", score: 68439, avatarUrl: "/assets/users/7.png", avatarBg: "from-[#3D3D3D] to-[#2B2B2B]" },
   { rank: 8, msisdn: "931xxxx222", score: 66981, avatarUrl: "/assets/users/8.png", avatarBg: "from-[#2B2B2B] to-[#191919]" },
   { rank: 9, msisdn: "944xxxx888", score: 50546, avatarUrl: "/assets/users/9.png", avatarBg: "from-[#3D3D3D] to-[#2B2B2B]" },
@@ -158,7 +158,7 @@ export const LeaderboardJazzStatic: React.FC = () => {
 
         {/* ── Premium Glassmorphic Header Card (replicated from TournamentHistory.tsx) ── */}
         <div className="pb-4 z-30">
-          <div className={`relative overflow-hidden p-4 flex items-center justify-between gap-3 border-b transition-all duration-300 ${isDarkTheme ? "bg-gradient-to-br from-[#2B2B2B]/40 to-[#191919]/30 border-white/[0.06] shadow-[0_12px_40px_rgba(0,0,0,0.2)]" : "bg-gradient-to-br from-white/70 to-white/40 border-slate-200/60 shadow-sm"} backdrop-blur-xl`}>
+          <div className={`relative overflow-hidden p-2 pr-0 flex items-center justify-between gap-3 border-b transition-all duration-300 ${isDarkTheme ? "bg-gradient-to-br from-[#2B2B2B]/40 to-[#191919]/30 border-white/[0.06] shadow-[0_12px_40px_rgba(0,0,0,0.2)]" : "bg-gradient-to-br from-white/70 to-white/40 border-slate-200/60 shadow-sm"} backdrop-blur-xl`}>
             <div className="w-full flex justify-between items-center gap-5">
               <div>
                 <button
@@ -184,13 +184,16 @@ export const LeaderboardJazzStatic: React.FC = () => {
                   </p>
                 </div>
               </div>
-              <div className={`w-10 h-10 flex-shrink-0 flex items-center justify-center rounded-xl overflow-hidden border shadow-sm ${isDarkTheme ? "bg-[#2B2B2B]/80 border-[#3D3D3D]" : "bg-white border-slate-200"}`}
+              <div className="w-16 h-16 -my-2 flex-shrink-0 flex items-center justify-center cursor-pointer active:scale-95 transition-all hover:scale-105"
                 onClick={() => navigate("/settingsStatic")}
               >
                 <img
-                  src={players.find((p) => p.rank === 6)?.avatarUrl || "/assets/users/6.png"}
+                  src={`/assets/users/${localStorage.getItem("selectedAvatarImg") || "9.png"}`}
                   alt="User Avatar"
-                  className="w-full h-full object-cover"
+                  className="w-full h-full object-contain"
+                  onError={(e) => {
+                    (e.target as HTMLImageElement).src = "/assets/users/9.png";
+                  }}
                 />
               </div>
             </div>
@@ -238,11 +241,11 @@ export const LeaderboardJazzStatic: React.FC = () => {
 
               {/* Avatar overlapping bottom */}
               <div className="w-full relative mt-auto flex justify-center pb-2">
-                <div className={`w-14 h-14 sm:w-16 sm:h-16 rounded-full border-2 overflow-hidden flex items-center justify-center shadow-md bg-gradient-to-b ${isDarkTheme ? "border-white/20 from-slate-700 to-slate-900" : "border-white from-[#E8EAF6] to-[#C5CAE9]"}`}>
+                <div className={`w-16 h-16 sm:w-16 sm:h-16 rounded-full overflow-hidden flex items-center justify-center shadow-md `}>
                   <img
                     src={rank2.avatarUrl}
                     alt={rank2.msisdn}
-                    className="w-[85%] h-[85%] object-contain"
+                    className="object-contain"
                   />
                 </div>
               </div>
@@ -265,11 +268,11 @@ export const LeaderboardJazzStatic: React.FC = () => {
 
               {/* Avatar overlapping bottom */}
               <div className="w-full relative mt-auto flex justify-center pb-2.5">
-                <div className={`w-16 h-16 sm:w-20 sm:h-20 rounded-full border-2 overflow-hidden flex items-center justify-center shadow-md bg-gradient-to-b ${isDarkTheme ? "border-[#FFCA20]/45 from-slate-700 to-slate-900" : "border-white from-[#FFF5F5] to-[#FCE4EC]"}`}>
+                <div className={`w-18 h-18 sm:w-20 sm:h-20 rounded-full overflow-hidden flex items-center justify-center shadow-md `}>
                   <img
                     src={rank1.avatarUrl}
                     alt={rank1.msisdn}
-                    className="w-[85%] h-[85%] object-contain"
+                    className="object-contain"
                   />
                 </div>
               </div>
@@ -292,11 +295,11 @@ export const LeaderboardJazzStatic: React.FC = () => {
 
               {/* Avatar overlapping bottom */}
               <div className="w-full relative mt-auto flex justify-center pb-2">
-                <div className={`w-14 h-14 sm:w-16 sm:h-16 rounded-full border-2 overflow-hidden flex items-center justify-center shadow-md bg-gradient-to-b ${isDarkTheme ? "border-white/20 from-slate-700 to-slate-900" : "border-white from-[#FFE0B2] to-[#FFCC80]"}`}>
+                <div className={`w-14 h-14 sm:w-16 sm:h-16 rounded-full overflow-hidden flex items-center justify-center shadow-md`}>
                   <img
                     src={rank3.avatarUrl}
                     alt={rank3.msisdn}
-                    className="w-[85%] h-[85%] object-contain"
+                    className="object-contain"
                   />
                 </div>
               </div>
@@ -335,11 +338,11 @@ export const LeaderboardJazzStatic: React.FC = () => {
                   {/* Left Side: Avatar, MSISDN, Score */}
                   <div className="flex items-center gap-3">
                     {/* Brand-aligned Avatar Wrapper with gradient bg and border */}
-                    <div className={`w-12 h-12 rounded-full overflow-hidden border flex items-center justify-center shrink-0 ${isDarkTheme ? `border-[#3D3D3D] bg-gradient-to-tr ${player.avatarBg}` : "border-slate-100 bg-[#fff5f5]"}`}>
+                    <div className={`w-12 h-12 rounded-full overflow-hidden flex items-center justify-center shrink-0 `}>
                       <img
                         src={player.avatarUrl}
                         alt={player.msisdn}
-                        className="w-[85%] h-[85%] object-contain mt-1"
+                        className="object-contain mt-1"
                       />
                     </div>
 

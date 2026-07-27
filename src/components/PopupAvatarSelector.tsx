@@ -31,7 +31,14 @@ const avatarCosts: Record<string, number> = {
   "12.png": 200,
   "13.png": 100,
   "14.png": 50,
-  "15.png": 150
+  "15.png": 150,
+  "16.png": 50,
+  "17.png": 100,
+  "18.png": 50,
+  "19.png": 150,
+  "20.png": 100,
+  "21.png": 200,
+  "22.png": 150
 };
 
 const PopupAvatarSelector: React.FC<PopupAvatarSelectorProps> = ({
@@ -46,7 +53,7 @@ const PopupAvatarSelector: React.FC<PopupAvatarSelectorProps> = ({
   const { t } = useLanguage();
   const [showConfirm, setShowConfirm] = useState(false);
   const avatars: string[] = Array.from(
-    { length: 15 },
+    { length: 22 },
     (_, i) => `${i + 1}.png`
   );
 
@@ -67,7 +74,7 @@ const PopupAvatarSelector: React.FC<PopupAvatarSelectorProps> = ({
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 bg-black/40 backdrop-blur-[2px] z-[100] flex items-center justify-center p-4 will-change-transform"
+            className="fixed inset-0 bg-black/40 backdrop-blur-[10px] z-[100] flex items-center justify-center p-4 will-change-transform"
             onClick={onClose}
           >
             <motion.div
@@ -120,11 +127,11 @@ const PopupAvatarSelector: React.FC<PopupAvatarSelectorProps> = ({
                             }
                           }}
                           disabled={!isAffordable}
-                          className={`relative aspect-square w-full rounded-[2rem] bg-white/10 border transition-all duration-200 active:scale-95 flex items-center justify-center p-2 ${isSelected
+                          className={`relative aspect-square w-full rounded-[2rem] bg-white/10 border transition-all duration-200 active:scale-95 flex items-center justify-center ${isSelected
                             ? "ring-2 ring-yellow-500 ring-offset-2 ring-offset-[#111] border-transparent scale-105"
                             : isAffordable
-                              ? "ring-0 border-white/10 opacity-90 hover:opacity-100"
-                              : "ring-0 border-white/5 opacity-40 cursor-not-allowed"
+                              ? "ring-0 border-white/10 "
+                              : "ring-0 border-white/5 cursor-not-allowed"
                             }`}
                         >
                           <img

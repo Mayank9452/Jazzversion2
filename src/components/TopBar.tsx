@@ -34,10 +34,10 @@ export function TopBar() {
   const { t } = useLanguage();
   const { theme, setTheme } = useTheme();
 
-  const { data: response } = useAppSelector((state) => state.home);
+  const { data: response } = useAppSelector((state) => state.jazzHome);
   const { data: profileData } = useAppSelector((state) => state.profile);
 
-  const userInfo = profileData?.data?.userInfo || response?.data?.userInfo;
+  const userInfo = response?.data?.userInfo || response?.data?.userInfo;
   const user_play_coins = userInfo?.user_play_coins ?? 0;
   const user_reward_coins = userInfo?.user_reward_coins ?? response?.data?.diamonds ?? profileData?.data?.userPoints ?? 0;
   const user_phone = userInfo?.user_phone;
@@ -94,7 +94,7 @@ export function TopBar() {
 
           {/* Reward Coins Chip */}
           <div
-            onClick={handleRedeem}
+            // onClick={handleRedeem}
             className="flex items-center gap-2 h-12 px-3 rounded-xl border border-brand-gold-100/30 bg-brand-gold-100/5 hover:bg-brand-gold-100/10 transition-all shadow-inner cursor-pointer shrink-0"
             title="Redeem Coins"
           >

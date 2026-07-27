@@ -30,7 +30,7 @@ const HeroTournamentPageStatic: React.FC = () => {
     const location = useLocation();
     const navigate = useNavigate();
     const { theme } = useTheme();
-    const avatar = useAppSelector((state) => state.auth.user?.profile_image) || "9.png";
+    const avatar = useAppSelector((state) => state.auth.user?.profile_image) || localStorage.getItem("selectedAvatarImg") || "9.png";
 
     const [isDarkTheme, setIsDarkTheme] = useState(true);
 
@@ -297,7 +297,7 @@ const HeroTournamentPageStatic: React.FC = () => {
                                 className="w-full h-full object-contain"
                             />
                             {/* Floating control buttons */}
-                            <div className="absolute inset-x-0 top-0 p-3 flex items-center justify-between z-20 w-full">
+                            <div className="absolute inset-x-0 top-0 p-2 pr-0 flex items-center justify-between z-20 w-full">
                                 <button
                                     onClick={handleClickBack}
                                     className={`w-10 h-10 rounded-xl flex items-center justify-center shadow-md active:scale-95 transition-all pointer-events-auto cursor-pointer shrink-0 ${isDarkTheme ? "bg-[#32323299] backdrop-blur-md border border-white/10 text-white hover:bg-black/75" : "bg-white border border-slate-200 text-slate-700 hover:bg-slate-50"}`}
@@ -311,11 +311,11 @@ const HeroTournamentPageStatic: React.FC = () => {
 
                                 <div
                                     onClick={() => navigate("/settingsStatic")}
-                                    className={`w-10 h-10 flex-shrink-0 flex items-center justify-center rounded-xl overflow-hidden border cursor-pointer active:scale-95 transition-all hover:scale-105 shadow-md ${isDarkTheme ? "bg-[#32323299] backdrop-blur-md border-white/10" : "bg-white border-slate-200"}`}
+                                    className="w-16 h-16 -my-2 flex-shrink-0 flex items-center justify-center cursor-pointer active:scale-95 transition-all hover:scale-105"
                                 >
                                     <img
                                         src={`/assets/users/${avatar}`}
-                                        className="w-full h-full object-cover"
+                                        className="w-full h-full object-contain"
                                         alt="Avatar"
                                         onError={(e) => {
                                             (e.target as HTMLImageElement).src = "/assets/users/9.png";

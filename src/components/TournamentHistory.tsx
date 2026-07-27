@@ -93,6 +93,7 @@ const TournamentHistory: React.FC = () => {
   const navigate = useNavigate();
   const { t } = useLanguage();
   const { resolvedTheme } = useTheme();
+  const avatar = localStorage.getItem("selectedAvatarImg") || "9.png";
   const isDark = resolvedTheme === "dark";
   const [loading, setLoading] = useState(false);
   const [tournamentHistoryData, setTournamentHistoryData] = useState<any | null>(null);
@@ -153,7 +154,7 @@ const TournamentHistory: React.FC = () => {
 
         {/* ── Premium Glassmorphic Header Card ── */}
         <div className="pb-4">
-          <div className=" relative overflow-hidden bg-gradient-to-br from-white/70 to-white/40 dark:from-[#2B2B2B]/40 dark:to-[#191919]/30 backdrop-blur-xl border border-white/40 dark:border-white/[0.06] p-4 flex items-center justify-between gap-3 shadow-[0_3px_1px_rgba(0,0,0,7%)] dark:shadow-[0_12px_40px_rgba(0,0,0,0.2)]">
+          <div className=" relative overflow-hidden bg-gradient-to-br from-white/70 to-white/40 dark:from-[#2B2B2B]/40 dark:to-[#191919]/30 backdrop-blur-xl border border-white/40 dark:border-white/[0.06] p-2 pr-1 flex items-center justify-between gap-3 shadow-[0_3px_1px_rgba(0,0,0,7%)] dark:shadow-[0_12px_40px_rgba(0,0,0,0.2)]">
             {/* Left side: Titles */}
             <div className="w-full flex justify-between items-center gap-5">
               <div>
@@ -176,10 +177,18 @@ const TournamentHistory: React.FC = () => {
 
               </div>
 
-              {/* Right side: Modern Trophy Badge */}
-              <div className="w-10 h-10 flex-shrink-0 flex items-center justify-center  bg-yellow-main/5 dark:bg-[#2B2B2B]/80 rounded-xl shadow-[0_0_15px_rgba(254,203,19,0.15)]" onClick={() => navigate("/settingsStatic")}>
-                {/* <Trophy className="w-4.5 h-4.5 text-yellow-main fill-yellow-main/10" /> */}
-                <img src="/assets/users/1.png" className="w-4.5 h-4.5 text-yellow-main fill-yellow-main/10" alt="1.png" />
+              <div
+                className="w-16 h-16 -my-2 flex-shrink-0 flex items-center justify-center cursor-pointer active:scale-95 transition-all hover:scale-105"
+                onClick={() => navigate("/settingsStatic")}
+              >
+                <img
+                  src={`/assets/users/${avatar}`}
+                  className="w-full h-full object-contain"
+                  alt="User Avatar"
+                  onError={(e) => {
+                    (e.target as HTMLImageElement).src = "/assets/users/9.png";
+                  }}
+                />
               </div>
 
             </div>
