@@ -17,7 +17,8 @@ import {
     Gamepad2,
     Users,
     Award,
-    PhoneCall
+    PhoneCall,
+    Gift
 } from "lucide-react";
 import { useTheme } from "next-themes";
 import { fetchLiveTournament, playLiveTournament } from "@/apiServices/igplApi";
@@ -25,6 +26,109 @@ import GameViewerNew from "./GameViewerNew";
 import { TopBar } from "./TopBar";
 import { BottomNavBar } from "./BottomNavBar";
 import LeaderboardJoinPopup from "./LeaderboardJoinPopup";
+
+const TopupIcon = ({ className = "w-6 h-6" }: { className?: string }) => {
+    const color = "#ffca20";
+
+    return (
+        <div className={`relative ${className}`}>
+            <svg
+                viewBox="0 0 80 80"
+                className="w-full h-full"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+            >
+                {/* Mobile Outline */}
+                <rect
+                    x="12"
+                    y="3"
+                    width="48"
+                    height="74"
+                    rx="6"
+                    stroke={color}
+                    strokeWidth="6"
+                />
+
+                {/* Top Speaker / Camera */}
+                <rect
+                    x="31"
+                    y="7"
+                    width="10"
+                    height="2.5"
+                    rx="1.25"
+                    fill={color}
+                />
+
+                {/* Top Bezel Divider */}
+                <path
+                    d="M12 12H60"
+                    stroke={color}
+                    strokeWidth="6"
+                />
+
+                {/* Bottom Bezel Divider */}
+                <path
+                    d="M12 68H60"
+                    stroke={color}
+                    strokeWidth="6"
+                />
+
+                {/* Speed / Power Lines */}
+                <rect
+                    x="30"
+                    y="31"
+                    width="10"
+                    height="2.5"
+                    rx="1.25"
+                    fill={color}
+                />
+
+                <rect
+                    x="26"
+                    y="39"
+                    width="14"
+                    height="2.5"
+                    rx="1.25"
+                    fill={color}
+                />
+
+                <rect
+                    x="30"
+                    y="47"
+                    width="10"
+                    height="2.5"
+                    rx="1.25"
+                    fill={color}
+                />
+
+                {/* Floating Circle */}
+                <circle
+                    cx="61"
+                    cy="40"
+                    r="14"
+                    fill="black"
+                    stroke={color}
+                    strokeWidth="6"
+                />
+
+                {/* Lightning Bolt */}
+                <path
+                    d="
+            M63 31
+            L56 40.5
+            H61
+            L58.5 50
+            L66 39
+            H62
+            L64.5 31
+            Z
+          "
+                    fill={color}
+                />
+            </svg>
+        </div>
+    );
+};
 
 const HeroTournamentPageStatic: React.FC = () => {
     const location = useLocation();
@@ -101,7 +205,7 @@ const HeroTournamentPageStatic: React.FC = () => {
                 },
                 rewardRanksList: [
                     { rank: "1", prize: "5,000", type: "topup" },
-                    { rank: "2", prize: "2,500", type: "voucher" },
+                    { rank: "2", prize: "2,500", type: "Voucher" },
                     { rank: "3", prize: "1,200", type: "coins" },
                     { rank: "4 - 10", prize: "500", type: "coins" },
                     { rank: "11 - 50", prize: "100", type: "coins" }
@@ -491,21 +595,15 @@ const HeroTournamentPageStatic: React.FC = () => {
                                                             {item?.type === "topup" ? (
                                                                 <>
 
-                                                                    <PhoneCall className="w-3.5 h-3.5 text-yellow-main flex-shrink-0" />
+                                                                    <TopupIcon className="w-3.5 h-3.5 text-yellow-main flex-shrink-0" />
                                                                     <span className={`text-xs font-extrabold ${isDarkTheme ? "text-white" : "text-slate-800"}`}>
                                                                         Rs {item?.prize}
                                                                     </span>
                                                                 </>
-                                                            ) : item?.type === "voucher" ? (
+                                                            ) : item?.type === "Voucher" ? (
                                                                 <>
 
-                                                                    <img
-                                                                        src="/assets/images/giftkarte.png"
-                                                                        width="22"
-                                                                        height="22"
-                                                                        alt="Voucher"
-                                                                        className="object-contain"
-                                                                    />
+                                                                    <Gift className="w-3.5 h-3.5 text-yellow-main flex-shrink-0" />
 
                                                                     <span className={`text-xs font-extrabold ${isDarkTheme ? "text-white" : "text-slate-800"}`}>
                                                                         {item?.prize}
@@ -514,13 +612,7 @@ const HeroTournamentPageStatic: React.FC = () => {
                                                             ) : (
                                                                 <>
 
-                                                                    <img
-                                                                        src="/assets/images/img/gold-coin.png"
-                                                                        width="14"
-                                                                        height="14"
-                                                                        alt="Coin"
-                                                                        className="object-contain"
-                                                                    />
+                                                                    <Coins className="w-3.5 h-3.5 text-yellow-main flex-shrink-0" />
 
                                                                     <span className={`text-xs font-extrabold ${isDarkTheme ? "text-white" : "text-slate-800"}`}>
                                                                         {item?.prize}

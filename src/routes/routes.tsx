@@ -1,6 +1,7 @@
 import BiddingPageLatest from "@/components/BiddingPageLatest";
 import { lazy } from "react";
 import { useAppSelector } from "@/app/hooks";
+// import Home from "@/pages/home/index";
 import Home from "@/pages/home/index";
 
 const BiddingPage = lazy(() => import("@/components/BiddingPage"));
@@ -90,6 +91,7 @@ import LeaderboardJazzStatic5 from "@/components/LeaderboardJazzStatic5";
 import SpinWheelUpdatedVoucher from "@/components/SpinWheelUpdatedVoucher";
 import GamesPageNew from "@/components/GamesPageNew";
 import SpinWheelUpdatedVoucher2 from "@/components/SpinWheelUpdatedVoucher2";
+import SpinWheelUpdatedVoucher3 from "@/components/SpinWheelUpdatedVoucher3";
 
 const UserIdHandler = () => {
   const [searchParams] = useSearchParams();
@@ -151,7 +153,7 @@ const routes = [
   },
   {
     path: "/spinandwin",
-    element: <SpinWheelUpdatedVoucher2 />,
+    element: <SpinWheelUpdatedVoucher3 />,
   },
   {
     path: "/settingsStatic",

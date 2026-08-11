@@ -136,8 +136,8 @@ const DailyTournamentNewTesting5: React.FC<DailyTournament> = ({
                                             <div className="flex justify-center items-center py-1 mt-1 bg-slate-100/80 dark:bg-white/[0.03] border border-slate-200/60 dark:border-white/[0.04] rounded-xl whitespace-nowrap">
                                                 <div className="font-extrabold flex items-center text-xs sm:text-[10px]">
                                                     <img
-                                                        src="/assets/images/giftkarte.webp"
-                                                        alt="voucher"
+                                                        src="/assets/images/Voucher.webp"
+                                                        alt="Voucher"
                                                         className="w-6 h-6 object-contain"
                                                     />
                                                     <span className="tracking-wide text-slate-800 dark:text-brand-yellow-100 font-bold">

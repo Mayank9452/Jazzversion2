@@ -108,7 +108,7 @@ export default function SettingsPageNewStatic() {
                             setCoverImg("https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=600&h=800&q=80");
                         }}
                         alt="Cover banner"
-                        className="w-full h-full object-cover opacity-50"
+                        className="w-full h-full object-cover opacity-60"
                     />
                     {/* Theme-aware overlay over cover image */}
                     <div className={`absolute inset-0 z-10 ${isDark
@@ -165,7 +165,7 @@ export default function SettingsPageNewStatic() {
                             </div>
                             <div className="text-left flex flex-col justify-center leading-none">
                                 <p className="text-[10px] font-bold text-muted-foreground uppercase tracking-wide">Coins</p>
-                                <p className="text-base font-black text-foreground mt-1">₹{userCoins}</p>
+                                <p className="text-base font-black text-foreground mt-1">{userCoins}</p>
                             </div>
                         </div>
 
@@ -362,7 +362,7 @@ export default function SettingsPageNewStatic() {
                 currentAvatar={currentAvatar}
                 onSelect={(avatar) => setSelectedAvatar(avatar)}
                 onSave={handleSaveAvatar}
-                userCoins={userCoins}
+                userCoins={50}
             />
             <PopupBannerUnsubscribe
                 isShow={showUnsubscribePopup}

@@ -74,9 +74,11 @@ export default function ProfilePage() {
     }
   }, [dispatch, data]);
 
-
-
-
+  useEffect(() => {
+    if (user && !Array.isArray(user) && user.user_profile_img) {
+      setSelectedAvatar(`${user.user_profile_img}.png`);
+    }
+  }, [user]);
 
   const handleSaveAvatar = async () => {
     try {
@@ -431,8 +433,10 @@ export default function ProfilePage() {
           isShow={isEditingImage}
           onClose={() => setIsEditingImage(false)}
           selectedAvatar={selectedAvatar}
+          currentAvatar={user && !Array.isArray(user) && user.user_profile_img ? `${user.user_profile_img}.png` : "1.png"}
           onSelect={setSelectedAvatar}
           onSave={handleSaveAvatar}
+          userCoins={Number(data?.data?.userPoints || 0)}
         />
       </div>
 

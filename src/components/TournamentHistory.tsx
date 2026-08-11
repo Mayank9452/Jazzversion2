@@ -6,7 +6,7 @@ import {
   ChevronLeft, ChevronRight, Award, Sword, Medal,
   ArrowLeft,
   CheckCircle2, XCircle, Coins,
-  PhoneCall
+  Smartphone
 } from "lucide-react";
 import { TopBar } from "./TopBar";
 import { BottomNavBar } from "./BottomNavBar";
@@ -38,6 +38,137 @@ function formatTimeRange(start: string, end: string) {
     return `${start} – ${end}`;
   }
 }
+
+// const TopupIcon = ({ className = "w-6 h-6" }: { className?: string }) => {
+//   return (
+//     <div className={`relative ${className} flex items-center justify-center`}>
+//       <Smartphone
+//         className="w-full h-full text-yellow-main"
+//         strokeWidth={2.5}
+//       />
+//       <svg
+//         className="absolute inset-0 w-full h-full"
+//         viewBox="0 0 80 80"
+//       >
+//         <text
+//           x="40"
+//           y="48"
+//           textAnchor="middle"
+//           fill="#FACC15"
+//           fontSize="24"
+//           fontWeight="900"
+//         >
+//           ₨
+//         </text>
+//       </svg>
+//     </div>
+//   );
+// };
+
+
+const TopupIcon = ({ className = "w-6 h-6" }: { className?: string }) => {
+  const color = "#ffca20";
+
+  return (
+    <div className={`relative ${className}`}>
+      <svg
+        viewBox="0 0 80 80"
+        className="w-full h-full"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        {/* Mobile Outline */}
+        <rect
+          x="12"
+          y="3"
+          width="48"
+          height="74"
+          rx="6"
+          stroke={color}
+          strokeWidth="5"
+        />
+
+        {/* Top Speaker / Camera */}
+        <rect
+          x="31"
+          y="7"
+          width="10"
+          height="2.5"
+          rx="1.25"
+          fill={color}
+        />
+
+        {/* Top Bezel Divider */}
+        <path
+          d="M12 12H60"
+          stroke={color}
+          strokeWidth="5"
+        />
+
+        {/* Bottom Bezel Divider */}
+        <path
+          d="M12 68H60"
+          stroke={color}
+          strokeWidth="5"
+        />
+
+        {/* Speed / Power Lines */}
+        <rect
+          x="30"
+          y="31"
+          width="10"
+          height="2.5"
+          rx="1.25"
+          fill={color}
+        />
+
+        <rect
+          x="26"
+          y="39"
+          width="14"
+          height="2.5"
+          rx="1.25"
+          fill={color}
+        />
+
+        <rect
+          x="30"
+          y="47"
+          width="10"
+          height="2.5"
+          rx="1.25"
+          fill={color}
+        />
+
+        {/* Floating Circle */}
+        <circle
+          cx="61"
+          cy="40"
+          r="14"
+          fill="black"
+          stroke={color}
+          strokeWidth="5"
+        />
+
+        {/* Lightning Bolt */}
+        <path
+          d="
+            M63 31
+            L56 40.5
+            H61
+            L58.5 50
+            L66 39
+            H62
+            L64.5 31
+            Z
+          "
+          fill={color}
+        />
+      </svg>
+    </div>
+  );
+};
+
 
 function AccentLine() {
   return (
@@ -144,11 +275,29 @@ const TournamentHistory: React.FC = () => {
     return sum;
   }, 0);
 
+  function formatShortNumber(num: number): string {
+    if (num >= 1000) {
+      return (num / 1000).toFixed(1).replace(/\.0$/, "") + "K";
+    }
+    return num.toString();
+  }
+
+  const formatNumberInText = (text: string) => {
+    if (!text) return "";
+    return text.replace(/\d+/g, (match) => Number(match).toLocaleString('en-IN'));
+  };
+
+  const displayPlayed = 100000;
+  const displayWins = 500000;
+  const displayCoins = 10000000;
+  const displayVouchers = 1000000;
+  const displayTalktime = 2000000;
+
   return (
     <>
       {/* <TopBar /> */}
 
-      <div className="min-h-screen bg-background text-foreground transition-colors duration-300">
+      <div className="min-h-screen bg-background text-foreground transition-colors duration-300 mb-8">
 
         <AccentLine />
 
@@ -197,172 +346,170 @@ const TournamentHistory: React.FC = () => {
           </div>
         </div>
 
-        {/* ── Stats row ── */}
-        {tournaments.length > 0 && (
-          <div
-            className="overflow-hidden w-full px-4 pb-2.5 flex"
+        {/* ── Stats row 1 (Bigger Numbers, slides) ── */}
+        <div
+          className="overflow-hidden w-full px-4 pb-1.5 flex"
+
+        >
+          <motion.div
+            className="flex gap-2.5 shrink-0"
+            animate={{ x: ["0%", "-50%"] }}
+            transition={{
+              ease: "linear",
+              duration: 18,
+              repeat: Infinity,
+            }}
             style={{
-              maskImage: "linear-gradient(to right, transparent, white 8%, white 92%, transparent)",
-              WebkitMaskImage: "linear-gradient(to right, transparent, white 8%, white 92%, transparent)"
+              width: "max-content",
+              willChange: "transform"
             }}
           >
-            <motion.div
-              className="flex gap-2.5 shrink-0"
-              animate={{ x: ["0%", "-50%"] }}
-              transition={{
-                ease: "linear",
-                duration: 16,
-                repeat: Infinity,
-              }}
-              style={{
-                width: "max-content",
-                willChange: "transform"
-              }}
-            >
-              {[
-                {
-                  val: tournaments.length.toString(),
-                  label: "Played",
-                  color: "gold",
-                  icon: <Gamepad2 className="w-6 h-6 text-yellow-main" />,
-                  lineColor: "bg-yellow-main",
-                  iconBg: "bg-yellow-main/20 border border-yellow-main/30",
-                  valColor: "text-slate-800 dark:text-white"
-                },
-                {
-                  val: totalWins.toString(),
-                  label: "Won",
-                  color: "gold",
-                  icon: <Trophy className="w-6 h-6 text-yellow-main" />,
-                  lineColor: "bg-yellow-main",
-                  iconBg: "bg-yellow-main/20 border border-yellow-main/30",
-                  valColor: "text-slate-800 dark:text-white"
-                },
-                {
-                  val: totalCoins.toLocaleString(),
-                  label: "Coins",
-                  color: "gold",
-                  icon: <img src="/assets/images/img/gold-coin.png" className="w-6 h-6 object-contain" alt="Coins" />,
-                  lineColor: "bg-yellow-main",
-                  iconBg: "bg-yellow-main/20 border border-yellow-main/30",
-                  valColor: "text-slate-800 dark:text-white"
-                },
-                {
-                  val: totalVouchers.toString(),
-                  label: "Voucher",
-                  color: "gold",
-                  icon: <img src="/assets/images/giftkarte.png" className="w-6 h-6 object-contain" alt="Voucher" />,
-                  lineColor: "bg-yellow-main",
-                  iconBg: "bg-yellow-main/20 border border-yellow-main/30",
-                  valColor: "text-slate-800 dark:text-white"
-                },
-                {
-                  val: totalTalktime.toString(),
-                  label: "Topup",
-                  color: "gold",
-                  icon: <PhoneCall className="w-6 h-6 text-yellow-main" />,
-                  lineColor: "bg-yellow-main",
-                  iconBg: "bg-yellow-main/20 border border-yellow-main/30",
-                  valColor: "text-slate-800 dark:text-white"
-                },
-              ].concat([
-                {
-                  val: tournaments.length.toString(),
-                  label: "Played",
-                  color: "gold",
-                  icon: <Gamepad2 className="w-6 h-6 text-yellow-main" />,
-                  lineColor: "bg-yellow-main",
-                  iconBg: "bg-yellow-main/20 border border-yellow-main/30",
-                  valColor: "text-slate-800 dark:text-white"
-                },
-                {
-                  val: totalWins.toString(),
-                  label: "Won",
-                  color: "gold",
-                  icon: <Trophy className="w-6 h-6 text-yellow-main" />,
-                  lineColor: "bg-yellow-main",
-                  iconBg: "bg-yellow-main/20 border border-yellow-main/30",
-                  valColor: "text-slate-800 dark:text-white"
-                },
-                {
-                  val: totalCoins.toLocaleString(),
-                  label: "Coins",
-                  color: "gold",
-                  icon: <img src="/assets/images/img/gold-coin.png" className="w-6 h-6 object-contain" alt="Coins" />,
-                  lineColor: "bg-yellow-main",
-                  iconBg: "bg-yellow-main/20 border border-yellow-main/30",
-                  valColor: "text-slate-800 dark:text-white"
-                },
-                {
-                  val: totalVouchers.toString(),
-                  label: "Voucher",
-                  color: "gold",
-                  icon: <img src="/assets/images/giftkarte.png" className="w-6 h-6 object-contain" alt="Voucher" />,
-                  lineColor: "bg-yellow-main",
-                  iconBg: "bg-yellow-main/20 border border-yellow-main/30",
-                  valColor: "text-slate-800 dark:text-white"
-                },
-                {
-                  val: totalTalktime.toString(),
-                  label: "Topup",
-                  color: "gold",
-                  icon: <PhoneCall className="w-6 h-6 text-yellow-main" />,
-                  lineColor: "bg-yellow-main",
-                  iconBg: "bg-yellow-main/20 border border-yellow-main/30",
-                  valColor: "text-slate-800 dark:text-white"
-                },
-              ]).map(({ val, label, icon, lineColor, valColor }, idx) => {
-                const statCardBg = isDark
-                  ? "bg-gradient-to-br from-[#2b2b2b6e] to-[#2b2b2b6e] backdrop-blur-xl"
-                  : "bg-gradient-to-br from-white/75 to-white/35 backdrop-blur-xl shadow-[0_8px_32px_rgba(31,38,135,0.03)]";
-                const statCardBorder = isDark ? "border border-white/[0.06]" : "border border-slate-200/50 shadow-[1px_1px_0px_1px_rgba(0,0,0,0.12)]";
+            {[
+              {
+                val: formatNumberInText(displayPlayed.toString()),
+                label: "Played",
+                color: "gold",
+                icon: <Gamepad2 className="w-6 h-6 text-yellow-main" />,
+                lineColor: "bg-yellow-main",
+                iconBg: "bg-yellow-main/20 border border-yellow-main/30",
+                valColor: "text-slate-800 dark:text-white"
+              },
+              {
+                val: formatNumberInText(displayWins.toString()),
+                label: "Won",
+                color: "gold",
+                icon: <Trophy className="w-6 h-6 text-yellow-main" />,
+                lineColor: "bg-yellow-main",
+                iconBg: "bg-yellow-main/20 border border-yellow-main/30",
+                valColor: "text-slate-800 dark:text-white"
+              },
+              {
+                val: formatNumberInText(displayCoins.toString()),
+                label: "Coins",
+                color: "gold",
+                icon: <Coins className="w-6 h-6 text-yellow-main" />,
+                lineColor: "bg-yellow-main",
+                iconBg: "bg-yellow-main/20 border border-yellow-main/30",
+                valColor: "text-slate-800 dark:text-white"
+              },
+              {
+                val: formatNumberInText(displayVouchers.toString()),
+                label: "Giftkarte",
+                color: "gold",
+                icon: <Gift className="w-6 h-6 text-yellow-main" />,
+                lineColor: "bg-yellow-main",
+                iconBg: "bg-yellow-main/20 border border-yellow-main/30",
+                valColor: "text-slate-800 dark:text-white"
+              },
+              {
+                val: formatNumberInText(displayTalktime.toString()),
+                label: "Topup",
+                color: "gold",
+                icon: <TopupIcon className="w-6 h-6" />,
+                lineColor: "bg-yellow-main",
+                iconBg: "bg-yellow-main/20 border border-yellow-main/30",
+                valColor: "text-slate-800 dark:text-white"
+              },
+            ].concat([
+              {
+                val: formatNumberInText(displayPlayed.toString()),
+                label: "Played",
+                color: "gold",
+                icon: <Gamepad2 className="w-6 h-6 text-yellow-main" />,
+                lineColor: "bg-yellow-main",
+                iconBg: "bg-yellow-main/20 border border-yellow-main/30",
+                valColor: "text-slate-800 dark:text-white"
+              },
+              {
+                val: formatNumberInText(displayWins.toString()),
+                label: "Won",
+                color: "gold",
+                icon: <Trophy className="w-6 h-6 text-yellow-main" />,
+                lineColor: "bg-yellow-main",
+                iconBg: "bg-yellow-main/20 border border-yellow-main/30",
+                valColor: "text-slate-800 dark:text-white"
+              },
+              {
+                val: formatNumberInText(displayCoins.toString()),
+                label: "Coins",
+                color: "gold",
+                icon: <Coins className="w-6 h-6 text-yellow-main" />,
+                lineColor: "bg-yellow-main",
+                iconBg: "bg-yellow-main/20 border border-yellow-main/30",
+                valColor: "text-slate-800 dark:text-white"
+              },
+              {
+                val: formatNumberInText(displayVouchers.toString()),
+                label: "Giftkarte",
+                color: "gold",
+                icon: <Gift className="w-6 h-6 text-yellow-main" />,
+                lineColor: "bg-yellow-main",
+                iconBg: "bg-yellow-main/20 border border-yellow-main/30",
+                valColor: "text-slate-800 dark:text-white"
+              },
+              {
+                val: formatNumberInText(displayTalktime.toString()),
+                label: "Topup",
+                color: "gold",
+                icon: <TopupIcon className="w-6 h-6" />,
+                lineColor: "bg-yellow-main",
+                iconBg: "bg-yellow-main/20 border border-yellow-main/30",
+                valColor: "text-slate-800 dark:text-white"
+              },
+            ]).map(({ val, label, icon, lineColor, valColor }, idx) => {
+              const statCardBg = isDark
+                ? "bg-gradient-to-br from-[#2b2b2b6e] to-[#2b2b2b6e]"
+                : "bg-gradient-to-br from-white/75 to-white/35 shadow-[0_8px_32px_rgba(31,38,135,0.03)]";
+              const statCardBorder = isDark ? "border border-white/[0.06]" : "border border-slate-200/50 shadow-[1px_1px_0px_1px_rgba(0,0,0,0.12)]";
 
-                return (
-                  <div
-                    key={`${label}-${idx}`}
-                    className={`relative overflow-hidden rounded-2xl ${statCardBorder} ${statCardBg} pt-2 pb-3 px-1 flex flex-col items-center justify-center min-h-[90px] w-[95px] flex-shrink-0 shadow-[0_8px_32px_rgba(0,0,0,0.02)] dark:shadow-[0_12px_40px_rgba(0,0,0,0.15)] gap-1`}
-                  >
-                    {/* Top: Circular Icon */}
-                    <div className="w-8 h-8 rounded-full flex items-center justify-center mb-1">
-                      {icon}
-                    </div>
-
-                    {/* Middle: Value */}
-                    <span className={`text-sm sm:text-base font-black ${valColor} tracking-wide leading-none truncate max-w-full px-1`}>
-                      {val}
-                    </span>
-
-                    {/* Bottom: Label */}
-                    <span className="text-[10px] sm:text-[10px] font-black text-muted-foreground dark:text-slate-400 uppercase tracking-wider">
-                      {label}
-                    </span>
-
-                    {/* Underline Decoration */}
-                    <div className={`absolute bottom-0 left-1/2 -translate-x-1/2 w-8 h-[4px] ${lineColor} rounded-full`} />
+              return (
+                <div
+                  key={`${label}-${idx}-big`}
+                  className={`relative overflow-hidden rounded-2xl ${statCardBorder} ${statCardBg} pt-2 pb-3 px-1 flex flex-col items-center justify-center min-h-[90px] w-[125px] flex-shrink-0 shadow-[0_8px_32px_rgba(0,0,0,0.02)] dark:shadow-[0_12px_40px_rgba(0,0,0,0.15)] gap-1`}
+                >
+                  {/* Top: Circular Icon */}
+                  <div className="w-8 h-8 rounded-full flex items-center justify-center mb-1">
+                    {icon}
                   </div>
-                );
-              })}
-            </motion.div>
-          </div>
-        )}
+
+                  {/* Middle: Value */}
+                  <span className={`text-sm sm:text-base font-black ${valColor} tracking-wide leading-none truncate max-w-full px-1`}>
+                    {val}
+                  </span>
+
+                  {/* Bottom: Label */}
+                  <span className="text-[10px] sm:text-[10px] font-black text-muted-foreground dark:text-slate-400 uppercase tracking-wider">
+                    {label}
+                  </span>
+
+                  {/* Underline Decoration */}
+                  <div className={`absolute bottom-0 left-1/2 -translate-x-1/2 w-8 h-[4px] ${lineColor} rounded-full`} />
+                </div>
+              );
+            })}
+          </motion.div>
+        </div>
+
+
 
         <AccentLine />
 
         {/* ── Tournament list ── */}
         <div className="px-3 pt-3">
-          <style>{`
-            @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@700;900&family=Marcellus&display=swap');
-            .font-elegant-serif {
-              font-family: 'Cinzel', 'Marcellus', Georgia, serif;
-            }
-          `}</style>
 
           {tournaments.length > 0 ? (
             <div className="flex flex-col gap-3.5 max-w-lg mx-auto">
               <AnimatePresence>
                 {tournaments.map((item: any, index: number) => {
                   const rank = item.player_reward_rank || "0";
-                  const prize = Number(item.player_reward_prize || 0).toLocaleString();
+
+                  // Vary the reward types and reward values (Lakh to 1 Crore range)
+                  const mockRewardTypes = ["1", "2", "3"]; // 1 = Coins, 2 = Voucher, 3 = Topup
+                  const mockRewardValues = [10000000, 500000, 100000, 2500000, 1200000, 750000];
+
+                  const rewardTypeVal = mockRewardTypes[index % mockRewardTypes.length];
+                  const rawPrizeVal = mockRewardValues[index % mockRewardValues.length];
+                  const prizeText = formatNumberInText(rawPrizeVal.toString());
 
                   let startDateText = "12 May 2024";
                   let startTimeText = "10:00 PM";
@@ -424,7 +571,7 @@ const TournamentHistory: React.FC = () => {
                           />
                         </div>
                       ) : (
-                        <div className={`relative w-24 h-24 sm:w-28 sm:h-28 flex-shrink-0 overflow-visible rounded-2xl flex items-center justify-center p-1.5 transition-all duration-300 border ${LIGHT_BANNER_GRADIENTS[index % LIGHT_BANNER_GRADIENTS.length]
+                        <div className={`relative w-24 h-24 sm:w-28 sm:h-28 flex-shrink-0 overflow-visible rounded-2xl flex items-center justify-center p-1.5 transition-all duration-300 border ${LIGHT_BANNER_GRADIENTS[Math.floor(Math.random() * LIGHT_BANNER_GRADIENTS.length)]
                           }`}>
                           {/* Soft yellow ambient backdrop glow */}
                           <div className="absolute top-[50%] left-[50%] -translate-x-[50%] -translate-y-[50%] w-[90%] aspect-square rounded-full bg-[#FFCA20]/20 blur-[16px] pointer-events-none z-0" />
@@ -454,42 +601,38 @@ const TournamentHistory: React.FC = () => {
                               <span>Ends: {endDateText} | {endTimeText}</span>
                             </div>
                           </div>
-
-                          {/* <div className="flex-shrink-0">
-                            <StatusBadge status={status} />
-                          </div> */}
                         </div>
 
                         <div className="my-2" />
 
                         <div className="flex items-center justify-between gap-2">
-                          <div className="flex-1 grid grid-cols-2 gap-2">
-                            <div className="flex flex-col">
+                          <div className="flex-1 flex gap-5 items-start">
+                            <div className="flex flex-col flex-shrink-0">
                               <span className="text-[13px] sm:text-[11px] font-bold text-muted-foreground dark:text-slate-200  leading-none mb-1">
                                 Rank
                               </span>
-                              <span className="text-sm sm:text-base font-bold text-[#14b8a6] dark:text-yellow-main tracking-wide">
+                              <span className="text-[13px] sm:text-base font-bold text-brand-gold-100 dark:text-brand-yellow-100 tracking-wide">
                                 #{rank}
                               </span>
                             </div>
 
-                            <div className="flex flex-col min-w-0">
+                            <div className="flex flex-col min-w-0 flex-1">
                               <span className="text-[13px] sm:text-[11px] font-bold text-muted-foreground dark:text-slate-200  leading-none mb-1">
                                 Reward
                               </span>
                               <div className="flex items-center gap-1">
-                                {String(item.fee_reward_type || item.reward_type) === "2" ? (
+                                {rewardTypeVal === "2" ? (
                                   <>
-                                    <img src="/assets/images/img/giftkarte.png" className="w-4 h-4 object-contain flex-shrink-0" alt="Voucher" />
-                                    <span className="text-xs sm:text-sm font-black text-purple-600 dark:text-purple-400 leading-none truncate">
-                                      {prize} Voucher
+                                    <img src="/assets/images/giftkarte.png" className="w-4 h-4 object-contain flex-shrink-0" alt="Voucher" />
+                                    <span className="text-[13px] sm:text-sm font-semibold text-brand-gold-100 dark:text-brand-yellow-100 leading-none truncate">
+                                      {prizeText} Giftkarte
                                     </span>
                                   </>
-                                ) : String(item.fee_reward_type || item.reward_type) === "3" ? (
+                                ) : rewardTypeVal === "3" ? (
                                   <>
-                                    <Award className="w-4 h-4 text-yellow-main flex-shrink-0" />
-                                    <span className="text-xs sm:text-sm font-black text-emerald-600 dark:text-emerald-400 leading-none truncate">
-                                      Rs {prize}
+                                    <TopupIcon className="w-4 h-4 flex-shrink-0" />
+                                    <span className="text-[13px] sm:text-sm font-semibold text-brand-gold-100 dark:text-brand-yellow-100 leading-none truncate">
+                                      Rs {prizeText} Topup
                                     </span>
                                   </>
                                 ) : (
@@ -502,26 +645,14 @@ const TournamentHistory: React.FC = () => {
                                         (e.target as HTMLImageElement).style.display = "none";
                                       }}
                                     />
-                                    <span className="text-sm sm:text-base font-black text-slate-800 dark:text-white leading-none truncate">
-                                      {prize}
+                                    <span className="text-[13px] sm:text-sm font-semibold text-brand-gold-100 dark:text-brand-yellow-100 leading-none truncate">
+                                      {prizeText} Coins
                                     </span>
                                   </>
                                 )}
                               </div>
                             </div>
-
-
-
                           </div>
-
-                          {/* <div className="flex flex-col">
-                            <span className="text-[11px] sm:text-[11px] font-black text-slate-400 dark:text-slate-200  leading-none mb-1">
-                              Category
-                            </span>
-                            <span className="text-sm sm:text-base font-bold text-[#14b8a6] dark:text-yellow-main tracking-wide">
-                              Arcade
-                            </span>
-                          </div> */}
                         </div>
                       </div>
                     </motion.div>

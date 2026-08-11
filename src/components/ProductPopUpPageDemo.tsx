@@ -55,8 +55,8 @@ function ProductPopUpPageDemo({
           payload?.status === "success" ||
           payload?.message === "Reward claimed successfully!" ||
           payload?.message === "Voucher assigned to user" ||
-          payload?.voucher_code ||
-          payload?.voucher_details?.voucher_code;
+          payload?.Voucher_code ||
+          payload?.Voucher_details?.Voucher_code;
 
         if (isSuccess) {
           if (active) {
@@ -183,11 +183,10 @@ function ProductPopUpPageDemo({
               </div>
             </div>
             <div
-              className={`border-dashed border-b-[6px] w-full min-h-12 flex flex-col justify-center items-center p-4 text-center ${
-                isClaimed
-                  ? "bg-gradient-to-r from-emerald-500 to-green-600 text-white font-bold"
-                  : "bg-slate-800 text-gray-300"
-              }`}
+              className={`border-dashed border-b-[6px] w-full min-h-12 flex flex-col justify-center items-center p-4 text-center ${isClaimed
+                ? "bg-gradient-to-r from-emerald-500 to-green-600 text-white font-bold"
+                : "bg-slate-800 text-gray-300"
+                }`}
             >
               <div className="text-white tracking-wide text-lg font-extrabold flex justify-center items-center gap-2">
                 {isClaiming ? (

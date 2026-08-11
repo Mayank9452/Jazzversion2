@@ -89,8 +89,8 @@ export const PopupSpinWheel: React.FC<PopupSpinWheelProps> = ({ isShow, onClose 
 
     const defaultSegments = ["100", "50", "200", "50", "300", "400", "450", "500", "10", "100"];
     const defaultColors = [
-        "#364C62", "#F1C40F", "#E67E22", "#E74C3C",
-        "#98985A", "#95A5A6", "#16A085", "#27AE60", "#2980B9"
+        "#FF3D00", "#FFD600", "#00E5FF", "#7C4DFF",
+        "#00E676", "#FF6D00", "#AA00FF", "#00B0FF"
     ];
 
     const rawRewards = spinJSON?.segmentValuesArray || [];
@@ -102,6 +102,7 @@ export const PopupSpinWheel: React.FC<PopupSpinWheelProps> = ({ isShow, onClose 
 
     const segmentCount = rewards.length || 10;
     const angle = 360 / segmentCount;
+    const colors = spinJSON?.colorArray?.slice(0, rewards.length) || defaultColors;
 
     const handleSpin = async () => {
         if (isSpinning) return;
@@ -292,7 +293,7 @@ export const PopupSpinWheel: React.FC<PopupSpinWheelProps> = ({ isShow, onClose 
                                                                             className={`segment absolute w-1/2 h-1/2 top-0 left-[50%] origin-bottom-right text-xs font-semibold text-center flex items-end justify-center pb-2 ${isSpinning ? "opacity-40" : ""} ${result ? (result?.id === segment?.id ? "opacity-100" : "opacity-40") : ""} overflow-hidden`}
                                                                             style={{
                                                                                 transform: `rotate(${rotation}deg) skewY(-${90 - angle}deg)`,
-                                                                                background: index % 2 === 0 ? "#FFFFFF" : "#191919",
+                                                                                background: colors[index % colors.length],
                                                                             }}
                                                                         >
                                                                             <div
@@ -306,8 +307,8 @@ export const PopupSpinWheel: React.FC<PopupSpinWheelProps> = ({ isShow, onClose 
                                                                                         <span
                                                                                             className="text-[13px] sm:text-[15px] text-center font-pop font-extrabold px-2 pt-0.5 leading-tight break-words"
                                                                                             style={{
-                                                                                                color: index % 2 === 0 ? "#191919" : "#FFFFFF",
-                                                                                                textShadow: index % 2 === 0 ? "none" : "0px 0px 3px black",
+                                                                                                color: "#FFFFFF",
+                                                                                                textShadow: "0px 1px 3px rgba(0,0,0,0.9), 0px 2px 6px rgba(0,0,0,0.9)",
                                                                                                 transform: "rotate(90deg)",
                                                                                                 position: "absolute",
                                                                                                 maxWidth: "80px",
@@ -325,8 +326,8 @@ export const PopupSpinWheel: React.FC<PopupSpinWheelProps> = ({ isShow, onClose 
                                                                                                 <div
                                                                                                     className="flex flex-col items-center justify-start gap-1 text-center font-pop font-extrabold px-2"
                                                                                                     style={{
-                                                                                                        color: index % 2 === 0 ? "#191919" : "#FFFFFF",
-                                                                                                        textShadow: index % 2 === 0 ? "none" : "0px 0px 3px black",
+                                                                                                        color: "#FFFFFF",
+                                                                                                        textShadow: "0px 1px 3px rgba(0,0,0,0.9), 0px 2px 6px rgba(0,0,0,0.9)",
                                                                                                         position: "absolute",
                                                                                                         left: "50%",
                                                                                                         top: "50%",
@@ -343,12 +344,13 @@ export const PopupSpinWheel: React.FC<PopupSpinWheelProps> = ({ isShow, onClose 
                                                                                                     {isDataPack ? (
                                                                                                         <Wifi className="w-9 h-9 sm:w-7 sm:h-7 text-white/95 drop-shadow-[0_0_2px_rgba(0,0,0,0.8)]" />
                                                                                                     ) : (
-                                                                                                        <img
-                                                                                                            src="/assets/images/img/gold-coin.png"
-                                                                                                            alt={text}
-                                                                                                            className="w-7 h-7 sm:w-6 sm:h-6 object-contain mt-1"
-                                                                                                            loading="lazy"
-                                                                                                        />
+                                                                                                        // <img
+                                                                                                        //     src="/assets/images/img/gold-coin.png"
+                                                                                                        //     alt={text}
+                                                                                                        //     className="w-7 h-7 sm:w-6 sm:h-6 object-contain mt-1"
+                                                                                                        //     loading="lazy"
+                                                                                                        // />
+                                                                                                        <></>
                                                                                                     )}
                                                                                                 </div>
                                                                                             );
@@ -357,8 +359,8 @@ export const PopupSpinWheel: React.FC<PopupSpinWheelProps> = ({ isShow, onClose 
                                                                                             <div
                                                                                                 className="-ms-2 flex flex-col items-center justify-start gap-1 text-center font-pop font-extrabold px-2"
                                                                                                 style={{
-                                                                                                    color: index % 2 === 0 ? "#191919" : "#FFFFFF",
-                                                                                                    textShadow: index % 2 === 0 ? "none" : "0px 0px 3px black",
+                                                                                                    color: "#FFFFFF",
+                                                                                                    textShadow: "0px 1px 3px rgba(0,0,0,0.9), 0px 2px 6px rgba(0,0,0,0.9)",
                                                                                                     position: "absolute",
                                                                                                     left: "50%",
                                                                                                     top: "50%",
@@ -382,12 +384,13 @@ export const PopupSpinWheel: React.FC<PopupSpinWheelProps> = ({ isShow, onClose 
                                                                                                 {isDataPack ? (
                                                                                                     <Wifi className="w-9 h-9 sm:w-7 sm:h-7 text-white/95 drop-shadow-[0_0_2px_rgba(0,0,0,0.8)]" />
                                                                                                 ) : (
-                                                                                                    <img
-                                                                                                        src="/assets/images/img/gold-coin.png"
-                                                                                                        alt={text}
-                                                                                                        className="w-7 h-7 sm:w-6 sm:h-6 object-contain mt-1"
-                                                                                                        loading="lazy"
-                                                                                                    />
+                                                                                                    // <img
+                                                                                                    //     src="/assets/images/img/gold-coin.png"
+                                                                                                    //     alt={text}
+                                                                                                    //     className="w-7 h-7 sm:w-6 sm:h-6 object-contain mt-1"
+                                                                                                    //     loading="lazy"
+                                                                                                    // />
+                                                                                                    <></>
                                                                                                 )}
                                                                                             </div>
                                                                                         );

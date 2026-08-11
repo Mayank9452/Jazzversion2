@@ -156,8 +156,8 @@ export const TargetChallengeZoneLandscape: React.FC = () => {
                                             {rewardType === 1 && (
                                                 <div className="font-extrabold flex items-center gap-1 text-xs sm:text-[10px]">
                                                     <img
-                                                        src="/assets/images/giftkarte.webp"
-                                                        alt="voucher"
+                                                        src="/assets/images/Voucher.webp"
+                                                        alt="Voucher"
                                                         className="w-6 h-6 object-contain"
                                                     />
                                                     <span className="tracking-wide text-slate-800 dark:text-brand-yellow-100 font-bold">

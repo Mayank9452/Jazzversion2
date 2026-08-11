@@ -1,6 +1,6 @@
 import React from "react";
 import { motion } from "framer-motion";
-import { LoaderPinwheel } from "lucide-react";
+import { LoaderPinwheel, X } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
 interface RedeemSpinPopupProps {
@@ -53,6 +53,14 @@ export default function RedeemSpinPopup({
                 <div className="absolute bottom-0 left-0 w-12 h-12 border-b-2 border-l-2 border-yellow-500 rounded-bl-[2.5rem] pointer-events-none" />
                 <div className="absolute bottom-0 right-0 w-12 h-12 border-b-2 border-r-2 border-yellow-500 rounded-br-[2.5rem] pointer-events-none" />
 
+                {/* Close Button */}
+                <button
+                    onClick={handleClose}
+                    className="absolute z-[50] top-4 right-4 w-10 h-10 rounded-full bg-white/5 hover:bg-white/10 active:scale-90 border-2 border-yellow-main flex items-center justify-center transition-all"
+                >
+                    <X className="h-5 w-5 text-white/60 hover:text-white" />
+                </button>
+
                 {/* Yellow Glow Effect */}
                 <div className="absolute -top-12 left-[50%] -translate-x-[50%] w-24 h-24 bg-[#FFCA20]/20 rounded-full blur-2xl pointer-events-none" />
 
@@ -63,10 +71,13 @@ export default function RedeemSpinPopup({
 
                 <div className="space-y-1">
                     <h3 className="text-white text-base font-black uppercase tracking-wider">
-                        Spin & Win Limit
+                        Spin Wheel Limit
                     </h3>
                     <p className="text-slate-400 text-xs leading-relaxed px-1">
-                        Sorry, You already used Spin & Win today. Do you want to spin again?
+                        You already have used 1 spin today.
+                    </p>
+                    <p className="text-slate-400 text-xs leading-relaxed px-1">
+                        Do you want to spin again?
                     </p>
                 </div>
 

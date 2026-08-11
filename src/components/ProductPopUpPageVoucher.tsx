@@ -41,7 +41,7 @@ function ProductPopUpPageVoucher({
     };
   }, []);
 
-  // Parse application name and voucher amount from name (e.g., "Grab 5000 Ks" -> "Grab", "5000 Ks")
+  // Parse application name and Voucher amount from name (e.g., "Grab 5000 Ks" -> "Grab", "5000 Ks")
   const getVoucherDetails = () => {
     const fullName = result?.name || "Voucher";
     const parts = fullName.split(" ");
@@ -106,14 +106,14 @@ function ProductPopUpPageVoucher({
         payload?.status === "success" ||
         payload?.message === "Reward claimed successfully!" ||
         payload?.message === "Voucher assigned to user" ||
-        payload?.voucher_code ||
-        payload?.voucher_details?.voucher_code;
+        payload?.Voucher_code ||
+        payload?.Voucher_details?.Voucher_code;
 
       if (isSuccess) {
-        setCouponCode(payload?.voucher_code || payload?.voucher_details?.voucher_code || "");
+        setCouponCode(payload?.Voucher_code || payload?.Voucher_details?.Voucher_code || "");
         setIsApiLoading(false);
       } else {
-        // If not successfully claimed as voucher, navigate to rewards page with status
+        // If not successfully claimed as Voucher, navigate to rewards page with status
         if (payload?.message?.includes("subscribed")) {
           navigate("/rewards", { state: { subscriptionRequired: true } });
         } else if (
@@ -258,7 +258,7 @@ function ProductPopUpPageVoucher({
                 {/* Dashed Border Code input with Copy Button */}
                 <div className="border border-dashed border-gray-300 rounded-lg p-1 bg-gray-50 flex items-center justify-between w-full mt-1 min-h-[50px] relative overflow-hidden">
                   {!hasScratched ? (
-                    <div 
+                    <div
                       onClick={handleScratch}
                       className="w-full h-10 rounded-md scratch-card-overlay flex items-center justify-center cursor-pointer hover:opacity-90 active:scale-[0.99] transition-all"
                     >
@@ -320,11 +320,10 @@ function ProductPopUpPageVoucher({
 
             {/* Bottom Redeem/Claim Button */}
             <div
-              className={`mt-4 rounded-xl py-3.5 px-6 flex items-center justify-between shadow-lg transition-all ${
-                (!couponCode || isApiLoading)
-                  ? "opacity-50 pointer-events-none cursor-not-allowed bg-gray-600"
-                  : "cursor-pointer active:scale-95 gradient-green-light"
-              }`}
+              className={`mt-4 rounded-xl py-3.5 px-6 flex items-center justify-between shadow-lg transition-all ${(!couponCode || isApiLoading)
+                ? "opacity-50 pointer-events-none cursor-not-allowed bg-gray-600"
+                : "cursor-pointer active:scale-95 gradient-green-light"
+                }`}
               style={{
                 background: (!couponCode || isApiLoading)
                   ? "#4b5563"
@@ -341,8 +340,8 @@ function ProductPopUpPageVoucher({
                 {isApiLoading
                   ? (language === "my" ? "ကုဒ်ရယူနေသည်..." : "Fetching code...")
                   : !couponCode
-                  ? (language === "my" ? "ကူပွန်ကုဒ်ကို အရင်ခြစ်ပါ" : "Scratch Card to Reveal Code")
-                  : (language === "my" ? `${appName} app တွင် ရယူရန်` : `Redeem in ${appName} app`)}
+                    ? (language === "my" ? "ကူပွန်ကုဒ်ကို အရင်ခြစ်ပါ" : "Scratch Card to Reveal Code")
+                    : (language === "my" ? `${appName} app တွင် ရယူရန်` : `Redeem in ${appName} app`)}
               </span>
               {couponCode && !isApiLoading && <ArrowRight className="text-slate-950 stroke-[3px]" size={20} />}
             </div>

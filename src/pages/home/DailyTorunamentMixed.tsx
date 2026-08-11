@@ -167,11 +167,11 @@ const DailyTournamentMixedTesting2: React.FC<DailyTournament> = ({
                                                     <div className="font-extrabold flex items-center gap-1 text-xs sm:text-[10px]">
                                                         <img
                                                             src="/assets/images/giftkarte.png"
-                                                            alt="voucher"
+                                                            alt="giftkarte"
                                                             className="w-6 h-6 object-contain"
                                                         />
                                                         <span className="tracking-wide text-slate-800 dark:text-brand-yellow-100 font-bold">
-                                                            {formatNumberInText("Rs 100000 Voucher")}
+                                                            {formatNumberInText("Rs 100000 Giftkarte")}
                                                         </span>
                                                     </div>
                                                 )}

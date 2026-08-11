@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useAppDispatch, useAppSelector } from "@/app/hooks";
 import { fetchJazzHomeDataThunk, fetchJazzInstantGamesThunk } from "@/features/jazzHome/jazzHomeSlice";
 
@@ -33,6 +33,8 @@ import DailyTournamentMixedTesting2 from "./DailyTournamentMixedTesting2";
 import { TopBarUpdated } from "@/components/TopBarUpdated";
 import PopupBannerUpdated from "@/components/PopupBannerUpdated";
 import PopupSpinWheel from "@/components/PopupSpinWheel";
+import DailyTournamentMixedTesting3 from "./DailyTournamentMixedTesting3";
+import DailyTournamentMixedTesting4 from "./DailyTournamentMixedTesting4";
 
 /* ─── Section Header ─────────────────────────────────────────────────────── */
 
@@ -95,24 +97,27 @@ const Section: React.FC<{ children: React.ReactNode; className?: string }> = ({
 
 /* ─── Spin & Win Banner ───────────────────────────────────────────────────── */
 
-const SpinWinBanner: React.FC = () => (
-  <Link
-    to="/spinandwin"
-    className="group block w-full rounded-2xl overflow-hidden border border-primary/20
+const SpinWinBanner: React.FC = () => {
+  const navigate = useNavigate();
+
+
+  return (
+    <div
+      onClick={() => navigate("/spinandwin")}
+      className="w-full rounded-2xl overflow-hidden
                shadow-sm transition-all duration-300
-               active:scale-95 hover:border-primary/40"
-  >
-    <div className="relative">
-      <img
-        src="/assets/images/img/spinbanner.jpg"
-        alt="Spin and Win"
-        className="w-full h-auto block transition-transform duration-500 group-hover:scale-105"
-      />
-      {/* Subtle overlay gradient so it blends with bg */}
-      <div className="absolute inset-0 bg-gradient-to-t from-[#12122a]/60 to-transparent pointer-events-none" />
+               active:scale-95 hover:border-primary/40 px-1"
+    >
+      <div className="relative">
+        <img
+          src="/assets/images/img/spinbanner.jpg"
+          alt="Spin and Win"
+          className="w-full h-full rounded-lg transition-transform duration-500 group-hover:scale-105"
+        />
+      </div>
     </div>
-  </Link>
-);
+  );
+}
 
 /* ─── Loading skeleton ────────────────────────────────────────────────────── */
 
@@ -819,10 +824,117 @@ const Home = () => {
     homeStatus === "loading" ||
     (instantGamesStatus === "loading" && !jazzInstantGamesData);
 
+  const shuffledSections = useMemo(() => {
+    const sections: { id: string; element: React.ReactNode }[] = [];
+
+    // 1. Weekly Tournaments
+    if (jazzHomePageData?.dailyTournaments && jazzHomePageData.dailyTournaments.length > 0) {
+      sections.push({
+        id: "testing2",
+        element: (
+          <Section key="testing2">
+            <SectionHeader
+              title="Weekly Tournaments"
+              icon={<Clock size={15} className="text-brand-gold-100 dark:text-brand-yellow-100" />}
+              accent="purple"
+            />
+            <DailyTournamentMixedTesting2
+              dailyTournaments={jazzHomePageData.dailyTournaments}
+            />
+          </Section>
+        )
+      });
+    }
+
+    // 2. Daily Tournaments
+    if (jazzHomePageData?.dailyTournaments && jazzHomePageData.dailyTournaments.length > 0) {
+      sections.push({
+        id: "testing1",
+        element: (
+          <Section key="testing1">
+            <SectionHeader
+              title="Daily Tournaments"
+              icon={<Clock size={15} className="text-brand-gold-100 dark:text-brand-yellow-100" />}
+              accent="purple"
+            />
+            <DailyTournamentMixedTesting
+              dailyTournaments={jazzHomePageData.dailyTournaments}
+            />
+          </Section>
+        )
+      });
+    }
+
+    // 3. Trending Games
+    sections.push({
+      id: "trending",
+      element: (
+        <Section key="trending">
+          <SectionHeader
+            title="Trending Games"
+            icon={<Star size={15} className="text-brand-gold-100 dark:text-brand-yellow-100 fill-brand-gold-100/10 dark:fill-brand-yellow-100/10" />}
+          />
+          <CategoryNavigationIcon />
+        </Section>
+      )
+    });
+
+    // 4. Spin and Win
+    sections.push({
+      id: "spinwin",
+      element: (
+        <Section key="spinwin">
+          <SectionHeader
+            title="Spin and Win"
+            icon={<Trophy size={15} className="text-brand-gold-100 dark:text-brand-yellow-100 fill-brand-gold-100/10 dark:fill-brand-yellow-100/10" />}
+          />
+          <SpinWinBanner />
+        </Section>
+      )
+    });
+
+    // 5. Upcoming Tournaments
+    sections.push({
+      id: "upcoming",
+      element: (
+        <Section key="upcoming">
+          <SectionHeader
+            title="Upcoming Tournaments"
+            icon={<Star size={15} className="text-brand-gold-100 dark:text-brand-yellow-100 fill-brand-gold-100/10 dark:fill-brand-yellow-100/10" />}
+          />
+          <CategoryNavigationTesting />
+        </Section>
+      )
+    });
+
+    // 6. Target Challenge Zone
+    sections.push({
+      id: "targetzone",
+      element: (
+        <Section key="targetzone">
+          <SectionHeader
+            title="Target Challenge Zone"
+            icon={<Target size={15} className="text-brand-gold-100 dark:text-brand-yellow-100 fill-brand-gold-100/10 dark:fill-brand-yellow-100/10" />}
+          />
+          <TargetChallengeZone />
+        </Section>
+      )
+    });
+
+    // Fisher-Yates Shuffle
+    const result = [...sections];
+    for (let i = result.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [result[i], result[j]] = [result[j], result[i]];
+    }
+
+    return result;
+  }, [jazzHomePageData?.dailyTournaments]);
+
   return (
     <>
       {/* ── Global background ── */}
-      <div className="min-h-screen bg-background text-foreground transition-colors duration-300">
+      <div className="min-h-screen bg-background text-foreground transition-colors duration-300 pb-8">
         {/* Ambient top glow */}
         <div
           className="pointer-events-none fixed inset-x-0 top-0 h-96 z-0"
@@ -981,225 +1093,7 @@ const Home = () => {
                   </Section>
                 )} */}
 
-                {/* {jazzHomePageData?.dailyTournaments?.length > 0 && (
-                  <Section>
-                    <SectionHeader
-                      title="Weekly Tournaments Testing (Talktime)"
-                      icon={<Clock size={15} className="text-brand-gold-100 dark:text-brand-yellow-100" />}
-                      accent="purple"
-                    // action={{ label: "View All", href: "/games" }}
-                    />
-                    <DailyTournamentNewTesting7
-                      dailyTournaments={jazzHomePageData.dailyTournaments}
-                    />
-                  </Section>
-                )} */}
-
-
-
-                {/* {jazzHomePageData?.dailyTournaments?.length > 0 && (
-                  <Section>
-                    <SectionHeader
-                      title="Weekly Tournaments Testing (Coins - 2)"
-                      icon={<Clock size={15} className="text-brand-gold-100 dark:text-brand-yellow-100" />}
-                      accent="purple"
-                    // action={{ label: "View All", href: "/games" }}
-                    />
-                    <DailyTournamentNewTesting
-                      dailyTournaments={jazzHomePageData.dailyTournaments}
-                    />
-                  </Section>
-                )} */}
-
-                {/* {jazzHomePageData?.dailyTournaments?.length > 0 && (
-                  <Section>
-                    <SectionHeader
-                      title="Weekly Tournaments Testing (Voucher - 2)"
-                      icon={<Clock size={15} className="text-brand-gold-100 dark:text-brand-yellow-100" />}
-                      accent="purple"
-                    
-                    />
-                    <DailyTournamentNewTesting5
-                      dailyTournaments={jazzHomePageData.dailyTournaments}
-                    />
-                  </Section>
-                )} */}
-
-                {/* {jazzHomePageData?.dailyTournaments?.length > 0 && (
-                  <Section>
-                    <SectionHeader
-                      title="Weekly Tournaments Testing (Talktime - 2)"
-                      icon={<Clock size={15} className="text-brand-gold-100 dark:text-brand-yellow-100" />}
-                      accent="purple"
-                   
-                    />
-                    <DailyTournamentNewTesting6
-                      dailyTournaments={jazzHomePageData.dailyTournaments}
-                    />
-                  </Section>
-                )} */}
-
-                {jazzHomePageData?.dailyTournaments?.length > 0 && (
-                  <Section>
-                    <SectionHeader
-                      title="Weekly Tournaments"
-                      icon={<Clock size={15} className="text-brand-gold-100 dark:text-brand-yellow-100" />}
-                      accent="purple"
-                    // action={{ label: "View All", href: "/games" }}
-                    />
-                    <DailyTournamentMixedTesting2
-                      dailyTournaments={jazzHomePageData.dailyTournaments}
-                    />
-                  </Section>
-                )}
-
-                {/* {jazzHomePageData?.dailyTournaments?.length > 0 && (
-                  <Section>
-                    <SectionHeader
-                      title="Weekly Tournaments Testing"
-                      icon={<Clock size={15} className="text-brand-gold-100 dark:text-brand-yellow-100" />}
-                      accent="purple"
-                    // action={{ label: "View All", href: "/games" }}
-                    />
-                    <DailyTournamentNewTestingV
-                      dailyTournaments={jazzHomePageData.dailyTournaments}
-                    />
-                  </Section>
-                )} */}
-
-                {/* ── Weekly Tournaments ── */}
-                {/* {jazzHomePageData?.weeklyTournaments?.length > 0 && (
-                  <Section>
-                    <SectionHeader
-                      title="Daily Tournaments"
-                      icon={<Trophy size={15} className="text-brand-gold-100 dark:text-brand-yellow-100 fill-brand-gold-100/10 dark:fill-brand-yellow-100/10" />}
-                      accent="blue"
-                    // action={{ label: "View All", href: "/games" }}
-                    />
-                    <WeeklyTournamentNew
-                      weeklyTournaments={jazzHomePageData.weeklyTournaments}
-                    />
-                  </Section>
-                )} */}
-
-                {/* ── Weekly Tournaments ── */}
-                {/* {jazzHomePageData?.weeklyTournaments?.length > 0 && (
-                  <Section>
-                    <SectionHeader
-                      title="Daily Tournaments V2"
-                      icon={<Trophy size={15} className="text-brand-gold-100 dark:text-brand-yellow-100 fill-brand-gold-100/10 dark:fill-brand-yellow-100/10" />}
-                      accent="blue"
-                    // action={{ label: "View All", href: "/games" }}
-                    />
-                    <WeeklyTournamentTesting
-                      weeklyTournaments={jazzHomePageData.weeklyTournaments}
-                    />
-                  </Section>
-                )} */}
-
-                {/* {jazzHomePageData?.weeklyTournaments?.length > 0 && (
-                  <Section>
-                    <SectionHeader
-                      title="Daily Tournaments V3 (VIP Style)"
-                      icon={<Trophy size={15} className="text-brand-gold-100 dark:text-brand-yellow-100 fill-brand-gold-100/10 dark:fill-brand-yellow-100/10" />}
-                      accent="blue"
-                    />
-                    <WeeklyTournamentTestingV2
-                      weeklyTournaments={jazzHomePageData.weeklyTournaments}
-                    />
-                  </Section>
-                )} */}
-
-
-                {jazzHomePageData?.dailyTournaments?.length > 0 && (
-                  <Section>
-                    <SectionHeader
-                      title="Daily Tournaments"
-                      icon={<Clock size={15} className="text-brand-gold-100 dark:text-brand-yellow-100" />}
-                      accent="purple"
-                    // action={{ label: "View All", href: "/games" }}
-                    />
-                    <DailyTournamentMixedTesting
-                      dailyTournaments={jazzHomePageData.dailyTournaments}
-                    />
-                  </Section>
-                )}
-
-
-
-
-                <Section>
-                  <SectionHeader
-                    title="Trending Games"
-                    icon={<Star size={15} className="text-brand-gold-100 dark:text-brand-yellow-100 fill-brand-gold-100/10 dark:fill-brand-yellow-100/10" />}
-                  // action={{ label: "View All", href: "/tournament-history" }}
-                  />
-                  <CategoryNavigationIcon />
-                </Section>
-
-
-
-
-
-
-
-
-                {/* ── Suggested Games ── */}
-                {/* <Section>
-                  <SectionHeader
-                    title="Practice Games"
-                    icon={<Star size={15} className="text-brand-gold-100 dark:text-brand-yellow-100 fill-brand-gold-100/10 dark:fill-brand-yellow-100/10" />}
-                    accent="aqua"
-                  />
-                  <SuggestedGamesNew />
-                </Section> */}
-
-
-                {/* ── Recent Results ── */}
-                <Section>
-                  <SectionHeader
-                    title="Spin and Win"
-                    icon={<Trophy size={15} className="text-brand-gold-100 dark:text-brand-yellow-100 fill-brand-gold-100/10 dark:fill-brand-yellow-100/10" />}
-                  // action={{ label: "View All", href: "/spinandwin" }}
-                  />
-                  <SpinWinBanner />
-                </Section>
-
-
-
-                {/* <Section>
-                  <SectionHeader
-                    title="Testing Games"
-                    icon={<Star size={15} className="text-brand-gold-100 dark:text-brand-yellow-100 fill-brand-gold-100/10 dark:fill-brand-yellow-100/10" />}
-                  // action={{ label: "View All", href: "/tournament-history" }}
-                  />
-                  <CategoryNavigation categoriesList={trendingCategories} />
-                </Section> */}
-
-                <Section>
-                  <SectionHeader
-                    title="Upcoming Tournaments"
-                    icon={<Star size={15} className="text-brand-gold-100 dark:text-brand-yellow-100 fill-brand-gold-100/10 dark:fill-brand-yellow-100/10" />}
-                  // action={{ label: "View All", href: "/tournament-history" }}
-                  />
-                  <CategoryNavigationTesting />
-                </Section>
-
-                <Section>
-                  <SectionHeader
-                    title="Target Challenge Zone"
-                    icon={<Target size={15} className="text-brand-gold-100 dark:text-brand-yellow-100 fill-brand-gold-100/10 dark:fill-brand-yellow-100/10" />}
-                  />
-                  <TargetChallengeZone />
-                </Section>
-
-                {/* <Section>
-                  <SectionHeader
-                    title="Target Challenge Zone Landscape"
-                    icon={<Target size={15} className="text-brand-gold-100 dark:text-brand-yellow-100 fill-brand-gold-100/10 dark:fill-brand-yellow-100/10" />}
-                  />
-                  <TargetChallengeZoneLandscape />
-                </Section> */}
+                {shuffledSections.map((item) => item.element)}
 
 
 

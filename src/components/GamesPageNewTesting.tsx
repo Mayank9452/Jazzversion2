@@ -2,7 +2,8 @@ import React, { useEffect, useState, useMemo, useCallback } from "react";
 import {
     Gamepad2, Zap, Play, Compass, Flame, Map,
     Puzzle, Flag, ChevronRight, ChevronLeft, Trophy, Bolt,
-    Star, Crown, Sparkles, TrendingUp, HelpCircle, ArrowLeft
+    Star, Crown, Sparkles, TrendingUp, HelpCircle, ArrowLeft,
+    Clock
 } from "lucide-react";
 import { BottomNavBar } from "./BottomNavBar";
 import { useLanguage } from "./context/LanguageContext";
@@ -67,12 +68,13 @@ function PlayStoreHeroCardV2({ game, rank = 1, onPlay }: { game: any; rank?: num
     return (
         <div
             onClick={onPlay}
-            className="relative w-full aspect-[3/4] cursor-pointer group transition-all active:scale-[0.98] duration-200 select-none flex items-center justify-end"
+            className="relative w-full cursor-pointer group transition-all active:scale-[0.98] duration-200 select-none flex items-center justify-end pl-12"
+        // style={{ aspectRatio: "314 / 226" }}
         >
             {/* Giant Rank Number (Layered BEHIND the banner image with z-0) */}
-            <div className="absolute left-[-65px] bottom-[0px] sm:bottom-[-25px] z-0 pointer-events-none select-none">
+            <div className="absolute -left-[0.4rem] bottom-[-4px] sm:bottom-[-15px] z-0 pointer-events-none select-none">
                 <span
-                    className="text-[150px] sm:text-[145px] font-black leading-none tracking-tighter font-sans select-none"
+                    className="text-[130px] sm:text-[145px] font-black leading-none tracking-tighter font-sans select-none"
                     style={{
                         WebkitTextStroke: isDark ? "3px rgba(255, 255, 255, 0.95)" : "3px rgba(20, 20, 20, 0.9)",
                         color: "transparent"
@@ -82,12 +84,11 @@ function PlayStoreHeroCardV2({ game, rank = 1, onPlay }: { game: any; rank?: num
                 </span>
             </div>
 
-            {/* Poster Image Container (Layered IN FRONT with z-10) */}
-            <div className="relative z-10 w-[100%] h-full rounded-2xl overflow-hidden shadow-xl border border-slate-200/50 dark:border-white/10 bg-[#2B2B2B]">
+            <div className="relative z-10 w-[100%] h-full rounded-xl overflow-hidden shadow-xl border border-slate-200/50 dark:border-white/10 bg-[#2B2B2B]">
                 <img
-                    src={game?.game_image_url}
+                    src={`https://jazzgplapi.gamenow.com.pk/uploads/webp/suggested_games/${game.game_image}`}
                     alt={game?.game_name}
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                    className="w-full h-full object-center group-hover:scale-105 transition-transform duration-700"
                 />
             </div>
         </div>
@@ -106,27 +107,7 @@ function PlayStoreHero({ game, onPlay }: { game: any; onPlay: () => void }) {
                 alt={game?.game_name}
                 className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
             />
-            {/* Dark Overlay Gradient */}
-            <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent flex flex-col justify-end p-4" />
 
-            {/* Floating Play Button (Yellow-main fill) */}
-            <div className="absolute bottom-4 right-3 w-8 h-8 rounded-full bg-yellow-main backdrop-blur-md border-2 border-white flex items-center justify-center text-black shadow-lg hover:scale-105 transition-all">
-                <Play className="w-4 h-4 fill-current ml-0.5" />
-            </div>
-
-            {/* Content */}
-            <div className="absolute bottom-3.5 left-4 right-4 flex items-center gap-3">
-                <img
-                    src={game?.game_image_url}
-                    alt=""
-                    className="w-11 h-11 rounded-xl object-cover border border-white/20 shadow-md shrink-0"
-                />
-                <div className="flex-1 min-w-0 text-start">
-                    <div className="text-white font-bold text-[14px] truncate leading-tight">
-                        {game?.game_name}
-                    </div>
-                </div>
-            </div>
         </div>
     );
 }
@@ -146,70 +127,69 @@ function PlayStoreAppCard({ game, onPlay }: { game: any; onPlay: () => void }) {
                     alt={game?.game_name}
                     className="w-full h-full object-cover"
                 />
-                {/* <div className="absolute inset-0 bg-black/5 hover:bg-black/0 transition-colors" /> */}
-                {/* Play Icon Badge */}
-                {/* <div className="absolute bottom-1.5 right-1.5 w-6 h-6 rounded-full bg-white/90 dark:bg-yellow-main backdrop-blur-sm flex items-center justify-center text-slate-800 dark:text-black border border-slate-200 dark:border-white">
-                    <Play className="w-2.5 h-2.5 fill-current ml-0.5" />
-                </div> */}
             </div>
-            {/* <div className="text-[11px] font-bold text-slate-800 dark:text-slate-200 mt-2 truncate w-full leading-tight text-start">
-        {game?.game_name}
-      </div> */}
-            {/* <div className="flex items-center gap-1 mt-0.5 text-[9px] text-slate-500 dark:text-[#BDBDBD] font-semibold justify-start">
-        <span>{rating}</span>
-        <Star className="w-2.5 h-2.5 text-[#FFCA20] fill-current" />
-        <span>•</span>
-        <span className="truncate max-w-[40px]">{size}</span>
-      </div> */}
         </div>
     );
 }
 
 // 3. Promoted Promo Card (Large landscape banner with footer details - Theme Aware)
 function PlayStorePromotedBanner({ game, onPlay }: { game: any; onPlay: () => void }) {
-    const rating = getMockRating(game?.game_id || 1);
     return (
-        <div
-            onClick={onPlay}
-            className="mx-2 my-2.5 overflow-hidden rounded-2xl border border-slate-200/50 dark:border-white/10 bg-white dark:bg-[#2B2B2B] shadow-sm dark:shadow-md hover:shadow-md dark:hover:shadow-lg transition-all cursor-pointer relative aspect-[16/9] group"
-        >
-            <img
-                src={`https://jazzgplapi.gamenow.com.pk/uploads/webp/640X360/${game?.game_image}`}
-                alt={game?.game_name}
-                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
-            />
-            {/* Dark Overlay Gradient */}
-            <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/40 to-transparent flex flex-col justify-end p-3" />
-
-            {/* Content & Play button in same row */}
-            <div className="absolute bottom-3 left-3 right-3 flex items-center justify-between gap-3 z-10">
-                <div className="flex items-center gap-2.5 min-w-0 text-start">
-                    <img
-                        src={game?.game_image_url}
-                        alt=""
-                        className="w-10 h-10 rounded-[12px] object-cover shrink-0 border border-white/20 shadow-md"
-                    />
-                    <div className="min-w-0">
-                        <div className="text-white font-bold text-[13px] truncate leading-tight">
-                            {game?.game_name}
-                        </div>
-                        {/* <div className="flex items-center gap-1.5 mt-0.5 text-slate-300 text-[10px]">
-                            <span className="font-semibold text-white/90">{game?.category_name || "Instant Play"}</span>
-                            <span>•</span>
-                            <div className="flex items-center text-[#FFCA20] gap-0.5">
-                                <Star className="w-2.5 h-2.5 fill-current" />
-                                <span className="font-bold text-white/90">{rating}</span>
-                            </div>
-                        </div> */}
-                    </div>
-                </div>
-
-                {/* Play Button */}
-                <button className="bg-yellow-main w-8 h-8 rounded-full bg-yellow-main backdrop-blur-md border-2 border-white flex items-center justify-center text-black shadow-lg hover:scale-105 transition-all">
-                    <Play className="w-4 h-4 fill-current ml-0.5" />
-                </button>
+        <>
+            <style>{`
+                @keyframes pulse-yellow-glow {
+                    0%, 100% {
+                        box-shadow: 0 0 10px 1px rgba(255, 202, 32, 0.4);
+                        border-color: rgba(255, 202, 32, 0.45);
+                    }
+                    50% {
+                        box-shadow: 0 0 24px 4px rgba(255, 202, 32, 0.85);
+                        border-color: rgba(255, 202, 32, 0.85);
+                    }
+                }
+                @keyframes shimmer-sweep {
+                    0% {
+                        transform: translateX(-200%) skewX(-25deg);
+                    }
+                    35%, 100% {
+                        transform: translateX(200%) skewX(-25deg);
+                    }
+                }
+                .animate-yellow-glow {
+                    animation: pulse-yellow-glow 2.2s infinite ease-in-out;
+                }
+                .shimmer-effect::after {
+                    content: '';
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    width: 50%;
+                    height: 100%;
+                    background: linear-gradient(
+                        90deg,
+                        transparent,
+                        rgba(255, 236, 172, 0.2) 20%,
+                        rgba(255, 255, 255, 0.7) 60%,
+                        transparent
+                    );
+                    animation: shimmer-sweep 5.2s infinite ease-in-out;
+                }
+            `}</style>
+            <div
+                onClick={onPlay}
+                className="my-3 overflow-hidden rounded-2xl border-2 border-[#FFCA20]/50 bg-white dark:bg-[#2B2B2B] shadow-sm dark:shadow-md hover:shadow-md dark:hover:shadow-lg transition-all cursor-pointer relative aspect-[16/9] group animate-yellow-glow shimmer-effect"
+            >
+                {/* <div className="absolute top-3 left-3 z-20 px-3 py-1 rounded-lg bg-[#FFCA20] text-slate-950 font-black text-[9px] sm:text-[10px] uppercase tracking-wider shadow-[0_2px_8px_rgba(255,202,32,0.4)] flex items-center gap-1.5">
+                    <span className="w-1.5 h-1.5 rounded-full bg-slate-950 animate-ping" />
+                    🔥 Promoted
+                </div> */}
+                <img
+                    src={`https://jazzgplapi.gamenow.com.pk/uploads/webp/640X360/${game?.game_image}`}
+                    alt={game?.game_name}
+                    className="w-full h-full object-cover group-hover:scale-[1.03] transition-transform duration-700"
+                />
             </div>
-        </div>
+        </>
     );
 }
 
@@ -245,27 +225,6 @@ function PlayStoreLandscapeCard({ game, onPlay }: { game: any; onPlay: () => voi
                 alt={game?.game_name}
                 className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
             />
-            {/* Dark Overlay Gradient */}
-            <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent flex flex-col justify-end p-4" />
-
-            {/* Floating Play Button (Yellow-main fill) */}
-            <div className="absolute bottom-3 right-2 w-8 h-8 rounded-full bg-yellow-main backdrop-blur-md border-2 border-white flex items-center justify-center text-black shadow-lg hover:scale-105 transition-all">
-                <Play className="w-4 h-4 fill-current ml-0.5" />
-            </div>
-
-            {/* Content */}
-            <div className="absolute bottom-4 bottom-3.5 left-4  flex items-center gap-3">
-                {/* <img
-                    src={game?.game_image_url}
-                    alt=""
-                    className="w-11 h-11 rounded-xl object-cover border border-white/20 shadow-md shrink-0"
-                /> */}
-                <div className="flex-1 min-w-0 text-start">
-                    <div className="text-white font-bold text-[14px] truncate leading-tight">
-                        {game?.game_name}
-                    </div>
-                </div>
-            </div>
         </div>
     );
 }
@@ -368,17 +327,72 @@ export default function GamesPageNewTesting() {
             }
         });
 
+        // Replicate games to 180 for testing if the list is shorter than 180
+        if (list.length > 0 && list.length < 180) {
+            const baseList = [...list];
+            let copyIdx = 0;
+            while (list.length < 180) {
+                const baseGame = baseList[copyIdx % baseList.length];
+                list.push({
+                    ...baseGame,
+                    game_id: baseGame.game_id * 1000 + list.length
+                });
+                copyIdx++;
+            }
+        }
+
         return list;
     }, [categories, randomGamesData]);
 
-    // Top Free & Trending computed lists for Top Charts
-    const topFreeChartsList = useMemo(() => {
-        return allGames.slice(0, 5);
-    }, [allGames]);
+    const trendingGames = useMemo(() => allGames.slice(0, 10), [allGames]);
+    const lastPlayedGames = useMemo(() => allGames.slice(10, 15), [allGames]);
+    const playAllGames = useMemo(() => allGames.slice(15), [allGames]);
 
-    const trendingChartsList = useMemo(() => {
-        return [...allGames].reverse().slice(0, 5);
-    }, [allGames]);
+    const cycles = useMemo(() => {
+        const list = [...playAllGames];
+        const result: any[] = [];
+        let cycleIndex = 0;
+        let bannerCount = 0;
+
+        while (list.length > 0) {
+            // 1. PlayStoreAppCard (8 games)
+            const appCards = list.splice(0, Math.min(8, list.length));
+
+            // 2. PlayStoreColumnItem (desired limit 9 * 2^cycleIndex, multiple of 3 and >= 9, or remainder at the end)
+            const desiredColumns = 9 * Math.pow(2, cycleIndex);
+            let columnItems: any[] = [];
+            if (list.length > 0) {
+                const limit = Math.min(desiredColumns, list.length);
+                let count = limit;
+                if (list.length > desiredColumns) {
+                    count = limit - (limit % 3);
+                } else {
+                    count = limit - (limit % 3);
+                }
+                columnItems = list.splice(0, count);
+            }
+
+            // 3. PlayStoreLandscapeCard (5 games)
+            const landscapeCards = list.splice(0, Math.min(5, list.length));
+
+            // 4. PlayStorePromotedBanner (1 game, max 4 times total)
+            let bannerGame = null;
+            if (bannerCount < 4 && list.length > 0) {
+                bannerGame = list.shift();
+                bannerCount++;
+            }
+
+            result.push({
+                id: cycleIndex,
+                appCards,
+                columnItems,
+                landscapeCards,
+                bannerGame
+            });
+            cycleIndex++;
+        }
+        return result;
+    }, [playAllGames]);
 
     // Game Launch Trigger
     const handleGameLaunch = useCallback(
@@ -505,82 +519,127 @@ export default function GamesPageNewTesting() {
                                 </div>
                             </motion.div>
                         ) : (
-                            /* Single Unified Scroll Feed (Theme Aware) - No Heading Elements */
+                            /* Single Unified Scroll Feed (Theme Aware) with headers and repeating cycles */
                             <motion.div
                                 key="unified_feed"
                                 initial={{ opacity: 0 }}
                                 animate={{ opacity: 1 }}
                                 exit={{ opacity: 0 }}
-                                className="space-y-2"
+                                className="space-y-4 pb-6 text-start"
                             >
-
-
-                                {/* 1b. Hero Spotlight Carousel V2 (Numbers Behind Cards) */}
-                                {randomGamesData?.usergamesList?.length > 0 && (
-                                    <div className="pl-2 pr-2 pt-2 overflow-visible">
-                                        <Swiper
-                                            loop={randomGamesData.usergamesList.length > 2}
-                                            slidesPerView={2}
-                                            centeredSlides={true}
-                                            spaceBetween={80}
-                                            autoplay={{ delay: 4500, disableOnInteraction: false }}
-                                            modules={[Autoplay]}
-                                            className="overflow-visible"
-                                        >
-                                            {randomGamesData.usergamesList.map((game: any, i: number) => (
-                                                <SwiperSlide key={`v2_${game.game_id || game.report_game_id || i}`} className="overflow-visible">
-                                                    <PlayStoreHeroCardV2
-                                                        game={{ ...game, game_id: game.game_id || game.report_game_id }}
-                                                        rank={i + 1}
-                                                        onPlay={() => handleGameLaunch({ ...game, game_id: game.game_id || game.report_game_id })}
-                                                    />
-                                                </SwiperSlide>
-                                            ))}
-                                        </Swiper>
+                                {/* 1. Top Trending Section */}
+                                {trendingGames.length > 0 && (
+                                    <div className="space-y-2">
+                                        <div className="flex items-center justify-between px-4 mt-3 mb-1">
+                                            <div className="flex items-center gap-3">
+                                                <span className="flex items-center justify-center p-2 rounded-xl bg-[#FFCA20]/10 text-[#FFCA20] border border-[#FFCA20]/30 shadow-[0_0_15px_rgba(255,202,32,0.25)]">
+                                                    <TrendingUp className="w-4 h-4 fill-current shrink-0 animate-pulse" />
+                                                </span>
+                                                <div className="flex flex-col text-start">
+                                                    {/* <span className="text-[8px] sm:text-[9px] font-black text-[#DFA208] tracking-[3px] uppercase leading-none mb-1">
+                                                        // TRENDING NOW
+                                                    </span> */}
+                                                    <h2 className="text-base sm:text-lg font-black italic tracking-wider bg-gradient-to-r from-[#2B2B2B] to-[#191919] dark:from-[#FFCA20] dark:via-[#E6B53A] dark:to-[#DFA208] bg-clip-text text-transparent drop-shadow-[0_1.5px_2px_rgba(0,0,0,0.15)]">
+                                                        Top Trending
+                                                    </h2>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div className="pl-2 pr-2 overflow-visible">
+                                            <Swiper
+                                                loop={trendingGames.length > 2}
+                                                slidesPerView={1.9}
+                                                centeredSlides={false}
+                                                spaceBetween={18}
+                                                autoplay={{ delay: 4500, disableOnInteraction: false }}
+                                                modules={[Autoplay]}
+                                                className="overflow-visible"
+                                            >
+                                                {trendingGames.map((game: any, i: number) => (
+                                                    <SwiperSlide key={`v2_${game.game_id || game.report_game_id || i}`} className="overflow-visible">
+                                                        <PlayStoreHeroCardV2
+                                                            game={game}
+                                                            rank={i + 1}
+                                                            onPlay={() => handleGameLaunch(game)}
+                                                        />
+                                                    </SwiperSlide>
+                                                ))}
+                                            </Swiper>
+                                        </div>
                                     </div>
                                 )}
 
-                                <motion.div
-                                    key="unified_feed"
-                                    initial={{ opacity: 0 }}
-                                    animate={{ opacity: 1 }}
-                                    exit={{ opacity: 0 }}
-                                    className="space-y-6"
-                                >
-                                    {/* 1. Hero Spotlight Carousel */}
-                                    {randomGamesData?.usergamesList?.length > 0 && (
+                                {/* 2. Last Played Section */}
+                                {lastPlayedGames.length > 0 && (
+                                    <div className="space-y-2">
+                                        <div className="flex items-center justify-between px-4 mb-1">
+                                            <div className="flex items-center gap-3">
+                                                <span className="flex items-center justify-center p-2 rounded-xl bg-[#FFCA20]/10 text-[#FFCA20] border border-[#FFCA20]/30 shadow-[0_0_15px_rgba(255,202,32,0.25)]">
+                                                    <Clock className="w-4 h-4  shrink-0" />
+                                                </span>
+                                                <div className="flex flex-col text-start">
+                                                    {/* <span className="text-[8px] sm:text-[9px] font-black text-[#DFA208] tracking-[3px] uppercase leading-none mb-1">
+                                                        // RESUME PLAY
+                                                    </span> */}
+                                                    <h2 className="text-base sm:text-lg font-black italic tracking-wider bg-gradient-to-r from-[#2B2B2B] to-[#191919] dark:from-[#FFCA20] dark:via-[#E6B53A] dark:to-[#DFA208] bg-clip-text text-transparent drop-shadow-[0_1.5px_2px_rgba(0,0,0,0.15)]">
+                                                        Last Played
+                                                    </h2>
+                                                </div>
+                                            </div>
+                                        </div>
                                         <div className="px-2">
                                             <Swiper
-                                                loop={randomGamesData.usergamesList.length > 2}
+                                                loop={lastPlayedGames.length > 2}
                                                 slidesPerView={1.3}
                                                 centeredSlides={true}
                                                 spaceBetween={12}
                                                 autoplay={{ delay: 4000, disableOnInteraction: false }}
                                                 modules={[Autoplay]}
                                             >
-                                                {randomGamesData.usergamesList.map((game: any, i: number) => (
-                                                    <SwiperSlide key={game.game_id || game.report_game_id || i}>
+                                                {lastPlayedGames.map((game: any, i: number) => (
+                                                    <SwiperSlide key={`hero_${game.game_id || game.report_game_id || i}`}>
                                                         <PlayStoreHero
-                                                            game={{ ...game, game_id: game.game_id || game.report_game_id }}
-                                                            onPlay={() => handleGameLaunch({ ...game, game_id: game.game_id || game.report_game_id })}
+                                                            game={game}
+                                                            onPlay={() => handleGameLaunch(game)}
                                                         />
                                                     </SwiperSlide>
                                                 ))}
                                             </Swiper>
                                         </div>
-                                    )}
+                                    </div>
+                                )}
 
-                                    {/* 2. Suggested For You Row */}
-                                    {allGames.length > 0 && (
-                                        <div>
-                                            <div
-                                                className="overflow-hidden w-full mx-2 px-4 pb-2.5 flex">
+                                {/* 3. Play All Section Header */}
+                                {playAllGames.length > 0 && (
+                                    <div className="flex items-center justify-between px-4 mb-1">
+                                        <div className="flex items-center gap-3">
+                                            <span className="flex items-center justify-center p-2 rounded-xl bg-[#FFCA20]/10 text-[#FFCA20] border border-[#FFCA20]/30 shadow-[0_0_15px_rgba(255,202,32,0.25)]">
+                                                <Gamepad2 className="w-4 h-4 shrink-0" />
+                                            </span>
+                                            <div className="flex flex-col text-start">
+                                                {/* <span className="text-[8px] sm:text-[9px] font-black text-[#DFA208] tracking-[3px] uppercase leading-none mb-1">
+                                                    // ARCADE CATALOG
+                                                </span> */}
+                                                <h2 className="text-base sm:text-lg font-black italic  tracking-wider bg-gradient-to-r from-[#2B2B2B] to-[#191919] dark:from-[#FFCA20] dark:via-[#E6B53A] dark:to-[#DFA208] bg-clip-text text-transparent drop-shadow-[0_1.5px_2px_rgba(0,0,0,0.15)]">
+                                                    Play All
+                                                </h2>
+                                            </div>
+                                        </div>
+                                    </div>
+                                )}
+
+                                {/* Repeating Cycles */}
+                                {cycles.map((cycle, cIdx) => (
+                                    <div key={`cycle_${cycle.id || cIdx}`} className="space-y-6">
+                                        {/* PlayStoreAppCard (8 games) - Animate Slide Infinitely */}
+                                        {cycle.appCards?.length > 0 && (
+                                            <div className="overflow-hidden w-full px-4 pb-1 flex">
                                                 <motion.div
-                                                    className="flex gap-2 shrink-0"
+                                                    className="flex gap-3 shrink-0"
                                                     animate={{ x: ["0%", "-50%"] }}
                                                     transition={{
                                                         ease: "linear",
-                                                        duration: 25,
+                                                        duration: 20,
                                                         repeat: Infinity,
                                                     }}
                                                     style={{
@@ -588,258 +647,67 @@ export default function GamesPageNewTesting() {
                                                         willChange: "transform"
                                                     }}
                                                 >
-                                                    {allGames.slice(0, 10).concat(allGames.slice(0, 10)).map((game, i) => (
+                                                    {cycle.appCards.concat(cycle.appCards).map((g: any, i: number) => (
                                                         <PlayStoreAppCard
-                                                            key={`${game.game_id || i}-${i}`}
-                                                            game={game}
-                                                            onPlay={() => handleGameLaunch(game)}
-                                                        />
-                                                    ))}
-                                                </motion.div>
-                                            </div>
-                                        </div>
-                                    )}
-
-
-
-
-                                    {/* 5. Dynamic Alternating Category highlights */}
-                                    {categories.map((cat, catIdx) => {
-                                        const games = cat.games || [];
-                                        if (games.length === 0) return null;
-
-                                        const layoutType = catIdx % 3;
-
-                                        return (
-                                            <div key={cat.category_id} className="">
-
-
-                                                {/* Layout 0: 3x3 Grid of Banners (total 9 banners) */}
-                                                {layoutType === 0 && (
-                                                    <div className="grid grid-cols-3 gap-2.5 px-4 pb-2 w-full">
-                                                        {games.slice(0, 9).map((g: any, i: number) => (
-                                                            <PlayStoreColumnItem
-                                                                key={g.game_id || i}
-                                                                game={g}
-                                                                onPlay={() => handleGameLaunch(g)}
-                                                            />
-                                                        ))}
-                                                    </div>
-                                                )}
-
-                                                {/* Layout 1: Landscape swipe row (Run, jump, run! layout) */}
-                                                {/* {layoutType === 1 && (
-                                                    <Swiper
-                                                        slidesPerView={1.8}
-                                                        spaceBetween={12}
-                                                        centeredSlides={true}
-                                                        autoplay={{ delay: 4000, disableOnInteraction: false }}
-                                                        modules={[Autoplay]}
-                                                    >
-                                                        {games.map((g: any, i: number) => (
-                                                            <SwiperSlide key={g.game_id || i}>
-                                                                <PlayStoreLandscapeCard
-                                                                    game={{ ...g, category_name: cat.category_name }}
-                                                                    onPlay={() => handleGameLaunch(g)}
-                                                                />
-                                                            </SwiperSlide>
-                                                        ))}
-                                                    </Swiper>
-                                                )} */}
-
-                                                {/* Layout 2: Single Promo Card followed by mini scroll */}
-                                                {layoutType === 2 && (
-                                                    <div>
-                                                        <PlayStorePromotedBanner
-                                                            game={games[0]}
-                                                            onPlay={() => handleGameLaunch(games[0])}
-                                                        />
-                                                        {games.length > 1 && (
-                                                            <div
-                                                                className="overflow-hidden w-full px-2 mt-6 pb-1 flex">
-                                                                <motion.div
-                                                                    className="flex gap-2 shrink-0"
-                                                                    animate={{ x: ["0%", "-50%"] }}
-                                                                    transition={{
-                                                                        ease: "linear",
-                                                                        duration: 20,
-                                                                        repeat: Infinity,
-                                                                    }}
-                                                                    style={{
-                                                                        width: "max-content",
-                                                                        willChange: "transform"
-                                                                    }}
-                                                                >
-                                                                    {games.slice(1, 6).concat(games.slice(1, 6)).map((g: any, i: number) => (
-                                                                        <PlayStoreAppCard
-                                                                            key={`${g.game_id || i}-${i}`}
-                                                                            game={g}
-                                                                            onPlay={() => handleGameLaunch(g)}
-                                                                        />
-                                                                    ))}
-                                                                </motion.div>
-                                                            </div>
-                                                        )}
-                                                    </div>
-                                                )}
-                                            </div>
-                                        );
-                                    })}
-                                </motion.div>
-
-
-
-
-
-                                {/* 2. Suggested For You Row */}
-                                {allGames.length > 0 && (
-                                    <div>
-                                        {/* Commented Out Suggested Heading for Clean View */}
-                                        {/*
-                    <div className="flex justify-between items-center px-4 mb-3">
-                      <div className="text-[14px] font-black uppercase tracking-wider text-slate-800 dark:text-white flex items-center gap-1.5">
-                        <Sparkles className="w-4 h-4 text-[#FFCA20] fill-current" /> Suggested for you
-                      </div>
-                    </div>
-                    */}
-                                        <div
-                                            className="overflow-hidden w-full px-4 pb-2.5 flex"
-                                            style={{
-                                                // maskImage: "linear-gradient(to right, transparent, white 8%, white 92%, transparent)",
-                                                // WebkitMaskImage: "linear-gradient(to right, transparent, white 8%, white 92%, transparent)"
-                                            }}
-                                        >
-                                            <motion.div
-                                                className="flex gap-2 shrink-0"
-                                                animate={{ x: ["0%", "-50%"] }}
-                                                transition={{
-                                                    ease: "linear",
-                                                    duration: 25,
-                                                    repeat: Infinity,
-                                                }}
-                                                style={{
-                                                    width: "max-content",
-                                                    willChange: "transform"
-                                                }}
-                                            >
-                                                {allGames.slice(0, 10).concat(allGames.slice(0, 10)).map((game, i) => (
-                                                    <PlayStoreAppCard
-                                                        key={`${game.game_id || i}-${i}`}
-                                                        game={game}
-                                                        onPlay={() => handleGameLaunch(game)}
-                                                    />
-                                                ))}
-                                            </motion.div>
-                                        </div>
-                                    </div>
-                                )}
-
-
-
-
-
-                                {/* 5. Dynamic Alternating Category highlights */}
-                                {categories.map((cat, catIdx) => {
-                                    const games = cat.games || [];
-                                    if (games.length === 0) return null;
-
-                                    const layoutType = catIdx % 3;
-
-                                    return (
-                                        <div key={cat.category_id} className="pt-1">
-                                            {/* Commented Out Dynamic Highlights Title Row */}
-                                            {/*
-                      <div className="flex justify-between items-center px-4 mb-3">
-                        <div className="text-[14px] font-black uppercase tracking-wider text-slate-800 dark:text-white flex items-center gap-1.5 text-start">
-                          {cat.category_name} Highlights
-                        </div>
-                        <button
-                          onClick={() => setSelectedCategoryDetail(cat)}
-                          className="p-1 hover:bg-slate-100 dark:hover:bg-[#2B2B2B] rounded-full text-slate-500 dark:text-slate-300"
-                        >
-                          <ChevronRight className="w-4.5 h-4.5" />
-                        </button>
-                      </div>
-                      */}
-
-                                            {/* Layout 0: 3x3 Grid of Banners (total 9 banners) */}
-                                            {layoutType === 0 && (
-                                                <div className="grid grid-cols-3 gap-2.5 px-4 pb-2 w-full">
-                                                    {games.slice(0, 9).map((g: any, i: number) => (
-                                                        <PlayStoreColumnItem
-                                                            key={g.game_id || i}
+                                                            key={`appcard_${g.game_id || i}-${i}`}
                                                             game={g}
                                                             onPlay={() => handleGameLaunch(g)}
                                                         />
                                                     ))}
-                                                </div>
-                                            )}
+                                                </motion.div>
+                                            </div>
+                                        )}
 
-                                            {/* Layout 1: Landscape swipe row (Run, jump, run! layout) */}
-                                            {layoutType === 1 && (
+                                        {/* PlayStoreColumnItem (9, 18, 36... games) */}
+                                        {cycle.columnItems?.length > 0 && (
+                                            <div className="grid grid-cols-3 gap-3 px-2 w-full">
+                                                {cycle.columnItems.map((g: any, i: number) => (
+                                                    <PlayStoreColumnItem
+                                                        key={`col_${g.game_id || i}`}
+                                                        game={g}
+                                                        onPlay={() => handleGameLaunch(g)}
+                                                    />
+                                                ))}
+                                            </div>
+                                        )}
+
+                                        {/* PlayStoreLandscapeCard (5 games) */}
+                                        {cycle.landscapeCards?.length > 0 && (
+                                            <div className="w-full">
                                                 <Swiper
+                                                    loop={cycle.landscapeCards.length > 2}
                                                     slidesPerView={1.5}
                                                     spaceBetween={12}
-                                                    slidesOffsetBefore={16}
-                                                    slidesOffsetAfter={16}
+                                                    // slidesOffsetBefore={16}
+                                                    // slidesOffsetAfter={16}
+                                                    centeredSlides={true}
                                                     autoplay={{ delay: 4000, disableOnInteraction: false }}
                                                     modules={[Autoplay]}
                                                     className="w-full"
                                                 >
-                                                    {games.map((g: any, i: number) => (
-                                                        <SwiperSlide key={g.game_id || i}>
+                                                    {cycle.landscapeCards.map((g: any, i: number) => (
+                                                        <SwiperSlide key={`land_${g.game_id || i}`}>
                                                             <PlayStoreLandscapeCard
-                                                                game={{ ...g, category_name: cat.category_name }}
+                                                                game={g}
                                                                 onPlay={() => handleGameLaunch(g)}
                                                             />
                                                         </SwiperSlide>
                                                     ))}
                                                 </Swiper>
-                                            )}
+                                            </div>
+                                        )}
 
-                                            {/* Layout 2: Single Promo Card followed by mini scroll */}
-                                            {layoutType === 2 && (
-                                                <div>
-                                                    <PlayStorePromotedBanner
-                                                        game={games[0]}
-                                                        onPlay={() => handleGameLaunch(games[0])}
-                                                    />
-                                                    {games.length > 1 && (
-                                                        <div
-                                                            className="overflow-hidden w-full px-2 mt-6 pb-1 flex"
-                                                            style={{
-                                                                // maskImage: "linear-gradient(to right, transparent, white 8%, white 92%, transparent)",
-                                                                // WebkitMaskImage: "linear-gradient(to right, transparent, white 8%, white 92%, transparent)"
-                                                            }}
-                                                        >
-                                                            <motion.div
-                                                                className="flex gap-2 shrink-0"
-                                                                animate={{ x: ["0%", "-50%"] }}
-                                                                transition={{
-                                                                    ease: "linear",
-                                                                    duration: 20,
-                                                                    repeat: Infinity,
-                                                                }}
-                                                                style={{
-                                                                    width: "max-content",
-                                                                    willChange: "transform"
-                                                                }}
-                                                            >
-                                                                {games.slice(1, 6).concat(games.slice(1, 6)).map((g: any, i: number) => (
-                                                                    <PlayStoreAppCard
-                                                                        key={`${g.game_id || i}-${i}`}
-                                                                        game={g}
-                                                                        onPlay={() => handleGameLaunch(g)}
-                                                                    />
-                                                                ))}
-                                                            </motion.div>
-                                                        </div>
-                                                    )}
-                                                </div>
-                                            )}
-                                        </div>
-                                    );
-                                })}
+                                        {/* PlayStorePromotedBanner */}
+                                        {cycle.bannerGame && (
+                                            <div className="px-2">
+                                                <PlayStorePromotedBanner
+                                                    game={cycle.bannerGame}
+                                                    onPlay={() => handleGameLaunch(cycle.bannerGame)}
+                                                />
+                                            </div>
+                                        )}
+                                    </div>
+                                ))}
                             </motion.div>
                         )}
 

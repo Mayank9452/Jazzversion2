@@ -27,103 +27,25 @@ const players: Player[] = [
 
 const formatScore = (num: number) => num.toLocaleString();
 
-const LaurelLeaf = ({
-  x,
-  y,
-  rotate,
-}: {
-  x: number;
-  y: number;
-  rotate: number;
-}) => (
-  <g transform={`translate(${x} ${y}) rotate(${rotate})`}>
-    <path
-      d="
-        M0 0
-        C4 -8 8 -16 0 -24
-        C-8 -16 -4 -8 0 0
-        Z
-      "
-      fill="#DFA208"
-    />
-    <path
-      d="M0 -2 L0 -21"
-      stroke="rgba(255,255,255,.35)"
-      strokeWidth="0.8"
-      strokeLinecap="round"
-    />
-  </g>
-);
-
 // --- Custom Laurel Badge Component with centered rank number/text ---
-const LaurelBadge: React.FC<{ rankText: string; color: string; size?: number; isDark?: boolean }> = ({ rankText, color, size = 60, isDark = true }) => {
+const LaurelBadge: React.FC<{ rankText: string; color?: string; size?: number; isDark?: boolean }> = ({ rankText, color, size = 60, isDark = true }) => {
   const numberPart = rankText.replace(/[a-z]/g, "");
   const textPart = rankText.replace(/[0-9]/g, "").toUpperCase();
 
   return (
     <div className="relative flex items-center justify-center select-none" style={{ width: size, height: size }}>
-      {/* Laurel Wreath Leaves SVG */}
-      <svg
-        width={size}
-        height={size}
-        viewBox="0 0 100 100"
-        fill="none"
-        stroke={color}
-        strokeWidth="2"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        className="absolute inset-0 "
-      >
-        {/* Left Laurel stem */}
-        {/* <path d="M 32,80 C 12,68 12,32 42,20" /> */}
-        {/* Right Laurel stem */}
-        {/* <path d="M 68,80 C 88,68 88,32 58,20" /> */}
-
-        {/* Bow ribbon at bottom */}
-        <path d="M 44,82 C 47,79 53,79 56,82 C 58,84 54,89 50,86 C 46,89 42,84 44,82 Z" fill={color} />
-        <path d="M 46,84 C 41,88 38,92 39,93" />
-        <path d="M 54,84 C 59,88 62,92 61,93" />
-
-        {/* Leaves left */}
-        {/* <path d="M 32,80 C 28,78 25,71 30,68 C 35,65 35,73 32,80" fill={color} />
-        <path d="M 25,73 C 19,70 18,63 24,61 C 30,59 29,67 25,73" fill={color} />
-        <path d="M 20,64 C 14,60 14,53 20,51 C 26,49 25,57 20,64" fill={color} />
-        <path d="M 18,54 C 13,49 14,42 20,41 C 26,40 24,48 18,54" fill={color} />
-        <path d="M 19,43 C 16,37 18,30 24,31 C 30,32 26,39 19,43" fill={color} />
-        <path d="M 24,33 C 23,26 27,21 32,24 C 37,27 32,33 24,33" fill={color} />
-        <path d="M 32,25 C 33,18 39,15 42,20 C 45,25 38,29 32,25" fill={color} /> */}
-
-        <LaurelLeaf x={30} y={76} rotate={-80} />
-        <LaurelLeaf x={24} y={68} rotate={-60} />
-        <LaurelLeaf x={20} y={59} rotate={-40} />
-        <LaurelLeaf x={18} y={49} rotate={-20} />
-        <LaurelLeaf x={19} y={39} rotate={0} />
-        <LaurelLeaf x={23} y={30} rotate={23} />
-        <LaurelLeaf x={30} y={22} rotate={45} />
-
-        {/* Leaves right */}
-        {/* <path d="M 68,80 C 72,78 75,71 70,68 C 65,65 65,73 68,80" fill={color} />
-        <path d="M 75,73 C 81,70 82,63 76,61 C 70,59 71,67 75,73" fill={color} />
-        <path d="M 80,64 C 86,60 86,53 80,51 C 74,49 75,57 80,64" fill={color} />
-        <path d="M 82,54 C 87,49 86,42 80,41 C 74,40 76,48 82,54" fill={color} />
-        <path d="M 81,43 C 84,37 82,30 76,31 C 70,32 74,39 81,43" fill={color} />
-        <path d="M 76,33 C 77,26 73,21 68,24 C 63,27 68,33 76,33" fill={color} />
-        <path d="M 68,25 C 67,18 61,15 58,20 C 55,25 62,29 68,25" fill={color} /> */}
-        <LaurelLeaf x={70} y={76} rotate={80} />
-        <LaurelLeaf x={76} y={68} rotate={60} />
-        <LaurelLeaf x={80} y={59} rotate={40} />
-        <LaurelLeaf x={82} y={49} rotate={20} />
-        <LaurelLeaf x={81} y={39} rotate={0} />
-        <LaurelLeaf x={77} y={30} rotate={-23} />
-        <LaurelLeaf x={70} y={22} rotate={-45} />
-      </svg>
-      {/* Rank text centered */}
-      <div className={`font-sans font-black z-10 select-none flex flex-col items-center leading-none ${isDark ? "text-white drop-shadow-[0_2px_3px_rgba(0,0,0,0.85)]" : "text-slate-800"}`}>
-        <span className={`${textPart ? "text-[17px]" : "text-sm"} font-black`}>{numberPart}</span>
-        {textPart != null &&
-          <span className="text-[7.5px] font-black tracking-widest uppercase">{textPart}</span>
-        }
-
+      {/* Laurel Wreath Leaves Image */}
+      <img
+        src="/assets/images/laurel_leaf.png"
+        alt="laurel leaf"
+        className="w-full h-full object-contain absolute inset-0"
+      />
+      {/* Rank text centered in the space */}
+      <div className={`font-sans font-black z-10 select-none flex flex-col items-center justify-center leading-none ${isDark ? "text-white drop-shadow-[0_2px_3px_rgba(0,0,0,0.85)]" : "text-slate-800"}`} style={{ transform: "translateY(-4%)" }}>
+        <span className={`${textPart ? "text-[16px] sm:text-[18px]" : "text-[14px] sm:text-[16px]"} font-black`}>{numberPart}</span>
+        {textPart && (
+          <span className="text-[7.5px] font-black tracking-widest uppercase mt-[1px]">{textPart}</span>
+        )}
       </div>
     </div>
   );
@@ -237,7 +159,7 @@ export const LeaderboardJazzStatic: React.FC = () => {
             {/* 3D Box Stand */}
             <div className={`w-full aspect-[3/4.8] flex flex-col items-center justify-between pt-3 pb-0 rounded-2xl overflow-hidden relative border transition-all duration-300 ${isDarkTheme ? "bg-gradient-to-b from-[#175A9C] via-[#0E3566]/80 to-[#081938]/95 border-white/[0.08] shadow-[0_8px_20px_rgba(0,0,0,0.4)]" : "bg-gradient-to-b from-[#E6F0FA] to-[#F1F7FC] border-blue-100/80 shadow-sm"}`}>
               {/* Silver Wreath */}
-              <LaurelBadge rankText="2nd" color="#BAC3D6" size={64} isDark={isDarkTheme} />
+              <LaurelBadge rankText="2nd" color="#BAC3D6" size={90} isDark={isDarkTheme} />
 
               {/* Avatar overlapping bottom */}
               <div className="w-full relative mt-auto flex justify-center pb-2">
@@ -264,7 +186,7 @@ export const LeaderboardJazzStatic: React.FC = () => {
             {/* 3D Box Stand */}
             <div className={`w-full aspect-[3/5.2] flex flex-col items-center justify-between pt-4.5 pb-0 rounded-2xl overflow-hidden relative border transition-all duration-300 ${isDarkTheme ? "bg-gradient-to-b from-[#DFA208] via-[#8C6D0F]/85 to-[#191919]/95 border-2 border-[#FFCA20]/45 shadow-[0_12px_28px_rgba(0,0,0,0.6)]" : "bg-gradient-to-b from-[#FFF2CC] via-[#FFF9E6] to-[#FFFBF0] border-[#FFCA20]/45 shadow-sm"}`}>
               {/* Gold Wreath */}
-              <LaurelBadge rankText="1st" color="#FFCA20" size={72} isDark={isDarkTheme} />
+              <LaurelBadge rankText="1st" color="#FFCA20" size={100} isDark={isDarkTheme} />
 
               {/* Avatar overlapping bottom */}
               <div className="w-full relative mt-auto flex justify-center pb-2.5">
@@ -291,7 +213,7 @@ export const LeaderboardJazzStatic: React.FC = () => {
             {/* 3D Box Stand */}
             <div className={`w-full aspect-[3/4.4] flex flex-col items-center justify-between pt-2.5 pb-0 rounded-2xl overflow-hidden relative border transition-all duration-300 ${isDarkTheme ? "bg-gradient-to-b from-[#8E24AA] via-[#4A148C]/80 to-[#1F0038]/95 border border-white/[0.08] shadow-[0_6px_16px_rgba(0,0,0,0.4)]" : "bg-gradient-to-b from-[#FCEAE6] to-[#FDF4F2] border-orange-100/80 shadow-sm"}`}>
               {/* Bronze Wreath */}
-              <LaurelBadge rankText="3rd" color="#C5A059" size={60} isDark={isDarkTheme} />
+              <LaurelBadge rankText="3rd" color="#C5A059" size={80} isDark={isDarkTheme} />
 
               {/* Avatar overlapping bottom */}
               <div className="w-full relative mt-auto flex justify-center pb-2">
@@ -328,7 +250,7 @@ export const LeaderboardJazzStatic: React.FC = () => {
               return (
                 <div
                   key={player.rank}
-                  className={`flex items-center justify-between py-1 select-none transition-all ${isCurrentUser
+                  className={`flex items-center justify-between select-none transition-all ${isCurrentUser
                     ? isDarkTheme
                       ? "bg-yellow-main/30 border-2 border-[#FFCA20]/45 -mx-3 px-3 rounded-xl shadow-[0_4px_20px_rgba(0,0,0,0.3)] my-1"
                       : "bg-[#fffbeb] border-2 border-[#FFCA20]/45 -mx-3 px-3 rounded-xl shadow-sm my-1"
@@ -362,7 +284,7 @@ export const LeaderboardJazzStatic: React.FC = () => {
 
                   {/* Right Side: Gold Wreath Badge */}
                   <div className="shrink-0 mr-1">
-                    <LaurelBadge rankText={`${player.rank}`} color="#C5A059" size={50} isDark={isDarkTheme} />
+                    <LaurelBadge rankText={`${player.rank}`} color="#C5A059" size={70} isDark={isDarkTheme} />
                   </div>
                 </div>
               );

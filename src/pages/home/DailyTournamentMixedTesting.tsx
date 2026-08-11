@@ -7,12 +7,115 @@ import "swiper/css/pagination";
 import SectionLabel from "./SectionLabel";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { Gamepad2, Play, Clock, Trophy, Phone, PhoneCall } from "lucide-react";
+import { Gamepad2, Play, Clock, Trophy, Phone, PhoneCall, Coins, Gift } from "lucide-react";
 import { useTheme } from "next-themes";
 
 interface DailyTournament {
     dailyTournaments: any;
 }
+
+const TopupIcon = ({ className = "w-6 h-6" }: { className?: string }) => {
+    const color = "#ffca20";
+
+    return (
+        <div className={`relative ${className}`}>
+            <svg
+                viewBox="0 0 80 80"
+                className="w-full h-full"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+            >
+                {/* Mobile Outline */}
+                <rect
+                    x="12"
+                    y="3"
+                    width="48"
+                    height="74"
+                    rx="6"
+                    stroke={color}
+                    strokeWidth="6"
+                />
+
+                {/* Top Speaker / Camera */}
+                <rect
+                    x="31"
+                    y="7"
+                    width="10"
+                    height="2.5"
+                    rx="1.25"
+                    fill={color}
+                />
+
+                {/* Top Bezel Divider */}
+                <path
+                    d="M12 12H60"
+                    stroke={color}
+                    strokeWidth="6"
+                />
+
+                {/* Bottom Bezel Divider */}
+                <path
+                    d="M12 68H60"
+                    stroke={color}
+                    strokeWidth="6"
+                />
+
+                {/* Speed / Power Lines */}
+                <rect
+                    x="30"
+                    y="31"
+                    width="10"
+                    height="2.5"
+                    rx="1.25"
+                    fill={color}
+                />
+
+                <rect
+                    x="26"
+                    y="39"
+                    width="14"
+                    height="2.5"
+                    rx="1.25"
+                    fill={color}
+                />
+
+                <rect
+                    x="30"
+                    y="47"
+                    width="10"
+                    height="2.5"
+                    rx="1.25"
+                    fill={color}
+                />
+
+                {/* Floating Circle */}
+                <circle
+                    cx="61"
+                    cy="40"
+                    r="14"
+                    fill="black"
+                    stroke={color}
+                    strokeWidth="6"
+                />
+
+                {/* Lightning Bolt */}
+                <path
+                    d="
+            M63 31
+            L56 40.5
+            H61
+            L58.5 50
+            L66 39
+            H62
+            L64.5 31
+            Z
+          "
+                    fill={color}
+                />
+            </svg>
+        </div>
+    );
+};
 
 const getGameImage = (gameName: string, defaultImage: string, index: number) => {
     const name = gameName?.toLowerCase() || "";
@@ -141,32 +244,25 @@ const DailyTournamentMixedTesting: React.FC<DailyTournament> = ({
                                             <div className="flex justify-center items-center px-2 py-1.5 mt-1 bg-slate-100/80 dark:bg-white/[0.03] border border-slate-200/60 dark:border-white/[0.04] rounded-xl whitespace-nowrap min-h-[36px] shadow-[inset_0_-4px_24px_rgba(0,0,0,0.2),inset_0_-2px_1px_rgba(78,78,78,1),inset_0px_0_0px_rgba(255,255,255,0.6),inset_0px_0_0px_rgba(255,255,255,0.6)]">
                                                 {rewardType === 0 && (
                                                     <div className="font-extrabold flex items-center gap-1.5 text-sm sm:text-xs">
-                                                        <img
-                                                            src="/assets/images/img/gold-coin.png"
-                                                            alt="coin"
-                                                            className="w-5 h-5 object-contain"
-                                                        />
-                                                        <span className="tracking-wide text-slate-800 dark:text-brand-yellow-100 font-bold">
+                                                        <Coins className="w-5 h-5 text-brand-gold-100 dark:text-brand-yellow-100 shrink-0" />
+                                                        <span className="text-slate-800 dark:text-brand-yellow-100 font-bold">
                                                             {Number(game?.fee_prize_1).toLocaleString()} Coins
                                                         </span>
                                                     </div>
                                                 )}
                                                 {rewardType === 1 && (
-                                                    <div className="font-extrabold flex items-center gap-0 text-xs sm:text-[10px]">
-                                                        <img
-                                                            src="/assets/images/giftkarte.png"
-                                                            alt="voucher"
-                                                            className="w-6 h-6 object-contain"
-                                                        />
-                                                        <span className="tracking-wide text-slate-800 dark:text-brand-yellow-100 font-bold">
-                                                            {formatNumberInText("Rs 100000 Voucher")}
+                                                    <div className="font-extrabold flex items-center gap-1 text-xs sm:text-[10px]">
+                                                        <Gift className="w-5 h-5 text-brand-gold-100 dark:text-brand-yellow-100 shrink-0" />
+                                                        <span className="text-slate-800 dark:text-brand-yellow-100 font-bold">
+                                                            {formatNumberInText("Rs 100000 Giftkarte")}
                                                         </span>
                                                     </div>
                                                 )}
                                                 {rewardType === 2 && (
                                                     <div className="font-extrabold flex items-center gap-1.5 text-xs sm:text-[10px]">
-                                                        <PhoneCall className="h-3.5 w-3.5 text-brand-gold-100 dark:text-brand-yellow-100 shrink-0" />
-                                                        <span className="tracking-wide text-slate-800 dark:text-brand-yellow-100 font-bold">
+                                                        {/* <PhoneCall className="h-3.5 w-3.5 text-brand-gold-100 dark:text-brand-yellow-100 shrink-0" /> */}
+                                                        <TopupIcon className="w-4 h-4" />
+                                                        <span className="text-slate-800 dark:text-brand-yellow-100 font-bold">
                                                             {formatNumberInText("Rs 100000 Topup")}
                                                         </span>
                                                     </div>

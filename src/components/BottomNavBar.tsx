@@ -246,7 +246,7 @@ const ProfileIcon = ({ className, style, ...props }: React.SVGProps<SVGSVGElemen
   </svg>
 )
 
-const VOUCHER_IMAGES = [
+const Voucher_IMAGES = [
   "/assets/images/giftkarte.webp"
 ]
 
@@ -269,9 +269,9 @@ export function BottomNavBar({
   const { resolvedTheme } = useTheme()
   const isDark = resolvedTheme === "dark"
 
-  type DisplayState = 'icon' | 'text' | 'voucher';
+  type DisplayState = 'icon' | 'text' | 'Voucher';
   const [currentState, setCurrentState] = React.useState<DisplayState>('icon');
-  const [currentVoucher, setCurrentVoucher] = React.useState<string>('/assets/images/giftkarte.webp');
+  const [currentVoucher, setCurrentVoucher] = React.useState<string>('/assets/images/Voucher.webp');
 
   React.useEffect(() => {
     let timeoutId: NodeJS.Timeout;
@@ -281,10 +281,10 @@ export function BottomNavBar({
         if (prev === 'icon') {
           return 'text';
         } else if (prev === 'text') {
-          // Select a random voucher when transitioning to 'voucher'
-          const randomVoucher = VOUCHER_IMAGES[Math.floor(Math.random() * VOUCHER_IMAGES.length)];
+          // Select a random Voucher when transitioning to 'Voucher'
+          const randomVoucher = Voucher_IMAGES[Math.floor(Math.random() * Voucher_IMAGES.length)];
           setCurrentVoucher(randomVoucher);
-          return 'voucher';
+          return 'Voucher';
         } else {
           return 'icon';
         }
@@ -472,9 +472,9 @@ export function BottomNavBar({
                               </motion.div>
                             )}
 
-                            {currentState === "voucher" && (
+                            {currentState === "Voucher" && (
                               <motion.div
-                                key="voucher"
+                                key="Voucher"
                                 initial={{ opacity: 0, scale: 0.6, y: 8 }}
                                 animate={{ opacity: 1, scale: 1, y: 0 }}
                                 exit={{ opacity: 0, scale: 0.6, y: -8 }}

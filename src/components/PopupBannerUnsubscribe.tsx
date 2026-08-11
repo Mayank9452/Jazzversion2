@@ -43,7 +43,7 @@ const PopupBannerUnsubscribe = ({
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          className="fixed inset-0 z-[1000] flex items-center justify-center bg-black/40 backdrop-blur-[2px] will-change-transform"
+          className="fixed inset-0 z-[1000] flex items-center justify-center bg-black/40 backdrop-blur-[7px] will-change-transform"
           style={{ marginTop: "0px" }}
           onClick={handleClose}
         >
