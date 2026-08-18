@@ -41,7 +41,7 @@ const LaurelBadge: React.FC<{ rankText: string; color?: string; size?: number; i
         className="w-full h-full object-contain absolute inset-0"
       />
       {/* Rank text centered in the space */}
-      <div className={`font-sans font-black z-10 select-none flex flex-col items-center justify-center leading-none ${isDark ? "text-white drop-shadow-[0_2px_3px_rgba(0,0,0,0.85)]" : "text-slate-800"}`} style={{ transform: "translateY(-4%)" }}>
+      <div className={`font-black z-10 select-none flex flex-col items-center justify-center leading-none ${isDark ? "text-white drop-shadow-[0_2px_3px_rgba(0,0,0,0.85)]" : "text-slate-800"}`} style={{ transform: "translateY(-4%)" }}>
         <span className={`${textPart ? "text-[16px] sm:text-[18px]" : "text-[14px] sm:text-[16px]"} font-black`}>{numberPart}</span>
         {textPart && (
           <span className="text-[7.5px] font-black tracking-widest uppercase mt-[1px]">{textPart}</span>
@@ -275,7 +275,7 @@ export const LeaderboardJazzStatic: React.FC = () => {
                       </span>
                       {/* Brand yellow score */}
                       <div className="flex items-center gap-1 mt-1 leading-none">
-                        <span className={`text-[13px] font-black font-mono leading-none ${isDarkTheme ? "text-[#FFCA20]" : "text-[#dfa208]"}`}>
+                        <span className={`text-[13px] font-black leading-none ${isDarkTheme ? "text-[#FFCA20]" : "text-[#dfa208]"}`}>
                           {formatScore(player.score)}
                         </span>
                       </div>

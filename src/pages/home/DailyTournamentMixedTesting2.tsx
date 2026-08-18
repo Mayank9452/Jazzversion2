@@ -168,7 +168,7 @@ const DailyTournamentMixedTesting2: React.FC<DailyTournament> = ({
 
         const pad = (num: number) => String(num).padStart(2, "0");
 
-        return `${pad(days)}:${pad(hours)}:${pad(minutes)}:${pad(seconds)}`;
+        return `${pad(days)}d:${pad(hours)}m:${pad(minutes)}m:${pad(seconds)}s`;
     };
 
     useEffect(() => {
@@ -242,7 +242,7 @@ const DailyTournamentMixedTesting2: React.FC<DailyTournament> = ({
 
                                             {/* Timer Row */}
                                             <div className="flex items-center justify-center gap-1 py-1 pb-0">
-                                                <div className="flex items-center gap-1 px-2 py-0.5 rounded-full bg-slate-900/90 dark:bg-white/[0.08] text-white text-xs sm:text-[9px] font-bold font-mono tracking-tight shadow-sm whitespace-nowrap">
+                                                <div className="flex items-center gap-1 px-2 py-0.5 rounded-full bg-slate-900/90 dark:bg-white/[0.08] text-white text-xs sm:text-[9px] font-semibold shadow-sm whitespace-nowrap">
                                                     <Clock className="h-4 w-4 text-white shrink-0" />
                                                     {countdowns[game?.tournament_id]?.includes(":") ? (
                                                         <span className="flex items-center gap-[2px]">

@@ -343,7 +343,7 @@ export function BottomNavBar({
         {isToggle && (
           <div className="flex justify-between">
             <button
-              className="bg-brand-black-100 text-white w-16 text-[10px] px-2 py-1 gap-1 pt-2 shadow-md flex justify-center items-center rounded-t-md border-t border-x border-white/10"
+              className="bg-white dark:bg-brand-black-100 text-slate-800 dark:text-white w-16 text-[10px] px-2 py-1 gap-1 pt-2 shadow-md flex justify-center items-center rounded-t-md border-t border-x border-slate-200 dark:border-white/10"
               style={{ borderBottom: "none" }}
               onClick={() => navigate(-1)}
             >
@@ -352,7 +352,7 @@ export function BottomNavBar({
             </button>
 
             <button
-              className="bg-brand-black-100 text-white w-12 shadow-md flex justify-center items-center rounded-t-md border-t border-x border-white/10"
+              className="bg-white dark:bg-brand-black-100 text-slate-800 dark:text-white w-12 shadow-md flex justify-center items-center rounded-t-md border-t border-x border-slate-200 dark:border-white/10"
               style={{ borderBottom: "none" }}
               onClick={() => setIsOpen?.(!isOpen)}
             >
@@ -372,19 +372,19 @@ export function BottomNavBar({
                 <svg
                   viewBox="0 0 480 95"
                   preserveAspectRatio="none"
-                  className="w-full h-full"
+                  className="w-full h-full drop-shadow-[0_-4px_12px_rgba(0,0,0,0.05)] dark:drop-shadow-[0_-4px_16px_rgba(0,0,0,0.45)]"
                 >
                   {/* Fill Path */}
                   <path
                     d="M 0,25 L 170,25 C 195,25 205,5 240,5 C 275,5 285,25 310,25 L 480,25 L 480,95 L 0,95 Z"
-                    className="fill-brand-black-100 transition-colors duration-300"
+                    className="fill-white dark:fill-brand-black-100 transition-colors duration-300"
                   />
                   {/* Border Stroke Path */}
                   <path
                     d="M 0,25 L 170,25 C 195,25 205,5 240,5 C 275,5 285,25 310,25 L 480,25"
                     fill="none"
                     strokeWidth="2.5"
-                    className="stroke-white/10 transition-colors duration-300"
+                    className="stroke-slate-200/80 dark:stroke-white/10 transition-colors duration-300"
                   />
                 </svg>
               </div>
@@ -410,7 +410,7 @@ export function BottomNavBar({
                       {isPlayWin ? (
                         <div
                           className={cn(
-                            "absolute bottom-1 w-[80px] h-[80px] rounded-full border-4 flex items-center justify-center transition-all duration-300 overflow-hidden bg-brand-gradient border-brand-black-100 dark:border-white hover:brightness-110",
+                            "absolute bottom-1 w-[80px] h-[80px] rounded-full border-4 flex items-center justify-center transition-all duration-300 overflow-hidden bg-brand-gradient border-slate-100 dark:border-white hover:brightness-110",
                             "shadow-[0_0_9px_rgba(255,202,32,0.65)]",
                             isActive && "ring-2 ring-brand-yellow-100/60 scale-105"
                           )}

@@ -13,7 +13,7 @@ import DailyTournamentNew from "./DailyTournamentNew";
 import { Link, useNavigate } from "react-router-dom";
 import { BottomNavBar } from "@/components/BottomNavBar";
 import { TopBar } from "@/components/TopBar";
-import { Trophy, Calendar, Flame, Zap, Gamepad2, Star, Target, Swords, Car, Clock, ShieldAlert, Compass } from "lucide-react";
+import { Trophy, Calendar, Flame, Zap, Gamepad2, Star, Target, Swords, Car, Clock, ShieldAlert, Compass, Gift } from "lucide-react";
 import { useTheme } from "next-themes";
 import WeeklyTournamentTesting from "./WeeklyTournamentTesting";
 import WeeklyTournamentTestingV2 from "./WeeklyTournamentTestingV2";
@@ -32,9 +32,11 @@ import DailyTournamentMixedTesting from "./DailyTournamentMixedTesting";
 import DailyTournamentMixedTesting2 from "./DailyTournamentMixedTesting2";
 import { TopBarUpdated } from "@/components/TopBarUpdated";
 import PopupBannerUpdated from "@/components/PopupBannerUpdated";
+import { DailyLoginBonusPopup, DailyLoginBannerCard } from "@/components/DailyLoginBonusPopup";
 import PopupSpinWheel from "@/components/PopupSpinWheel";
 import DailyTournamentMixedTesting3 from "./DailyTournamentMixedTesting3";
 import DailyTournamentMixedTesting4 from "./DailyTournamentMixedTesting4";
+import { DailyLoginBonusPopupOld } from "@/components/DailyLoginBonusPopupOld";
 
 /* ─── Section Header ─────────────────────────────────────────────────────── */
 
@@ -225,7 +227,7 @@ const CategoryNavigationTesting = ({ categoriesList = categories }: { categories
   const navigate = useNavigate();
 
   const handleCategoryClick = (catId: string, label: string) => {
-    navigate("/games", { state: { scrollToCategory: label } });
+    navigate("/tournamentPageStatic", { state: { fromUpcoming: true } });
   };
 
   return (
@@ -789,11 +791,23 @@ const Home = () => {
   const [premiumCountdown, setPremiumCountdown] = useState<string>("");
   const [showSpinWheelPopup, setShowSpinWheelPopup] = useState(false);
   const [shouldShowWelcomePopups, setShouldShowWelcomePopups] = useState(false);
+  const [showDailyLoginPopup, setShowDailyLoginPopup] = useState(false);
 
   useEffect(() => {
     const hasShown = sessionStorage.getItem("hasShownWelcomePopups");
     if (!hasShown) {
       setShouldShowWelcomePopups(true);
+    }
+  }, []);
+
+  useEffect(() => {
+    const savedLastClaim = localStorage.getItem("gamenow_daily_last_claim_date");
+    const todayStr = new Date().toDateString();
+    if (savedLastClaim !== todayStr) {
+      const timer = setTimeout(() => {
+        setShowDailyLoginPopup(true);
+      }, 1500);
+      return () => clearTimeout(timer);
     }
   }, []);
 
@@ -921,6 +935,20 @@ const Home = () => {
       )
     });
 
+    // 7. Daily Login Bonus Banner
+    sections.push({
+      id: "dailybonus",
+      element: (
+        <Section key="dailybonus">
+          <SectionHeader
+            title="Daily Login Rewards"
+            icon={<Gift size={15} className="text-brand-gold-100 dark:text-brand-yellow-100 fill-brand-gold-100/10 dark:fill-brand-yellow-100/10" />}
+          />
+          <DailyLoginBannerCard onClick={() => setShowDailyLoginPopup(true)} />
+        </Section>
+      )
+    });
+
     // Fisher-Yates Shuffle
     const result = [...sections];
     for (let i = result.length - 1; i > 0; i--) {
@@ -952,7 +980,7 @@ const Home = () => {
         ) : (
           jazzHomePageData && (
             <div className="relative z-10">
-              <div className="px-1 pt-1 space-y-3">
+              <div className="px-1 pt-1 space-y-7">
 
 
 
@@ -976,8 +1004,8 @@ const Home = () => {
                       accent="purple"
                       extra={
                         vipCountdown && (
-                          <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-slate-900/60 dark:bg-black/40 border border-slate-200/10 dark:border-white/10 text-white text-[12px] font-bold font-mono tracking-tight shadow-sm whitespace-nowrap">
-                            <Clock className="h-3.5 w-3.5 text-brand-gold-100 dark:text-brand-yellow-100 shrink-0" />
+                          <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-slate-900/60 dark:bg-black/40 border border-slate-200/10 dark:border-white/10 text-white text-[12px] font-semibold  tracking-tight shadow-sm whitespace-nowrap">
+                            <Clock className="h-3.5 w-3.5 text-white shrink-0" />
                             {vipCountdown.includes(":") ? (
                               <span className="flex items-center gap-[2px]">
                                 {vipCountdown.split(":").map((part, idx, arr) => (
@@ -1009,14 +1037,14 @@ const Home = () => {
                       accent="purple"
                       extra={
                         premiumCountdown && (
-                          <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-slate-900/60 dark:bg-black/40 border border-slate-200/10 dark:border-white/10 text-white text-[12px] font-bold font-mono tracking-tight shadow-sm whitespace-nowrap">
-                            <Clock className="h-3.5 w-3.5 text-brand-gold-100 dark:text-brand-yellow-100 shrink-0" />
+                          <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-slate-900/60 dark:bg-black/40 border border-slate-200/10 dark:border-white/10 text-white text-[12px] font-semibold shadow-sm whitespace-nowrap">
+                            <Clock className="h-3.5 w-3.5 text-white shrink-0" />
                             {premiumCountdown.includes(":") ? (
                               <span className="flex items-center gap-[2px]">
                                 {premiumCountdown.split(":").map((part, idx, arr) => (
                                   <span key={idx} className="flex items-center gap-[2px]">
                                     <span>{part}</span>
-                                    {idx < arr.length - 1 && <span className="opacity-40 text-brand-gold-100 dark:text-brand-yellow-100">:</span>}
+                                    {idx < arr.length - 1 && <span className="opacity-40">:</span>}
                                   </span>
                                 ))}
                               </span>
@@ -1120,6 +1148,10 @@ const Home = () => {
       </div>
 
       <BottomNavBar />
+      <DailyLoginBonusPopupOld
+        isOpen={showDailyLoginPopup}
+        onClose={() => setShowDailyLoginPopup(false)}
+      />
       {shouldShowWelcomePopups && (
         <>
           <PopupBannerUpdated

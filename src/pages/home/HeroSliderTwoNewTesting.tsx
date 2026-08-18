@@ -3,7 +3,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import SectionLabel from "./SectionLabel";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { Clock, Trophy, Gamepad2, Play } from "lucide-react";
+import { Clock, Trophy, Gamepad2, Play, Coins } from "lucide-react";
 import { useTheme } from "next-themes";
 
 interface HeroGames {
@@ -192,11 +192,12 @@ const HeroSliderTwoNewTesting: React.FC<HeroSliderTwoProps> = ({ heroGames, onCo
                                                 {/* Prize Pool & Play Button */}
                                                 <div className="flex justify-between items-center mx-1 px-2.5 py-2 border-t border-slate-200/50 dark:border-white/[0.04] bg-slate-50 dark:bg-white/[0.03] rounded-b-[24px] shadow-[inset_0_-4px_24px_rgba(0,0,0,0.2),inset_0_-2px_1px_rgba(78,78,78,1),inset_0px_0_0px_rgba(255,255,255,0.6),inset_0px_0_0px_rgba(255,255,255,0.6)]">
                                                     <div className="flex items-center gap-2">
-                                                        <img
+                                                        {/* <img
                                                             src="/assets/images/img/gold-coin.png"
                                                             className="w-10 h-10 object-contain drop-shadow-[0_2px_4px_rgba(0,0,0,0.15)] shrink-0"
                                                             alt="Coin"
-                                                        />
+                                                        /> */}
+                                                        <Coins className="w-8 h-8 text-brand-gold-100 dark:text-brand-yellow-100 shrink-0" />
                                                         <div>
                                                             <div className="text-xs text-slate-800 dark:text-white font-bold leading-none tracking-[0.5px]">Prize Pool</div>
                                                             <div className="text-sm font-black text-brand-gold-100 dark:text-brand-yellow-100 mt-1 tracking-[0.5px]">

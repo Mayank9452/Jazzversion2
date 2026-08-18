@@ -660,7 +660,7 @@ export default function GamesPageNewTesting() {
 
                                         {/* PlayStoreColumnItem (9, 18, 36... games) */}
                                         {cycle.columnItems?.length > 0 && (
-                                            <div className="grid grid-cols-3 gap-3 px-2 w-full">
+                                            <div className="grid grid-cols-3 gap-2 px-2 w-full">
                                                 {cycle.columnItems.map((g: any, i: number) => (
                                                     <PlayStoreColumnItem
                                                         key={`col_${g.game_id || i}`}

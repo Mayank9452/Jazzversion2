@@ -150,9 +150,10 @@ const HeroTournamentPageStatic: React.FC = () => {
     }, []);
 
     // Retrieve tournament ID from router state
-    const stateData = location.state as { tournament_id: any; fromMixedTesting2?: boolean } | null;
+    const stateData = location.state as { tournament_id: any; fromMixedTesting2?: boolean; fromUpcoming?: boolean } | null;
     const tournament_id = stateData?.tournament_id;
     const fromMixedTesting2 = stateData?.fromMixedTesting2 || false;
+    const fromUpcoming = stateData?.fromUpcoming || false;
 
     // Local state variables
     const [loading, setLoading] = useState<boolean>(true);
@@ -434,12 +435,13 @@ const HeroTournamentPageStatic: React.FC = () => {
                             <div className={`rounded-3xl border shadow-xl p-5 space-y-5 relative ${isDarkTheme ? "bg-[#252525]/40 border-white/[0.08] text-white" : "bg-[#ebebebcc] border-slate-100 text-slate-800"}`}>
                                 {/* Play Button floating on top right, overlapping bottom of image banner header */}
                                 <motion.button
+                                    disabled={fromUpcoming}
                                     onClick={handlePlayLiveTournament}
-                                    className={`absolute -top-6 right-6 h-10 px-5 rounded-full bg-gradient-to-r from-[#ffca20] to-[#dfa208] text-[#191919] hover:brightness-110 active:scale-95 transition-all flex items-center justify-center gap-1.5 z-30 cursor-pointer border-2 font-black text-sm shadow-md ${isDarkTheme ? "border-white" : "border-white"}`}
-                                    animate={{
+                                    className={`absolute -top-6 right-6 h-10 px-5 rounded-full bg-gradient-to-r from-[#ffca20] to-[#dfa208] text-[#191919] hover:brightness-110 active:scale-95 transition-all flex items-center justify-center gap-1.5 z-30 border-2 font-black text-sm shadow-md ${isDarkTheme ? "border-white" : "border-white"} ${fromUpcoming ? "opacity-50 pointer-events-none grayscale cursor-not-allowed" : "cursor-pointer"}`}
+                                    animate={fromUpcoming ? {} : {
                                         scale: [0.95, 1.05, 0.95]
                                     }}
-                                    transition={{
+                                    transition={fromUpcoming ? {} : {
                                         duration: 1.6,
                                         repeat: Infinity,
                                         ease: "easeInOut"
@@ -499,9 +501,11 @@ const HeroTournamentPageStatic: React.FC = () => {
                                 <div className={`border rounded-2xl p-3.5 flex flex-col items-center justify-center gap-2.5 ${isDarkTheme ? "bg-[#1f1f1f] border-white/[0.05]" : "bg-[#f8f9fa] border-slate-200/50 shadow-sm"}`}>
                                     <div className="flex items-center gap-1 text-sm font-bold">
                                         <Clock className="w-4 h-4 text-[#dfa208]" />
-                                        <span className={isDarkTheme ? "text-white/80" : "text-slate-700"}>Ends In</span>
+                                        <span className={isDarkTheme ? "text-white/80" : "text-slate-700"}>
+                                            {fromUpcoming ? "Starts In" : "Ends In"}
+                                        </span>
                                     </div>
-                                    <div className="flex items-center gap-0.5 text-base font-black font-mono">
+                                    <div className="flex items-center gap-0.5 text-base font-bold">
                                         <span className={`px-2.5 py-1.5 rounded border ${isDarkTheme ? "bg-white/5 border-white/5 text-white" : "bg-white border-slate-200/80 text-slate-800"}`}>{timeLeft.days}d</span>
                                         <span className={isDarkTheme ? "text-white/40 mx-0.5" : "text-slate-400 mx-0.5"}>:</span>
                                         <span className={`px-2.5 py-1.5 rounded border ${isDarkTheme ? "bg-white/5 border-white/5 text-white" : "bg-white border-slate-200/80 text-slate-800"}`}>{timeLeft.hours}h</span>

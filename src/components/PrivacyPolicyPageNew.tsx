@@ -112,7 +112,7 @@ export default function PrivacyPolicyPageNew() {
 
         <div className="px-2 max-w-md mx-auto relative z-10">
           {/* Scrollable Privacy Content Card */}
-          <div className={`rounded-3xl backdrop-blur-md p-5 shadow-lg overflow-y-auto relative text-[12px] leading-relaxed transition-all duration-300 border ${isDark
+          <div className={`rounded-3xl backdrop-blur-md p-5 shadow-lg overflow-y-auto relative text-sm leading-relaxed transition-all duration-300 border ${isDark
             ? "bg-[#282828]/50 border-white/[0.06] text-white/90 shadow-[0_12px_40px_rgba(0,0,0,0.25)]"
             : "bg-white/90 border-slate-200/60 text-slate-700 shadow-[0_8px_32px_rgba(0,0,0,0.06)]"
             }`}>

@@ -32,7 +32,8 @@ export function TopBarUpdated() {
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
     const { t } = useLanguage();
-    const { theme, setTheme } = useTheme();
+    const { resolvedTheme, setTheme } = useTheme();
+    const isDark = resolvedTheme === "dark";
 
     const { data: response } = useAppSelector((state) => state.jazzHome);
     const { data: profileData } = useAppSelector((state) => state.profile);
@@ -72,14 +73,14 @@ export function TopBarUpdated() {
         <>
             <div className="sticky top-0 z-[99] w-full">
                 <div
-                    className="bg-brand-black-100 border-b border-white/[0.08] h-[70px] flex items-center justify-between px-2 w-full transition-colors duration-300 relative z-10"
+                    className="bg-white/85 dark:bg-brand-black-100/90 border-b border-slate-200/80 dark:border-white/[0.08] backdrop-blur-md shadow-[0_2px_12px_rgba(0,0,0,0.03)] h-[70px] flex items-center justify-between px-2 w-full transition-all duration-300 relative z-10"
                 >
                     {/* Left Section: Navigation Toggler & Coins Chip */}
                     <div className="flex items-center gap-2 relative z-20">
                         {/* Hamburger Button */}
                         <button
                             onClick={() => setSidebarOpen(true)}
-                            className="w-9 h-9 rounded-xl flex items-center justify-center border border-white/10 bg-white/[0.03] hover:bg-white/5 active:scale-95 transition-all text-white shrink-0"
+                            className="w-9 h-9 rounded-xl flex items-center justify-center border border-slate-200 dark:border-white/10 bg-slate-50 dark:bg-white/[0.03] hover:bg-slate-100 dark:hover:bg-white/5 active:scale-95 transition-all text-slate-800 dark:text-white shrink-0"
                             title="Open Navigation"
                         >
                             <Menu className="w-5 h-5" />
@@ -88,16 +89,16 @@ export function TopBarUpdated() {
                         {/* Reward Coins Chip (Left Side, Smaller Layout) */}
                         <div
                             // onClick={handleRedeem}
-                            className="flex flex-col items-center justify-center h-12 px-3.5 rounded-lg border border-brand-gold-100/30 bg-brand-gold-100/5 hover:bg-brand-gold-100/10 transition-all shadow-inner cursor-pointer shrink-0"
+                            className="flex flex-col items-center justify-center h-12 px-3.5 rounded-lg border border-[#dfa208]/30 dark:border-brand-gold-100/30 bg-[#ffca20]/5 dark:bg-brand-gold-100/5 hover:bg-[#ffca20]/10 dark:hover:bg-brand-gold-100/10 transition-all shadow-inner cursor-pointer shrink-0"
                             title="Redeem Coins"
                         >
                             {/* Top Row: Coin Icon and Coins Text */}
                             <div className="flex items-center gap-1">
                                 <img src="/assets/images/img/gold-coin.png" className="w-3.5 h-3.5 object-contain animate-pulse" alt="Reward Coins" />
-                                <span className="text-[8px] font-black uppercase tracking-wider text-brand-gold-200 leading-none">Coins</span>
+                                <span className="text-[8px] font-black uppercase tracking-wider text-[#dfa208] dark:text-brand-gold-200 leading-none">Coins</span>
                             </div>
                             {/* Bottom Row: Value */}
-                            <span className="text-white text-[11px] font-black leading-none mt-1">
+                            <span className="text-slate-800 dark:text-white text-[11px] font-black leading-none mt-1">
                                 {user_reward_coins == 0 ? 250000 : user_reward_coins}
                             </span>
                         </div>
@@ -107,7 +108,7 @@ export function TopBarUpdated() {
                     <div className="absolute left-1/2 -translate-x-1/2 z-10 flex items-center justify-center">
                         <Link to="/" className="flex items-center">
                             <img
-                                src="/assets/images/img/gamenow.png"
+                                src={isDark ? "/assets/images/img/gamenow.png" : "/assets/images/img/gamenow-logo.png"}
                                 alt="GameNow Logo"
                                 className="w-[75px] object-contain transition-transform duration-300 hover:scale-105"
                             />
@@ -116,6 +117,32 @@ export function TopBarUpdated() {
 
                     {/* Right Section: Toggles & Actions */}
                     <div className="flex items-center gap-2 relative z-20">
+
+                        {/* Notification Bell */}
+                        <button
+                            onClick={() => navigate("/notification")}
+                            className="relative w-9 h-9 rounded-xl flex items-center justify-center border border-slate-200 dark:border-white/10 bg-slate-50 dark:bg-white/[0.03] hover:bg-slate-100 dark:hover:bg-white/5 active:scale-95 transition-all text-slate-800 dark:text-white shrink-0"
+                            title="Notifications"
+                        >
+                            <Bell className="h-4.5 w-4.5" />
+                            <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-[#FFCA20] rounded-full border border-white dark:border-brand-black-100 shadow-md animate-pulse" />
+                        </button>
+
+
+
+                        {/* Theme Toggler */}
+                        <button
+                            onClick={() => setTheme(isDark ? "light" : "dark")}
+                            className="w-9 h-9 rounded-xl flex items-center justify-center border border-slate-200 dark:border-white/10 bg-slate-50 dark:bg-white/[0.03] hover:bg-slate-100 dark:hover:bg-white/5 active:scale-95 transition-all text-slate-800 dark:text-white shrink-0"
+                            title={isDark ? "Switch to Light Mode" : "Switch to Dark Mode"}
+                        >
+                            {mounted && isDark ? (
+                                <Sun className="h-4.5 w-4.5 text-brand-yellow-100 drop-shadow-[0_0_8px_rgba(255,202,32,0.5)]" />
+                            ) : (
+                                <Moon className="h-4.5 w-4.5 text-slate-800 dark:text-white" />
+                            )}
+                        </button>
+
                         {/* Profile Image Avatar */}
                         <button
                             onClick={() => navigate("/settingsStatic")}
@@ -123,29 +150,6 @@ export function TopBarUpdated() {
                             title="My Account"
                         >
                             <img src={`/assets/users/${avatar}`} alt="Avatar" className="w-full h-full object-contain" />
-                        </button>
-
-                        {/* Theme Toggler */}
-                        <button
-                            onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-                            className="w-9 h-9 rounded-xl flex items-center justify-center border border-white/10 bg-white/[0.03] hover:bg-white/5 active:scale-95 transition-all text-white shrink-0"
-                            title={theme === "dark" ? "Switch to Light Mode" : "Switch to Dark Mode"}
-                        >
-                            {mounted && theme === "dark" ? (
-                                <Sun className="h-4.5 w-4.5 text-brand-yellow-100 drop-shadow-[0_0_8px_rgba(255,202,32,0.5)]" />
-                            ) : (
-                                <Moon className="h-4.5 w-4.5 text-white" />
-                            )}
-                        </button>
-
-                        {/* Notification Bell */}
-                        <button
-                            onClick={() => navigate("/notification")}
-                            className="relative w-9 h-9 rounded-xl flex items-center justify-center border border-white/10 bg-white/[0.03] hover:bg-white/5 active:scale-95 transition-all text-white shrink-0"
-                            title="Notifications"
-                        >
-                            <Bell className="h-4.5 w-4.5" />
-                            <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-brand-yellow-100 rounded-full border border-brand-black-100 shadow-md animate-pulse" />
                         </button>
                     </div>
                 </div>
@@ -164,44 +168,44 @@ export function TopBarUpdated() {
 
                 {/* Drawer content */}
                 <div
-                    className={`absolute top-0 left-0 bottom-0 w-[75%] max-w-[320px] bg-[#191919ad] dark:bg-[#00000040] h-full shadow-2xl flex flex-col border-r border-white/20 transition-transform duration-300 ease-out transform ${sidebarOpen ? "translate-x-0" : "-translate-x-full"
+                    className={`absolute top-0 left-0 bottom-0 w-[75%] max-w-[320px] bg-white/95 dark:bg-[#191919]/95 text-slate-800 dark:text-white h-full shadow-2xl flex flex-col border-r border-slate-200/60 dark:border-white/10 transition-transform duration-300 ease-out transform ${sidebarOpen ? "translate-x-0" : "-translate-x-full"
                         }`}
                 >
                     {/* Header */}
-                    <div className="flex items-center justify-between p-4 border-b border-white/10 bg-black/20">
-                        <span className="font-bold text-white text-base whitespace-nowrap">GAMENOW Premier League</span>
+                    <div className="flex items-center justify-between p-4 border-b border-slate-200 dark:border-white/10 bg-slate-50 dark:bg-black/20 text-slate-800 dark:text-white">
+                        <span className="font-bold text-slate-800 dark:text-white text-base whitespace-nowrap">GAMENOW Premier League</span>
                         <Button
                             variant="ghost"
                             size="icon"
                             onClick={() => setSidebarOpen(false)}
-                            className="text-white/70 hover:text-white hover:bg-white/10 rounded-full h-8 w-8 p-0"
+                            className="text-slate-500 hover:text-slate-800 hover:bg-slate-100 dark:text-white/70 dark:hover:text-white dark:hover:bg-white/10 rounded-full h-8 w-8 p-0"
                         >
                             <X className="h-5 w-5" />
                         </Button>
                     </div>
 
                     {/* Sidenav Profile */}
-                    <div className="p-4 bg-gradient-to-b from-white/5 to-transparent border-b border-white/10 flex flex-col gap-3">
+                    <div className="p-4 bg-gradient-to-b from-slate-50 to-transparent dark:from-white/5 to-transparent border-b border-slate-200 dark:border-white/10 flex flex-col gap-3">
                         <div className="flex items-center gap-3">
                             <div className="w-20 h-20 rounded-full overflow-hidden">
                                 <img src={`/assets/users/${avatar}`} alt="Avatar" className="w-full h-full object-cover" />
                             </div>
                             <div className="flex flex-col text-start">
-                                <h6 className="text-white text-sm font-black m-0 leading-tight">
+                                <h6 className="text-slate-800 dark:text-white text-sm font-black m-0 leading-tight">
                                     {userName === "null" || !userName ? "Player" : userName}
                                 </h6>
-                                <span className="text-white/60 text-xs font-semibold mt-0.5">
+                                <span className="text-slate-500 dark:text-white/60 text-xs font-semibold mt-0.5">
                                     {user_phone}
                                 </span>
                             </div>
                         </div>
 
                         {/* Sidenav Coins Display Box */}
-                        <div className="bg-brand-black-200 dark:bg-transparent rounded-xl p-3 border border-white/20 flex items-center justify-between w-full">
-                            <div className="text-[11px] font-bold text-white/60 uppercase tracking-wide">Coins</div>
+                        <div className="bg-slate-50 dark:bg-transparent rounded-xl p-3 border border-slate-200 dark:border-white/10 flex items-center justify-between w-full">
+                            <div className="text-[11px] font-bold text-slate-500 dark:text-white/60 uppercase tracking-wide">Coins</div>
                             <div className="flex items-center gap-1.5">
                                 <img src="/assets/images/img/gold-coin.png" className="w-5 h-5 object-contain" alt="" />
-                                <span className="text-[13px] font-extrabold text-white leading-none">
+                                <span className="text-[13px] font-extrabold text-slate-800 dark:text-white leading-none">
                                     {user_reward_coins == 0 ? 250000 : user_reward_coins}
                                 </span>
                             </div>
@@ -215,7 +219,7 @@ export function TopBarUpdated() {
                                 <Link
                                     to="/settingsStatic"
                                     onClick={() => setSidebarOpen(false)}
-                                    className="flex items-center gap-3 px-3 py-2.5 rounded-xl text-left text-white/80 hover:text-white hover:bg-white/5 transition-all font-semibold text-sm"
+                                    className="flex items-center gap-3 px-3 py-2.5 rounded-xl text-left text-slate-700 hover:text-slate-900 hover:bg-slate-100 dark:text-white/80 dark:hover:text-white dark:hover:bg-white/5 transition-all font-semibold text-sm"
                                 >
                                     <User className="h-4.5 w-4.5 text-brand-gold-100 dark:text-brand-yellow-100" />
                                     My Profile
@@ -226,7 +230,7 @@ export function TopBarUpdated() {
                                 <Link
                                     to="/spinandwin"
                                     onClick={() => setSidebarOpen(false)}
-                                    className="flex items-center gap-3 px-3 py-2.5 rounded-xl text-left text-white/80 hover:text-white hover:bg-white/5 transition-all font-semibold text-sm"
+                                    className="flex items-center gap-3 px-3 py-2.5 rounded-xl text-left text-slate-700 hover:text-slate-900 hover:bg-slate-100 dark:text-white/80 dark:hover:text-white dark:hover:bg-white/5 transition-all font-semibold text-sm"
                                 >
                                     <LoaderPinwheel className="h-4.5 w-4.5 text-brand-gold-100 dark:text-brand-yellow-100" />
                                     Spin & Win
@@ -237,7 +241,7 @@ export function TopBarUpdated() {
                                 <Link
                                     to="/games"
                                     onClick={() => setSidebarOpen(false)}
-                                    className="flex items-center gap-3 px-3 py-2.5 rounded-xl text-left text-white/80 hover:text-white hover:bg-white/5 transition-all font-semibold text-sm"
+                                    className="flex items-center gap-3 px-3 py-2.5 rounded-xl text-left text-slate-700 hover:text-slate-900 hover:bg-slate-100 dark:text-white/80 dark:hover:text-white dark:hover:bg-white/5 transition-all font-semibold text-sm"
                                 >
                                     <Gamepad2 className="h-4.5 w-4.5 text-brand-gold-100 dark:text-brand-yellow-100" />
                                     Play More Games
@@ -248,7 +252,7 @@ export function TopBarUpdated() {
                                 <Link
                                     to="/profile/tournamentHistory"
                                     onClick={() => setSidebarOpen(false)}
-                                    className="flex items-center gap-3 px-3 py-2.5 rounded-xl text-left text-white/80 hover:text-white hover:bg-white/5 transition-all font-semibold text-sm"
+                                    className="flex items-center gap-3 px-3 py-2.5 rounded-xl text-left text-slate-700 hover:text-slate-900 hover:bg-slate-100 dark:text-white/80 dark:hover:text-white dark:hover:bg-white/5 transition-all font-semibold text-sm"
                                 >
                                     <Trophy className="h-4.5 w-4.5 text-brand-gold-100 dark:text-brand-yellow-100" />
                                     Tournament History
@@ -259,20 +263,18 @@ export function TopBarUpdated() {
                                 <Link
                                     to="/notification"
                                     onClick={() => setSidebarOpen(false)}
-                                    className="flex items-center gap-3 px-3 py-2.5 rounded-xl text-left text-white/80 hover:text-white hover:bg-white/5 transition-all font-semibold text-sm"
+                                    className="flex items-center gap-3 px-3 py-2.5 rounded-xl text-left text-slate-700 hover:text-slate-900 hover:bg-slate-100 dark:text-white/80 dark:hover:text-white dark:hover:bg-white/5 transition-all font-semibold text-sm"
                                 >
                                     <Bell className="h-4.5 w-4.5 text-brand-gold-100 dark:text-brand-yellow-100" />
                                     Notifications
                                 </Link>
                             </li>
 
-
-
                             <li>
                                 <Link
                                     to="/privacy-policy"
                                     onClick={() => setSidebarOpen(false)}
-                                    className="flex items-center gap-3 px-3 py-2.5 rounded-xl text-left text-white/80 hover:text-white hover:bg-white/5 transition-all font-semibold text-sm"
+                                    className="flex items-center gap-3 px-3 py-2.5 rounded-xl text-left text-slate-700 hover:text-slate-900 hover:bg-slate-100 dark:text-white/80 dark:hover:text-white dark:hover:bg-white/5 transition-all font-semibold text-sm"
                                 >
                                     <ShieldCheck className="h-4.5 w-4.5 text-brand-gold-100 dark:text-brand-yellow-100" />
                                     Privacy Policy
@@ -283,7 +285,7 @@ export function TopBarUpdated() {
                                 <Link
                                     to="/terms"
                                     onClick={() => setSidebarOpen(false)}
-                                    className="flex items-center gap-3 px-3 py-2.5 rounded-xl text-left text-white/80 hover:text-white hover:bg-white/5 transition-all font-semibold text-sm"
+                                    className="flex items-center gap-3 px-3 py-2.5 rounded-xl text-left text-slate-700 hover:text-slate-900 hover:bg-slate-100 dark:text-white/80 dark:hover:text-white dark:hover:bg-white/5 transition-all font-semibold text-sm"
                                 >
                                     <FileText className="h-4.5 w-4.5 text-brand-gold-100 dark:text-brand-yellow-100" />
                                     Terms and Conditions
@@ -296,7 +298,7 @@ export function TopBarUpdated() {
                                         setSidebarOpen(false);
                                         setShowUnsubscribePopup(true);
                                     }}
-                                    className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-left text-yellow-main hover:bg-yellow-main/10 transition-all font-semibold text-sm"
+                                    className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-left text-[#dfa208] hover:bg-[#ffca20]/10 dark:text-yellow-main dark:hover:bg-yellow-main/10 transition-all font-semibold text-sm"
                                 >
                                     <LogOut className="h-4.5 w-4.5" />
                                     Unsubscribe

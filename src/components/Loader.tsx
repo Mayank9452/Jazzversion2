@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect, useMemo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Phone } from "lucide-react";
+import { Coins, Gift, Phone, Trophy } from "lucide-react";
 
 export default function WaitLoader({ isOverlay = false }: { isOverlay?: boolean }) {
   const [index, setIndex] = useState(0);
@@ -145,7 +145,7 @@ export default function WaitLoader({ isOverlay = false }: { isOverlay?: boolean 
         <div className="absolute bottom-[20%] right-[10%] w-[300px] h-[300px] bg-[#DFA208]/15 blur-[120px] rounded-full animate-pulse [animation-delay:1s]" />
       </div>
 
-      <div className="relative flex flex-col items-center gap-8 text-center max-w-sm px-6">
+      <div className="relative flex flex-col items-center gap-4 text-center max-w-sm px-6">
         {/* ── PORTAL BRAND LOGO ── */}
         {/* <motion.div
           initial={{ y: -30, opacity: 0 }}
@@ -292,12 +292,13 @@ export default function WaitLoader({ isOverlay = false }: { isOverlay?: boolean 
             className="absolute top-2 left-2 z-30"
           >
             {!coinError ? (
-              <img
-                src="/assets/images/img/gold-coin.png"
-                alt="Gold Coin"
-                className="w-8 h-8 object-contain filter drop-shadow-[0_0_8px_rgba(251,191,36,0.6)]"
-                onError={() => setCoinError(true)}
-              />
+              // <img
+              //   src="/assets/images/img/gold-coin.png"
+              //   alt="Gold Coin"
+              //   className="w-8 h-8 object-contain filter drop-shadow-[0_0_8px_rgba(251,191,36,0.6)]"
+              //   onError={() => setCoinError(true)}
+              // />
+              <Coins className="w-8 h-8 text-brand-gold-100 dark:text-brand-yellow-100 shrink-0" />
             ) : (
               // Styled Coin Fallback SVG
               <svg viewBox="0 0 24 24" className="w-8 h-8 filter drop-shadow-[0_0_8px_rgba(251,191,36,0.8)]">
@@ -324,12 +325,13 @@ export default function WaitLoader({ isOverlay = false }: { isOverlay?: boolean 
             className="absolute bottom-2 right-2 z-30"
           >
             {!diamondError ? (
-              <img
-                src="/assets/images/giftkarte.png"
-                alt="Voucher"
-                className="w-10 h-10 object-contain filter drop-shadow-[0_0_10px_rgba(6,182,212,0.7)]"
-                onError={() => setDiamondError(true)}
-              />
+              // <img
+              //   src="/assets/images/giftkarte.png"
+              //   alt="Voucher"
+              //   className="w-10 h-10 object-contain filter drop-shadow-[0_0_10px_rgba(6,182,212,0.7)]"
+              //   onError={() => setDiamondError(true)}
+              // />
+              <Gift className="w-8 h-8 text-brand-gold-100 dark:text-brand-yellow-100 shrink-0" />
             ) : (
               // Styled Voucher Fallback SVG
               <svg viewBox="0 0 24 24" className="w-10 h-10 filter drop-shadow-[0_0_10px_rgba(6,182,212,0.8)]">
@@ -355,12 +357,13 @@ export default function WaitLoader({ isOverlay = false }: { isOverlay?: boolean 
             className="absolute top-4 right-2 z-30"
           >
             {!trophyError ? (
-              <img
-                src="/assets/images/img/trophy.png"
-                alt="Trophy"
-                className="w-8 h-8 object-contain filter drop-shadow-[0_0_8px_rgba(251,191,36,0.5)]"
-                onError={() => setTrophyError(true)}
-              />
+              // <img
+              //   src="/assets/images/img/trophy.png"
+              //   alt="Trophy"
+              //   className="w-8 h-8 object-contain filter drop-shadow-[0_0_8px_rgba(251,191,36,0.5)]"
+              //   onError={() => setTrophyError(true)}
+              // />
+              <Trophy className="w-8 h-8 text-brand-gold-100 dark:text-brand-yellow-100 shrink-0" />
             ) : (
               // Styled Trophy Fallback SVG
               <svg viewBox="0 0 24 24" className="w-8 h-8 filter drop-shadow-[0_0_8px_rgba(251,191,36,0.8)]">
@@ -399,7 +402,7 @@ export default function WaitLoader({ isOverlay = false }: { isOverlay?: boolean 
               animate={{ y: 0, opacity: 1 }}
               exit={{ y: -12, opacity: 0 }}
               transition={{ duration: 0.4, ease: "easeOut" }}
-              className="text-white text-base font-bold tracking-[0.15em] "
+              className="text-white text-base font-semibold "
               style={{
                 textShadow: "0 0 12px rgba(255,202,32,0.4)",
                 // fontFamily: "'Atom Sans', sans-serif",

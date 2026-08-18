@@ -39,18 +39,18 @@ const avatarCosts: Record<string, number> = {
   "20.png": 0,
   "21.png": 200,
   "22.png": 150,
-  "23.png": 300,
-  "24.png": 200,
-  "25.png": 150,
-  "26.png": 120,
-  "27.png": 0,
-  "28.png": 130,
-  "29.png": 200,
-  "30.png": 160,
-  "31.png": 0,
-  "32.png": 250,
-  "33.png": 120,
-  "34.png": 150
+  // "23.png": 300,
+  // "24.png": 200,
+  // "25.png": 150,
+  // "26.png": 120,
+  // "27.png": 0,
+  // "28.png": 130,
+  // "29.png": 200,
+  // "30.png": 160,
+  // "31.png": 0,
+  // "32.png": 250,
+  // "33.png": 120,
+  // "34.png": 150
 };
 
 const PopupAvatarSelector: React.FC<PopupAvatarSelectorProps> = ({
@@ -67,7 +67,7 @@ const PopupAvatarSelector: React.FC<PopupAvatarSelectorProps> = ({
   const [showLowBalance, setShowLowBalance] = useState(false);
   const [requiredCoins, setRequiredCoins] = useState(0);
   const avatars: string[] = Array.from(
-    { length: 34 },
+    { length: 22 },
     (_, i) => `${i + 1}.png`
   );
 

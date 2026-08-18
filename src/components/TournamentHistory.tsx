@@ -14,6 +14,7 @@ import { useLanguage } from "./context/LanguageContext";
 import { useTheme } from "next-themes";
 import { historyPageApi } from "@/apiServices/igplApi";
 import WaitLoader from "./Loader";
+const Currency = "Rs";
 
 function formatDateRange(start: string, end: string) {
   try {
@@ -393,7 +394,7 @@ const TournamentHistory: React.FC = () => {
                 valColor: "text-slate-800 dark:text-white"
               },
               {
-                val: formatNumberInText(displayVouchers.toString()),
+                val: `${Currency} ${formatNumberInText(displayVouchers.toString())}`,
                 label: "Giftkarte",
                 color: "gold",
                 icon: <Gift className="w-6 h-6 text-yellow-main" />,
@@ -402,7 +403,7 @@ const TournamentHistory: React.FC = () => {
                 valColor: "text-slate-800 dark:text-white"
               },
               {
-                val: formatNumberInText(displayTalktime.toString()),
+                val: `${Currency} ${formatNumberInText(displayTalktime.toString())}`,
                 label: "Topup",
                 color: "gold",
                 icon: <TopupIcon className="w-6 h-6" />,
@@ -439,7 +440,7 @@ const TournamentHistory: React.FC = () => {
                 valColor: "text-slate-800 dark:text-white"
               },
               {
-                val: formatNumberInText(displayVouchers.toString()),
+                val: `${Currency} ${formatNumberInText(displayVouchers.toString())}`,
                 label: "Giftkarte",
                 color: "gold",
                 icon: <Gift className="w-6 h-6 text-yellow-main" />,
@@ -448,7 +449,7 @@ const TournamentHistory: React.FC = () => {
                 valColor: "text-slate-800 dark:text-white"
               },
               {
-                val: formatNumberInText(displayTalktime.toString()),
+                val: `${Currency} ${formatNumberInText(displayTalktime.toString())}`,
                 label: "Topup",
                 color: "gold",
                 icon: <TopupIcon className="w-6 h-6" />,
@@ -623,28 +624,30 @@ const TournamentHistory: React.FC = () => {
                               <div className="flex items-center gap-1">
                                 {rewardTypeVal === "2" ? (
                                   <>
-                                    <img src="/assets/images/giftkarte.png" className="w-4 h-4 object-contain flex-shrink-0" alt="Voucher" />
+                                    {/* <img src="/assets/images/giftkarte.png" className="w-4 h-4 object-contain flex-shrink-0" alt="Voucher" /> */}
+                                    <Gift className="w-4 h-4 text-brand-gold-100 dark:text-brand-yellow-100 shrink-0" />
                                     <span className="text-[13px] sm:text-sm font-semibold text-brand-gold-100 dark:text-brand-yellow-100 leading-none truncate">
-                                      {prizeText} Giftkarte
+                                      {Currency} {prizeText} Giftkarte
                                     </span>
                                   </>
                                 ) : rewardTypeVal === "3" ? (
                                   <>
                                     <TopupIcon className="w-4 h-4 flex-shrink-0" />
                                     <span className="text-[13px] sm:text-sm font-semibold text-brand-gold-100 dark:text-brand-yellow-100 leading-none truncate">
-                                      Rs {prizeText} Topup
+                                      {Currency} {prizeText} Topup
                                     </span>
                                   </>
                                 ) : (
                                   <>
-                                    <img
+                                    {/* <img
                                       src="/assets/images/img/gold-coin.png"
                                       alt="coin"
                                       className="w-4 h-4 object-contain flex-shrink-0"
                                       onError={(e) => {
                                         (e.target as HTMLImageElement).style.display = "none";
                                       }}
-                                    />
+                                    /> */}
+                                    <Coins className="w-4 h-4 text-brand-gold-100 dark:text-brand-yellow-100 shrink-0" />
                                     <span className="text-[13px] sm:text-sm font-semibold text-brand-gold-100 dark:text-brand-yellow-100 leading-none truncate">
                                       {prizeText} Coins
                                     </span>
