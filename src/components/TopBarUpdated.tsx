@@ -168,7 +168,7 @@ export function TopBarUpdated() {
 
                 {/* Drawer content */}
                 <div
-                    className={`absolute top-0 left-0 bottom-0 w-[75%] max-w-[320px] bg-white/95 dark:bg-[#191919]/95 text-slate-800 dark:text-white h-full shadow-2xl flex flex-col border-r border-slate-200/60 dark:border-white/10 transition-transform duration-300 ease-out transform ${sidebarOpen ? "translate-x-0" : "-translate-x-full"
+                    className={`absolute top-0 left-0 bottom-0 w-[75%] max-w-[320px] bg-white/95 dark:bg-[#00000040] text-slate-800 dark:text-white h-full shadow-2xl flex flex-col border-r border-slate-200/60 dark:border-white/10 transition-transform duration-300 ease-out transform ${sidebarOpen ? "translate-x-0" : "-translate-x-full"
                         }`}
                 >
                     {/* Header */}

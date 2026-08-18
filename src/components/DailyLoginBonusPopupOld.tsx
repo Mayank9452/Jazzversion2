@@ -256,7 +256,7 @@ export function DailyLoginBonusPopupOld({ isOpen, onClose, onRewardClaimed }: Da
                         exit={{ opacity: 0, scale: 0.9, y: 15 }}
                         transition={{ type: "spring", stiffness: 350, damping: 25 }}
                         className={`relative w-full max-w-[420px] rounded-3xl border-2 p-5 pt-2 flex flex-col items-center gap-2 shadow-2xl transition-all duration-300 ${isDark
-                            ? "bg-gradient-to-br from-[#0e0e0eab] via-[#323232] to-[#0e0e0eab] border-[#ffca20]/25 text-white"
+                            ? "bg-gradient-to-br from-[#0e0e0eab] via-[#222222] to-[#0e0e0ede] border-[#ffca20]/25 text-white"
                             : "bg-gradient-to-br from-[#FFFDF0] via-[#FFFCE0] to-[#FFF3CD] border-[#ffca20]/50 text-slate-800"
                             }`}
                     >

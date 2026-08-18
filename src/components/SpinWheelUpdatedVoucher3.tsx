@@ -543,10 +543,10 @@ function SpinWheelUpdatedVoucher3({ }) {
                                                         transformOrigin: "center center",
                                                     }}
                                                 >
-                                                    {Array(23)
+                                                    {Array(15)
                                                         .fill(0)
                                                         .map((segment: any, index: number) => {
-                                                            const arrayLength = 360 / 23;
+                                                            const arrayLength = 360 / 15;
                                                             const angle = 360 / 9;
                                                             const rotation =
                                                                 arrayLength * index - arrayLength / 2;

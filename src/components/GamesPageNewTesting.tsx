@@ -344,9 +344,9 @@ export default function GamesPageNewTesting() {
         return list;
     }, [categories, randomGamesData]);
 
-    const trendingGames = useMemo(() => allGames.slice(0, 10), [allGames]);
-    const lastPlayedGames = useMemo(() => allGames.slice(10, 15), [allGames]);
-    const playAllGames = useMemo(() => allGames.slice(15), [allGames]);
+    const trendingGames = useMemo(() => allGames.slice(0, 7), [allGames]);
+    const lastPlayedGames = useMemo(() => allGames.slice(7, 12), [allGames]);
+    const playAllGames = useMemo(() => allGames.slice(12), [allGames]);
 
     const cycles = useMemo(() => {
         const list = [...playAllGames];
