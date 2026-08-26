@@ -18,8 +18,6 @@ interface TargetGame {
 }
 
 const TopupIcon = ({ className = "w-6 h-6" }: { className?: string }) => {
-    const color = "#ffca20";
-
     return (
         <div className={`relative ${className}`}>
             <svg
@@ -35,7 +33,7 @@ const TopupIcon = ({ className = "w-6 h-6" }: { className?: string }) => {
                     width="48"
                     height="74"
                     rx="6"
-                    stroke={color}
+                    stroke="currentColor"
                     strokeWidth="6"
                 />
 
@@ -46,20 +44,20 @@ const TopupIcon = ({ className = "w-6 h-6" }: { className?: string }) => {
                     width="10"
                     height="2.5"
                     rx="1.25"
-                    fill={color}
+                    fill="currentColor"
                 />
 
                 {/* Top Bezel Divider */}
                 <path
                     d="M12 12H60"
-                    stroke={color}
+                    stroke="currentColor"
                     strokeWidth="6"
                 />
 
                 {/* Bottom Bezel Divider */}
                 <path
                     d="M12 68H60"
-                    stroke={color}
+                    stroke="currentColor"
                     strokeWidth="6"
                 />
 
@@ -70,7 +68,7 @@ const TopupIcon = ({ className = "w-6 h-6" }: { className?: string }) => {
                     width="10"
                     height="2.5"
                     rx="1.25"
-                    fill={color}
+                    fill="currentColor"
                 />
 
                 <rect
@@ -79,7 +77,7 @@ const TopupIcon = ({ className = "w-6 h-6" }: { className?: string }) => {
                     width="14"
                     height="2.5"
                     rx="1.25"
-                    fill={color}
+                    fill="currentColor"
                 />
 
                 <rect
@@ -88,7 +86,7 @@ const TopupIcon = ({ className = "w-6 h-6" }: { className?: string }) => {
                     width="10"
                     height="2.5"
                     rx="1.25"
-                    fill={color}
+                    fill="currentColor"
                 />
 
                 {/* Floating Circle */}
@@ -97,7 +95,7 @@ const TopupIcon = ({ className = "w-6 h-6" }: { className?: string }) => {
                     cy="40"
                     r="14"
                     fill="black"
-                    stroke={color}
+                    stroke="currentColor"
                     strokeWidth="6"
                 />
 
@@ -113,7 +111,7 @@ const TopupIcon = ({ className = "w-6 h-6" }: { className?: string }) => {
             L64.5 31
             Z
           "
-                    fill={color}
+                    fill="currentColor"
                 />
             </svg>
         </div>
@@ -254,28 +252,31 @@ export const TargetChallengeZone: React.FC = () => {
                                         </div>
 
                                         {/* Reward Row */}
-                                        <div className="flex justify-center items-center px-2 py-1.5 mt-1 bg-slate-100/80 dark:bg-white/[0.03] border border-slate-200/60 dark:border-white/[0.04] rounded-xl whitespace-nowrap min-h-[36px] shadow-[inset_0_-4px_24px_rgba(0,0,0,0.2),inset_0_-2px_1px_rgba(78,78,78,1),inset_0px_0_0px_rgba(255,255,255,0.6),inset_0px_0_0px_rgba(255,255,255,0.6)]">
+                                        <div className={`flex justify-center items-center px-2 py-1.5 mt-1 border rounded-xl whitespace-nowrap min-h-[36px] transition-all duration-300 ${
+                                            isDark 
+                                                ? "bg-slate-100/80 dark:bg-white/[0.03] border-slate-200/60 dark:border-white/[0.04] shadow-[inset_0_-4px_24px_rgba(0,0,0,0.2),inset_0_-2px_1px_rgba(78,78,78,1),inset_0px_0_0px_rgba(255,255,255,0.6),inset_0px_0_0px_rgba(255,255,255,0.6)]" 
+                                                : "bg-brand-gradient border-[#dfa208]/40 shadow-[0_2px_8px_rgba(223,162,8,0.2)]"
+                                        }`}>
                                             {rewardType === 0 && (
                                                 <div className="font-extrabold flex items-center gap-0.5 text-sm sm:text-xs">
-                                                    <Coins className="w-5 h-5 text-brand-gold-100 dark:text-brand-yellow-100 shrink-0" />
-                                                    <span className=" text-slate-800 dark:text-brand-yellow-100 font-bold">
+                                                    <Coins className={`w-5 h-5 shrink-0 ${isDark ? "text-brand-gold-100 dark:text-brand-yellow-100" : "text-black fill-black/10"}`} />
+                                                    <span className={`tracking-wide font-bold ${isDark ? "text-slate-800 dark:text-brand-yellow-100" : "text-black font-black"}`}>
                                                         {formatNumberInText(game.prize)}
                                                     </span>
                                                 </div>
                                             )}
                                             {rewardType === 1 && (
                                                 <div className="font-extrabold flex items-center gap-0.5 text-xs sm:text-[10px]">
-                                                    <Gift className="w-5 h-5 text-brand-gold-100 dark:text-brand-yellow-100 shrink-0" />
-                                                    <span className=" text-slate-800 dark:text-brand-yellow-100 font-bold">
+                                                    <Gift className={`w-5 h-5 shrink-0 ${isDark ? "text-brand-gold-100 dark:text-brand-yellow-100" : "text-black fill-black/10"}`} />
+                                                    <span className={`tracking-wide font-bold ${isDark ? "text-slate-800 dark:text-brand-yellow-100" : "text-black font-black"}`}>
                                                         {formatNumberInText(game.prize)}
                                                     </span>
                                                 </div>
                                             )}
                                             {rewardType === 2 && (
                                                 <div className="font-extrabold flex items-center gap-1 text-xs sm:text-[10px]">
-                                                    {/* <PhoneCall className="h-3.5 w-3.5 text-brand-gold-100 dark:text-brand-yellow-100 shrink-0" /> */}
-                                                    <TopupIcon className="w-4 h-4" />
-                                                    <span className=" text-slate-800 dark:text-brand-yellow-100 font-bold">
+                                                    <TopupIcon className={`w-4 h-4 shrink-0 ${isDark ? "text-brand-yellow-100" : "text-black"}`} />
+                                                    <span className={`tracking-wide font-bold ${isDark ? "text-slate-800 dark:text-brand-yellow-100" : "text-black font-black"}`}>
                                                         {formatNumberInText(game.prize)}
                                                     </span>
                                                 </div>

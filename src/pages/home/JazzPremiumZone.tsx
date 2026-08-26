@@ -181,17 +181,16 @@ const JazzPremiumZone: React.FC<JazzPremiumZoneProps> = ({ heroGames, onCountdow
                                             </div>
 
                                             {/* Prize Pool & Play Button */}
-                                            <div className="flex justify-between items-center mx-1 px-2.5 py-2 border-t border-slate-200/50 dark:border-white/[0.04] bg-slate-50 dark:bg-white/[0.03] rounded-b-[24px] shadow-[inset_0_-4px_24px_rgba(0,0,0,0.2),inset_0_-2px_1px_rgba(78,78,78,1),inset_0px_0_0px_rgba(255,255,255,0.6),inset_0px_0_0px_rgba(255,255,255,0.6)]">
+                                            <div className={`flex justify-between items-center mx-1 px-2.5 py-2 border-t rounded-b-[24px] transition-all duration-300 ${
+                                                isDark 
+                                                    ? "border-[#dfa208]/30 dark:border-white/[0.04] bg-slate-50 dark:bg-white/[0.03] shadow-[inset_0_-4px_24px_rgba(0,0,0,0.2),inset_0_-2px_1px_rgba(78,78,78,1),inset_0px_0_0px_rgba(255,255,255,0.6),inset_0px_0_0px_rgba(255,255,255,0.6)]" 
+                                                    : "bg-gradient-to-r from-[#FFFDF0] via-[#FFFCE0] to-[#FFF3CD] border-[#dfa208]/30 shadow-[inset_0_1px_4px_rgba(255,255,255,0.8)]"
+                                            }`}>
                                                 <div className="flex items-center gap-2">
-                                                    {/* <img
-                                                        src="/assets/images/img/gold-coin.png"
-                                                        className="w-10 h-10 object-contain drop-shadow-[0_2px_4px_rgba(0,0,0,0.15)] shrink-0"
-                                                        alt="Coin"
-                                                    /> */}
-                                                    <Coins className="w-8 h-8 text-brand-gold-100 dark:text-brand-yellow-100 shrink-0" />
+                                                    <Coins className={`w-8 h-8 shrink-0 ${isDark ? "text-brand-gold-100 dark:text-brand-yellow-100" : "text-[#dfa208]"}`} />
                                                     <div>
-                                                        <div className="text-[12px] text-slate-800 dark:text-white font-bold leading-none tracking-[0.5px]">Prize Pool</div>
-                                                        <div className="text-sm font-black text-brand-gold-100 dark:text-brand-yellow-100 mt-1 tracking-[0.5px]">
+                                                        <div className={`text-[12px] font-bold leading-none tracking-[0.5px] ${isDark ? "text-slate-800 dark:text-white" : "text-slate-600"}`}>Prize Pool</div>
+                                                        <div className={`text-sm font-black mt-1 tracking-[0.5px] ${isDark ? "text-brand-gold-100 dark:text-brand-yellow-100" : "text-slate-800 font-extrabold"}`}>
                                                             {(!game?.fee_reward_type || game?.fee_reward_type === "1") && `${Number(game?.fee_prize_1).toLocaleString()} Coins`}
                                                             {game?.fee_reward_type === "2" && `${game?.fee_prize_1} GB Data`}
                                                             {game?.fee_reward_type === "3" && `Rs ${game?.fee_prize_1}`}

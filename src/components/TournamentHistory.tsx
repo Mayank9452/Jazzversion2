@@ -14,6 +14,7 @@ import { useLanguage } from "./context/LanguageContext";
 import { useTheme } from "next-themes";
 import { historyPageApi } from "@/apiServices/igplApi";
 import WaitLoader from "./Loader";
+import { BottomNavBarNew } from "./BottomNavBarNew";
 const Currency = "Rs";
 
 function formatDateRange(start: string, end: string) {
@@ -304,13 +305,17 @@ const TournamentHistory: React.FC = () => {
 
         {/* ── Premium Glassmorphic Header Card ── */}
         <div className="pb-4">
-          <div className=" relative overflow-hidden bg-gradient-to-br from-white/70 to-white/40 dark:from-[#2B2B2B]/40 dark:to-[#191919]/30 backdrop-blur-xl border border-white/40 dark:border-white/[0.06] p-2 pr-1 flex items-center justify-between gap-3 shadow-[0_3px_1px_rgba(0,0,0,7%)] dark:shadow-[0_12px_40px_rgba(0,0,0,0.2)]">
+          <div className={`relative overflow-hidden backdrop-blur-xl p-2 pr-1 flex items-center justify-between gap-3 border-b transition-all duration-300 shadow-[0_3px_1px_rgba(0,0,0,7%)] dark:shadow-[0_12px_40px_rgba(0,0,0,0.2)] ${
+            isDark 
+              ? "bg-gradient-to-br from-[#2B2B2B]/40 to-[#191919]/30 border-white/[0.06]" 
+              : "bg-brand-gradient border-[#dfa208]/30"
+          }`}>
             {/* Left side: Titles */}
             <div className="w-full flex justify-between items-center gap-5">
               <div>
                 <button
                   onClick={() => navigate(-1)}
-                  className={`w-10 h-10 rounded-xl flex items-center justify-center shadow-md active:scale-95 transition-all pointer-events-auto cursor-pointer shrink-0 ${isDark ? "bg-[#32323299] backdrop-blur-md border border-white/10 text-white hover:bg-black/75" : "bg-white border border-slate-200 text-slate-700 hover:bg-slate-50"}`}
+                  className={`w-10 h-10 rounded-xl flex items-center justify-center shadow-md active:scale-95 transition-all pointer-events-auto cursor-pointer shrink-0 ${isDark ? "bg-[#32323299] backdrop-blur-md border border-white/10 text-white hover:bg-black/75" : "bg-white/40 border border-[#dfa208]/30 text-black hover:bg-white/60"}`}
                   title="Back"
                 >
                   <ArrowLeft className="w-5 h-5" />
@@ -318,10 +323,10 @@ const TournamentHistory: React.FC = () => {
               </div>
               <div >
 
-                <h1 className="text-base sm:text-lg font-black tracking-wide uppercase text-slate-800 dark:text-white leading-tight">
+                <h1 className={`text-base sm:text-lg font-black tracking-wide uppercase leading-tight ${isDark ? "text-white" : "text-black"}`}>
                   Tournament History
                 </h1>
-                <p className="text-[11px] sm:text-xs font-bold text-slate-500 dark:text-muted-foreground mt-1 leading-none">
+                <p className={`text-[11px] sm:text-xs font-bold mt-1 leading-none ${isDark ? "text-slate-500 dark:text-muted-foreground" : "text-black/70"}`}>
                   Your past battles & rewards
                 </p>
 
@@ -692,7 +697,7 @@ const TournamentHistory: React.FC = () => {
         </div>
       </div>
 
-      <BottomNavBar />
+      <BottomNavBarNew />
       {loading && <WaitLoader isOverlay />}
     </>
   );

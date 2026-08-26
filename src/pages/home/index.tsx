@@ -37,6 +37,8 @@ import PopupSpinWheel from "@/components/PopupSpinWheel";
 import DailyTournamentMixedTesting3 from "./DailyTournamentMixedTesting3";
 import DailyTournamentMixedTesting4 from "./DailyTournamentMixedTesting4";
 import { DailyLoginBonusPopupOld } from "@/components/DailyLoginBonusPopupOld";
+import { TopBarUpdatedNew } from "@/components/TopBarUpdatedNew";
+import { BottomNavBarNew } from "@/components/BottomNavBarNew";
 
 /* ─── Section Header ─────────────────────────────────────────────────────── */
 
@@ -57,15 +59,15 @@ const SectionHeader: React.FC<SectionHeaderProps> = ({
 }) => {
   return (
     <div className="flex items-center justify-between mb-4.5 px-0.5">
-      <div className="flex items-center gap-2.5">
+      <div className="flex items-center gap-2.5 mb-1">
         {/* Icon */}
         {icon && (
-          <span className="flex items-center justify-center p-2 rounded-xl bg-brand-yellow-100/10 dark:bg-brand-yellow-100/15 text-brand-gold-100 dark:text-brand-yellow-100 border border-brand-yellow-100/20 dark:border-brand-yellow-100/10 shadow-sm shadow-brand-yellow-100/5">
+          <span className="flex items-center justify-center p-2 rounded-xl bg-black/70 dark:bg-brand-yellow-100/15 text-brand-gold-100 dark:text-brand-yellow-100 border border-brand-yellow-100/20 dark:border-brand-yellow-100/10 shadow-sm shadow-brand-yellow-100/5">
             {icon}
           </span>
         )}
         {/* Title */}
-        <h2 className="text-brand-black-100 dark:text-white font-black text-[13px] tracking-wide">
+        <h2 className="text-brand-black-100 dark:text-white font-semibold text-[16px] tracking-wide">
           {title}
         </h2>
       </div>
@@ -644,7 +646,7 @@ const CategoryNavigationIcon = () => {
               {/* Glassmorphic Square Container */}
               <div
                 className={` w-[64px] h-[64px] rounded-lg flex items-center justify-center border-2 backdrop-blur-[12px] transition-all duration-300 ${isActive
-                  ? "bg-brand-yellow-100/25 dark:bg-[#ffc200] border-black dark:border-white shadow-[0_6px_15px_rgba(255,202,32,0.25)] "
+                  ? "bg-[#ffc200] border-black dark:border-white shadow-[0_6px_15px_rgba(255,202,32,0.25)] "
                   : "bg-white/70 dark:bg-white/[0.03] border-brand-yellow-200/30 dark:border-brand-yellow-100/10 shadow-[0_4px_12px_rgba(0,0,0,0.04)]"
                   }`}
               >
@@ -973,7 +975,7 @@ const Home = () => {
           }}
         />
 
-        <TopBarUpdated />
+        <TopBarUpdatedNew />
 
         {loading ? (
           <LoadingSkeleton />
@@ -1147,7 +1149,7 @@ const Home = () => {
         )}
       </div>
 
-      <BottomNavBar />
+      <BottomNavBarNew />
       <DailyLoginBonusPopupOld
         isOpen={showDailyLoginPopup}
         onClose={() => setShowDailyLoginPopup(false)}

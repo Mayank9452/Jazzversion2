@@ -7,15 +7,9 @@ import Swal from "sweetalert2";
 // Day Rewards definition
 const REWARDS = [
   { day: 1, type: "coins", value: "250", label: "Coins", icon: Coins, color: "text-amber-400" },
-  { day: 2, type: "data", value: "100 MB", label: "Data Pack", icon: Wifi, color: "text-blue-400" },
-  { day: 3, type: "voucher", value: "Rs 20", label: "Voucher", icon: Gift, color: "text-purple-400" },
-  { day: 4, type: "topup", value: "Rs 10", label: "Topup", icon: Smartphone, color: "text-emerald-400" },
-  { day: 5, type: "coins", value: "500", label: "Coins", icon: Coins, color: "text-amber-400" },
-  { day: 6, type: "data", value: "250 MB", label: "Data Pack", icon: Wifi, color: "text-blue-400" },
+  { day: 3, type: "data", value: "100 MB", label: "Data Pack", icon: Wifi, color: "text-blue-400" },
   { day: 7, type: "voucher", value: "Rs 50", label: "Voucher", icon: Gift, color: "text-purple-400" },
-  { day: 8, type: "topup", value: "Rs 20", label: "Topup", icon: Smartphone, color: "text-emerald-400" },
-  { day: 9, type: "coins", value: "1,000", label: "Coins", icon: Coins, color: "text-amber-400" },
-  { day: 10, type: "jackpot", value: "Rs 100", label: "Mega Topup", icon: Trophy, color: "text-brand-yellow-100" },
+  { day: 15, type: "jackpot", value: "Rs 100", label: "Mega Topup", icon: Trophy, color: "text-brand-yellow-100" },
 ];
 
 export function DailyLoginBannerCard({ onClick }: { onClick: () => void }) {
@@ -71,8 +65,19 @@ export function DailyLoginBonusPopup({ isOpen, onClose, onRewardClaimed }: Daily
   const [streak, setStreak] = useState<number>(0);
   const [claimedToday, setClaimedToday] = useState<boolean>(false);
 
+  const getProgressBarWidth = (streakVal: number) => {
+    if (streakVal <= 1) return 0;
+    if (streakVal <= 3) {
+      return 0 + ((streakVal - 1) / 2) * 33.3;
+    }
+    if (streakVal <= 7) {
+      return 33.3 + ((streakVal - 3) / 4) * 33.3;
+    }
+    const clamped = Math.min(streakVal, 15);
+    return 66.6 + ((clamped - 7) / 8) * 33.4;
+  };
+
   useEffect(() => {
-    // Load state from LocalStorage
     const savedClaimed = localStorage.getItem("gamenow_daily_claimed_days");
     const savedLastClaim = localStorage.getItem("gamenow_daily_last_claim_date");
     const savedStreak = localStorage.getItem("gamenow_daily_streak");
@@ -83,26 +88,52 @@ export function DailyLoginBonusPopup({ isOpen, onClose, onRewardClaimed }: Daily
       setClaimedDays(claimedList);
     }
 
+    let currentStreak = 1;
     if (savedStreak) {
-      setStreak(Number(savedStreak));
+      currentStreak = Number(savedStreak);
     }
+    setStreak(currentStreak);
 
     const todayStr = new Date().toDateString();
+    let isClaimedToday = false;
     if (savedLastClaim === todayStr) {
+      isClaimedToday = true;
       setClaimedToday(true);
+    } else {
+      setClaimedToday(false);
     }
 
-    // Determine active day
-    if (claimedList.length === 0) {
-      setActiveDay(1);
-    } else {
-      const maxClaimed = Math.max(...claimedList);
-      if (savedLastClaim === todayStr) {
-        setActiveDay(maxClaimed);
-      } else {
-        const nextDay = maxClaimed + 1 > 10 ? 1 : maxClaimed + 1;
-        setActiveDay(nextDay);
+    const oneDayMs = 24 * 60 * 60 * 1000;
+    if (savedLastClaim && savedLastClaim !== todayStr) {
+      const lastClaimDate = new Date(savedLastClaim);
+      const diffTime = new Date().setHours(0, 0, 0, 0) - lastClaimDate.setHours(0, 0, 0, 0);
+      if (diffTime > oneDayMs) {
+        currentStreak = 1;
+        setStreak(1);
+        setClaimedDays([]);
+        localStorage.setItem("gamenow_daily_streak", "1");
+        localStorage.removeItem("gamenow_daily_claimed_days");
+        claimedList = [];
+      } else if (!isClaimedToday) {
+        const nextStreak = currentStreak + 1 > 15 ? 1 : currentStreak + 1;
+        currentStreak = nextStreak;
+        setStreak(nextStreak);
+        localStorage.setItem("gamenow_daily_streak", String(nextStreak));
       }
+    }
+
+    const milestones = [1, 3, 7, 15];
+    const nextUnclaimed = milestones.find(m => !claimedList.includes(m)) || 15;
+    setActiveDay(nextUnclaimed);
+
+    if (claimedList.length === 4) {
+      setClaimedDays([]);
+      setStreak(1);
+      setActiveDay(1);
+      setClaimedToday(false);
+      localStorage.removeItem("gamenow_daily_claimed_days");
+      localStorage.setItem("gamenow_daily_streak", "1");
+      localStorage.removeItem("gamenow_daily_last_claim_date");
     }
   }, [isOpen]);
 
@@ -117,23 +148,31 @@ export function DailyLoginBonusPopup({ isOpen, onClose, onRewardClaimed }: Daily
       return;
     }
 
+    if (streak < activeDay) {
+      Swal.fire({
+        title: "Streak Incomplete!",
+        text: `You need a ${activeDay}-day streak to claim this reward. Current streak: ${streak} Days.`,
+        icon: "warning",
+        confirmButtonColor: "#dfa208",
+      });
+      return;
+    }
+
     const nextClaimed = [...claimedDays, activeDay];
     const todayStr = new Date().toDateString();
-    const nextStreak = streak + 1 > 10 ? 1 : streak + 1;
 
     setClaimedDays(nextClaimed);
     setClaimedToday(true);
-    setStreak(nextStreak);
 
     localStorage.setItem("gamenow_daily_claimed_days", JSON.stringify(nextClaimed));
     localStorage.setItem("gamenow_daily_last_claim_date", todayStr);
-    localStorage.setItem("gamenow_daily_streak", String(nextStreak));
 
-    const currentReward = REWARDS[activeDay - 1];
+    const currentReward = REWARDS.find(r => r.day === activeDay);
+    if (!currentReward) return;
 
     Swal.fire({
       title: "Claimed Successfully!",
-      html: `You won <b style="color: #ffca20">${currentReward.value} ${currentReward.label}</b>!<br/>Streak updated to <b>${nextStreak} Days</b>.`,
+      html: `You won <b style="color: #ffca20">${currentReward.value} ${currentReward.label}</b>!<br/>Streak is at <b>${streak} Days</b>.`,
       icon: "success",
       confirmButtonColor: "#dfa208",
       background: isDark ? "#191919" : "#fff",
@@ -189,21 +228,20 @@ export function DailyLoginBonusPopup({ isOpen, onClose, onRewardClaimed }: Daily
               <X className="w-4 h-4" />
             </button>
 
-            {/* Horizontal Scrollable Streak Track (10 rewards & progress bar) */}
-            <div className="w-full overflow-x-auto py-6 px-4 relative z-10 scrollbar-thin scrollbar-thumb-amber-500/20 scrollbar-track-transparent">
-              {/* Relative container with minimum width to scroll on mobile */}
-              <div className="relative min-w-[850px] flex flex-col items-stretch">
+            {/* Streak Track (1, 3, 7, 15 days) */}
+            <div className="w-full py-6 px-1 relative z-10">
+              <div className="relative w-full flex flex-col items-stretch">
 
                 {/* Horizontal Progress Line behind the dots */}
-                <div className="absolute top-[18px] left-[42px] right-[42px] h-1.5 rounded-full bg-slate-350 dark:bg-slate-800 pointer-events-none z-0">
+                <div className="absolute top-[18px] left-[18px] right-[18px] h-1.5 rounded-full bg-slate-350 dark:bg-slate-800 pointer-events-none z-0">
                   <div
                     className="h-full rounded-full bg-gradient-to-r from-amber-500 to-[#dfa208] transition-all duration-500"
-                    style={{ width: `${Math.min(((streak - 1) / 9) * 100, 100)}%` }}
+                    style={{ width: `${getProgressBarWidth(streak)}%` }}
                   />
                 </div>
 
                 {/* Horizontal list of dot+card items */}
-                <div className="flex justify-between items-center gap-3 w-full">
+                <div className="flex justify-between items-center gap-2 w-full">
                   {REWARDS.map((reward) => {
                     const Icon = reward.icon;
                     const isClaimed = claimedDays.includes(reward.day);
@@ -261,7 +299,7 @@ export function DailyLoginBonusPopup({ isOpen, onClose, onRewardClaimed }: Daily
 
                           {/* Reward Icon (highlighted in text-brand-yellow) */}
                           <div className="my-1.5 shrink-0 relative z-10">
-                            {reward.day === 10 ? (
+                            {reward.day === 15 ? (
                               <Trophy className={`w-7 h-7 filter drop-shadow ${isClaimed
                                 ? "text-[#ffca20]/45"
                                 : isLocked
@@ -284,10 +322,10 @@ export function DailyLoginBonusPopup({ isOpen, onClose, onRewardClaimed }: Daily
                             {reward.value}
                           </span>
 
-                          {/* Claimed check mark in top right of card (red color) */}
+                          {/* Claimed check mark in top right of card (yellow border color) */}
                           {isClaimed && (
-                            <div className="absolute top-1.5 right-1.5 w-4.5 h-4.5 rounded-full bg-red-500 border border-white flex items-center justify-center shadow-sm z-30">
-                              <Check className="w-3.5 h-3.5 text-white stroke-[4]" />
+                            <div className="absolute top-1.5 right-1.5 w-4.5 h-4.5 rounded-full bg-[#ffca20] border border-[#dfa208] flex items-center justify-center shadow-sm z-30">
+                              <Check className="w-3.5 h-3.5 text-black stroke-[4]" />
                             </div>
                           )}
                         </div>
@@ -304,13 +342,13 @@ export function DailyLoginBonusPopup({ isOpen, onClose, onRewardClaimed }: Daily
             <div className="w-full flex flex-col gap-2 items-center relative z-10 mt-1">
               <button
                 onClick={handleClaim}
-                disabled={claimedToday}
-                className={`w-full py-3.5 rounded-2xl font-black text-sm uppercase tracking-widest transition-all duration-200 border-b-4 ${claimedToday
+                disabled={claimedToday || streak < activeDay}
+                className={`w-full py-3.5 rounded-2xl font-black text-sm uppercase tracking-widest transition-all duration-200 border-b-4 ${claimedToday || streak < activeDay
                   ? "bg-gradient-to-r from-[#ffca20]/50 to-[#dfa208]/50 text-black/50 border-[#dfa208]/30 border-b-0 cursor-not-allowed pointer-events-none"
                   : "bg-gradient-to-r from-[#ffca20] to-[#dfa208] text-black border-amber-600 hover:brightness-110 active:border-b-0 active:translate-y-[4px] cursor-pointer shadow-md shadow-amber-500/10"
                   }`}
               >
-                {claimedToday ? "Claimed Today" : "Tap to collect"}
+                {claimedToday ? "Claimed Today" : streak >= activeDay ? "Tap to collect" : `Unlock on Day ${activeDay} (${streak}/${activeDay})`}
               </button>
             </div>
           </motion.div>

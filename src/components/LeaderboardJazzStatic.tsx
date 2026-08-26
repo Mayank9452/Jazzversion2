@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { ArrowLeft, ChevronLeft, Trophy } from "lucide-react";
 import { BottomNavBar } from "./BottomNavBar";
+import { BottomNavBarNew } from "./BottomNavBarNew";
 
 // --- Mock Data representing the exact images, msisdn, and scores ---
 interface Player {
@@ -80,12 +81,12 @@ export const LeaderboardJazzStatic: React.FC = () => {
 
         {/* ── Premium Glassmorphic Header Card (replicated from TournamentHistory.tsx) ── */}
         <div className="pb-4 z-30">
-          <div className={`relative overflow-hidden p-2 pr-0 flex items-center justify-between gap-3 border-b transition-all duration-300 ${isDarkTheme ? "bg-gradient-to-br from-[#2B2B2B]/40 to-[#191919]/30 border-white/[0.06] shadow-[0_12px_40px_rgba(0,0,0,0.2)]" : "bg-gradient-to-br from-white/70 to-white/40 border-slate-200/60 shadow-sm"} backdrop-blur-xl`}>
+          <div className={`relative overflow-hidden p-2 pr-0 flex items-center justify-between gap-3 border-b transition-all duration-300 ${isDarkTheme ? "bg-gradient-to-br from-[#2B2B2B]/40 to-[#191919]/30 border-white/[0.06] shadow-[0_12px_40px_rgba(0,0,0,0.2)]" : "bg-brand-gradient border-[#dfa208]/30 shadow-sm"} backdrop-blur-xl`}>
             <div className="w-full flex justify-between items-center gap-5">
               <div>
                 <button
                   onClick={() => navigate(-1)}
-                  className="w-10 h-10 rounded-xl flex items-center justify-center shadow-md active:scale-95 transition-all pointer-events-auto cursor-pointer shrink-0 bg-white border border-slate-200 text-slate-700 hover:bg-slate-50 dark:bg-[#32323299] dark:backdrop-blur-md dark:border-white/10 dark:text-white dark:hover:bg-black/75"
+                  className={`w-10 h-10 rounded-xl flex items-center justify-center shadow-md active:scale-95 transition-all pointer-events-auto cursor-pointer shrink-0 ${isDarkTheme ? "bg-[#32323299] backdrop-blur-md border border-white/10 text-white hover:bg-black/75" : "bg-white/40 border border-[#dfa208]/30 text-black hover:bg-white/60"}`}
                   title="Back"
                 >
                   <ArrowLeft className="w-5 h-5" />
@@ -98,10 +99,10 @@ export const LeaderboardJazzStatic: React.FC = () => {
                   className="w-10 h-8 object-contain"
                 />
                 <div className="flex flex-col text-start leading-none">
-                  <h1 className={`text-base sm:text-lg font-black tracking-wide uppercase leading-tight ${isDarkTheme ? "text-white" : "text-slate-800"}`}>
+                  <h1 className={`text-base sm:text-lg font-black tracking-wide uppercase leading-tight ${isDarkTheme ? "text-white" : "text-black"}`}>
                     Leaderboard
                   </h1>
-                  <p className="text-[11px] sm:text-xs font-bold text-slate-500 dark:text-muted-foreground mt-0.5 leading-none">
+                  <p className={`text-[11px] sm:text-xs font-bold mt-0.5 leading-none ${isDarkTheme ? "text-slate-500 dark:text-muted-foreground" : "text-black/70"}`}>
                     Top Player Rankings
                   </p>
                 </div>
@@ -157,9 +158,9 @@ export const LeaderboardJazzStatic: React.FC = () => {
           {/* ──────────────── Rank 2 (Left) ──────────────── */}
           <div className="flex flex-col items-center w-[29%]">
             {/* 3D Box Stand */}
-            <div className={`w-full aspect-[3/4.8] flex flex-col items-center justify-between pt-3 pb-0 rounded-2xl overflow-hidden relative border transition-all duration-300 ${isDarkTheme ? "bg-gradient-to-b from-[#175A9C] via-[#0E3566]/80 to-[#081938]/95 border-white/[0.08] shadow-[0_8px_20px_rgba(0,0,0,0.4)]" : "bg-gradient-to-b from-[#E6F0FA] to-[#F1F7FC] border-blue-100/80 shadow-sm"}`}>
+            <div className={`w-full aspect-[3/4.8] flex flex-col items-center justify-between pt-3 pb-0 rounded-2xl overflow-hidden relative border transition-all duration-300 ${isDarkTheme ? "bg-gradient-to-b from-[#175A9C] via-[#0E3566]/80 to-[#081938]/95 border-white/[0.08] shadow-[0_8px_20px_rgba(0,0,0,0.4)]" : "bg-gradient-to-b from-[#3b82f6]/95 via-[#2563eb]/95 to-[#1d4ed8] border-blue-200/50 shadow-sm"}`}>
               {/* Silver Wreath */}
-              <LaurelBadge rankText="2nd" color="#BAC3D6" size={90} isDark={isDarkTheme} />
+              <LaurelBadge rankText="2nd" color="#BAC3D6" size={90} isDark={true} />
 
               {/* Avatar overlapping bottom */}
               <div className="w-full relative mt-auto flex justify-center pb-2">
@@ -184,9 +185,9 @@ export const LeaderboardJazzStatic: React.FC = () => {
           {/* ──────────────── Rank 1 (Center - Elevated) ──────────────── */}
           <div className="flex flex-col items-center w-[33%] z-10">
             {/* 3D Box Stand */}
-            <div className={`w-full aspect-[3/5.2] flex flex-col items-center justify-between pt-4.5 pb-0 rounded-2xl overflow-hidden relative border transition-all duration-300 ${isDarkTheme ? "bg-gradient-to-b from-[#DFA208] via-[#8C6D0F]/85 to-[#191919]/95 border-2 border-[#FFCA20]/45 shadow-[0_12px_28px_rgba(0,0,0,0.6)]" : "bg-gradient-to-b from-[#FFF2CC] via-[#FFF9E6] to-[#FFFBF0] border-[#FFCA20]/45 shadow-sm"}`}>
+            <div className={`w-full aspect-[3/5.2] flex flex-col items-center justify-between pt-4.5 pb-0 rounded-2xl overflow-hidden relative border transition-all duration-300 ${isDarkTheme ? "bg-gradient-to-b from-[#DFA208] via-[#8C6D0F]/85 to-[#191919]/95 border-2 border-[#FFCA20]/45 shadow-[0_12px_28px_rgba(0,0,0,0.6)]" : "bg-gradient-to-b from-[#fbbf24] via-[#f59e0b] to-[#d97706] border-2 border-[#fbbf24]/50 shadow-sm"}`}>
               {/* Gold Wreath */}
-              <LaurelBadge rankText="1st" color="#FFCA20" size={100} isDark={isDarkTheme} />
+              <LaurelBadge rankText="1st" color="#FFCA20" size={100} isDark={true} />
 
               {/* Avatar overlapping bottom */}
               <div className="w-full relative mt-auto flex justify-center pb-2.5">
@@ -211,9 +212,9 @@ export const LeaderboardJazzStatic: React.FC = () => {
           {/* ──────────────── Rank 3 (Right) ──────────────── */}
           <div className="flex flex-col items-center w-[29%]">
             {/* 3D Box Stand */}
-            <div className={`w-full aspect-[3/4.4] flex flex-col items-center justify-between pt-2.5 pb-0 rounded-2xl overflow-hidden relative border transition-all duration-300 ${isDarkTheme ? "bg-gradient-to-b from-[#8E24AA] via-[#4A148C]/80 to-[#1F0038]/95 border border-white/[0.08] shadow-[0_6px_16px_rgba(0,0,0,0.4)]" : "bg-gradient-to-b from-[#FCEAE6] to-[#FDF4F2] border-orange-100/80 shadow-sm"}`}>
+            <div className={`w-full aspect-[3/4.4] flex flex-col items-center justify-between pt-2.5 pb-0 rounded-2xl overflow-hidden relative border transition-all duration-300 ${isDarkTheme ? "bg-gradient-to-b from-[#8E24AA] via-[#4A148C]/80 to-[#1F0038]/95 border border-white/[0.08] shadow-[0_6px_16px_rgba(0,0,0,0.4)]" : "bg-gradient-to-b from-[#c084fc]/95 via-[#a855f7]/95 to-[#7e22ce] border-purple-200/50 shadow-sm"}`}>
               {/* Bronze Wreath */}
-              <LaurelBadge rankText="3rd" color="#C5A059" size={80} isDark={isDarkTheme} />
+              <LaurelBadge rankText="3rd" color="#C5A059" size={80} isDark={true} />
 
               {/* Avatar overlapping bottom */}
               <div className="w-full relative mt-auto flex justify-center pb-2">
@@ -294,7 +295,7 @@ export const LeaderboardJazzStatic: React.FC = () => {
         </div>
 
       </div>
-      <BottomNavBar />
+      <BottomNavBarNew />
     </>
   );
 };

@@ -17,6 +17,8 @@ import { HexagonalAvatarFrame } from "./HexagonalAvatarFrame";
 import PopupAvatarSelector from "./PopupAvatarSelector";
 import PopupBannerUnsubscribe from "./PopupBannerUnsubscribe";
 import { TopBarUpdated } from "./TopBarUpdated";
+import { TopBarUpdatedNew } from "./TopBarUpdatedNew";
+import { BottomNavBarNew } from "./BottomNavBarNew";
 // Helper function to format phone number
 const phoneShowFormat = (phone: string | undefined): string => {
     if (!phone) return "";
@@ -93,7 +95,7 @@ export default function SettingsPageNewStatic() {
     const avatars = Array.from({ length: 22 }, (_, i) => `${i + 1}.png`);
     return (
         <>
-            <TopBarUpdated />
+            <TopBarUpdatedNew />
             <div className="relative bg-[#F8F9FA] dark:bg-black text-foreground overflow-x-hidden min-h-screen pb-8 transition-colors duration-300">
                 {/* Glow effects for glassmorphism backdrop (hidden in dark mode) */}
                 <div className="absolute top-[300px] -left-20 w-80 h-80 bg-purple-600/10 rounded-full blur-[120px] pointer-events-none z-0 dark:hidden" />
@@ -156,12 +158,13 @@ export default function SettingsPageNewStatic() {
                             ? "bg-[#ffffff14] backdrop-blur-md border-[#ffffff52] shadow-[0_4px_24px_rgba(0,0,0,0.2)]"
                             : "bg-white border-slate-100 shadow-[0_1px_2px_rgba(0,0,0,0.26)]"
                             }`}>
-                            <div className={`p-2 shrink-0 ${isDark ? "rounded-xl bg-amber-500/10" : "rounded-full bg-[#FFF9E6]"}`}>
-                                <img
+                            <div className={`p-2 shrink-0 ${isDark ? "rounded-xl bg-amber-500/10" : "rounded-full text-yellow-main"}`}>
+                                {/* <img
                                     src="/assets/images/img/gold-coin.png"
                                     alt="coin"
                                     className="w-5 h-5 object-contain"
-                                />
+                                /> */}
+                                <Coins className="h-5 w-5" />
                             </div>
                             <div className="text-left flex flex-col justify-center leading-none">
                                 <p className="text-[10px] font-bold text-muted-foreground uppercase tracking-wide">Coins</p>
@@ -375,7 +378,7 @@ export default function SettingsPageNewStatic() {
                 }}
             />
             {loading && <WaitLoader isOverlay />}
-            <BottomNavBar />
+            <BottomNavBarNew />
         </>
     );
 }

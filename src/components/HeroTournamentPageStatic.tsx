@@ -26,6 +26,7 @@ import GameViewerNew from "./GameViewerNew";
 import { TopBar } from "./TopBar";
 import { BottomNavBar } from "./BottomNavBar";
 import LeaderboardJoinPopup from "./LeaderboardJoinPopup";
+import { BottomNavBarNew } from "./BottomNavBarNew";
 
 const TopupIcon = ({ className = "w-6 h-6" }: { className?: string }) => {
     const color = "#ffca20";
@@ -437,7 +438,7 @@ const HeroTournamentPageStatic: React.FC = () => {
                                 <motion.button
                                     disabled={fromUpcoming}
                                     onClick={handlePlayLiveTournament}
-                                    className={`absolute -top-6 right-6 h-10 px-5 rounded-full bg-gradient-to-r from-[#ffca20] to-[#dfa208] text-[#191919] hover:brightness-110 active:scale-95 transition-all flex items-center justify-center gap-1.5 z-30 border-2 font-black text-sm shadow-md ${isDarkTheme ? "border-white" : "border-white"} ${fromUpcoming ? "opacity-50 pointer-events-none grayscale cursor-not-allowed" : "cursor-pointer"}`}
+                                    className={`absolute -top-6 right-6 h-10 px-5 rounded-full bg-gradient-to-r from-[#ffca20] to-[#dfa208] text-[#191919] hover:brightness-110 active:scale-95 transition-all flex items-center justify-center gap-1.5 z-30 border-2 font-black text-sm shadow-md ${isDarkTheme ? "border-white" : "border-white"} ${fromUpcoming ? "opacity-70 pointer-events-none cursor-not-allowed" : "cursor-pointer"}`}
                                     animate={fromUpcoming ? {} : {
                                         scale: [0.95, 1.05, 0.95]
                                     }}
@@ -725,7 +726,7 @@ const HeroTournamentPageStatic: React.FC = () => {
                     />
                 )}
             </div>
-            <BottomNavBar />
+            <BottomNavBarNew />
         </>
     );
 };

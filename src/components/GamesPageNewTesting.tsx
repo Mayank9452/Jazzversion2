@@ -20,6 +20,7 @@ import PopupBannerUnsubscribe from "./PopupBannerUnsubscribe";
 import LowBalancePopup from "./LowBalancePopup";
 import GameViewerNew from "./GameViewerNew";
 import WaitLoader from "./Loader";
+import { BottomNavBarNew } from "./BottomNavBarNew";
 
 // ─── Play Store UI Constants (Locked to Brand Color Palette) ─────────────────
 
@@ -434,7 +435,7 @@ export default function GamesPageNewTesting() {
 
                 {/* ── Premium Glassmorphic Header Card (replicated from TournamentHistory.tsx) ── */}
                 <div className="relative z-[99]">
-                    <div className={`relative overflow-hidden p-2 pr-1 flex items-center justify-between gap-3 border-b transition-all duration-300 ${isDark ? "bg-gradient-to-br from-[#2B2B2B]/40 to-[#191919]/30 border-white/[0.06] shadow-[0_12px_40px_rgba(0,0,0,0.2)]" : "bg-gradient-to-br from-white/70 to-white/40 border-slate-200/60 shadow-sm"} backdrop-blur-xl`}>
+                    <div className={`relative overflow-hidden p-2 pr-1 flex items-center justify-between gap-3 border-b transition-all duration-300 ${isDark ? "bg-gradient-to-br from-[#2B2B2B]/40 to-[#191919]/30 border-white/[0.06] shadow-[0_12px_40px_rgba(0,0,0,0.2)]" : "bg-brand-gradient border-[#dfa208]/30 shadow-sm"} backdrop-blur-xl`}>
                         <div className="w-full flex justify-between items-center gap-5">
                             <div>
                                 <button
@@ -445,17 +446,17 @@ export default function GamesPageNewTesting() {
                                             navigate(-1);
                                         }
                                     }}
-                                    className={`w-10 h-10 rounded-xl flex items-center justify-center shadow-md active:scale-95 transition-all pointer-events-auto cursor-pointer shrink-0 ${isDark ? "bg-[#32323299] backdrop-blur-md border border-white/10 text-white hover:bg-black/75" : "bg-white border border-slate-200 text-slate-700 hover:bg-slate-50"}`}
+                                    className={`w-10 h-10 rounded-xl flex items-center justify-center shadow-md active:scale-95 transition-all pointer-events-auto cursor-pointer shrink-0 ${isDark ? "bg-[#32323299] backdrop-blur-md border border-white/10 text-white hover:bg-black/75" : "bg-white/40 border border-[#dfa208]/30 text-black hover:bg-white/60"}`}
                                     title="Back"
                                 >
                                     <ArrowLeft className="w-5 h-5" />
                                 </button>
                             </div>
                             <div className="flex-1 text-center">
-                                <h1 className={`text-base sm:text-lg font-black tracking-wide uppercase leading-tight ${isDark ? "text-white" : "text-slate-800"}`}>
+                                <h1 className={`text-base sm:text-lg font-black tracking-wide uppercase leading-tight ${isDark ? "text-white" : "text-black"}`}>
                                     Play Games
                                 </h1>
-                                <p className="text-[11px] sm:text-xs font-bold text-slate-500 dark:text-muted-foreground mt-1 leading-none">
+                                <p className={`text-[11px] sm:text-xs font-bold mt-1 leading-none ${isDark ? "text-slate-500 dark:text-muted-foreground" : "text-black/70"}`}>
                                     Explore our collection of games
                                 </p>
                             </div>
@@ -530,16 +531,16 @@ export default function GamesPageNewTesting() {
                                 {/* 1. Top Trending Section */}
                                 {trendingGames.length > 0 && (
                                     <div className="space-y-2">
-                                        <div className="flex items-center justify-between px-4 mt-3 mb-1">
+                                        <div className="flex items-center justify-between px-4 mt-2 mb-1">
                                             <div className="flex items-center gap-3">
-                                                <span className="flex items-center justify-center p-2 rounded-xl bg-[#FFCA20]/10 text-[#FFCA20] border border-[#FFCA20]/30 shadow-[0_0_15px_rgba(255,202,32,0.25)]">
+                                                <span className="flex items-center justify-center p-2 rounded-xl bg-black/70 dark:bg-[#FFCA20]/10 text-[#FFCA20] border border-[#FFCA20]/30 shadow-[0_0_15px_rgba(255,202,32,0.25)]">
                                                     <TrendingUp className="w-4 h-4 fill-current shrink-0 animate-pulse" />
                                                 </span>
                                                 <div className="flex flex-col text-start">
                                                     {/* <span className="text-[8px] sm:text-[9px] font-black text-[#DFA208] tracking-[3px] uppercase leading-none mb-1">
                                                         // TRENDING NOW
                                                     </span> */}
-                                                    <h2 className="text-base sm:text-lg font-black italic tracking-wider bg-gradient-to-r from-[#2B2B2B] to-[#191919] dark:from-[#FFCA20] dark:via-[#E6B53A] dark:to-[#DFA208] bg-clip-text text-transparent drop-shadow-[0_1.5px_2px_rgba(0,0,0,0.15)]">
+                                                    <h2 className="text-base font-bold italic bg-gradient-to-r from-[#2B2B2B] to-[#191919] dark:from-[#FFCA20] dark:via-[#E6B53A] dark:to-[#DFA208] bg-clip-text text-transparent drop-shadow-[0_1.5px_2px_rgba(0,0,0,0.15)]">
                                                         Top Trending
                                                     </h2>
                                                 </div>
@@ -551,7 +552,7 @@ export default function GamesPageNewTesting() {
                                                 slidesPerView={1.9}
                                                 centeredSlides={false}
                                                 spaceBetween={18}
-                                                autoplay={{ delay: 4500, disableOnInteraction: false }}
+                                                autoplay={{ delay: 3000, disableOnInteraction: false }}
                                                 modules={[Autoplay]}
                                                 className="overflow-visible"
                                             >
@@ -574,14 +575,14 @@ export default function GamesPageNewTesting() {
                                     <div className="space-y-2">
                                         <div className="flex items-center justify-between px-4 mb-1">
                                             <div className="flex items-center gap-3">
-                                                <span className="flex items-center justify-center p-2 rounded-xl bg-[#FFCA20]/10 text-[#FFCA20] border border-[#FFCA20]/30 shadow-[0_0_15px_rgba(255,202,32,0.25)]">
+                                                <span className="flex items-center justify-center p-2 rounded-xl bg-black/70 dark:bg-[#FFCA20]/10 text-[#FFCA20] border border-[#FFCA20]/30 shadow-[0_0_15px_rgba(255,202,32,0.25)]">
                                                     <Clock className="w-4 h-4  shrink-0" />
                                                 </span>
                                                 <div className="flex flex-col text-start">
                                                     {/* <span className="text-[8px] sm:text-[9px] font-black text-[#DFA208] tracking-[3px] uppercase leading-none mb-1">
                                                         // RESUME PLAY
                                                     </span> */}
-                                                    <h2 className="text-base sm:text-lg font-black italic tracking-wider bg-gradient-to-r from-[#2B2B2B] to-[#191919] dark:from-[#FFCA20] dark:via-[#E6B53A] dark:to-[#DFA208] bg-clip-text text-transparent drop-shadow-[0_1.5px_2px_rgba(0,0,0,0.15)]">
+                                                    <h2 className="text-base font-bold italic bg-gradient-to-r from-[#2B2B2B] to-[#191919] dark:from-[#FFCA20] dark:via-[#E6B53A] dark:to-[#DFA208] bg-clip-text text-transparent drop-shadow-[0_1.5px_2px_rgba(0,0,0,0.15)]">
                                                         Last Played
                                                     </h2>
                                                 </div>
@@ -613,14 +614,14 @@ export default function GamesPageNewTesting() {
                                 {playAllGames.length > 0 && (
                                     <div className="flex items-center justify-between px-4 mb-1">
                                         <div className="flex items-center gap-3">
-                                            <span className="flex items-center justify-center p-2 rounded-xl bg-[#FFCA20]/10 text-[#FFCA20] border border-[#FFCA20]/30 shadow-[0_0_15px_rgba(255,202,32,0.25)]">
+                                            <span className="flex items-center justify-center p-2 rounded-xl bg-black/70 dark:bg-[#FFCA20]/10 text-[#FFCA20] border border-[#FFCA20]/30 shadow-[0_0_15px_rgba(255,202,32,0.25)]">
                                                 <Gamepad2 className="w-4 h-4 shrink-0" />
                                             </span>
                                             <div className="flex flex-col text-start">
                                                 {/* <span className="text-[8px] sm:text-[9px] font-black text-[#DFA208] tracking-[3px] uppercase leading-none mb-1">
                                                     // ARCADE CATALOG
                                                 </span> */}
-                                                <h2 className="text-base sm:text-lg font-black italic  tracking-wider bg-gradient-to-r from-[#2B2B2B] to-[#191919] dark:from-[#FFCA20] dark:via-[#E6B53A] dark:to-[#DFA208] bg-clip-text text-transparent drop-shadow-[0_1.5px_2px_rgba(0,0,0,0.15)]">
+                                                <h2 className="text-base font-bold italic bg-gradient-to-r from-[#2B2B2B] to-[#191919] dark:from-[#FFCA20] dark:via-[#E6B53A] dark:to-[#DFA208] bg-clip-text text-transparent drop-shadow-[0_1.5px_2px_rgba(0,0,0,0.15)]">
                                                     Play All
                                                 </h2>
                                             </div>
@@ -716,7 +717,7 @@ export default function GamesPageNewTesting() {
 
             </div>
 
-            <BottomNavBar />
+            <BottomNavBarNew />
 
             {/* Game Play Frame Overlay */}
             {selectedGame && (
