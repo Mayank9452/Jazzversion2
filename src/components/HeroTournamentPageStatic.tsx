@@ -470,7 +470,7 @@ const HeroTournamentPageStatic: React.FC = () => {
                                     <div className="flex flex-col items-center justify-center">
                                         <Trophy className="w-4 h-4 text-[#dfa208] mb-1" />
                                         <span className={`text-sm font-black ${isDarkTheme ? "text-[#ffca20]" : "text-[#dfa208]"}`}>10,000</span>
-                                        <span className={`text-[10px] font-bold mt-0.5 ${isDarkTheme ? "text-white/50" : "text-slate-500"}`}>Prize Pool</span>
+                                        <span className={`text-xs font-bold mt-0.5 ${isDarkTheme ? "text-white/50" : "text-slate-500"}`}>Prize Pool</span>
                                     </div>
                                     {/* Leaderboard Column */}
                                     <button
@@ -488,13 +488,13 @@ const HeroTournamentPageStatic: React.FC = () => {
                                         className={`flex flex-col items-center justify-center border-x w-full active:scale-95 transition-all py-1 border-none bg-transparent cursor-pointer ${isDarkTheme ? "border-white/5 hover:bg-white/5" : "border-slate-200/50 hover:bg-slate-200/50"}`}
                                     >
                                         <img src="/assets/images/img/trophy.png" className="w-8 h-8 object-contain mb-1" alt="Leaderboard" />
-                                        <span className={`text-[10px] font-bold mt-0.5 ${isDarkTheme ? "text-white/50" : "text-slate-500"}`}>Leaderboard</span>
+                                        <span className={`text-xs font-bold mt-0.5 ${isDarkTheme ? "text-white/50" : "text-slate-500"}`}>Leaderboard</span>
                                     </button>
                                     {/* Players Joined Column */}
                                     <div className="flex flex-col items-center justify-center">
                                         <Users className={`w-4 h-4 mb-1 ${isDarkTheme ? "text-white" : "text-slate-700"}`} />
                                         <span className={`text-sm font-black ${isDarkTheme ? "text-white" : "text-slate-800"}`}>200</span>
-                                        <span className={`text-[10px] font-bold mt-0.5 ${isDarkTheme ? "text-white/50" : "text-slate-500"}`}>Players Joined</span>
+                                        <span className={`text-xs font-bold mt-0.5 ${isDarkTheme ? "text-white/50" : "text-slate-500"}`}>Players Joined</span>
                                     </div>
                                 </div>
 

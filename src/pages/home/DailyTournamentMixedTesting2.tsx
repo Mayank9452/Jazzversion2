@@ -24,7 +24,7 @@ const getGameImage = (gameName: string, defaultImage: string, index: number) => 
     }
     const images = [
         "/assets/images/01.png",
-        "/assets/images/02.png",
+        "/assets/images/character.png",
     ];
     return images[index % images.length];
 };
@@ -258,11 +258,10 @@ const DailyTournamentMixedTesting2: React.FC<DailyTournament> = ({
                                             </div>
 
                                             {/* Reward Row */}
-                                            <div className={`flex justify-center items-center px-2 py-1.5 mt-1 border rounded-xl whitespace-nowrap min-h-[36px] transition-all duration-300 ${
-                                                isDark 
-                                                    ? "bg-slate-100/80 dark:bg-white/[0.03] border-slate-200/60 dark:border-white/[0.04] shadow-[inset_0_-4px_24px_rgba(0,0,0,0.2),inset_0_-2px_1px_rgba(78,78,78,1),inset_0px_0_0px_rgba(255,255,255,0.6),inset_0px_0_0px_rgba(255,255,255,0.6)]" 
+                                            <div className={`flex justify-center items-center px-2 py-1.5 mt-1 border rounded-xl whitespace-nowrap min-h-[36px] transition-all duration-300 ${isDark
+                                                    ? "bg-slate-100/80 dark:bg-white/[0.03] border-slate-200/60 dark:border-white/[0.04] shadow-[inset_0_-4px_24px_rgba(0,0,0,0.2),inset_0_-2px_1px_rgba(78,78,78,1),inset_0px_0_0px_rgba(255,255,255,0.6),inset_0px_0_0px_rgba(255,255,255,0.6)]"
                                                     : "bg-brand-gradient border-[#dfa208]/40 shadow-[0_2px_8px_rgba(223,162,8,0.2)]"
-                                            }`}>
+                                                }`}>
                                                 {rewardType === 0 && (
                                                     <div className="font-extrabold flex items-center gap-1.5 text-sm sm:text-xs">
                                                         <Coins className={`w-5 h-5 shrink-0 ${isDark ? "text-brand-gold-100 dark:text-brand-yellow-100" : "text-black fill-black/10"}`} />

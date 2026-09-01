@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Coins, Gift, Wifi, Trophy, Check, X, Flame, Zap } from "lucide-react";
+import { Coins, Gift, Wifi, Trophy, Check, X, Flame, Zap, Sparkles } from "lucide-react";
 import { useTheme } from "next-themes";
 import Swal from "sweetalert2";
 
@@ -381,7 +381,7 @@ export function DailyLoginBonusPopupOld({ isOpen, onClose, onRewardClaimed }: Da
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 0 }}
                         onClick={onClose}
-                        className="absolute inset-0 backdrop-blur-[10px]"
+                        className="absolute inset-0 backdrop-blur-[5px]"
                     />
 
                     <motion.div
@@ -389,8 +389,70 @@ export function DailyLoginBonusPopupOld({ isOpen, onClose, onRewardClaimed }: Da
                         animate={{ opacity: 1, scale: 1, y: 0 }}
                         exit={{ opacity: 0, scale: 0.9, y: 15 }}
                         transition={{ type: "spring", stiffness: 350, damping: 25 }}
-                        className="relative w-full max-w-[390px] rounded-[32px] border-2 border-[#D8A14E]/60 p-5 pt-8 flex flex-col items-center gap-4 shadow-[0_20px_50px_rgba(216,161,78,0.15)] bg-gradient-to-b from-[#180F31] via-[#0E0720] to-[#04010E] text-white"
+                        className="relative w-full max-w-[390px] rounded-[32px] border-2 border-[#D8A14E]/60 p-5 pt-8 flex flex-col items-center gap-2 shadow-[0_20px_50px_rgba(216,161,78,0.25)] bg-gradient-to-b from-[#180f31e6] via-[#0e0720f2] to-[#04010efa] text-white"
                     >
+                        {/* ── Ambient Gaming Sparkle Effects & Background Glows ── */}
+                        <div className="absolute inset-0 rounded-[30px] overflow-hidden pointer-events-none z-0">
+                            {/* Ambient Glow Orbs */}
+                            <div className="absolute -top-10 left-1/4 w-36 h-36 bg-amber-500/25 rounded-full blur-2xl pointer-events-none" />
+                            <div className="absolute top-1/3 -right-12 w-36 h-36 bg-purple-600/25 rounded-full blur-2xl pointer-events-none" />
+                            <div className="absolute -bottom-10 left-1/3 w-40 h-40 bg-[#FFD05C]/20 rounded-full blur-2xl pointer-events-none" />
+
+                            {/* Top Left Sparkle */}
+                            <motion.div
+                                animate={{ scale: [0.7, 1.3, 0.7], opacity: [0.3, 1, 0.3], rotate: [0, 90, 0] }}
+                                transition={{ duration: 2.4, repeat: Infinity, ease: "easeInOut" }}
+                                className="absolute top-6 left-6 text-[#FFD05C]"
+                            >
+                                <Sparkles className="w-5 h-5 drop-shadow-[0_0_10px_rgba(255,208,92,0.9)]" />
+                            </motion.div>
+
+                            {/* Top Right Sparkle */}
+                            <motion.div
+                                animate={{ scale: [1.2, 0.6, 1.2], opacity: [0.9, 0.2, 0.9], rotate: [45, 135, 45] }}
+                                transition={{ duration: 3, repeat: Infinity, ease: "easeInOut", delay: 0.6 }}
+                                className="absolute top-8 right-8 text-amber-300"
+                            >
+                                <Sparkles className="w-4 h-4 drop-shadow-[0_0_8px_rgba(251,191,36,0.9)]" />
+                            </motion.div>
+
+                            {/* Mid Left Twinkle */}
+                            <motion.div
+                                animate={{ scale: [0.4, 1.2, 0.4], opacity: [0.2, 0.95, 0.2], rotate: [0, 180, 0] }}
+                                transition={{ duration: 2.2, repeat: Infinity, ease: "easeInOut", delay: 1.1 }}
+                                className="absolute top-[45%] left-2.5 text-yellow-200"
+                            >
+                                <Sparkles className="w-4 h-4 drop-shadow-[0_0_10px_rgba(254,240,138,0.9)]" />
+                            </motion.div>
+
+                            {/* Mid Right Twinkle */}
+                            <motion.div
+                                animate={{ scale: [0.5, 1.25, 0.5], opacity: [0.25, 1, 0.25], rotate: [0, -90, 0] }}
+                                transition={{ duration: 2.8, repeat: Infinity, ease: "easeInOut", delay: 1.6 }}
+                                className="absolute top-[40%] right-3 text-[#FFD05C]"
+                            >
+                                <Sparkles className="w-4 h-4 drop-shadow-[0_0_8px_rgba(255,208,92,0.9)]" />
+                            </motion.div>
+
+                            {/* Bottom Left Sparkle */}
+                            <motion.div
+                                animate={{ scale: [0.6, 1.15, 0.6], opacity: [0.4, 0.95, 0.4], rotate: [0, 45, 0] }}
+                                transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut", delay: 0.8 }}
+                                className="absolute bottom-16 left-6 text-amber-400"
+                            >
+                                <Sparkles className="w-3.5 h-3.5 drop-shadow-[0_0_8px_rgba(251,191,36,0.9)]" />
+                            </motion.div>
+
+                            {/* Bottom Right Sparkle */}
+                            <motion.div
+                                animate={{ scale: [0.8, 1.35, 0.8], opacity: [0.3, 1, 0.3], rotate: [15, 105, 15] }}
+                                transition={{ duration: 2.6, repeat: Infinity, ease: "easeInOut", delay: 0.3 }}
+                                className="absolute bottom-14 right-6 text-yellow-300"
+                            >
+                                <Sparkles className="w-4 h-4 drop-shadow-[0_0_10px_rgba(253,224,71,0.9)]" />
+                            </motion.div>
+                        </div>
+
                         {/* <div className="absolute -top-16 left-1/2 -translate-x-1/2 z-30 pointer-events-none">
                             <div className="relative flex items-center justify-center">
                                 <div className="absolute w-28 h-28 rounded-full bg-amber-500/20 blur-xl animate-pulse" />
@@ -410,36 +472,38 @@ export function DailyLoginBonusPopupOld({ isOpen, onClose, onRewardClaimed }: Da
                                 Daily Login Bonus
                             </div>
 
-                            <div className="absolute -left-3 top-[6px] w-6 h-8 bg-white border-l border-b border-[#D8A14E]/40 -z-10" style={{ clipPath: "polygon(100% 0, 0 0, 30% 50%, 0 100%, 100% 100%)" }}></div>
+                            <div className="absolute -left-3 top-[6px] w-6 h-8 bg-[#ffae00] border-l border-b border-[#D8A14E]/40 -z-10" style={{ clipPath: "polygon(100% 0, 0 0, 30% 50%, 0 100%, 100% 100%)" }}></div>
                             <div className="absolute -left-[1px] top-[36px] w-[4px] h-[4px] bg-[#0c061d] -z-10" style={{ clipPath: "polygon(0 0, 100% 0, 100% 100%)" }}></div>
 
-                            <div className="absolute -right-3 top-[6px] w-6 h-8 bg-white border-r border-b border-[#D8A14E]/40 -z-10" style={{ clipPath: "polygon(0 0, 100% 0, 70% 50%, 100% 100%, 0 100%)" }}></div>
+                            <div className="absolute -right-3 top-[6px] w-6 h-8 bg-[#ffae00] border-r border-b border-[#D8A14E]/40 -z-10" style={{ clipPath: "polygon(0 0, 100% 0, 70% 50%, 100% 100%, 0 100%)" }}></div>
                             <div className="absolute -right-[1px] top-[36px] w-[4px] h-[4px] bg-[#0c061d] -z-10" style={{ clipPath: "polygon(0 0, 100% 0, 0 100%)" }}></div>
                         </div>
 
                         <div className="text-center z-10 flex items-center justify-center gap-1.5 mb-0.5">
                             <span className="text-[#D8A14E] text-[10px] sm:text-xs">✦</span>
-                            <p className="text-white/70 text-[10px] sm:text-[11px] font-medium tracking-wide">
+                            <p className="text-white/70 text-xs sm:text-[11px] font-medium tracking-wide">
                                 Log in daily & claim amazing rewards!
                             </p>
                             <span className="text-[#D8A14E] text-[10px] sm:text-xs">✦</span>
                         </div>
 
                         <div className="w-full px-2 py-2 relative z-10">
-                            <div className="relative w-full h-8 flex items-center">
-                                <div className="absolute left-[16px] right-[16px] h-1.5 rounded-full bg-[#1b1236]/85 border border-white/[0.03] shadow-inner pointer-events-none z-0">
+                            <div className="relative w-full">
+                                {/* Horizontal Progress Track Line - centered at y = 16px (the center of the 32px circle) */}
+                                <div className="absolute top-4 left-4 right-4 -translate-y-1/2 h-1.5 rounded-full bg-[#676767] border border-white/[0.03] shadow-inner pointer-events-none z-0">
                                     <div
                                         className="h-full rounded-full bg-gradient-to-r from-[#DF9F28] via-[#FFD05C] to-[#DF9F28] transition-all duration-500"
                                         style={{ width: `${getProgressBarWidth(streak)}%` }}
                                     />
                                 </div>
 
-                                <div className="absolute inset-x-0 top-0 bottom-0 flex justify-between items-center z-10 pointer-events-none">
+                                {/* Milestone Nodes / Dots */}
+                                <div className="relative flex justify-between items-start z-10">
                                     {REWARDS.map((reward, idx) => {
                                         const isPassed = streak >= reward.day;
                                         const isDotActive = reward.day === activeDay && !claimedToday;
                                         return (
-                                            <div key={idx} className="flex flex-col items-center pointer-events-auto relative">
+                                            <div key={idx} className="flex flex-col items-center pointer-events-auto">
                                                 <div
                                                     className={`w-8 h-8 rounded-full border-2 flex items-center justify-center shadow-md transition-all duration-300 ${isDotActive
                                                         ? "bg-gradient-to-b from-[#FFD05C] to-[#DF9F28] border-[#FFD05C] text-[#180F31] font-black animate-pulse shadow-[0_0_12px_#FFD05C]"
@@ -455,7 +519,7 @@ export function DailyLoginBonusPopupOld({ isOpen, onClose, onRewardClaimed }: Da
                                                         <span className="text-[11px] font-black leading-none">{reward.day}</span>
                                                     )}
                                                 </div>
-                                                <span className="text-[#D8A14E] text-[9px] font-black tracking-wider uppercase mt-1 relative top-[3px]">
+                                                <span className="text-[#D8A14E] text-[9px] font-black tracking-wider uppercase mt-1">
                                                     Day {reward.day}
                                                 </span>
                                             </div>
@@ -467,7 +531,7 @@ export function DailyLoginBonusPopupOld({ isOpen, onClose, onRewardClaimed }: Da
 
                         <div className="w-full relative z-10 mt-2">
                             <div className="grid grid-cols-3 gap-3 w-full">
-                                {REWARDS.slice(0, 3).map((reward) => {
+                                {REWARDS.slice(0, 3).map((reward, idx) => {
                                     const Icon = reward.icon;
                                     const isClaimed = claimedDays.includes(reward.day);
                                     const isActive = reward.day === activeDay && !claimedToday;
@@ -480,7 +544,7 @@ export function DailyLoginBonusPopupOld({ isOpen, onClose, onRewardClaimed }: Da
                                                 ? "bg-[#1c1236]/60 border-2 border-[#FFD05C] shadow-[0_0_15px_rgba(255,208,92,0.45)]"
                                                 : isClaimed
                                                     ? "bg-[#100923]/60 border border-[#7c3aed]/10 opacity-60 text-slate-500"
-                                                    : "bg-[#1c1236]/40 border border-[#D8A14E]/25 hover:border-[#D8A14E]/50"
+                                                    : "bg-[#1c1236]/40 border-2 border-[#d8a14e8f] hover:border-[#D8A14E]/50"
                                                 }`}
                                             style={{ height: "105px" }}
                                         >
@@ -494,17 +558,26 @@ export function DailyLoginBonusPopupOld({ isOpen, onClose, onRewardClaimed }: Da
                                             </div>
 
                                             <div className="my-1.5 shrink-0 relative z-10">
-                                                <Icon className={`w-7 h-7 ${isClaimed ? "text-[#FFD05C]/45" : isLocked ? "text-white/30" : "text-[#FFD05C]"}`} />
+                                                <Icon className={`w-7 h-7 ${isClaimed ? "text-[#FFD05C]/45" : isLocked ? "text-white" : "text-[#FFD05C]"}`} />
                                             </div>
 
                                             <span className={`text-[10px] font-black leading-none truncate max-w-full text-center relative z-10 ${isActive ? "text-[#FFD05C]" : "text-white"}`}>
                                                 {reward.day === 3 ? "100,000 MB" : `Rs ${reward.value}`}
                                             </span>
 
-                                            {isClaimed && (
+                                            {/* Top Right: Check mark if claimed, else Sparkle */}
+                                            {isClaimed ? (
                                                 <div className="absolute top-1.5 right-1.5 w-4 h-4 rounded-full bg-gradient-to-r from-[#DF9F28] to-[#FFD05C] border border-amber-600 flex items-center justify-center shadow-sm z-30">
                                                     <Check className="w-3 h-3 text-black stroke-[4.5]" />
                                                 </div>
+                                            ) : (
+                                                <motion.div
+                                                    animate={{ scale: [0.8, 1.25, 0.8], opacity: [0.5, 1, 0.5], rotate: [0, 90, 0] }}
+                                                    transition={{ duration: 2.2 + idx * 0.3, repeat: Infinity, ease: "easeInOut" }}
+                                                    className="absolute top-1.5 right-1.5 z-20 pointer-events-none"
+                                                >
+                                                    <Sparkles className={`w-3.5 h-3.5 ${isActive ? "text-[#FFD05C] drop-shadow-[0_0_8px_rgba(255,208,92,0.9)]" : "text-[#D8A14E]/70"}`} />
+                                                </motion.div>
                                             )}
                                         </div>
                                     );
@@ -524,7 +597,7 @@ export function DailyLoginBonusPopupOld({ isOpen, onClose, onRewardClaimed }: Da
                                         ? "bg-[#1c1236]/60 border-2 border-[#FFD05C] shadow-[0_0_20px_rgba(255,208,92,0.55)] animate-pulse"
                                         : isClaimed
                                             ? "bg-[#100923]/60 border border-[#7c3aed]/10 opacity-60 text-slate-500"
-                                            : "bg-[#1c1236]/40 border border-[#D8A14E]/25"
+                                            : "bg-[#1c1236]/40 border-2 border-[#d8a14e8f]"
                                         }`}
                                     style={{ height: "110px" }}
                                 >
@@ -539,10 +612,19 @@ export function DailyLoginBonusPopupOld({ isOpen, onClose, onRewardClaimed }: Da
 
                                     <MysteryBoxRewardAnimation isClaimed={isClaimed} isLocked={isLocked} isActive={isActive} />
 
-                                    {isClaimed && (
+                                    {/* Top Right: Check mark if claimed, else Sparkle */}
+                                    {isClaimed ? (
                                         <div className="absolute top-2 right-2 w-5 h-5 rounded-full bg-gradient-to-r from-[#DF9F28] to-[#FFD05C] border border-amber-600 flex items-center justify-center shadow-md z-30">
                                             <Check className="w-3.5 h-3.5 text-black stroke-[4]" />
                                         </div>
+                                    ) : (
+                                        <motion.div
+                                            animate={{ scale: [0.85, 1.3, 0.85], opacity: [0.6, 1, 0.6], rotate: [0, 180, 0] }}
+                                            transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut" }}
+                                            className="absolute top-2 right-2 z-20 pointer-events-none"
+                                        >
+                                            <Sparkles className={`w-4 h-4 ${isActive ? "text-[#FFD05C] drop-shadow-[0_0_10px_rgba(255,208,92,1)]" : "text-amber-300/80"}`} />
+                                        </motion.div>
                                     )}
                                 </div>
                             );

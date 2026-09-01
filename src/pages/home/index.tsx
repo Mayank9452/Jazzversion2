@@ -39,6 +39,7 @@ import DailyTournamentMixedTesting4 from "./DailyTournamentMixedTesting4";
 import { DailyLoginBonusPopupOld } from "@/components/DailyLoginBonusPopupOld";
 import { TopBarUpdatedNew } from "@/components/TopBarUpdatedNew";
 import { BottomNavBarNew } from "@/components/BottomNavBarNew";
+import LowBalancePopup from "@/components/LowBalancePopup";
 
 /* ─── Section Header ─────────────────────────────────────────────────────── */
 
@@ -153,13 +154,12 @@ const LoadingSkeleton: React.FC = () => (
 /* ─── Category Navigation ────────────────────────────────────────────────── */
 
 const categories = [
-  { id: "all", label: "Friends Cricket", image: "/assets/images/friend cricket name.png" },
+  { id: "all", label: "Friends Cricket", image: "/assets/images/SquareWithTitle.png" },
   { id: "action", label: "Zombie Uprising", image: "/assets/images/Zombie Uprising.png" },
   { id: "moba", label: "Tropical Slicer", image: "/assets/images/Tropical Slicer name.png" },
   { id: "racing", label: "Road Racer", image: "/assets/images/Road Racer name.png" },
   { id: "sports", label: "Sports", image: "/assets/images/friend cricket.png" },
-  { id: "arcade", label: "Arcade", image: "/assets/images/Alien Galaxy.png" },
-  { id: "puzzle", label: "Puzzle", image: "/assets/images/box tower.jpeg" }
+  { id: "puzzle", label: "Puzzle", image: "/assets/images/SquareWithoutTitle.png" }
 ];
 
 const trendingCategories = [
@@ -794,6 +794,7 @@ const Home = () => {
   const [showSpinWheelPopup, setShowSpinWheelPopup] = useState(false);
   const [shouldShowWelcomePopups, setShouldShowWelcomePopups] = useState(false);
   const [showDailyLoginPopup, setShowDailyLoginPopup] = useState(false);
+  const [showLowBalancePopup, setShowLowBalancePopup] = useState(true);
 
   useEffect(() => {
     const hasShown = sessionStorage.getItem("hasShownWelcomePopups");
@@ -807,7 +808,7 @@ const Home = () => {
     const todayStr = new Date().toDateString();
     if (savedLastClaim !== todayStr) {
       const timer = setTimeout(() => {
-        setShowDailyLoginPopup(true);
+        setShowDailyLoginPopup(false);
       }, 1500);
       return () => clearTimeout(timer);
     }
@@ -951,6 +952,8 @@ const Home = () => {
       )
     });
 
+
+
     // Fisher-Yates Shuffle
     const result = [...sections];
     for (let i = result.length - 1; i > 0; i--) {
@@ -982,7 +985,7 @@ const Home = () => {
         ) : (
           jazzHomePageData && (
             <div className="relative z-10">
-              <div className="px-1 pt-1 space-y-7">
+              <div className="px-1 pt-1 space-y-4">
 
 
 
@@ -1153,6 +1156,10 @@ const Home = () => {
       <DailyLoginBonusPopupOld
         isOpen={showDailyLoginPopup}
         onClose={() => setShowDailyLoginPopup(false)}
+      />
+      <LowBalancePopup
+        visible={showLowBalancePopup}
+        onClose={() => setShowLowBalancePopup(false)}
       />
       {shouldShowWelcomePopups && (
         <>

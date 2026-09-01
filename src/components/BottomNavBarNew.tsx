@@ -246,8 +246,12 @@ const ProfileIcon = ({ className, style, ...props }: React.SVGProps<SVGSVGElemen
     </svg>
 )
 
-const Voucher_IMAGES = [
+const VOUCHER_IMAGES_DARK = [
     "/assets/images/giftkarte.webp"
+]
+
+const VOUCHER_IMAGES_LIGHT = [
+    "/assets/images/giftkarte.png"
 ]
 
 type BottomNavBarProps = {
@@ -271,7 +275,13 @@ export function BottomNavBarNew({
 
     type DisplayState = 'icon' | 'text' | 'Voucher';
     const [currentState, setCurrentState] = React.useState<DisplayState>('icon');
-    const [currentVoucher, setCurrentVoucher] = React.useState<string>('/assets/images/Voucher.webp');
+    const [currentVoucher, setCurrentVoucher] = React.useState<string>(
+        isDark ? '/assets/images/giftkarte.png' : '/assets/images/giftkarte.webp'
+    );
+
+    React.useEffect(() => {
+        setCurrentVoucher(isDark ? '/assets/images/giftkarte.png' : '/assets/images/giftkarte.webp');
+    }, [isDark]);
 
     React.useEffect(() => {
         let timeoutId: NodeJS.Timeout;
@@ -281,7 +291,8 @@ export function BottomNavBarNew({
                 if (prev === 'icon') {
                     return 'text';
                 } else if (prev === 'text') {
-                    const randomVoucher = Voucher_IMAGES[Math.floor(Math.random() * Voucher_IMAGES.length)];
+                    const voucherList = isDark ? VOUCHER_IMAGES_DARK : VOUCHER_IMAGES_LIGHT;
+                    const randomVoucher = voucherList[Math.floor(Math.random() * voucherList.length)];
                     setCurrentVoucher(randomVoucher);
                     return 'Voucher';
                 } else {
@@ -294,7 +305,7 @@ export function BottomNavBarNew({
 
         timeoutId = setTimeout(triggerToggle, 3000);
         return () => clearTimeout(timeoutId);
-    }, []);
+    }, [isDark]);
 
     const navItems = [
         {

@@ -89,7 +89,7 @@ const PopupBannerUnsubscribe = ({
               className="w-full text-center relative z-10"
             >
               {/* Celebration Image Visual */}
-              <div className="relative mb-4 flex justify-center">
+              <div className="relative mb-2 flex justify-center">
                 <motion.div
                   animate={{
                     y: [-4, 4, -4],
@@ -105,7 +105,7 @@ const PopupBannerUnsubscribe = ({
                   {/* Outer Atmosphere Glow - Reduced blur */}
                   <div className="absolute -inset-6 blur-xl rounded-full opacity-80 group-hover:opacity-100 transition-opacity" />
 
-                  <div className="relative w-24 h-24">
+                  <div className="relative w-24 h-20">
                     {/* The Container */}
                     <div className="absolute inset-0 rounded-[2rem]">
                       <div className="w-full h-full flex items-center justify-center overflow-hidden relative">
@@ -113,7 +113,7 @@ const PopupBannerUnsubscribe = ({
                         <div className="absolute inset-0 " />
 
                         <img
-                          src="/assets/robotavatar/3.png"
+                          src="/assets/emojis/unsub.gif"
                           className="w-full h-full object-cover relative z-10 "
                           alt="Success Robot"
                           loading="lazy"

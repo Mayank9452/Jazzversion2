@@ -68,7 +68,7 @@ const PopupBannerUpdated: React.FC<PopupBannerUpdatedProps> = ({ onClose }) => {
               className="w-full text-center relative z-10"
             >
               {/* Image Visual */}
-              <div className="relative mb-6 flex justify-center">
+              <div className="relative mb-2 flex justify-center">
                 <motion.div
                   animate={{
                     y: [-4, 4, -4],
@@ -83,11 +83,11 @@ const PopupBannerUpdated: React.FC<PopupBannerUpdatedProps> = ({ onClose }) => {
                 >
                   <div className="absolute -inset-6 blur-xl rounded-full opacity-80 group-hover:opacity-100 transition-opacity" />
 
-                  <div className="relative w-24 h-16">
+                  <div className="relative w-24 h-20">
                     <div className="absolute inset-0 overflow-hidden">
                       <div className="w-full h-full flex items-center justify-center relative">
                         <img
-                          src="/assets/images/gamenow.png"
+                          src="/assets/emojis/subcribe.gif"
                           className="w-full h-full object-cover relative z-10"
                           alt="Welcome Robot"
                           loading="lazy"
@@ -117,11 +117,11 @@ const PopupBannerUpdated: React.FC<PopupBannerUpdatedProps> = ({ onClose }) => {
               {/* Title */}
               <h2 className="text-lg font-bold leading-tight mb-3">
                 <span className="text-white leading-relaxed">Welcome to</span> <br />
-                <span className="text-[#ffc200] leading-relaxed">GAMENOW Premier League</span>
+                <span className="text-[#ffc200] leading-relaxed">Gamenow Premier League</span>
               </h2>
 
               {/* Description */}
-              <p className="text-sm text-blue-100 leading-relaxed mb-8">
+              <p className="text-sm text-blue-100 leading-relaxed mb-4">
                 Start Playing tournament and win amazing prizes
               </p>
 

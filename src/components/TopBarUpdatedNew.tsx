@@ -74,8 +74,8 @@ export function TopBarUpdatedNew() {
             <div className="sticky top-0 z-[99] w-full">
                 <div
                     className={`${isDark
-                            ? "bg-white/85 dark:bg-brand-black-100/90 border-b border-slate-200/80 dark:border-white/[0.08] shadow-[0_2px_12px_rgba(0,0,0,0.03)]"
-                            : "bg-brand-gradient border-b border-[#dfa208]/30 shadow-[0_2px_12px_rgba(0,0,0,0.05)]"
+                        ? "bg-white/85 dark:bg-brand-black-100/90 border-b border-slate-200/80 dark:border-white/[0.08] shadow-[0_2px_12px_rgba(0,0,0,0.03)]"
+                        : "bg-brand-gradient border-b border-[#dfa208]/30 shadow-[0_2px_12px_rgba(0,0,0,0.05)]"
                         } backdrop-blur-md h-[70px] flex items-center justify-between px-2 w-full transition-all duration-300 relative z-10`}
                 >
                     {/* Left Section: Navigation Toggler & Coins Chip */}
@@ -84,8 +84,8 @@ export function TopBarUpdatedNew() {
                         <button
                             onClick={() => setSidebarOpen(true)}
                             className={`w-9 h-9 rounded-xl flex items-center justify-center border active:scale-95 transition-all shrink-0 ${isDark
-                                    ? "border-slate-200 dark:border-white/10 bg-slate-50 dark:bg-white/[0.03] hover:bg-slate-100 dark:hover:bg-white/5 text-slate-800 dark:text-white"
-                                    : "border-[#dfa208]/30 bg-white/40 backdrop-blur-md hover:bg-white/60 text-black"
+                                ? "border-slate-200 dark:border-white/10 bg-slate-50 dark:bg-white/[0.03] hover:bg-slate-100 dark:hover:bg-white/5 text-slate-800 dark:text-white"
+                                : "border-[#dfa208]/30 bg-white/40 backdrop-blur-md hover:bg-white/60 text-black"
                                 }`}
                             title="Open Navigation"
                         >
@@ -96,18 +96,19 @@ export function TopBarUpdatedNew() {
                         <div
                             // onClick={handleRedeem}
                             className={`flex flex-col items-center justify-center h-12 px-3.5 rounded-lg border transition-all shadow-inner cursor-pointer shrink-0 ${isDark
-                                    ? "border-[#dfa208]/30 dark:border-brand-gold-100/30 bg-[#ffca20]/5 dark:bg-brand-gold-100/5 hover:bg-[#ffca20]/10 dark:hover:bg-brand-gold-100/10"
-                                    : "border-[#dfa208]/50 bg-white/40 hover:bg-black/15"
+                                ? "border-[#dfa208]/30 dark:border-brand-gold-100/30 bg-[#ffca20]/5 dark:bg-brand-gold-100/5 hover:bg-[#ffca20]/10 dark:hover:bg-brand-gold-100/10"
+                                : "border-[#dfa208]/50 bg-white/40 hover:bg-black/15"
                                 }`}
                             title="Redeem Coins"
                         >
                             {/* Top Row: Coin Icon and Coins Text */}
                             <div className="flex items-center gap-1">
-                                {isDark ? (
+                                {/* {isDark ? (
                                     <img src="/assets/images/img/gold-coin.png" className="w-3.5 h-3.5 object-contain animate-pulse" alt="Reward Coins" />
                                 ) : (
                                     <Coins className="h-4 w-4 text-black/85" />
-                                )}
+                                )} */}
+                                <Coins className="h-4 w-4 text-black/85 dark:text-brand-gold-200" />
                                 <span className={`text-[8px] font-black uppercase tracking-wider leading-none ${isDark ? "text-[#dfa208] dark:text-brand-gold-200" : "text-black/85"}`}>Coins</span>
                             </div>
                             {/* Bottom Row: Value */}
@@ -135,8 +136,8 @@ export function TopBarUpdatedNew() {
                         <button
                             onClick={() => navigate("/notification")}
                             className={`relative w-9 h-9 rounded-xl flex items-center justify-center border active:scale-95 transition-all shrink-0 ${isDark
-                                    ? "border-slate-200 dark:border-white/10 bg-slate-50 dark:bg-white/[0.03] hover:bg-slate-100 dark:hover:bg-white/5 text-slate-800 dark:text-white"
-                                    : "border-[#dfa208]/30 bg-white/40 hover:bg-white/60 text-black"
+                                ? "border-slate-200 dark:border-white/10 bg-slate-50 dark:bg-white/[0.03] hover:bg-slate-100 dark:hover:bg-white/5 text-slate-800 dark:text-white"
+                                : "border-[#dfa208]/30 bg-white/40 hover:bg-white/60 text-black"
                                 }`}
                             title="Notifications"
                         >
@@ -149,8 +150,8 @@ export function TopBarUpdatedNew() {
                         <button
                             onClick={() => setTheme(isDark ? "light" : "dark")}
                             className={`w-9 h-9 rounded-xl flex items-center justify-center border active:scale-95 transition-all shrink-0 ${isDark
-                                    ? "border-slate-200 dark:border-white/10 bg-slate-50 dark:bg-white/[0.03] hover:bg-slate-100 dark:hover:bg-white/5 text-slate-800 dark:text-white"
-                                    : "border-[#dfa208]/30 bg-white/40 hover:bg-white/60 text-black"
+                                ? "border-slate-200 dark:border-white/10 bg-slate-50 dark:bg-white/[0.03] hover:bg-slate-100 dark:hover:bg-white/5 text-slate-800 dark:text-white"
+                                : "border-[#dfa208]/30 bg-white/40 hover:bg-white/60 text-black"
                                 }`}
                             title={isDark ? "Switch to Light Mode" : "Switch to Dark Mode"}
                         >

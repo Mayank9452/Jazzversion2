@@ -23,7 +23,7 @@ export default function LowBalancePopup({ visible, onClose, avatarUrl }: LowBala
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          className="fixed inset-0 z-[1000] flex items-center justify-center bg-black/40 backdrop-blur-[2px] will-change-transform"
+          className="fixed inset-0 z-[1000] flex items-center justify-center bg-black/40 backdrop-blur-[7px] will-change-transform"
           style={{ marginTop: "0px" }}
         >
           {/* Main Card */}
@@ -32,7 +32,7 @@ export default function LowBalancePopup({ visible, onClose, avatarUrl }: LowBala
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 30, scale: 0.95 }}
             transition={{ duration: 0.3, ease: "easeOut" }}
-            className="relative gradient-popup-premium backdrop-blur-md rounded-[2.5rem] max-w-sm w-[85%] p-6 border border-white/20 shadow-[0_20px_50px_rgba(0,0,0,0.5)] flex flex-col items-center gap-4 overflow-hidden will-change-transform"
+            className="relative bg-[#282828c2] dark:bg-[#0000002b] backdrop-blur-md rounded-[2.5rem] max-w-sm w-[85%] p-6 border border-white/20 shadow-[0_20px_50px_rgba(0,0,0,0.5)] flex flex-col items-center gap-4 overflow-hidden will-change-transform"
           >
             {/* Glowing Corner Accents */}
             <div className="absolute top-0 left-0 w-12 h-12 border-t-2 border-l-2 border-yellow-500 rounded-tl-[2.5rem] pointer-events-none" />
@@ -47,7 +47,7 @@ export default function LowBalancePopup({ visible, onClose, avatarUrl }: LowBala
             {/* Close Button */}
             <button
               onClick={onClose}
-              className="absolute z-[50] top-4 right-4 w-10 h-10 rounded-full bg-white/5 hover:bg-white/10 active:scale-90 border-2 border-pink-900 flex items-center justify-center transition-all"
+              className="absolute z-[50] top-4 right-4 w-10 h-10 rounded-full bg-white/5 hover:bg-white/10 active:scale-90 border-2 border-yellow-main flex items-center justify-center transition-all"
             >
               <X className="h-5 w-5 text-white/60 hover:text-white" />
             </button>
@@ -60,7 +60,7 @@ export default function LowBalancePopup({ visible, onClose, avatarUrl }: LowBala
               className="w-full text-center relative z-10"
             >
               {/* Image Visual */}
-              <div className="relative mb-4 flex justify-center">
+              <div className="relative flex justify-center">
                 <motion.div
                   animate={{
                     y: [-4, 4, -4],
@@ -73,13 +73,13 @@ export default function LowBalancePopup({ visible, onClose, avatarUrl }: LowBala
                   }}
                   className="relative group"
                 >
-                  <div className="absolute -inset-6 bg-gradient-to-r from-pink-500/20 via-purple-500/20 to-indigo-500/20 blur-xl rounded-full opacity-80 group-hover:opacity-100 transition-opacity" />
+                  <div className="absolute -inset-6 blur-xl rounded-full opacity-80 group-hover:opacity-100 transition-opacity" />
 
-                  <div className="relative w-24 h-24">
+                  <div className="relative w-24 h-20">
                     <div className="absolute inset-0 overflow-hidden">
                       <div className="w-full h-full flex items-center justify-center relative">
                         <img
-                          src='/assets/robotavatar/2.png'
+                          src='/assets/emojis/lb.gif'
                           className="w-full h-full object-cover relative z-10"
                           alt="Low Balance Robot"
                           loading="lazy"
@@ -107,17 +107,17 @@ export default function LowBalancePopup({ visible, onClose, avatarUrl }: LowBala
               </div>
 
               {/* Message Content */}
-              <h2 className="text-xl font-bold bg-gradient-to-r from-pink-400 via-white to-pink-600 bg-clip-text text-transparent leading-tight mb-3">
-                {t.lowBalance}
+              <h2 className="text-xl font-bold text-[#ffc200] leading-tight mb-3">
+                Low Balance !
               </h2>
               <p className="text-sm text-blue-100 leading-relaxed">
-                {t.lowBalanceMessage}
+                Insufficient balance. Please top up your account to continue playing
               </p>
 
               {/* Action Button */}
               <div className="mt-8 space-y-3">
                 <Button
-                  className="h-12 w-full bg-gradient-to-r from-pink-600 to-rose-700 hover:from-pink-500 hover:to-rose-600 text-white font-bold rounded-2xl shadow-lg shadow-pink-900/20 border-t border-white/20 transition-all active:scale-95 text-base"
+                  className="text-base h-12 w-full bg-gradient-to-r from-[#ffd43f] to-[#ffb800] hover:from-[#ffe066] hover:to-[#ffd014] text-[#0b2f5f] font-bold rounded-2xl shadow-lg shadow-pink-900/20 border-2 border-white transition-all active:scale-95"
                   onClick={onClose}
                 >
                   {t.okayGotIt || "OK, Got it"}

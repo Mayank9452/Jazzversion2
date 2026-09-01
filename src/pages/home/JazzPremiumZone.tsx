@@ -56,7 +56,7 @@ const getGameImage = (gameName: string, defaultImage: string) => {
         name.includes("bottle") ||
         name.includes("battle")
     ) {
-        return "/assets/images/Alien Galaxy.png";
+        return "/assets/images/HeroTournement.png";
     }
     return defaultImage;
 };
@@ -162,7 +162,7 @@ const JazzPremiumZone: React.FC<JazzPremiumZoneProps> = ({ heroGames, onCountdow
                                             className={`w-full flex flex-col gap-0 overflow-hidden rounded-[24px] transition-all duration-200 active:scale-[0.98] ${borderClass} ${cardBg}`}
                                         >
                                             {/* Game Banner Image */}
-                                            <div className="relative w-full aspect-[2.1/1] rounded-[18px] overflow-hidden shadow-sm">
+                                            <div className="relative w-full aspect-[2/1] rounded-[18px] overflow-hidden shadow-sm">
                                                 <img
                                                     src={getGameImage(game?.tournament_name, game?.tournament_game_image)}
                                                     alt={game?.tournament_name}
@@ -181,11 +181,10 @@ const JazzPremiumZone: React.FC<JazzPremiumZoneProps> = ({ heroGames, onCountdow
                                             </div>
 
                                             {/* Prize Pool & Play Button */}
-                                            <div className={`flex justify-between items-center mx-1 px-2.5 py-2 border-t rounded-b-[24px] transition-all duration-300 ${
-                                                isDark 
-                                                    ? "border-[#dfa208]/30 dark:border-white/[0.04] bg-slate-50 dark:bg-white/[0.03] shadow-[inset_0_-4px_24px_rgba(0,0,0,0.2),inset_0_-2px_1px_rgba(78,78,78,1),inset_0px_0_0px_rgba(255,255,255,0.6),inset_0px_0_0px_rgba(255,255,255,0.6)]" 
-                                                    : "bg-gradient-to-r from-[#FFFDF0] via-[#FFFCE0] to-[#FFF3CD] border-[#dfa208]/30 shadow-[inset_0_1px_4px_rgba(255,255,255,0.8)]"
-                                            }`}>
+                                            <div className={`flex justify-between items-center mx-1 px-2.5 py-2 border-t rounded-b-[24px] transition-all duration-300 ${isDark
+                                                ? "border-[#dfa208]/30 dark:border-white/[0.04] bg-slate-50 dark:bg-white/[0.03] shadow-[inset_0_-4px_24px_rgba(0,0,0,0.2),inset_0_-2px_1px_rgba(78,78,78,1),inset_0px_0_0px_rgba(255,255,255,0.6),inset_0px_0_0px_rgba(255,255,255,0.6)]"
+                                                : "bg-gradient-to-r from-[#FFFDF0] via-[#FFFCE0] to-[#FFF3CD] border-[#dfa208]/30 shadow-[inset_0_1px_4px_rgba(255,255,255,0.8)]"
+                                                }`}>
                                                 <div className="flex items-center gap-2">
                                                     <Coins className={`w-8 h-8 shrink-0 ${isDark ? "text-brand-gold-100 dark:text-brand-yellow-100" : "text-[#dfa208]"}`} />
                                                     <div>
