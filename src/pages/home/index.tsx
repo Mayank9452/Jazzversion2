@@ -249,12 +249,12 @@ const CategoryNavigationTesting = ({ categoriesList = categories }: { categories
             >
               {/* Premium Image Card Container */}
               <div
-                className="w-[110px] h-[110px] rounded-[2rem] flex items-center justify-center border border-slate-200/50 dark:border-white/10 bg-white/60 dark:bg-white/[0.02] backdrop-blur-[8px] transition-all duration-300 shadow-[0_4px_16px_rgba(0,0,0,0.04)] dark:shadow-[0_8px_32px_rgba(0,0,0,0.25)] overflow-hidden group-hover:border-brand-yellow-100/60 group-hover:shadow-[0_6px_20px_rgba(255,202,32,0.15)]"
+                className="w-[110px] h-[110px] rounded-[2rem] p-1 flex items-center justify-center border-2 border-brand-yellow-100 bg-white/60 dark:bg-white/[0.02] backdrop-blur-[8px] transition-all duration-300 shadow-[0_4px_16px_rgba(255,202,32,0.15)] dark:shadow-[0_8px_32px_rgba(0,0,0,0.25)] overflow-hidden group-hover:border-brand-yellow-100 group-hover:shadow-[0_6px_20px_rgba(255,202,32,0.25)]"
               >
                 <img
                   src={imageUrl}
                   alt={cat.label}
-                  className="w-full h-full object-cover rounded-[2rem] transition-transform duration-500 group-hover:scale-110 "
+                  className="w-full h-full object-cover rounded-[1.75rem] transition-transform duration-500 group-hover:scale-110"
                 />
               </div>
 

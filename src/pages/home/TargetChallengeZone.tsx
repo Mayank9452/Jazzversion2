@@ -212,7 +212,7 @@ export const TargetChallengeZone: React.FC = () => {
                                             }`}
                                     >
                                         {/* Yellow blur glow behind the transparent/opaque banner */}
-                                        <div className="absolute top-[40%] left-[50%] -translate-x-[50%] -translate-y-[50%] w-[70%] aspect-square rounded-full bg-[#FFCA20]/25 blur-[25px] pointer-events-none z-0" />
+                                        <div className="absolute top-[40%] left-[50%] -translate-x-[50%] -translate-y-[50%] w-[50%] aspect-square rounded-full bg-[#FFCA20]/25 blur-[5px] pointer-events-none z-0" />
 
                                         {/* Game Image Banner */}
                                         <div className="relative w-full aspect-[285/380] rounded-xl overflow-visible z-10">
@@ -220,7 +220,7 @@ export const TargetChallengeZone: React.FC = () => {
                                                 src={game.image}
                                                 className="w-full h-full rounded-lg block object-cover transition-transform duration-500 group-hover:scale-105"
                                                 style={{
-                                                    filter: "drop-shadow(0 0 14px rgba(255, 202, 32, 0.75))"
+                                                    filter: "drop-shadow(0 0 10px rgba(255, 203, 32, 0.95))"
                                                 }}
                                                 alt={game.name}
                                             />
@@ -252,30 +252,27 @@ export const TargetChallengeZone: React.FC = () => {
                                         </div>
 
                                         {/* Reward Row */}
-                                        <div className={`flex justify-center items-center px-2 py-1.5 mt-1 border rounded-xl whitespace-nowrap min-h-[36px] transition-all duration-300 ${isDark
-                                                ? "bg-slate-100/80 dark:bg-white/[0.03] border-slate-200/60 dark:border-white/[0.04] shadow-[inset_0_-4px_24px_rgba(0,0,0,0.2),inset_0_-2px_1px_rgba(78,78,78,1),inset_0px_0_0px_rgba(255,255,255,0.6),inset_0px_0_0px_rgba(255,255,255,0.6)]"
-                                                : "bg-brand-gradient border-[#dfa208]/40 shadow-[0_2px_8px_rgba(223,162,8,0.2)]"
-                                            }`}>
+                                        <div className="flex justify-center items-center px-2 py-1.5 mt-1 border-2 border-white rounded-xl whitespace-nowrap min-h-[36px] transition-all duration-300 bg-brand-gradient border-[#dfa208]/40 shadow-[0_2px_8px_rgba(223,162,8,0.2)]">
                                             {rewardType === 0 && (
-                                                <div className="font-extrabold flex items-center gap-0.5 text-sm sm:text-xs">
-                                                    <Coins className={`w-5 h-5 shrink-0 ${isDark ? "text-brand-gold-100 dark:text-brand-yellow-100" : "text-black fill-black/10"}`} />
-                                                    <span className={`tracking-wide font-bold ${isDark ? "text-slate-800 dark:text-brand-yellow-100" : "text-black font-black"}`}>
+                                                <div className="font-semibold flex items-center gap-0.5 text-sm sm:text-xs">
+                                                    <Coins className="w-5 h-5 shrink-0 text-black fill-black/10" />
+                                                    <span className="tracking-wide text-black font-bold">
                                                         {formatNumberInText(game.prize)}
                                                     </span>
                                                 </div>
                                             )}
                                             {rewardType === 1 && (
-                                                <div className="font-extrabold flex items-center gap-0.5 text-xs sm:text-[10px]">
-                                                    <Gift className={`w-5 h-5 shrink-0 ${isDark ? "text-brand-gold-100 dark:text-brand-yellow-100" : "text-black fill-black/10"}`} />
-                                                    <span className={`tracking-wide font-bold ${isDark ? "text-slate-800 dark:text-brand-yellow-100" : "text-black font-black"}`}>
+                                                <div className="font-semibold flex items-center gap-0.5 text-xs sm:text-[10px]">
+                                                    <Gift className="w-5 h-5 shrink-0 text-black fill-black/10" />
+                                                    <span className="tracking-wide text-black font-bold">
                                                         {formatNumberInText(game.prize)}
                                                     </span>
                                                 </div>
                                             )}
                                             {rewardType === 2 && (
-                                                <div className="font-extrabold flex items-center gap-1 text-xs sm:text-[10px]">
-                                                    <TopupIcon className={`w-4 h-4 shrink-0 ${isDark ? "text-brand-yellow-100" : "text-black"}`} />
-                                                    <span className={`tracking-wide font-bold ${isDark ? "text-slate-800 dark:text-brand-yellow-100" : "text-black font-black"}`}>
+                                                <div className="font-semibold flex items-center gap-1 text-xs sm:text-[10px]">
+                                                    <TopupIcon className="w-4 h-4 shrink-0 text-black" />
+                                                    <span className="tracking-wide text-black font-bold">
                                                         {formatNumberInText(game.prize)}
                                                     </span>
                                                 </div>

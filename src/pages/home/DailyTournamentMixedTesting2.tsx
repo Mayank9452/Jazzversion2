@@ -258,30 +258,27 @@ const DailyTournamentMixedTesting2: React.FC<DailyTournament> = ({
                                             </div>
 
                                             {/* Reward Row */}
-                                            <div className={`flex justify-center items-center px-2 py-1.5 mt-1 border rounded-xl whitespace-nowrap min-h-[36px] transition-all duration-300 ${isDark
-                                                    ? "bg-slate-100/80 dark:bg-white/[0.03] border-slate-200/60 dark:border-white/[0.04] shadow-[inset_0_-4px_24px_rgba(0,0,0,0.2),inset_0_-2px_1px_rgba(78,78,78,1),inset_0px_0_0px_rgba(255,255,255,0.6),inset_0px_0_0px_rgba(255,255,255,0.6)]"
-                                                    : "bg-brand-gradient border-[#dfa208]/40 shadow-[0_2px_8px_rgba(223,162,8,0.2)]"
-                                                }`}>
+                                            <div className="flex justify-center items-center px-2 py-1.5 mt-1 border-2 border-white rounded-xl whitespace-nowrap transition-all duration-300 bg-brand-gradient shadow-[0_2px_8px_rgba(223,162,8,0.2)]">
                                                 {rewardType === 0 && (
-                                                    <div className="font-extrabold flex items-center gap-1.5 text-sm sm:text-xs">
-                                                        <Coins className={`w-5 h-5 shrink-0 ${isDark ? "text-brand-gold-100 dark:text-brand-yellow-100" : "text-black fill-black/10"}`} />
-                                                        <span className={`tracking-wide font-bold ${isDark ? "text-slate-800 dark:text-brand-yellow-100" : "text-black font-black"}`}>
+                                                    <div className="font-semibold flex items-center gap-1 text-sm sm:text-xs">
+                                                        <Coins className="w-5 h-5 shrink-0 text-black fill-black/10" />
+                                                        <span className="tracking-wide text-black font-bold">
                                                             {Number(game?.fee_prize_1).toLocaleString()} Coins
                                                         </span>
                                                     </div>
                                                 )}
                                                 {rewardType === 1 && (
-                                                    <div className="font-extrabold flex items-center gap-1 text-xs sm:text-[10px]">
-                                                        <Gift className={`w-5 h-5 shrink-0 ${isDark ? "text-brand-gold-100 dark:text-brand-yellow-100" : "text-black fill-black/10"}`} />
-                                                        <span className={`tracking-wide font-bold ${isDark ? "text-slate-800 dark:text-brand-yellow-100" : "text-black font-black"}`}>
+                                                    <div className="font-semibold flex items-center gap-1 text-xs sm:text-[10px]">
+                                                        <Gift className="w-5 h-5 shrink-0 text-black fill-black/10" />
+                                                        <span className="tracking-wide text-black font-bold">
                                                             {formatNumberInText("Rs 100000 Giftkarte")}
                                                         </span>
                                                     </div>
                                                 )}
                                                 {rewardType === 2 && (
-                                                    <div className="font-extrabold flex items-center gap-1.5 text-xs sm:text-[10px]">
-                                                        <TopupIcon className={`h-3.5 w-3.5 shrink-0 ${isDark ? "text-brand-yellow-100" : "text-black"}`} />
-                                                        <span className={`tracking-wide font-bold ${isDark ? "text-slate-800 dark:text-brand-yellow-100" : "text-black font-black"}`}>
+                                                    <div className="font-semibold flex items-center gap-1 text-xs sm:text-[10px]">
+                                                        <TopupIcon className="h-5 w-5 shrink-0 text-black" />
+                                                        <span className="tracking-wide text-black font-bold">
                                                             {formatNumberInText("Rs 100000 Topup")}
                                                         </span>
                                                     </div>

@@ -43,7 +43,7 @@ export function DailyLoginBannerCard({ onClick }: { onClick: () => void }) {
         </div>
       </div>
 
-      <button className="bg-gradient-to-r from-[#ffca20] to-[#dfa208] text-black font-black text-[11px] tracking-wider uppercase px-4 py-2 rounded-xl border border-white/20 active:scale-95 transition-all shadow-md">
+      <button className="bg-gradient-to-r from-[#ffca20] to-[#dfa208] text-black font-black text-[11px] tracking-wider uppercase px-4 py-2 rounded-xl border-2 border-white active:scale-95 transition-all shadow-md">
         Open
       </button>
     </div>

@@ -526,7 +526,7 @@ function SpinWheelUpdatedVoucher3({ }) {
                                             </div> */}
 
                                             <div
-                                                className="h-[17rem] sm:h-80 aspect-square rounded-full custom-box shadow-[0_0_25px_35px_rgba(255,202,32,0.2)] dark:shadow-[0_0_20px_25px_rgba(255,202,32,1)]"
+                                                className="h-[17rem] sm:h-80 aspect-square rounded-full custom-box shadow-[0_0_25px_35px_rgba(255,202,32,0.2)] dark:shadow-[0_0_6px_26px_rgba(255,202,32,1)]"
                                             // style={{
                                             //     boxShadow: isDarkTheme
                                             //         ? `0 0 25px 35px ${hexToRgba(shadowColor, 0.45)}`
