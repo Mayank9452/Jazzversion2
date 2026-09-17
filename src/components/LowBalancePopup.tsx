@@ -73,18 +73,18 @@ export default function LowBalancePopup({ visible, onClose, avatarUrl }: LowBala
                   }}
                   className="relative group"
                 >
-                  <div className="absolute -inset-6 blur-xl rounded-full opacity-80 group-hover:opacity-100 transition-opacity" />
+                  <div className="absolute -inset-2 rounded-full transition-opacity" />
 
                   <div className="relative flex items-center justify-center">
                     <img
                       src='/assets/emojis/lb.gif'
-                      className="w-28 h-28 sm:w-32 sm:h-32 object-contain relative z-10"
+                      className="w-32 h-32 sm:w-32 sm:h-32 object-contain relative z-10"
                       alt="Low Balance Robot"
                       loading="lazy"
                     />
 
                     {/* Sparkles */}
-                    <motion.div
+                    {/* <motion.div
                       animate={{ scale: [0, 1.2, 0], opacity: [0, 1, 0] }}
                       transition={{ duration: 2, repeat: Infinity, delay: 0.5 }}
                       className="absolute top-2 right-2 z-20"
@@ -97,7 +97,7 @@ export default function LowBalancePopup({ visible, onClose, avatarUrl }: LowBala
                       className="absolute bottom-2 left-2 z-20"
                     >
                       <Sparkles className="w-3 h-3 text-pink-400" />
-                    </motion.div>
+                    </motion.div> */}
                   </div>
                 </motion.div>
               </div>

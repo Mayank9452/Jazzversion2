@@ -23,7 +23,7 @@ const getGameImage = (gameName: string, defaultImage: string, index: number) => 
         return "/assets/images/Stick Monkey.png";
     }
     const images = [
-        "/assets/images/01.png",
+        "/assets/images/knideNinja-portrait.png",
         "/assets/images/character.png",
     ];
     return images[index % images.length];

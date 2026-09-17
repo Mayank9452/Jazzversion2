@@ -150,7 +150,7 @@ const targetGames: TargetGame[] = [
     {
         id: "5",
         name: "Knife Ninja",
-        image: "/assets/images/knife ninja.jpeg",
+        image: "/assets/images/knideNinja-portrait.png",
         target: "40000",
         prize: "Rs 100000 Giftkarte",
     },

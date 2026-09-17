@@ -239,7 +239,215 @@ const MysteryBoxRewardAnimation = ({ isClaimed, isLocked, isActive }: { isClaime
     );
 };
 
-interface DailyLoginBonusPopupProps {
+// Celebratory Confetti Particle System
+const CelebrationConfetti = () => {
+    const confettiItems = React.useMemo(() => {
+        const colors = ["#FFD05C", "#DF9F28", "#FF5C93", "#5CE1FF", "#A78BFA", "#FFFFFF"];
+        const shapes = ["circle", "square", "diamond"];
+        return Array.from({ length: 35 }).map((_, i) => ({
+            id: i,
+            x: (Math.random() - 0.5) * 320,
+            y: -(Math.random() * 120 + 80),
+            targetY: Math.random() * 320 + 40,
+            targetX: (Math.random() - 0.5) * 320,
+            size: Math.random() * 7 + 5,
+            color: colors[i % colors.length],
+            shape: shapes[i % shapes.length],
+            rotate: Math.random() * 360,
+            targetRotate: Math.random() * 720 - 360,
+            duration: Math.random() * 1.6 + 2.2,
+            delay: Math.random() * 0.5,
+        }));
+    }, []);
+
+    return (
+        <div className="absolute inset-0 overflow-hidden pointer-events-none z-30">
+            {confettiItems.map((item) => (
+                <motion.div
+                    key={item.id}
+                    initial={{
+                        x: item.x,
+                        y: item.y,
+                        opacity: 0,
+                        scale: 0,
+                        rotate: item.rotate,
+                    }}
+                    animate={{
+                        x: item.targetX,
+                        y: item.targetY,
+                        opacity: [0, 1, 1, 0],
+                        scale: [0, 1.3, 1, 0.5],
+                        rotate: item.targetRotate,
+                    }}
+                    transition={{
+                        duration: item.duration,
+                        delay: item.delay,
+                        repeat: Infinity,
+                        repeatDelay: Math.random() * 1.5 + 0.8,
+                        ease: "easeOut",
+                    }}
+                    style={{
+                        position: "absolute",
+                        left: "50%",
+                        top: "25%",
+                        width: item.size,
+                        height: item.size,
+                        backgroundColor: item.color,
+                        borderRadius: item.shape === "circle" ? "50%" : item.shape === "diamond" ? "2px" : "1px",
+                        transform: item.shape === "diamond" ? "rotate(45deg)" : undefined,
+                    }}
+                />
+            ))}
+        </div>
+    );
+};
+
+interface RewardCongratulationsModalProps {
+    isOpen: boolean;
+    onClose: () => void;
+    reward: any;
+    streak: number;
+    day: number;
+}
+
+const RewardCongratulationsModal: React.FC<RewardCongratulationsModalProps> = ({
+    isOpen,
+    onClose,
+    reward,
+    streak,
+    day,
+}) => {
+    if (!isOpen || !reward) return null;
+
+    const Icon = reward.icon || Coins;
+    const isDay15 = reward.day === 15 || reward.type === "mystery";
+
+    const getRewardTitle = () => {
+        if (reward.day === 3) return "100,000 MB Data";
+        if (reward.day === 7) return "Rs 100,000 Giftkarte";
+        if (reward.day === 15) return "Rs 100,000 Topup";
+        return `${reward.value} ${reward.label}`;
+    };
+
+    const getRewardSubtitle = () => {
+        if (reward.day === 3) return "High-Speed Internet Data Pack Unlocked";
+        if (reward.day === 7) return "Exclusive Shopping Voucher Credited";
+        if (reward.day === 15) return "Mega Grand Jackpot Milestone Reward!";
+        return "Free Play Coins added to your balance";
+    };
+
+    return (
+        <div className="fixed inset-0 z-[1200] flex items-center justify-center px-4 select-none">
+            {/* Frosted Dark Backdrop */}
+            <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                onClick={onClose}
+                className="absolute inset-0 bg-black/85 backdrop-blur-[12px]"
+            />
+
+            {/* Celebratory Floating Confetti */}
+            <CelebrationConfetti />
+
+            {/* Modal Window */}
+            <motion.div
+                initial={{ opacity: 0, scale: 0.75, y: 30 }}
+                animate={{ opacity: 1, scale: 1, y: 0 }}
+                exit={{ opacity: 0, scale: 0.8, y: 20 }}
+                transition={{ type: "spring", stiffness: 380, damping: 26 }}
+                className="relative w-full max-w-[360px] rounded-[36px] border-2 border-[#D8A14E] p-6 pt-10 flex flex-col items-center text-center shadow-[0_0_60px_rgba(216,161,78,0.4)] bg-gradient-to-b from-[#21134a] via-[#12092c] to-[#080216] text-white z-20"
+            >
+                {/* Top 3D Folded Ribbon Header */}
+                <div className="relative -mt-16 mb-2 z-20 mx-auto select-none w-fit">
+                    <div className="bg-gradient-to-b from-[#3a1f80] via-[#241154] to-[#150a33] text-[#FFD05C] text-[15px] font-black px-8 py-3 rounded-xl uppercase tracking-widest shadow-[0_4px_25px_rgba(0,0,0,0.6)] border-2 border-[#FFD05C] flex items-center justify-center gap-2 relative z-10">
+                        <Sparkles className="w-4 h-4 text-amber-300 animate-spin" style={{ animationDuration: "6s" }} />
+                        <span>Congratulations!</span>
+                        <Sparkles className="w-4 h-4 text-amber-300 animate-spin" style={{ animationDuration: "6s" }} />
+                    </div>
+
+                    {/* Ribbon Wings */}
+                    <div className="absolute -left-3 top-[6px] w-6 h-8 bg-[#ffae00] border-l border-b border-[#D8A14E]/60 -z-10" style={{ clipPath: "polygon(100% 0, 0 0, 30% 50%, 0 100%, 100% 100%)" }}></div>
+                    <div className="absolute -left-[1px] top-[36px] w-[4px] h-[4px] bg-[#0c061d] -z-10" style={{ clipPath: "polygon(0 0, 100% 0, 100% 100%)" }}></div>
+                    <div className="absolute -right-3 top-[6px] w-6 h-8 bg-[#ffae00] border-r border-b border-[#D8A14E]/60 -z-10" style={{ clipPath: "polygon(0 0, 100% 0, 70% 50%, 100% 100%, 0 100%)" }}></div>
+                    <div className="absolute -right-[1px] top-[36px] w-[4px] h-[4px] bg-[#0c061d] -z-10" style={{ clipPath: "polygon(0 0, 100% 0, 0 100%)" }}></div>
+                </div>
+
+                {/* Rotating Sunburst & Glow behind Reward */}
+                <div className="relative my-3 w-20 h-20 flex items-center justify-center">
+                    {/* Spinning Rays */}
+                    {/* <motion.div
+                        animate={{ rotate: 360 }}
+                        transition={{ duration: 15, repeat: Infinity, ease: "linear" }}
+                        className="absolute -inset-8 opacity-40 pointer-events-none"
+                        style={{
+                            background: "conic-gradient(from 0deg, rgba(255, 208, 92, 0.4) 0deg, transparent 30deg, rgba(255, 208, 92, 0.4) 60deg, transparent 90deg, rgba(255, 208, 92, 0.4) 120deg, transparent 150deg, rgba(255, 208, 92, 0.4) 180deg, transparent 210deg, rgba(255, 208, 92, 0.4) 240deg, transparent 270deg, rgba(255, 208, 92, 0.4) 300deg, transparent 330deg, rgba(255, 208, 92, 0.4) 360deg)",
+                            borderRadius: "50%",
+                        }}
+                    /> */}
+
+                    {/* Pulsing Radial Core */}
+                    <div className="absolute inset-0 bg-gradient-to-r from-amber-500/30 via-[#FFD05C]/40 to-amber-500/30 rounded-full blur-xl animate-pulse" />
+
+                    {/* Circular Pedestal Plate */}
+                    <div className="relative w-20 h-20 rounded-full bg-gradient-to-b from-[#2e1966] to-[#12082b] border-2 border-[#FFD05C] flex items-center justify-center shadow-[0_0_30px_rgba(255,208,92,0.5)] z-10">
+                        {isDay15 ? (
+                            <motion.img
+                                src="/assets/images/mystery_box.png"
+                                animate={{ y: [-4, 4, -4], rotate: [-2, 2, -2] }}
+                                transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+                                className="w-16 h-16 object-contain drop-shadow-[0_0_15px_rgba(255,208,92,0.9)]"
+                                alt="Mystery Box"
+                            />
+                        ) : (
+                            <motion.div
+                                animate={{ scale: [0.92, 1.08, 0.92], rotate: [-4, 4, -4] }}
+                                transition={{ duration: 2.8, repeat: Infinity, ease: "easeInOut" }}
+                                className="flex items-center justify-center"
+                            >
+                                <Icon className="w-12 h-12 text-[#FFD05C] drop-shadow-[0_0_15px_rgba(255,208,92,0.9)]" />
+                            </motion.div>
+                        )}
+                    </div>
+                </div>
+
+                {/* Reward Title & Value */}
+                <div className="flex flex-col items-center gap-1 z-10 mt-1">
+                    <span className="text-[11px] font-black uppercase tracking-widest text-amber-300/80">
+                        You Received
+                    </span>
+                    <h3 className="text-2xl font-black bg-gradient-to-r from-[#FFFDF0] via-[#FFD05C] to-[#DF9F28] bg-clip-text text-transparent drop-shadow-[0_2px_8px_rgba(223,162,8,0.4)] tracking-wide">
+                        {getRewardTitle()}
+                    </h3>
+                    <p className="text-white/70 text-xs font-semibold max-w-[240px] leading-relaxed">
+                        {getRewardSubtitle()}
+                    </p>
+                </div>
+
+                {/* Streak Info Pill */}
+                <div className="flex items-center justify-center gap-2 mt-2 px-4 py-1.5 rounded-full bg-[#180f31]/90 border border-[#D8A14E]/50 shadow-inner z-10">
+                    <Flame className="w-4 h-4 text-amber-400 fill-amber-400 animate-bounce" />
+                    <span className="text-xs font-black text-white">
+                        Day {day} Claimed • Streak: <span className="text-[#FFD05C]">{streak} Days</span>
+                    </span>
+                </div>
+
+                {/* Collect CTA Button */}
+                <div className="w-full mt-4 flex flex-col gap-2 z-10">
+                    <button
+                        onClick={onClose}
+                        className="w-full py-3.5 rounded-2xl font-black text-base uppercase tracking-wider bg-gradient-to-r from-[#DF9F28] via-[#FFD05C] to-[#DF9F28] text-[#180F31] border-b-4 border-[#a66d0c] hover:brightness-110 active:border-b-0 active:translate-y-[4px] cursor-pointer shadow-[0_4px_25px_rgba(255,208,92,0.4)] transition-all flex items-center justify-center gap-2"
+                    >
+                        <Check className="w-5 h-5 stroke-[3.5]" />
+                        <span>Ok, Got it</span>
+                    </button>
+                </div>
+            </motion.div>
+        </div>
+    );
+};
+
+export interface DailyLoginBonusPopupProps {
     isOpen: boolean;
     onClose: () => void;
     onRewardClaimed?: () => void;
@@ -253,6 +461,8 @@ export function DailyLoginBonusPopupOld({ isOpen, onClose, onRewardClaimed }: Da
     const [activeDay, setActiveDay] = useState<number>(1);
     const [streak, setStreak] = useState<number>(0);
     const [claimedToday, setClaimedToday] = useState<boolean>(false);
+    const [showCongrats, setShowCongrats] = useState<boolean>(false);
+    const [claimedReward, setClaimedReward] = useState<any>(null);
 
     const getProgressBarWidth = (streakVal: number) => {
         if (streakVal <= 1) return 0;
@@ -359,15 +569,12 @@ export function DailyLoginBonusPopupOld({ isOpen, onClose, onRewardClaimed }: Da
         const currentReward = REWARDS.find(r => r.day === activeDay);
         if (!currentReward) return;
 
-        Swal.fire({
-            title: "Claimed Successfully!",
-            html: `You won <b style="color: #ffca20">${currentReward.value} ${currentReward.label}</b>!<br/>Streak is at <b>${streak} Days</b>.`,
-            icon: "success",
-            confirmButtonColor: "#dfa208",
-            background: isDark ? "#191919" : "#fff",
-            color: isDark ? "#ffffff" : "#1e293b"
-        });
+        setClaimedReward(currentReward);
+        setShowCongrats(true);
+    };
 
+    const handleCloseCongrats = () => {
+        setShowCongrats(false);
         if (onRewardClaimed) onRewardClaimed();
     };
 
@@ -574,7 +781,7 @@ export function DailyLoginBonusPopupOld({ isOpen, onClose, onRewardClaimed }: Da
                                                 <motion.div
                                                     animate={{ scale: [0.8, 1.25, 0.8], opacity: [0.5, 1, 0.5], rotate: [0, 90, 0] }}
                                                     transition={{ duration: 2.2 + idx * 0.3, repeat: Infinity, ease: "easeInOut" }}
-                                                    className="absolute top-1.5 right-1.5 z-20 pointer-events-none"
+                                                    className="absolute top-1.5 left-1.5 z-20 pointer-events-none"
                                                 >
                                                     <Sparkles className={`w-3.5 h-3.5 ${isActive ? "text-[#FFD05C] drop-shadow-[0_0_8px_rgba(255,208,92,0.9)]" : "text-[#D8A14E]/70"}`} />
                                                 </motion.div>
@@ -652,6 +859,19 @@ export function DailyLoginBonusPopupOld({ isOpen, onClose, onRewardClaimed }: Da
                     </motion.div>
                 </div>
             )}
+
+            {/* Premium Congratulations Celebration Modal */}
+            {showCongrats && (
+                <RewardCongratulationsModal
+                    isOpen={showCongrats}
+                    onClose={handleCloseCongrats}
+                    reward={claimedReward}
+                    streak={streak}
+                    day={activeDay}
+                />
+            )}
         </AnimatePresence>
     );
 }
+
+export default DailyLoginBonusPopupOld;
