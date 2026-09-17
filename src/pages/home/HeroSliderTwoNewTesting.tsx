@@ -65,7 +65,7 @@ const getGameImage = (gameName: string, defaultImage: string) => {
         name.includes("battle")
     ) {
         // return "/assets/images/pistol-bottle-640-360.png";
-        return "/assets/images/VipTournament.png";
+        return "/assets/images/VIP-Tournament.png";
     }
     return defaultImage;
 };
@@ -172,7 +172,7 @@ const HeroSliderTwoNewTesting: React.FC<HeroSliderTwoProps> = ({ heroGames, onCo
                                                 className={`w-full flex flex-col gap-0 overflow-hidden rounded-[24px] transition-all duration-200 active:scale-[0.98] ${borderClass} ${cardBg}`}
                                             >
                                                 {/* Game Banner Image */}
-                                                <div className="relative w-full aspect-[2.1/1] rounded-[18px] overflow-hidden shadow-sm">
+                                                <div className="relative w-full rounded-[18px] overflow-hidden shadow-sm">
                                                     <img
                                                         src={getGameImage(game?.tournament_name, game?.tournament_game_image)}
                                                         alt={game?.tournament_name}

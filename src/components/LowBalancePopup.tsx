@@ -73,39 +73,29 @@ export default function LowBalancePopup({ visible, onClose, avatarUrl }: LowBala
                   }}
                   className="relative group"
                 >
-                  <div className="absolute -inset-2 rounded-full transition-opacity" />
+                  <div className="relative flex items-center justify-center">
+                    <img
+                      src="/assets/emojis/lb.gif"
+                      className="relative z-10"
+                      alt="Low Balance Robot"
+                      loading="lazy"
+                    />
 
-                  <div className="relative w-24 h-20">
-                    {/* The Container */}
-                    <div className="absolute inset-0 rounded-[2rem]">
-                      <div className="w-full h-full flex items-center justify-center overflow-hidden relative">
-                        {/* Golden internal light */}
-                        <div className="absolute inset-0 " />
-
-                        <img
-                          src="/assets/emojis/lb.gif"
-                          className="w-full h-full object-cover relative z-10 "
-                          alt="Success Robot"
-                          loading="lazy"
-                        />
-
-                        {/* Floating Sparkle Particles */}
-                        <motion.div
-                          animate={{ scale: [0, 1.2, 0], opacity: [0, 1, 0] }}
-                          transition={{ duration: 2, repeat: Infinity, delay: 0.5 }}
-                          className="absolute top-4 right-4"
-                        >
-                          <Sparkles className="w-4 h-4 text-yellow-400" />
-                        </motion.div>
-                        <motion.div
-                          animate={{ scale: [0, 1, 0], opacity: [0, 0.8, 0] }}
-                          transition={{ duration: 1.5, repeat: Infinity, delay: 1.2 }}
-                          className="absolute bottom-4 left-4"
-                        >
-                          <Sparkles className="w-3 h-3 text-pink-400" />
-                        </motion.div>
-                      </div>
-                    </div>
+                    {/* Floating Sparkle Particles */}
+                    <motion.div
+                      animate={{ scale: [0, 1.2, 0], opacity: [0, 1, 0] }}
+                      transition={{ duration: 2, repeat: Infinity, delay: 0.5 }}
+                      className="absolute top-2 right-2 z-20 pointer-events-none"
+                    >
+                      <Sparkles className="w-4 h-4 text-yellow-400" />
+                    </motion.div>
+                    <motion.div
+                      animate={{ scale: [0, 1, 0], opacity: [0, 0.8, 0] }}
+                      transition={{ duration: 1.5, repeat: Infinity, delay: 1.2 }}
+                      className="absolute bottom-2 left-2 z-20 pointer-events-none"
+                    >
+                      <Sparkles className="w-3 h-3 text-pink-400" />
+                    </motion.div>
                   </div>
                 </motion.div>
               </div>
