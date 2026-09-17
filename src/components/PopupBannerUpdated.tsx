@@ -30,7 +30,7 @@ const PopupBannerUpdated: React.FC<PopupBannerUpdatedProps> = ({ onClose }) => {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          className="fixed inset-0 z-[90000] flex items-center justify-center bg-black/40 backdrop-blur-[7px] will-change-transform"
+          className="fixed inset-0 z-[90000] flex items-center justify-center bg-black/40 backdrop-blur-[3px] will-change-transform"
           style={{ marginTop: "0px" }}
           onClick={handleClose}
         >
@@ -83,29 +83,37 @@ const PopupBannerUpdated: React.FC<PopupBannerUpdatedProps> = ({ onClose }) => {
                 >
                   <div className="absolute -inset-2 rounded-full transition-opacity" />
 
-                  <div className="relative flex items-center justify-center">
-                    <img
-                      src="/assets/emojis/subcribe.gif"
-                      className="w-32 h-32 sm:w-32 sm:h-32 object-contain relative z-10"
-                      alt="Welcome Robot"
-                      loading="lazy"
-                    />
+                  <div className="relative w-24 h-20">
+                    {/* The Container */}
+                    <div className="absolute inset-0 rounded-[2rem]">
+                      <div className="w-full h-full flex items-center justify-center overflow-hidden relative">
+                        {/* Golden internal light */}
+                        <div className="absolute inset-0 " />
 
-                    {/* Sparkles */}
-                    {/* <motion.div
-                      animate={{ scale: [0, 1.2, 0], opacity: [0, 1, 0] }}
-                      transition={{ duration: 2, repeat: Infinity, delay: 0.5 }}
-                      className="absolute top-2 right-2 z-20"
-                    >
-                      <Sparkles className="w-4 h-4 text-yellow-400" />
-                    </motion.div>
-                    <motion.div
-                      animate={{ scale: [0, 1, 0], opacity: [0, 0.8, 0] }}
-                      transition={{ duration: 1.5, repeat: Infinity, delay: 1.2 }}
-                      className="absolute bottom-2 left-2 z-20"
-                    >
-                      <Sparkles className="w-3 h-3 text-pink-400" />
-                    </motion.div> */}
+                        <img
+                          src="/assets/emojis/subcribe.gif"
+                          className="w-full h-full object-cover relative z-10 "
+                          alt="Success Robot"
+                          loading="lazy"
+                        />
+
+                        {/* Floating Sparkle Particles */}
+                        <motion.div
+                          animate={{ scale: [0, 1.2, 0], opacity: [0, 1, 0] }}
+                          transition={{ duration: 2, repeat: Infinity, delay: 0.5 }}
+                          className="absolute top-4 right-4"
+                        >
+                          <Sparkles className="w-4 h-4 text-yellow-400" />
+                        </motion.div>
+                        <motion.div
+                          animate={{ scale: [0, 1, 0], opacity: [0, 0.8, 0] }}
+                          transition={{ duration: 1.5, repeat: Infinity, delay: 1.2 }}
+                          className="absolute bottom-4 left-4"
+                        >
+                          <Sparkles className="w-3 h-3 text-pink-400" />
+                        </motion.div>
+                      </div>
+                    </div>
                   </div>
                 </motion.div>
               </div>
