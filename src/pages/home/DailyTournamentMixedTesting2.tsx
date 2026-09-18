@@ -24,7 +24,7 @@ const getGameImage = (gameName: string, defaultImage: string, index: number) => 
     }
     const images = [
         "/assets/images/knideNinja-portrait.png",
-        "/assets/images/character.png",
+        "/assets/images/285-380-element.png",
     ];
     return images[index % images.length];
 };

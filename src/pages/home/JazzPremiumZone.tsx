@@ -56,7 +56,7 @@ const getGameImage = (gameName: string, defaultImage: string) => {
         name.includes("bottle") ||
         name.includes("battle")
     ) {
-        return "/assets/images/HeroTournement.png";
+        return "/assets/images/HeroBanner.png";
     }
     return defaultImage;
 };

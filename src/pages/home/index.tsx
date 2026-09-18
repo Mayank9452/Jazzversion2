@@ -154,12 +154,12 @@ const LoadingSkeleton: React.FC = () => (
 /* ─── Category Navigation ────────────────────────────────────────────────── */
 
 const categories = [
-  { id: "all", label: "Friends Cricket", image: "/assets/images/SquareWithTitle.png" },
+  { id: "all", label: "Friends Cricket", image: "/assets/images/SquareWithTitle.jpg" },
   { id: "action", label: "Zombie Uprising", image: "/assets/images/Zombie Uprising.png" },
   { id: "moba", label: "Tropical Slicer", image: "/assets/images/Tropical Slicer name.png" },
   { id: "racing", label: "Road Racer", image: "/assets/images/Road Racer name.png" },
   { id: "sports", label: "Sports", image: "/assets/images/friend cricket.png" },
-  { id: "puzzle", label: "Puzzle", image: "/assets/images/SquareWithoutTitle.png" }
+  { id: "puzzle", label: "Puzzle", image: "/assets/images/SquareWithoutTitle.jpg" }
 ];
 
 const trendingCategories = [

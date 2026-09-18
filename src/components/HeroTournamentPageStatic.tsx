@@ -398,7 +398,7 @@ const HeroTournamentPageStatic: React.FC = () => {
                         >
                             {/* Complete Image */}
                             <img
-                                src="/assets/images/02.png"
+                                src="/assets/images/285-380-element.png"
                                 alt="Tournament Banner"
                                 className="w-full h-full object-contain"
                             />
@@ -412,7 +412,8 @@ const HeroTournamentPageStatic: React.FC = () => {
                                 </button>
 
                                 <h2 className={`text-base font-black text-center px-2 truncate max-w-[200px] select-none ${isDarkTheme ? "text-white drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]" : "text-slate-800"}`}>
-                                    {info?.game_name || "Pistol Bottle Battle"}
+                                    {/* {info?.game_name || "Pistol Bottle Battle"} */}
+                                    Smart Surfer
                                 </h2>
 
                                 <div
