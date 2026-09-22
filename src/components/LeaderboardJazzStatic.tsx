@@ -81,7 +81,7 @@ export const LeaderboardJazzStatic: React.FC = () => {
 
         {/* ── Premium Glassmorphic Header Card (replicated from TournamentHistory.tsx) ── */}
         <div className="pb-4 z-30">
-          <div className={`relative overflow-hidden p-2 pr-0 flex items-center justify-between gap-3 border-b transition-all duration-300 ${isDarkTheme ? "bg-gradient-to-br from-[#2B2B2B]/40 to-[#191919]/30 border-white/[0.06] shadow-[0_12px_40px_rgba(0,0,0,0.2)]" : "bg-brand-gradient border-[#dfa208]/30 shadow-sm"} backdrop-blur-xl`}>
+          <div className={`relative overflow-hidden p-2 flex items-center justify-between gap-3 border-b transition-all duration-300 ${isDarkTheme ? "bg-gradient-to-br from-[#2B2B2B]/40 to-[#191919]/30 border-white/[0.06] shadow-[0_12px_40px_rgba(0,0,0,0.2)]" : "bg-brand-gradient border-[#dfa208]/30 shadow-sm"} backdrop-blur-xl`}>
             <div className="w-full flex justify-between items-center gap-5">
               <div>
                 <button
@@ -107,13 +107,13 @@ export const LeaderboardJazzStatic: React.FC = () => {
                   </p>
                 </div>
               </div>
-              <div className="w-16 h-16 -my-2 flex-shrink-0 flex items-center justify-center cursor-pointer active:scale-95 transition-all hover:scale-105"
+              <div className="w-12 h-12 flex-shrink-0 flex items-center justify-center cursor-pointer active:scale-95 transition-all hover:scale-105"
                 onClick={() => navigate("/settingsStatic")}
               >
                 <img
                   src={`/assets/users/${localStorage.getItem("selectedAvatarImg") || "9.png"}`}
                   alt="User Avatar"
-                  className="w-full h-full object-contain"
+                  className="w-full h-full object-cover"
                   onError={(e) => {
                     (e.target as HTMLImageElement).src = "/assets/users/9.png";
                   }}
@@ -164,7 +164,7 @@ export const LeaderboardJazzStatic: React.FC = () => {
 
               {/* Avatar overlapping bottom */}
               <div className="w-full relative mt-auto flex justify-center pb-2">
-                <div className={`w-16 h-16 sm:w-16 sm:h-16 rounded-full overflow-hidden flex items-center justify-center shadow-md `}>
+                <div className={`w-16 h-16 sm:w-16 sm:h-16 overflow-hidden flex items-center justify-center shadow-md `}>
                   <img
                     src={rank2.avatarUrl}
                     alt={rank2.msisdn}
@@ -191,7 +191,7 @@ export const LeaderboardJazzStatic: React.FC = () => {
 
               {/* Avatar overlapping bottom */}
               <div className="w-full relative mt-auto flex justify-center pb-2.5">
-                <div className={`w-18 h-18 sm:w-20 sm:h-20 rounded-full overflow-hidden flex items-center justify-center shadow-md `}>
+                <div className={`w-18 h-18 sm:w-20 sm:h-20 overflow-hidden flex items-center justify-center shadow-md `}>
                   <img
                     src={rank1.avatarUrl}
                     alt={rank1.msisdn}
@@ -218,7 +218,7 @@ export const LeaderboardJazzStatic: React.FC = () => {
 
               {/* Avatar overlapping bottom */}
               <div className="w-full relative mt-auto flex justify-center pb-2">
-                <div className={`w-14 h-14 sm:w-16 sm:h-16 rounded-full overflow-hidden flex items-center justify-center shadow-md`}>
+                <div className={`w-14 h-14 sm:w-16 sm:h-16 overflow-hidden flex items-center justify-center shadow-md`}>
                   <img
                     src={rank3.avatarUrl}
                     alt={rank3.msisdn}
@@ -261,7 +261,7 @@ export const LeaderboardJazzStatic: React.FC = () => {
                   {/* Left Side: Avatar, MSISDN, Score */}
                   <div className="flex items-center gap-3">
                     {/* Brand-aligned Avatar Wrapper with gradient bg and border */}
-                    <div className={`w-12 h-12 rounded-full overflow-hidden flex items-center justify-center shrink-0 `}>
+                    <div className={`w-12 h-12 overflow-hidden flex items-center justify-center shrink-0 `}>
                       <img
                         src={player.avatarUrl}
                         alt={player.msisdn}

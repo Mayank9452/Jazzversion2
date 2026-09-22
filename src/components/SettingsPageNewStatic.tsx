@@ -19,6 +19,7 @@ import PopupBannerUnsubscribe from "./PopupBannerUnsubscribe";
 import { TopBarUpdated } from "./TopBarUpdated";
 import { TopBarUpdatedNew } from "./TopBarUpdatedNew";
 import { BottomNavBarNew } from "./BottomNavBarNew";
+import PopupAvatarSelectorNew from "./PopupAvatarSelectorNew";
 // Helper function to format phone number
 const phoneShowFormat = (phone: string | undefined): string => {
     if (!phone) return "";
@@ -358,7 +359,7 @@ export default function SettingsPageNewStatic() {
                 </div>
             </div>
             {/* Avatar Modal */}
-            <PopupAvatarSelector
+            <PopupAvatarSelectorNew
                 isShow={showModal}
                 onClose={() => setShowModal(false)}
                 selectedAvatar={selectedAvatar}

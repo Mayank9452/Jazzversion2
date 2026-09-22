@@ -76,7 +76,7 @@ export default function PrivacyPolicyPageNew() {
 
         {/* ── Premium Glassmorphic Header Card ── */}
         <div className="pb-4 relative z-10">
-          <div className={`relative overflow-hidden p-2 pr-1 flex items-center justify-between gap-3 border-b transition-all duration-300 ${isDark ? "bg-gradient-to-br from-[#2B2B2B]/40 to-[#191919]/30 border-white/[0.06] shadow-[0_12px_40px_rgba(0,0,0,0.2)]" : "bg-brand-gradient border-[#dfa208]/30 shadow-sm"} backdrop-blur-xl`}>
+          <div className={`relative overflow-hidden p-2 flex items-center justify-between gap-3 border-b transition-all duration-300 ${isDark ? "bg-gradient-to-br from-[#2B2B2B]/40 to-[#191919]/30 border-white/[0.06] shadow-[0_12px_40px_rgba(0,0,0,0.2)]" : "bg-brand-gradient border-[#dfa208]/30 shadow-sm"} backdrop-blur-xl`}>
             <div className="w-full flex justify-between items-center gap-5">
               <div>
                 <button
@@ -95,13 +95,13 @@ export default function PrivacyPolicyPageNew() {
                   Rules, guidelines & safety
                 </p>
               </div>
-              <div className="w-16 h-16 -my-2 flex-shrink-0 flex items-center justify-center cursor-pointer active:scale-95 transition-all hover:scale-105"
+              <div className="w-12 h-12 flex-shrink-0 flex items-center justify-center cursor-pointer active:scale-95 transition-all hover:scale-105"
                 onClick={() => navigate("/settingsStatic")}
               >
                 <img
                   src={`/assets/users/${localStorage.getItem("selectedAvatarImg") || "9.png"}`}
                   alt="User Avatar"
-                  className="w-full h-full object-contain"
+                  className="w-full h-full object-cover"
                   onError={(e) => {
                     (e.target as HTMLImageElement).src = "/assets/users/9.png";
                   }}

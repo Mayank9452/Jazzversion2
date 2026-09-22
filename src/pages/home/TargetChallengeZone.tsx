@@ -218,6 +218,8 @@ export const TargetChallengeZone: React.FC = () => {
                                         <div className="relative w-full aspect-[285/380] rounded-xl overflow-visible z-10">
                                             <img
                                                 src={game.image}
+                                                loading="eager"
+                                                decoding="async"
                                                 className="w-full h-full rounded-lg block object-cover transition-transform duration-500 group-hover:scale-105"
                                                 style={{
                                                     filter: "drop-shadow(0 0 10px rgba(255, 203, 32, 0.95))"

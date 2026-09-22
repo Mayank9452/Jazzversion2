@@ -41,6 +41,103 @@ import { TopBarUpdatedNew } from "@/components/TopBarUpdatedNew";
 import { BottomNavBarNew } from "@/components/BottomNavBarNew";
 import LowBalancePopup from "@/components/LowBalancePopup";
 
+/* ─── Instant Image Cache Warmer & Preloader ─────────────────────────────── */
+
+const CRITICAL_HOME_BANNERS = [
+  "/assets/images/VIP-Tournament.png",
+  "/assets/images/HeroBanner.png",
+  "/assets/images/knideNinja-portrait.png",
+  "/assets/images/285-380-element.png",
+  "/assets/images/character.png",
+  "/assets/images/Alien Galaxy.png",
+  "/assets/images/Stick Monkey.png",
+  "/assets/images/6.png",
+  "/assets/images/9.png",
+  "/assets/images/285-380.png",
+  "/assets/images/knife ninja.jpeg",
+  "/assets/images/SquareWithTitle.jpg",
+  "/assets/images/Zombie Uprising.png",
+  "/assets/images/Tropical Slicer name.png",
+  "/assets/images/Road Racer name.png",
+  "/assets/images/friend cricket.png",
+  "/assets/images/SquareWithoutTitle.jpg",
+  "/assets/images/img/spinbanner.jpg",
+  "/assets/images/img/trophy.png",
+];
+
+// Instantly warm up image cache as soon as module is evaluated
+if (typeof window !== "undefined") {
+  CRITICAL_HOME_BANNERS.forEach((src) => {
+    const img = new Image();
+    img.src = src;
+    if ("decode" in img) {
+      img.decode().catch(() => { });
+    }
+  });
+}
+
+const DEFAULT_HERO_TOURNAMENTS = [
+  {
+    tournament_id: "hero-1",
+    tournament_name: "Pistol Bottle Battle",
+    tournament_game_id: "stick-monkey",
+    tournament_description: "Break bottles and win rewards",
+    tournament_type: "1",
+    tournament_section: "hero",
+    tournament_start: new Date().toISOString(),
+    tournament_end: new Date(Date.now() + 3 * 24 * 60 * 60 * 1000).toISOString(),
+    tournament_category_id: "1",
+    tournament_status: "active",
+    added_on: "",
+    updated_on: "",
+    fee_id: "1",
+    fee_tournament_id: "hero-1",
+    fee_country_id: "1",
+    fee_reward_type: "1",
+    fee_fee: "10",
+    fee_prize_1: "10,000",
+    fee_prize_2: "5,000",
+    fee_prize_3: "2,500",
+    fee_prize_4: "1,000",
+    fee_prize_5: "500",
+    fee_prize_6: "250",
+    fee_prize_7: "100",
+    fee_prize_8: "50",
+    fee_prize_9: "25",
+    banner_type: "image",
+    players_joined: "250",
+    tournament_game_image: "/assets/images/VIP-Tournament.png",
+    current_rank: "4"
+  }
+];
+
+const DEFAULT_DAILY_TOURNAMENTS = [
+  {
+    tournament_id: "knife-ninja",
+    tournament_name: "Knife Ninja",
+    tournament_game_image: "/assets/images/knideNinja-portrait.png",
+    tournament_end: new Date(Date.now() + 1 * 24 * 60 * 60 * 1000).toISOString(),
+    fee_prize_1: "10,000",
+    reward_type: 0
+  },
+  {
+    tournament_id: "target-challenge",
+    tournament_name: "Target Challenge",
+    tournament_game_image: "/assets/images/285-380-element.png",
+    tournament_end: new Date(Date.now() + 2 * 24 * 60 * 60 * 1000).toISOString(),
+    fee_prize_1: "100,000",
+    reward_type: 1
+  },
+  {
+    tournament_id: "alien-galaxy-war",
+    tournament_name: "Alien Galaxy War",
+    tournament_game_image: "/assets/images/character.png",
+    tournament_end: new Date(Date.now() + 3 * 24 * 60 * 60 * 1000).toISOString(),
+    fee_prize_1: "100,000",
+    reward_type: 2
+  }
+];
+
 /* ─── Section Header ─────────────────────────────────────────────────────── */
 
 interface SectionHeaderProps {
@@ -105,7 +202,6 @@ const Section: React.FC<{ children: React.ReactNode; className?: string }> = ({
 const SpinWinBanner: React.FC = () => {
   const navigate = useNavigate();
 
-
   return (
     <div
       onClick={() => navigate("/spinandwin")}
@@ -117,6 +213,8 @@ const SpinWinBanner: React.FC = () => {
         <img
           src="/assets/images/img/spinbanner.jpg"
           alt="Spin and Win"
+          loading="eager"
+          decoding="async"
           className="w-full h-full rounded-lg transition-transform duration-500 group-hover:scale-105"
         />
       </div>
@@ -209,6 +307,8 @@ const CategoryNavigation = ({ categoriesList = categories }: { categoriesList?: 
                 <img
                   src={imageUrl}
                   alt={cat.label}
+                  loading="eager"
+                  decoding="async"
                   className={`w-full h-full object-cover rounded-full transition-transform duration-300 ${isActive ? "scale-105" : ""}`}
                 />
               </div>
@@ -254,6 +354,8 @@ const CategoryNavigationTesting = ({ categoriesList = categories }: { categories
                 <img
                   src={imageUrl}
                   alt={cat.label}
+                  loading="eager"
+                  decoding="async"
                   className="w-full h-full object-cover rounded-[1.75rem] transition-transform duration-500 group-hover:scale-110"
                 />
               </div>
@@ -837,50 +939,52 @@ const Home = () => {
       fg_game_name: jazzHomePageData?.game_names?.[game.fg_game_id] || "",
     })) || null;
 
-  const loading =
-    homeStatus === "loading" ||
-    (instantGamesStatus === "loading" && !jazzInstantGamesData);
+  const heroGames =
+    jazzHomePageData?.heroTournaments && jazzHomePageData.heroTournaments.length > 0
+      ? jazzHomePageData.heroTournaments
+      : DEFAULT_HERO_TOURNAMENTS;
+
+  const dailyTournaments =
+    jazzHomePageData?.dailyTournaments && jazzHomePageData.dailyTournaments.length > 0
+      ? jazzHomePageData.dailyTournaments
+      : DEFAULT_DAILY_TOURNAMENTS;
 
   const shuffledSections = useMemo(() => {
     const sections: { id: string; element: React.ReactNode }[] = [];
 
     // 1. Weekly Tournaments
-    if (jazzHomePageData?.dailyTournaments && jazzHomePageData.dailyTournaments.length > 0) {
-      sections.push({
-        id: "testing2",
-        element: (
-          <Section key="testing2">
-            <SectionHeader
-              title="Weekly Tournaments"
-              icon={<Clock size={15} className="text-brand-gold-100 dark:text-brand-yellow-100" />}
-              accent="purple"
-            />
-            <DailyTournamentMixedTesting2
-              dailyTournaments={jazzHomePageData.dailyTournaments}
-            />
-          </Section>
-        )
-      });
-    }
+    sections.push({
+      id: "testing2",
+      element: (
+        <Section key="testing2">
+          <SectionHeader
+            title="Weekly Tournaments"
+            icon={<Clock size={15} className="text-brand-gold-100 dark:text-brand-yellow-100" />}
+            accent="purple"
+          />
+          <DailyTournamentMixedTesting2
+            dailyTournaments={dailyTournaments}
+          />
+        </Section>
+      )
+    });
 
     // 2. Daily Tournaments
-    if (jazzHomePageData?.dailyTournaments && jazzHomePageData.dailyTournaments.length > 0) {
-      sections.push({
-        id: "testing1",
-        element: (
-          <Section key="testing1">
-            <SectionHeader
-              title="Daily Tournaments"
-              icon={<Clock size={15} className="text-brand-gold-100 dark:text-brand-yellow-100" />}
-              accent="purple"
-            />
-            <DailyTournamentMixedTesting
-              dailyTournaments={jazzHomePageData.dailyTournaments}
-            />
-          </Section>
-        )
-      });
-    }
+    sections.push({
+      id: "testing1",
+      element: (
+        <Section key="testing1">
+          <SectionHeader
+            title="Daily Tournaments"
+            icon={<Clock size={15} className="text-brand-gold-100 dark:text-brand-yellow-100" />}
+            accent="purple"
+          />
+          <DailyTournamentMixedTesting
+            dailyTournaments={dailyTournaments}
+          />
+        </Section>
+      )
+    });
 
     // 3. Trending Games
     sections.push({
@@ -952,17 +1056,8 @@ const Home = () => {
       )
     });
 
-
-
-    // Fisher-Yates Shuffle
-    const result = [...sections];
-    for (let i = result.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [result[i], result[j]] = [result[j], result[i]];
-    }
-
-    return result;
-  }, [jazzHomePageData?.dailyTournaments]);
+    return sections;
+  }, [dailyTournaments]);
 
   return (
     <>
@@ -980,176 +1075,75 @@ const Home = () => {
 
         <TopBarUpdatedNew />
 
-        {loading ? (
-          <LoadingSkeleton />
-        ) : (
-          jazzHomePageData && (
-            <div className="relative z-10">
-              <div className="px-1 pt-1 space-y-4">
+        <div className="relative z-10">
+          <div className="px-1 pt-1 space-y-4">
+            {/* VIP Tournament */}
+            <Section>
+              <SectionHeader
+                title="VIP Tournament"
+                icon={<Trophy size={15} className="text-brand-gold-100 dark:text-brand-yellow-100 fill-brand-gold-100/10 dark:fill-brand-yellow-100/10" />}
+                accent="purple"
+                extra={
+                  vipCountdown && (
+                    <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-slate-900/60 dark:bg-black/40 border border-slate-200/10 dark:border-white/10 text-white text-[12px] font-semibold tracking-tight shadow-sm whitespace-nowrap">
+                      <Clock className="h-3.5 w-3.5 text-white shrink-0" />
+                      {vipCountdown.includes(":") ? (
+                        <span className="flex items-center gap-[2px]">
+                          {vipCountdown.split(":").map((part, idx, arr) => (
+                            <span key={idx} className="flex items-center gap-[2px]">
+                              <span>{part}</span>
+                              {idx < arr.length - 1 && <span className="opacity-40 text-brand-gold-100 dark:text-brand-yellow-100">:</span>}
+                            </span>
+                          ))}
+                        </span>
+                      ) : (
+                        <span>{vipCountdown}</span>
+                      )}
+                    </div>
+                  )
+                }
+              />
+              <HeroSliderTwoNewTesting
+                heroGames={heroGames}
+                onCountdownChange={setVipCountdown}
+              />
+            </Section>
 
+            {/* Jazz Premium zone */}
+            <Section>
+              <SectionHeader
+                title="Jazz Premium zone"
+                icon={<Star size={15} className="text-brand-gold-100 dark:text-brand-yellow-100 fill-brand-gold-100/10 dark:fill-brand-yellow-100/10" />}
+                accent="purple"
+                extra={
+                  premiumCountdown && (
+                    <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-slate-900/60 dark:bg-black/40 border border-slate-200/10 dark:border-white/10 text-white text-[12px] font-semibold shadow-sm whitespace-nowrap">
+                      <Clock className="h-3.5 w-3.5 text-white shrink-0" />
+                      {premiumCountdown.includes(":") ? (
+                        <span className="flex items-center gap-[2px]">
+                          {premiumCountdown.split(":").map((part, idx, arr) => (
+                            <span key={idx} className="flex items-center gap-[2px]">
+                              <span>{part}</span>
+                              {idx < arr.length - 1 && <span className="opacity-40">:</span>}
+                            </span>
+                          ))}
+                        </span>
+                      ) : (
+                        <span>{premiumCountdown}</span>
+                      )}
+                    </div>
+                  )
+                }
+              />
+              <JazzPremiumZone
+                heroGames={heroGames}
+                onCountdownChange={setPremiumCountdown}
+              />
+            </Section>
 
-
-                {/* ── VIP / Hero Tournaments ── */}
-                {/* {jazzHomePageData?.heroTournaments?.length > 0 && (
-                  <Section>
-                    <SectionHeader
-                      title="VIP Tournament"
-                      icon={<Trophy size={15} className="text-brand-gold-100 dark:text-brand-yellow-100 fill-brand-gold-100/10 dark:fill-brand-yellow-100/10" />}
-                      accent="purple"
-                    />
-                    <HeroSliderTwoNew heroGames={jazzHomePageData.heroTournaments} />
-                  </Section>
-                )} */}
-
-                {jazzHomePageData?.heroTournaments?.length > 0 && (
-                  <Section>
-                    <SectionHeader
-                      title="VIP Tournament"
-                      icon={<Trophy size={15} className="text-brand-gold-100 dark:text-brand-yellow-100 fill-brand-gold-100/10 dark:fill-brand-yellow-100/10" />}
-                      accent="purple"
-                      extra={
-                        vipCountdown && (
-                          <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-slate-900/60 dark:bg-black/40 border border-slate-200/10 dark:border-white/10 text-white text-[12px] font-semibold  tracking-tight shadow-sm whitespace-nowrap">
-                            <Clock className="h-3.5 w-3.5 text-white shrink-0" />
-                            {vipCountdown.includes(":") ? (
-                              <span className="flex items-center gap-[2px]">
-                                {vipCountdown.split(":").map((part, idx, arr) => (
-                                  <span key={idx} className="flex items-center gap-[2px]">
-                                    <span>{part}</span>
-                                    {idx < arr.length - 1 && <span className="opacity-40 text-brand-gold-100 dark:text-brand-yellow-100">:</span>}
-                                  </span>
-                                ))}
-                              </span>
-                            ) : (
-                              <span>{vipCountdown}</span>
-                            )}
-                          </div>
-                        )
-                      }
-                    />
-                    <HeroSliderTwoNewTesting
-                      heroGames={jazzHomePageData.heroTournaments}
-                      onCountdownChange={setVipCountdown}
-                    />
-                  </Section>
-                )}
-
-                {jazzHomePageData?.heroTournaments?.length > 0 && (
-                  <Section>
-                    <SectionHeader
-                      title="Jazz Premium zone"
-                      icon={<Star size={15} className="text-brand-gold-100 dark:text-brand-yellow-100 fill-brand-gold-100/10 dark:fill-brand-yellow-100/10" />}
-                      accent="purple"
-                      extra={
-                        premiumCountdown && (
-                          <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-slate-900/60 dark:bg-black/40 border border-slate-200/10 dark:border-white/10 text-white text-[12px] font-semibold shadow-sm whitespace-nowrap">
-                            <Clock className="h-3.5 w-3.5 text-white shrink-0" />
-                            {premiumCountdown.includes(":") ? (
-                              <span className="flex items-center gap-[2px]">
-                                {premiumCountdown.split(":").map((part, idx, arr) => (
-                                  <span key={idx} className="flex items-center gap-[2px]">
-                                    <span>{part}</span>
-                                    {idx < arr.length - 1 && <span className="opacity-40">:</span>}
-                                  </span>
-                                ))}
-                              </span>
-                            ) : (
-                              <span>{premiumCountdown}</span>
-                            )}
-                          </div>
-                        )
-                      }
-                    />
-                    <JazzPremiumZone
-                      heroGames={jazzHomePageData.heroTournaments}
-                      onCountdownChange={setPremiumCountdown}
-                    />
-                  </Section>
-                )}
-
-
-
-                {/* ── Daily Tournaments ── */}
-                {/* {jazzHomePageData?.dailyTournaments?.length > 0 && (
-                  <Section>
-                    <SectionHeader
-                      title="Weekly Tournaments"
-                      icon={<Clock size={15} className="text-brand-gold-100 dark:text-brand-yellow-100" />}
-                      accent="purple"
-                    // action={{ label: "View All", href: "/games" }}
-                    />
-                    <DailyTournamentNew
-                      dailyTournaments={jazzHomePageData.dailyTournaments}
-                    />
-                  </Section>
-                )} */}
-
-                {/* {jazzHomePageData?.dailyTournaments?.length > 0 && (
-                  <Section>
-                    <SectionHeader
-                      title="Weekly Tournaments Testing"
-                      icon={<Clock size={15} className="text-brand-gold-100 dark:text-brand-yellow-100" />}
-                      accent="purple"
-                    // action={{ label: "View All", href: "/games" }}
-                    />
-                    <DailyTournamentNewTestingV
-                      dailyTournaments={jazzHomePageData.dailyTournaments}
-                    />
-                  </Section>
-                )} */}
-
-                {/* {jazzHomePageData?.dailyTournaments?.length > 0 && (
-                  <Section>
-                    <SectionHeader
-                      title="Weekly Tournaments Testing (Coins)"
-                      icon={<Clock size={15} className="text-brand-gold-100 dark:text-brand-yellow-100" />}
-                      accent="purple"
-                    // action={{ label: "View All", href: "/games" }}
-                    />
-                    <DailyTournamentNewTesting3
-                      dailyTournaments={jazzHomePageData.dailyTournaments}
-                    />
-                  </Section>
-                )} */}
-
-                {/* {jazzHomePageData?.dailyTournaments?.length > 0 && (
-                  <Section>
-                    <SectionHeader
-                      title="Weekly Tournaments Testing (Voucher)"
-                      icon={<Clock size={15} className="text-brand-gold-100 dark:text-brand-yellow-100" />}
-                      accent="purple"
-                    // action={{ label: "View All", href: "/games" }}
-                    />
-                    <DailyTournamentNewTesting4
-                      dailyTournaments={jazzHomePageData.dailyTournaments}
-                    />
-                  </Section>
-                )} */}
-
-                {shuffledSections.map((item) => item.element)}
-
-
-
-
-                {/* <Section>
-                  <SectionHeader
-                    title="Testing Games"
-                    icon={<Star size={15} className="text-brand-gold-100 dark:text-brand-yellow-100 fill-brand-gold-100/10 dark:fill-brand-yellow-100/10" />}
-                  // action={{ label: "View All", href: "/tournament-history" }}
-                  />
-                  <CategoryNavigation categoriesList={trendingCategories} />
-                </Section> */}
-
-                {/* ── Spin & Win Banner ── */}
-                {/* <SpinWinBanner /> */}
-
-                {/* ── Category Navigation ── */}
-
-
-              </div>
-            </div>
-          )
-        )}
+            {shuffledSections.map((item) => item.element)}
+          </div>
+        </div>
       </div>
 
       <BottomNavBarNew />

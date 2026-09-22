@@ -17,7 +17,7 @@ export const HexagonalAvatarFrame = ({
       {/* Circle avatar image in center */}
       <button
         onClick={onEditClick}
-        className="w-full h-full rounded-full overflow-hidden relative z-10 transition-transform hover:scale-105 active:scale-95 cursor-pointer"
+        className="w-full h-full overflow-hidden relative z-10 transition-transform hover:scale-105 active:scale-95 cursor-pointer"
       >
         <img src={imageUrl} alt="Avatar" className="w-full h-full object-contain" />
       </button>

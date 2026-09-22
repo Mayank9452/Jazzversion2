@@ -150,11 +150,19 @@ const HeroTournamentPageStatic: React.FC = () => {
         return () => observer.disconnect();
     }, []);
 
-    // Retrieve tournament ID from router state
-    const stateData = location.state as { tournament_id: any; fromMixedTesting2?: boolean; fromUpcoming?: boolean } | null;
+    // Retrieve tournament ID and dynamic banner from router state
+    const stateData = location.state as {
+        tournament_id: any;
+        fromMixedTesting2?: boolean;
+        fromUpcoming?: boolean;
+        bannerImage?: string;
+        gameTitle?: string;
+    } | null;
     const tournament_id = stateData?.tournament_id;
     const fromMixedTesting2 = stateData?.fromMixedTesting2 || false;
     const fromUpcoming = stateData?.fromUpcoming || false;
+    const bannerImage = stateData?.bannerImage || "/assets/images/knideNinja-portrait.png";
+    const gameTitle = stateData?.gameTitle || "Knife Ninja";
 
     // Local state variables
     const [loading, setLoading] = useState<boolean>(true);
@@ -194,9 +202,9 @@ const HeroTournamentPageStatic: React.FC = () => {
                 myRank: 4,
                 tournamentInfo: {
                     tournament_id: tournament_id || "static-1",
-                    game_name: "Pistol Bottle Battle",
+                    game_name: gameTitle,
                     game_gameboost_id: "stick-monkey",
-                    game_image_url: "/assets/images/pistol-bottle.png",
+                    game_image_url: bannerImage,
                     fee_fee: "10",
                     fee_prize_1: "10,000",
                     fee_reward_type: "1",
@@ -289,7 +297,7 @@ const HeroTournamentPageStatic: React.FC = () => {
             );
             setSelectedGame({
                 tournamentInfo: {
-                    game_name: "Pistol Bottle Battle",
+                    game_name: gameTitle,
                     game_screen: "1"
                 }
             });
@@ -398,12 +406,12 @@ const HeroTournamentPageStatic: React.FC = () => {
                         >
                             {/* Complete Image */}
                             <img
-                                src="/assets/images/knideNinja-portrait.png"
+                                src={bannerImage}
                                 alt="Tournament Banner"
                                 className="w-full h-full object-contain"
                             />
                             {/* Floating control buttons */}
-                            <div className="absolute inset-x-0 top-0 p-2 pr-0 flex items-center justify-between z-20 w-full">
+                            <div className="absolute inset-x-0 top-0 p-2 pr-1 flex items-center justify-between z-20 w-full">
                                 <button
                                     onClick={handleClickBack}
                                     className={`w-10 h-10 rounded-xl flex items-center justify-center shadow-md active:scale-95 transition-all pointer-events-auto cursor-pointer shrink-0 ${isDarkTheme ? "bg-[#32323299] backdrop-blur-md border border-white/10 text-white hover:bg-black/75" : "bg-white border border-slate-200 text-slate-700 hover:bg-slate-50"}`}
@@ -412,17 +420,16 @@ const HeroTournamentPageStatic: React.FC = () => {
                                 </button>
 
                                 <h2 className={`text-base font-black text-center px-2 truncate max-w-[200px] select-none ${isDarkTheme ? "text-white drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]" : "text-slate-800"}`}>
-                                    {/* {info?.game_name || "Pistol Bottle Battle"} */}
-                                    Knife Ninja
+                                    {gameTitle}
                                 </h2>
 
                                 <div
                                     onClick={() => navigate("/settingsStatic")}
-                                    className="w-12 h-14 -my-2 flex-shrink-0 flex items-center justify-center cursor-pointer active:scale-95 transition-all hover:scale-105"
+                                    className="w-12 h-12 flex-shrink-0 flex items-center justify-center cursor-pointer active:scale-95 transition-all hover:scale-105"
                                 >
                                     <img
                                         src={`/assets/users/${avatar}`}
-                                        className="w-full h-full object-contain"
+                                        className="w-full h-full object-cover"
                                         alt="Avatar"
                                         onError={(e) => {
                                             (e.target as HTMLImageElement).src = "/assets/users/9.png";
@@ -466,7 +473,7 @@ const HeroTournamentPageStatic: React.FC = () => {
                                 </div> */}
 
                                 {/* Stats Grid row (Prize Pool, Leaderboard, Players Joined) */}
-                                <div className={`grid grid-cols-3 gap-1 rounded-2xl p-2 text-center border ${isDarkTheme ? "bg-[#1f1f1f] border-white/[0.05]" : "bg-[#f8f9fa] border-slate-200/50 shadow-sm"}`}>
+                                <div className={`grid grid-cols-3 gap-1 rounded-2xl p-2 text-center border ${isDarkTheme ? "bg-[#1f1f1fd9] border-white/[0.05]" : "bg-[#f8f9fa] border-slate-200/50 shadow-sm"}`}>
                                     {/* Prize Pool Column */}
                                     <div className="flex flex-col items-center justify-center">
                                         <Trophy className="w-4 h-4 text-[#dfa208] mb-1" />
@@ -500,7 +507,7 @@ const HeroTournamentPageStatic: React.FC = () => {
                                 </div>
 
                                 {/* Full-width Tournament Timer Badge */}
-                                <div className={`border rounded-2xl p-3.5 flex flex-col items-center justify-center gap-2.5 ${isDarkTheme ? "bg-[#1f1f1f] border-white/[0.05]" : "bg-[#f8f9fa] border-slate-200/50 shadow-sm"}`}>
+                                <div className={`border rounded-2xl p-3.5 flex flex-col items-center justify-center gap-2.5 ${isDarkTheme ? "bg-[#1f1f1fd9] border-white/[0.05]" : "bg-[#f8f9fa] border-slate-200/50 shadow-sm"}`}>
                                     <div className="flex items-center gap-1 text-sm font-bold">
                                         <Clock className="w-4 h-4 text-[#dfa208]" />
                                         <span className={isDarkTheme ? "text-white/80" : "text-slate-700"}>

@@ -203,6 +203,8 @@ const DailyTournamentMixedTesting: React.FC<DailyTournament> = ({
                                             <div className="relative w-full aspect-[285/380] rounded-xl overflow-hidden shadow-sm">
                                                 <img
                                                     src={getGameImage(game?.tournament_name, game?.tournament_game_image, index)}
+                                                    loading="eager"
+                                                    decoding="async"
                                                     className="w-full h-full block object-cover transition-transform duration-500 group-hover:scale-105"
                                                     alt={game?.tournament_name}
                                                 />

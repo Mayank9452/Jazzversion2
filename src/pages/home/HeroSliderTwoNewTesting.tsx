@@ -176,6 +176,10 @@ const HeroSliderTwoNewTesting: React.FC<HeroSliderTwoProps> = ({ heroGames, onCo
                                                     <img
                                                         src={getGameImage(game?.tournament_name, game?.tournament_game_image)}
                                                         alt={game?.tournament_name}
+                                                        loading="eager"
+                                                        // @ts-ignore
+                                                        fetchPriority="high"
+                                                        decoding="async"
                                                         className="w-full h-full object-cover transition-transform duration-500 hover:scale-[1.03]"
                                                     />
 

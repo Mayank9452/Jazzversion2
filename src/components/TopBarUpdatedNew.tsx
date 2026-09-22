@@ -165,7 +165,7 @@ export function TopBarUpdatedNew() {
                         {/* Profile Image Avatar */}
                         <button
                             onClick={() => navigate("/settingsStatic")}
-                            className="w-11 h-11 flex-shrink-0 flex items-center justify-center cursor-pointer active:scale-95 transition-all shrink-0"
+                            className="w-12 h-12 cursor-pointer active:scale-95 transition-all shrink-0"
                             title="My Account"
                         >
                             <img src={`/assets/users/${avatar}`} alt="Avatar" className="w-full h-full object-contain" />

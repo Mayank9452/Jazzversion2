@@ -209,9 +209,9 @@ const LOCAL_IMAGES = [
   "/assets/images/01.png",
   "/assets/images/02.png",
   "/assets/images/03.png",
-  "/assets/images/4.png",
-  "/assets/images/8.png",
-  "/assets/images/9.png"
+  "/assets/images/knideNinja-portrait.png",
+  "/assets/images/285-380-element.png",
+  "/assets/images/character.png"
 ];
 
 const LIGHT_BANNER_GRADIENTS = [
@@ -305,11 +305,10 @@ const TournamentHistory: React.FC = () => {
 
         {/* ── Premium Glassmorphic Header Card ── */}
         <div className="pb-4">
-          <div className={`relative overflow-hidden backdrop-blur-xl p-2 pr-1 flex items-center justify-between gap-3 border-b transition-all duration-300 shadow-[0_3px_1px_rgba(0,0,0,7%)] dark:shadow-[0_12px_40px_rgba(0,0,0,0.2)] ${
-            isDark 
-              ? "bg-gradient-to-br from-[#2B2B2B]/40 to-[#191919]/30 border-white/[0.06]" 
-              : "bg-brand-gradient border-[#dfa208]/30"
-          }`}>
+          <div className={`relative overflow-hidden backdrop-blur-xl p-2 flex items-center justify-between gap-3 border-b transition-all duration-300 shadow-[0_3px_1px_rgba(0,0,0,7%)] dark:shadow-[0_12px_40px_rgba(0,0,0,0.2)] ${isDark
+            ? "bg-gradient-to-br from-[#2B2B2B]/40 to-[#191919]/30 border-white/[0.06]"
+            : "bg-brand-gradient border-[#dfa208]/30"
+            }`}>
             {/* Left side: Titles */}
             <div className="w-full flex justify-between items-center gap-5">
               <div>
@@ -333,12 +332,12 @@ const TournamentHistory: React.FC = () => {
               </div>
 
               <div
-                className="w-16 h-16 -my-2 flex-shrink-0 flex items-center justify-center cursor-pointer active:scale-95 transition-all hover:scale-105"
+                className="w-12 h-12 flex-shrink-0 flex items-center justify-center cursor-pointer active:scale-95 transition-all hover:scale-105"
                 onClick={() => navigate("/settingsStatic")}
               >
                 <img
                   src={`/assets/users/${avatar}`}
-                  className="w-full h-full object-contain"
+                  className="w-full h-full object-cover"
                   alt="User Avatar"
                   onError={(e) => {
                     (e.target as HTMLImageElement).src = "/assets/users/9.png";

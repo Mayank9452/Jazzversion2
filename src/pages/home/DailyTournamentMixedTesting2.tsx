@@ -135,6 +135,30 @@ const TopupIcon = ({ className = "w-6 h-6" }: { className?: string }) => {
     );
 };
 
+const THREE_TOURNAMENT_BANNERS = [
+    {
+        id: "knife-ninja",
+        image: "/assets/images/knideNinja-portrait.png",
+        name: "Knife Ninja",
+        rewardType: 0,
+        prize: "10,000",
+    },
+    {
+        id: "target-challenge",
+        image: "/assets/images/285-380-element.png",
+        name: "Target Challenge",
+        rewardType: 1,
+        prize: "100,000",
+    },
+    {
+        id: "alien-galaxy-war",
+        image: "/assets/images/character.png",
+        name: "Alien Galaxy War",
+        rewardType: 2,
+        prize: "100,000",
+    },
+];
+
 const DailyTournamentMixedTesting2: React.FC<DailyTournament> = ({
     dailyTournaments,
 }) => {
@@ -144,11 +168,13 @@ const DailyTournamentMixedTesting2: React.FC<DailyTournament> = ({
 
     const [countdowns, setCountdowns] = useState<Record<string, string>>({});
 
-    const handleGameClick = (game: any) => {
+    const handleGameClick = (item: any) => {
         navigate("/tournamentPageStatic", {
             state: {
-                tournament_id: game?.tournament_id,
-                fromMixedTesting2: true
+                tournament_id: item?.tournament_id || item?.id,
+                fromMixedTesting2: true,
+                bannerImage: item?.image,
+                gameTitle: item?.name || item?.tournament_name,
             },
         });
     };
@@ -169,20 +195,28 @@ const DailyTournamentMixedTesting2: React.FC<DailyTournament> = ({
         return `${pad(days)}d:${pad(hours)}m:${pad(minutes)}m:${pad(seconds)}s`;
     };
 
+    const displayTournaments = THREE_TOURNAMENT_BANNERS.map((banner, index) => {
+        const game = dailyTournaments?.[index] || {};
+        const futureTime = new Date(Date.now() + (3 + index) * 24 * 60 * 60 * 1000).toISOString();
+        return {
+            ...banner,
+            tournament_id: game?.tournament_id || banner.id,
+            tournament_name: banner.name,
+            tournament_end: game?.tournament_end || futureTime,
+            fee_prize_1: game?.fee_prize_1 || banner.prize,
+        };
+    });
+
     useEffect(() => {
         const timer = setInterval(() => {
             const updated: Record<string, string> = {};
-            dailyTournaments?.forEach((t: any) => {
+            displayTournaments.forEach((t: any) => {
                 updated[t.tournament_id] = calculateCountdown(t.tournament_end);
             });
             setCountdowns(updated);
         }, 1000);
         return () => clearInterval(timer);
     }, [dailyTournaments]);
-
-    const displayTournaments = dailyTournaments && dailyTournaments.length > 0
-        ? dailyTournaments.slice(0, 2)
-        : [];
 
     return (
         <>
@@ -199,9 +233,8 @@ const DailyTournamentMixedTesting2: React.FC<DailyTournament> = ({
                             className="tiny-slider-one flex justify-center items-center overflow-visible"
                         >
                             {displayTournaments.map((game: any, index: any) => {
-                                const rewardType = index % 3; // 0 = Coins, 1 = Voucher, 2 = Topup
-                                const imageUrl = getGameImage(game?.tournament_name, game?.tournament_game_image, index);
-                                const isGlowImage = imageUrl.includes("box tower.jpeg") || imageUrl.includes("knife ninja.jpeg");
+                                const rewardType = game.rewardType; // 0 = Coins, 1 = Voucher, 2 = Topup
+                                const imageUrl = game.image;
 
                                 return (
                                     <SwiperSlide
@@ -216,13 +249,14 @@ const DailyTournamentMixedTesting2: React.FC<DailyTournament> = ({
                                             className="w-full flex flex-col overflow-visible rounded-2xl transition-all duration-200 active:scale-[0.98] relative z-10"
                                         >
                                             {/* Game Image Banner */}
-                                            <div className={`relative w-full aspect-[285/380] rounded-xl shadow-sm transition-all duration-300 ${isGlowImage ? "overflow-visible" : "overflow-hidden"}`}>
+                                            <div className="relative w-full aspect-[285/380] rounded-xl shadow-sm transition-all duration-300 overflow-hidden">
                                                 <img
                                                     src={imageUrl}
+                                                    loading="eager"
+                                                    // @ts-ignore
+                                                    fetchPriority="high"
+                                                    decoding="async"
                                                     className="w-full h-full rounded-xl block object-cover transition-transform duration-500 group-hover:scale-105"
-                                                    style={isGlowImage ? {
-                                                        filter: "drop-shadow(0 0 14px rgba(255, 202, 32, 0.75))"
-                                                    } : undefined}
                                                     alt={game?.tournament_name}
                                                 />
                                                 {/* Floating Play Button on Bottom Right */}
@@ -263,7 +297,7 @@ const DailyTournamentMixedTesting2: React.FC<DailyTournament> = ({
                                                     <div className="font-semibold flex items-center gap-1 text-sm sm:text-xs">
                                                         <Coins className="w-5 h-5 shrink-0 text-black fill-black/10" />
                                                         <span className="tracking-wide text-black font-bold">
-                                                            {Number(game?.fee_prize_1).toLocaleString()} Coins
+                                                            {Number(game?.fee_prize_1?.replace(/,/g, "") || 10000).toLocaleString()} Coins
                                                         </span>
                                                     </div>
                                                 )}
