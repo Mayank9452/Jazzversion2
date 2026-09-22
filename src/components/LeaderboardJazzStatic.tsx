@@ -19,7 +19,7 @@ const players: Player[] = [
   { rank: 3, msisdn: "912xxxx789", score: 82139, avatarUrl: "/assets/users/3.png", avatarBg: "from-[#2B2B2B] to-[#191919]" },
   { rank: 4, msisdn: "987xxxx321", score: 80857, avatarUrl: "/assets/users/4.png", avatarBg: "from-[#3D3D3D] to-[#2B2B2B]" },
   { rank: 5, msisdn: "955xxxx111", score: 76128, avatarUrl: "/assets/users/5.png", avatarBg: "from-[#3D3D3D] to-[#2B2B2B]" },
-  { rank: 6, msisdn: "955xxxx822", score: 71667, avatarUrl: "/assets/users/22.png", avatarBg: "from-[#2B2B2B] to-[#191919]" },
+  { rank: 6, msisdn: "955xxxx822", score: 71667, avatarUrl: "/assets/users/12.png", avatarBg: "from-[#2B2B2B] to-[#191919]" },
   { rank: 7, msisdn: "922xxxx999", score: 68439, avatarUrl: "/assets/users/7.png", avatarBg: "from-[#3D3D3D] to-[#2B2B2B]" },
   { rank: 8, msisdn: "931xxxx222", score: 66981, avatarUrl: "/assets/users/8.png", avatarBg: "from-[#2B2B2B] to-[#191919]" },
   { rank: 9, msisdn: "944xxxx888", score: 50546, avatarUrl: "/assets/users/9.png", avatarBg: "from-[#3D3D3D] to-[#2B2B2B]" },
@@ -195,7 +195,7 @@ export const LeaderboardJazzStatic: React.FC = () => {
                   <img
                     src={rank1.avatarUrl}
                     alt={rank1.msisdn}
-                    className="object-contain"
+                    className="object-cover"
                   />
                 </div>
               </div>

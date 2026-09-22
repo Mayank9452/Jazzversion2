@@ -398,7 +398,7 @@ const HeroTournamentPageStatic: React.FC = () => {
                         >
                             {/* Complete Image */}
                             <img
-                                src="/assets/images/285-380-element.png"
+                                src="/assets/images/knideNinja-portrait.png"
                                 alt="Tournament Banner"
                                 className="w-full h-full object-contain"
                             />
@@ -413,12 +413,12 @@ const HeroTournamentPageStatic: React.FC = () => {
 
                                 <h2 className={`text-base font-black text-center px-2 truncate max-w-[200px] select-none ${isDarkTheme ? "text-white drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]" : "text-slate-800"}`}>
                                     {/* {info?.game_name || "Pistol Bottle Battle"} */}
-                                    Smart Surfer
+                                    Knife Ninja
                                 </h2>
 
                                 <div
                                     onClick={() => navigate("/settingsStatic")}
-                                    className="w-16 h-16 -my-2 flex-shrink-0 flex items-center justify-center cursor-pointer active:scale-95 transition-all hover:scale-105"
+                                    className="w-12 h-14 -my-2 flex-shrink-0 flex items-center justify-center cursor-pointer active:scale-95 transition-all hover:scale-105"
                                 >
                                     <img
                                         src={`/assets/users/${avatar}`}

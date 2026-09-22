@@ -67,7 +67,7 @@ const PopupAvatarSelector: React.FC<PopupAvatarSelectorProps> = ({
   const [showLowBalance, setShowLowBalance] = useState(false);
   const [requiredCoins, setRequiredCoins] = useState(0);
   const avatars: string[] = Array.from(
-    { length: 22 },
+    { length: 17 },
     (_, i) => `${i + 1}.png`
   );
 
@@ -122,7 +122,7 @@ const PopupAvatarSelector: React.FC<PopupAvatarSelectorProps> = ({
                 </div>
 
                 {/* Avatar Grid - 3 Columns */}
-                <div className="grid grid-cols-3 gap-x-3 gap-y-4 max-h-[300px] overflow-y-auto pr-1 custom-scrollbar bg-white/5 backdrop-blur-sm p-3 rounded-2xl">
+                <div className="grid grid-cols-3 gap-x-3 gap-y-4 max-h-[300px] overflow-y-auto pr-1 custom-scrollbar bg-white/5 p-3 rounded-2xl">
                   {avatars.map((avatar) => {
                     const cost = avatarCosts[avatar] || 0;
                     const isAffordable = userCoins >= cost;
