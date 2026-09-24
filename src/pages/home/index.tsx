@@ -893,15 +893,15 @@ const Home = () => {
   const isDark = resolvedTheme === "dark";
   const [vipCountdown, setVipCountdown] = useState<string>("");
   const [premiumCountdown, setPremiumCountdown] = useState<string>("");
+  const [showPopupBanner, setShowPopupBanner] = useState(false);
   const [showSpinWheelPopup, setShowSpinWheelPopup] = useState(false);
-  const [shouldShowWelcomePopups, setShouldShowWelcomePopups] = useState(false);
+  const [showLowBalancePopup, setShowLowBalancePopup] = useState(false);
   const [showDailyLoginPopup, setShowDailyLoginPopup] = useState(false);
-  const [showLowBalancePopup, setShowLowBalancePopup] = useState(true);
 
   useEffect(() => {
     const hasShown = sessionStorage.getItem("hasShownWelcomePopups");
     if (!hasShown) {
-      setShouldShowWelcomePopups(true);
+      setShowPopupBanner(true);
     }
   }, []);
 
@@ -1151,27 +1151,32 @@ const Home = () => {
         isOpen={showDailyLoginPopup}
         onClose={() => setShowDailyLoginPopup(false)}
       />
+
+      {/* 1st: Popup Banner */}
+      {showPopupBanner && (
+        <PopupBannerUpdated
+          onClose={() => {
+            setShowPopupBanner(false);
+            setShowSpinWheelPopup(true);
+          }}
+        />
+      )}
+
+      {/* 2nd: Redeem Spin Wheel Popup */}
+      <PopupSpinWheel
+        isShow={showSpinWheelPopup}
+        onClose={() => {
+          setShowSpinWheelPopup(false);
+          setShowLowBalancePopup(true);
+          sessionStorage.setItem("hasShownWelcomePopups", "true");
+        }}
+      />
+
+      {/* 3rd: Low Balance Popup */}
       <LowBalancePopup
         visible={showLowBalancePopup}
         onClose={() => setShowLowBalancePopup(false)}
       />
-      {shouldShowWelcomePopups && (
-        <>
-          <PopupBannerUpdated
-            onClose={() => {
-              setShowSpinWheelPopup(true);
-              sessionStorage.setItem("hasShownWelcomePopups", "true");
-            }}
-          />
-          <PopupSpinWheel
-            isShow={showSpinWheelPopup}
-            onClose={() => {
-              setShowSpinWheelPopup(false);
-              setShouldShowWelcomePopups(false);
-            }}
-          />
-        </>
-      )}
     </>
   );
 };
