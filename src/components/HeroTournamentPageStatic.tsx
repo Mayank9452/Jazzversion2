@@ -401,14 +401,14 @@ const HeroTournamentPageStatic: React.FC = () => {
                     >
                         {/* 1. Complete Image Banner Header - Full Width, Native Aspect ratio */}
                         <div
-                            className={`relative w-full aspect-[285/380] flex items-center justify-center  ${isDarkTheme ? "bg-[#191919] border-white/10" : "bg-[#fffbeb] border-slate-100"}`}
+                            className={`relative w-full flex items-center justify-center  ${isDarkTheme ? "bg-[#191919] border-white/10" : "bg-[#fffbeb] border-slate-100"}`}
                             style={{ background: isDarkTheme ? "" : "radial-gradient(circle, rgba(254,203,19,0.15) 0%, rgba(255,255,255,1) 70%)" }}
                         >
                             {/* Complete Image */}
                             <img
                                 src={bannerImage}
                                 alt="Tournament Banner"
-                                className="w-full h-full object-contain"
+                                className=""
                             />
                             {/* Floating control buttons */}
                             <div className="absolute inset-x-0 top-0 p-2 pr-1 flex items-center justify-between z-20 w-full">
@@ -440,7 +440,7 @@ const HeroTournamentPageStatic: React.FC = () => {
                         </div>
 
                         {/* Glassmorphic Content overlapping the bottom 20% of the image header container */}
-                        <div className="px-2 -mt-[58%] relative z-20 space-y-5">
+                        <div className="px-2 -mt-[40%] relative z-20 space-y-5">
                             <div className={`rounded-3xl border shadow-xl p-5 space-y-5 relative ${isDarkTheme ? "bg-[#252525]/40 border-white/[0.08] text-white" : "bg-[#ebebebcc] border-slate-100 text-slate-800"}`}>
                                 {/* Play Button floating on top right, overlapping bottom of image banner header */}
                                 <motion.button
