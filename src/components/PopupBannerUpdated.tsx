@@ -83,7 +83,7 @@ const PopupBannerUpdated: React.FC<PopupBannerUpdatedProps> = ({ onClose }) => {
                 >
                   <div className="relative flex items-center justify-center">
                     <img
-                      src="/assets/emojis/subcribe.gif"
+                      src="/assets/emojis/subcribe.webp"
                       className="relative z-10"
                       alt="Welcome Robot"
                       loading="lazy"

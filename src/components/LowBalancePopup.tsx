@@ -75,7 +75,7 @@ export default function LowBalancePopup({ visible, onClose, avatarUrl }: LowBala
                 >
                   <div className="relative flex items-center justify-center">
                     <img
-                      src="/assets/emojis/lb.gif"
+                      src="/assets/emojis/lb.webp"
                       className="relative z-10"
                       alt="Low Balance Robot"
                       loading="lazy"

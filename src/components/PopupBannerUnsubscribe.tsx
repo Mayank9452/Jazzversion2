@@ -104,7 +104,7 @@ const PopupBannerUnsubscribe = ({
                 >
                   <div className="relative flex items-center justify-center">
                     <img
-                      src="/assets/emojis/unsub.gif"
+                      src="/assets/emojis/unsub.webp"
                       className="relative z-10"
                       alt="Unsubscribe Robot"
                       loading="lazy"
