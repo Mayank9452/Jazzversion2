@@ -492,7 +492,7 @@ function SpinWheelUpdatedVoucher3({ }) {
                         {/* Right side: Modern Profile Avatar Container */}
                         <div
                             onClick={() => navigate("/settingsStatic")}
-                            className="w-12 h-12 cursor-pointer active:scale-95 transition-all hover:scale-110 relative z-40"
+                            className="w-16 h-16 -my-2 cursor-pointer active:scale-95 transition-all hover:scale-110 relative z-40"
                         >
                             <img src={`/assets/users/${avatar}`} className="w-full h-full object-cover drop-shadow-[0_8px_16px_rgba(0,0,0,0.35)]" alt="User Avatar" />
                         </div>

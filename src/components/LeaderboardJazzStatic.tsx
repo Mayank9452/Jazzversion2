@@ -107,7 +107,7 @@ export const LeaderboardJazzStatic: React.FC = () => {
                   </p>
                 </div>
               </div>
-              <div className="w-12 h-12 flex-shrink-0 flex items-center justify-center cursor-pointer active:scale-95 transition-all hover:scale-105"
+              <div className="w-16 h-16 -my-2 flex-shrink-0 flex items-center justify-center cursor-pointer active:scale-95 transition-all hover:scale-105"
                 onClick={() => navigate("/settingsStatic")}
               >
                 <img

@@ -587,32 +587,21 @@ const TournamentHistoryUpdated: React.FC = () => {
                                             className={`relative w-full rounded-2xl overflow-hidden ${cardBg} ${cardBorder} p-3.5 ${cardTextColor} flex gap-4 transition-all duration-300 cursor-pointer hover:scale-[1.01] active:scale-[0.99] shadow-[0_8px_32px_rgba(0,0,0,0.08)] dark:shadow-[0_12px_40px_rgba(0,0,0,0.25)] hover:shadow-yellow-500/[0.05] dark:hover:shadow-yellow-500/[0.02]`}
                                         >
                                             {/* Left: Standard Rounded Rectangle Game Cover */}
-                                            {isDark ? (
-                                                <div className="relative w-24 h-24 sm:w-28 sm:h-28 flex-shrink-0">
-                                                    <img
-                                                        src={LOCAL_IMAGES[index % LOCAL_IMAGES.length]}
-                                                        alt={item.tournament_name}
-                                                        className="w-full h-full object-contain rounded-xl border border-white/2 border-r-2 border-r-yellow-main shadow-md transition-transform duration-500 hover:scale-105"
-                                                        loading="lazy"
-                                                    />
-                                                </div>
-                                            ) : (
-                                                <div className={`relative w-24 h-24 sm:w-28 sm:h-28 flex-shrink-0 overflow-visible rounded-2xl flex items-center justify-center p-1.5 transition-all duration-300 border ${LIGHT_BANNER_GRADIENTS[Math.floor(Math.random() * LIGHT_BANNER_GRADIENTS.length)]
-                                                    }`}>
-                                                    {/* Soft yellow ambient backdrop glow */}
-                                                    <div className="absolute top-[50%] left-[50%] -translate-x-[50%] -translate-y-[50%] w-[90%] aspect-square rounded-full bg-[#FFCA20]/20 blur-[16px] pointer-events-none z-0" />
+                                            <div className={`relative w-24 h-24 sm:w-28 sm:h-28 flex-shrink-0 overflow-visible rounded-2xl flex items-center justify-center p-1.5 transition-all duration-300 border ${LIGHT_BANNER_GRADIENTS[index % LIGHT_BANNER_GRADIENTS.length]
+                                                }`}>
+                                                {/* Soft yellow ambient backdrop glow */}
+                                                <div className="absolute top-[50%] left-[50%] -translate-x-[50%] -translate-y-[50%] w-[90%] aspect-square rounded-full bg-[#FFCA20]/20 blur-[16px] pointer-events-none z-0" />
 
-                                                    <img
-                                                        src={LOCAL_IMAGES[index % LOCAL_IMAGES.length]}
-                                                        alt={item.tournament_name}
-                                                        className="relative z-10 w-full h-full object-contain transition-transform duration-500 hover:scale-105"
-                                                        style={{
-                                                            filter: "drop-shadow(0 0 6px rgba(255, 202, 32, 0.55))"
-                                                        }}
-                                                        loading="lazy"
-                                                    />
-                                                </div>
-                                            )}
+                                                <img
+                                                    src={LOCAL_IMAGES[index % LOCAL_IMAGES.length]}
+                                                    alt={item.tournament_name}
+                                                    className="relative z-10 w-full h-full object-contain transition-transform duration-500 hover:scale-105"
+                                                    style={{
+                                                        filter: "drop-shadow(0 0 6px rgba(255, 202, 32, 0.55))"
+                                                    }}
+                                                    loading="lazy"
+                                                />
+                                            </div>
 
                                             {/* Right: Info details */}
                                             <div className="flex-1 flex flex-col justify-between min-w-0">

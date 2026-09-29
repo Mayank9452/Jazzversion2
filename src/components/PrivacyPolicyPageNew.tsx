@@ -95,7 +95,7 @@ export default function PrivacyPolicyPageNew() {
                   Rules, guidelines & safety
                 </p>
               </div>
-              <div className="w-12 h-12 flex-shrink-0 flex items-center justify-center cursor-pointer active:scale-95 transition-all hover:scale-105"
+              <div className="w-16 h-16 -my-2 flex-shrink-0 flex items-center justify-center cursor-pointer active:scale-95 transition-all hover:scale-105"
                 onClick={() => navigate("/settingsStatic")}
               >
                 <img
@@ -113,7 +113,7 @@ export default function PrivacyPolicyPageNew() {
 
         <div className="px-2 max-w-md mx-auto relative z-10">
           {/* Scrollable Privacy Content Card */}
-          <div className={`rounded-3xl backdrop-blur-md p-5 shadow-lg overflow-y-auto relative text-sm leading-relaxed transition-all duration-300 border ${isDark
+          <div className={`rounded-3xl backdrop-blur-md p-5 shadow-lg max-h-[calc(100vh-150px)] overflow-y-auto relative text-sm leading-relaxed transition-all duration-300 border ${isDark
             ? "bg-[#282828]/50 border-white/[0.06] text-white/90 shadow-[0_12px_40px_rgba(0,0,0,0.25)]"
             : "bg-white/90 border-slate-200/60 text-slate-700 shadow-[0_8px_32px_rgba(0,0,0,0.06)]"
             }`}>

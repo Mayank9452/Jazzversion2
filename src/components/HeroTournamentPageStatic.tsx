@@ -419,13 +419,13 @@ const HeroTournamentPageStatic: React.FC = () => {
                                     <ArrowLeft className="w-5 h-5" />
                                 </button>
 
-                                <h2 className={`text-base font-black text-center px-2 truncate max-w-[200px] select-none ${isDarkTheme ? "text-white drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]" : "text-slate-800"}`}>
+                                {/* <h2 className={`text-base font-black text-center px-2 truncate max-w-[200px] select-none ${isDarkTheme ? "text-white drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]" : "text-slate-800"}`}>
                                     {gameTitle}
-                                </h2>
+                                </h2> */}
 
                                 <div
                                     onClick={() => navigate("/settingsStatic")}
-                                    className="w-12 h-12 flex-shrink-0 flex items-center justify-center cursor-pointer active:scale-95 transition-all hover:scale-105"
+                                    className="w-16 h-16 -my-2 flex-shrink-0 flex items-center justify-center cursor-pointer active:scale-95 transition-all hover:scale-105"
                                 >
                                     <img
                                         src={`/assets/users/${avatar}`}
