@@ -87,6 +87,7 @@ const PopupBannerUpdated: React.FC<PopupBannerUpdatedProps> = ({ onClose }) => {
                       className="relative z-10"
                       alt="Welcome Robot"
                       loading="lazy"
+                      style={{ maxWidth: "150px" }}
                     />
 
                     {/* Floating Sparkle Particles */}
