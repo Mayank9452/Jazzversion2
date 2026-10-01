@@ -79,6 +79,7 @@ export default function LowBalancePopup({ visible, onClose, avatarUrl }: LowBala
                       className="relative z-10"
                       alt="Low Balance Robot"
                       loading="lazy"
+                      style={{ maxWidth: "150px" }}
                     />
 
                     {/* Floating Sparkle Particles */}

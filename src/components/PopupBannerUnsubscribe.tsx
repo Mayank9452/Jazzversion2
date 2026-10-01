@@ -108,6 +108,7 @@ const PopupBannerUnsubscribe = ({
                       className="relative z-10"
                       alt="Unsubscribe Robot"
                       loading="lazy"
+                      style={{ maxWidth: "150px" }}
                     />
 
                     {/* Floating Sparkle Particles */}

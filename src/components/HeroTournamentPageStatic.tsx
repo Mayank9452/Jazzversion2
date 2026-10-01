@@ -411,10 +411,10 @@ const HeroTournamentPageStatic: React.FC = () => {
                                 className=""
                             />
                             {/* Floating control buttons */}
-                            <div className="absolute inset-x-0 top-0 p-2 pr-1 flex items-center justify-between z-20 w-full">
+                            <div className="absolute inset-x-0 top-0 p-3 pr-1 flex items-center justify-between z-20 w-full">
                                 <button
                                     onClick={handleClickBack}
-                                    className={`w-10 h-10 rounded-xl flex items-center justify-center shadow-md active:scale-95 transition-all pointer-events-auto cursor-pointer shrink-0 ${isDarkTheme ? "bg-[#32323299] backdrop-blur-md border border-white/10 text-white hover:bg-black/75" : "bg-white border border-slate-200 text-slate-700 hover:bg-slate-50"}`}
+                                    className={`w-12 h-12 rounded-xl flex items-center justify-center shadow-md active:scale-95 transition-all pointer-events-auto cursor-pointer shrink-0 ${isDarkTheme ? "bg-[#32323299] backdrop-blur-md border border-white/10 text-white hover:bg-black/75" : "bg-white border border-slate-200 text-slate-700 hover:bg-slate-50"}`}
                                 >
                                     <ArrowLeft className="w-5 h-5" />
                                 </button>
@@ -478,7 +478,7 @@ const HeroTournamentPageStatic: React.FC = () => {
                                     <div className="flex flex-col items-center justify-center">
                                         <Trophy className="w-4 h-4 text-[#dfa208] mb-1" />
                                         <span className={`text-sm font-black ${isDarkTheme ? "text-[#ffca20]" : "text-[#dfa208]"}`}>10,000</span>
-                                        <span className={`text-xs font-bold mt-0.5 ${isDarkTheme ? "text-white/50" : "text-slate-500"}`}>Prize Pool</span>
+                                        <span className={`text-sm font-medium mt-0.5 ${isDarkTheme ? "text-white/50" : "text-slate-500"}`}>Prize Pool</span>
                                     </div>
                                     {/* Leaderboard Column */}
                                     <button
@@ -496,13 +496,13 @@ const HeroTournamentPageStatic: React.FC = () => {
                                         className={`flex flex-col items-center justify-center border-x w-full active:scale-95 transition-all py-1 border-none bg-transparent cursor-pointer ${isDarkTheme ? "border-white/5 hover:bg-white/5" : "border-slate-200/50 hover:bg-slate-200/50"}`}
                                     >
                                         <img src="/assets/images/img/trophy.png" className="w-8 h-8 object-contain mb-1" alt="Leaderboard" />
-                                        <span className={`text-xs font-bold mt-0.5 ${isDarkTheme ? "text-white/50" : "text-slate-500"}`}>Leaderboard</span>
+                                        <span className={`text-sm font-medium mt-0.5 ${isDarkTheme ? "text-white/50" : "text-slate-500"}`}>Leaderboard</span>
                                     </button>
                                     {/* Players Joined Column */}
                                     <div className="flex flex-col items-center justify-center">
                                         <Users className={`w-4 h-4 mb-1 ${isDarkTheme ? "text-white" : "text-slate-700"}`} />
                                         <span className={`text-sm font-black ${isDarkTheme ? "text-white" : "text-slate-800"}`}>200</span>
-                                        <span className={`text-xs font-bold mt-0.5 ${isDarkTheme ? "text-white/50" : "text-slate-500"}`}>Players Joined</span>
+                                        <span className={`text-sm font-medium mt-0.5 ${isDarkTheme ? "text-white/50" : "text-slate-500"}`}>Players Joined</span>
                                     </div>
                                 </div>
 
@@ -530,7 +530,7 @@ const HeroTournamentPageStatic: React.FC = () => {
                                     <h3 className={`text-xs font-black uppercase tracking-wider ${isDarkTheme ? "text-[#ffca20]" : "text-[#dfa208]"}`}>How to Play</h3>
                                     <div className={`text-xs leading-relaxed font-medium border rounded-2xl p-3.5 ${isDarkTheme ? "bg-[#1f1f1f]/50 border-white/[0.05] text-white/70" : "bg-white border-slate-100 text-slate-600 shadow-sm"}`}>
                                         <div className="">
-                                            <p className={isDarkTheme ? "text-white/70 text-xs" : "text-slate-600 text-xs"}>
+                                            <p className={isDarkTheme ? "text-white/70 text-sm" : "text-slate-600 text-xs"}>
                                                 {(info?.game_help !== "" && formatGameHelp(info?.game_help)) || "Tap to aim at the target bottles. Release to shoot. Hit golden bottles to get double points. Avoid shooting the bombs! You have 60 seconds to score as high as possible."}
                                             </p>
                                         </div>
@@ -560,7 +560,7 @@ const HeroTournamentPageStatic: React.FC = () => {
                                                     setIsLeaderboardPopupOpen(true);
                                                 }
                                             }}
-                                            className={`px-4 py-2 border rounded-xl text-xs font-black tracking-[0.5px] flex items-center gap-1.5 transition-all cursor-pointer ${isDarkTheme ? "bg-white/10 border-transparent hover:bg-white/20 text-[#ffca20]" : "bg-[#fffbeb] border-[#dfa208]/30 hover:bg-[#fff7d6] text-[#dfa208]"}`}
+                                            className={`px-4 py-2 border rounded-xl text-sm font-semibold tracking-[0.5px] flex items-center gap-1.5 transition-all cursor-pointer ${isDarkTheme ? "bg-white/10 border-transparent hover:bg-white/20 text-[#ffca20]" : "bg-[#fffbeb] border-[#dfa208]/30 hover:bg-[#fff7d6] text-[#dfa208]"}`}
                                         >
                                             Leaderboard
                                             {fromMixedTesting2 ? (

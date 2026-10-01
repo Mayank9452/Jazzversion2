@@ -246,6 +246,95 @@ const ProfileIcon = ({ className, style, ...props }: React.SVGProps<SVGSVGElemen
   </svg>
 )
 
+const GiftIcon = ({ className, style, ...props }: React.SVGProps<SVGSVGElement>) => (
+  <svg
+    viewBox="0 0 64 64"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+    className={className}
+    style={style}
+    {...props}
+  >
+    <defs>
+      <linearGradient id="gift-silver-box" x1="32" y1="12" x2="32" y2="56" gradientUnits="userSpaceOnUse">
+        <stop offset="0%" stopColor="#FFFFFF" />
+        <stop offset="25%" stopColor="#E5E7EB" />
+        <stop offset="60%" stopColor="#9CA3AF" />
+        <stop offset="100%" stopColor="#374151" />
+      </linearGradient>
+      <linearGradient id="gift-gold-ribbon" x1="0" y1="0" x2="0" y2="1" gradientTransform="rotate(45)">
+        <stop offset="0%" stopColor="#FFE047" />
+        <stop offset="50%" stopColor="#F59E0B" />
+        <stop offset="100%" stopColor="#B45309" />
+      </linearGradient>
+      <linearGradient id="gift-reflection" x1="16" y1="12" x2="32" y2="54" gradientUnits="userSpaceOnUse">
+        <stop offset="0%" stopColor="#FFFFFF" stopOpacity="0.85" />
+        <stop offset="50%" stopColor="#FFFFFF" stopOpacity="0.15" />
+        <stop offset="100%" stopColor="#FFFFFF" stopOpacity="0" />
+      </linearGradient>
+    </defs>
+
+    {/* ── Outer Black Shadow Outlines (4.5px) for 3D Pop ── */}
+    {/* Bow Left & Right Loop Outline */}
+    <path d="M 32 18 C 22 7 12 9 17 18 C 22 22 28 20 32 18 Z" stroke="#000000" strokeWidth="4.5" strokeLinecap="round" strokeLinejoin="round" />
+    <path d="M 32 18 C 42 7 52 9 47 18 C 42 22 36 20 32 18 Z" stroke="#000000" strokeWidth="4.5" strokeLinecap="round" strokeLinejoin="round" />
+
+    {/* Ribbon Tails Outline */}
+    <path d="M 29 20 L 20 29 M 35 20 L 44 29" stroke="#000000" strokeWidth="5" strokeLinecap="round" />
+
+    {/* Box Base Outline */}
+    <path d="M 15 27 L 49 27 L 49 51 C 49 54.5 46 57.5 42.5 57.5 L 21.5 57.5 C 18 57.5 15 54.5 15 51 Z" stroke="#000000" strokeWidth="4.5" strokeLinejoin="round" />
+
+    {/* Box Lid Outline */}
+    <rect x="11" y="18" width="42" height="11" rx="3" stroke="#000000" strokeWidth="4.5" strokeLinejoin="round" />
+
+    {/* ── Fills & Strokes ── */}
+    {/* Box Base Fill */}
+    <path d="M 15 27 L 49 27 L 49 51 C 49 54.5 46 57.5 42.5 57.5 L 21.5 57.5 C 18 57.5 15 54.5 15 51 Z" fill="url(#gift-silver-box)" stroke="#000000" strokeWidth="2.5" strokeLinejoin="round" />
+
+    {/* Vertical Gold Ribbon on Base */}
+    <rect x="27" y="27" width="10" height="30" fill="url(#gift-gold-ribbon)" stroke="#000000" strokeWidth="1.5" />
+
+    {/* Horizontal Gold Ribbon on Base */}
+    <rect x="15" y="38" width="34" height="8" fill="url(#gift-gold-ribbon)" stroke="#000000" strokeWidth="1.5" />
+
+    {/* Specular Highlight on Base Left */}
+    <path d="M 17 29 L 24 29 L 24 53 L 18 53 C 17.5 53 17 52.5 17 51.5 Z" fill="url(#gift-reflection)" />
+
+    {/* Box Lid Fill */}
+    <rect x="11" y="18" width="42" height="11" rx="3" fill="url(#gift-silver-box)" stroke="#000000" strokeWidth="2.5" strokeLinejoin="round" />
+
+    {/* Vertical Gold Ribbon on Lid */}
+    <rect x="27" y="18" width="10" height="11" fill="url(#gift-gold-ribbon)" stroke="#000000" strokeWidth="1.5" />
+
+    {/* Lid Specular Highlight Line */}
+    <path d="M 13 20.5 H 51" stroke="#FFFFFF" strokeWidth="1.5" strokeLinecap="round" opacity="0.7" />
+
+    {/* Ribbon Tails Fill */}
+    <path d="M 29 20 L 21 28.5" stroke="url(#gift-gold-ribbon)" strokeWidth="3.5" strokeLinecap="round" />
+    <path d="M 29 20 L 21 28.5" stroke="#000000" strokeWidth="1" strokeLinecap="round" />
+    <path d="M 35 20 L 43 28.5" stroke="url(#gift-gold-ribbon)" strokeWidth="3.5" strokeLinecap="round" />
+    <path d="M 35 20 L 43 28.5" stroke="#000000" strokeWidth="1" strokeLinecap="round" />
+
+    {/* Bow Left Loop Fill */}
+    <path d="M 32 18 C 22 7 12 9 17 18 C 22 22 28 20 32 18 Z" fill="url(#gift-gold-ribbon)" stroke="#000000" strokeWidth="1.5" strokeLinejoin="round" />
+    {/* Bow Right Loop Fill */}
+    <path d="M 32 18 C 42 7 52 9 47 18 C 42 22 36 20 32 18 Z" fill="url(#gift-gold-ribbon)" stroke="#000000" strokeWidth="1.5" strokeLinejoin="round" />
+
+    {/* Bow Inner Fold Lines */}
+    <path d="M 24 16.5 C 21 14 18 14 19 17.5" stroke="#B45309" strokeWidth="1" strokeLinecap="round" />
+    <path d="M 40 16.5 C 43 14 46 14 45 17.5" stroke="#B45309" strokeWidth="1" strokeLinecap="round" />
+
+    {/* Bow Center Knot Shadow & Fill */}
+    <circle cx="32" cy="18" r="4.5" fill="#000000" />
+    <circle cx="32" cy="18" r="3.5" fill="url(#gift-gold-ribbon)" stroke="#000000" strokeWidth="1" />
+    <circle cx="31.2" cy="17.2" r="1" fill="#FFFFFF" opacity="0.8" />
+
+    {/* Golden Star Accent Motif in Center of Ribbon Cross */}
+    <path d="M 32 39 L 33.2 41.5 L 36 41.8 L 33.9 43.7 L 34.5 46.5 L 32 45 L 29.5 46.5 L 30.1 43.7 L 28 41.8 L 30.8 41.5 Z" fill="#FFFFFF" stroke="#000000" strokeWidth="0.8" strokeLinejoin="round" />
+  </svg>
+)
+
 const VOUCHER_IMAGES_DARK = [
   "/assets/images/giftkarte.webp"
 ]
@@ -491,16 +580,14 @@ export function BottomNavBar({
                                 transition={{ type: "spring", stiffness: 300, damping: 20 }}
                                 className="flex items-center justify-center z-10"
                               >
-                                <img
-                                  src={currentVoucher}
-                                  alt="Voucher"
-                                  className="w-[80px] h-[80px] rounded-full object-cover"
-                                // style={{
-                                //   transform: "translate3d(0, 0, 0)",
-                                //   backfaceVisibility: "hidden",
-                                //   width: "56px",
-                                //   height: "56px"
-                                // }}
+                                <GiftIcon
+                                  style={{
+                                    transform: "translate3d(0, 0, 0)",
+                                    backfaceVisibility: "hidden",
+                                    width: "56px",
+                                    height: "56px"
+                                  }}
+                                  className="transition-all duration-300"
                                 />
                               </motion.div>
                             )}

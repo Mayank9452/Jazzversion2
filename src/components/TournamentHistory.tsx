@@ -305,7 +305,7 @@ const TournamentHistory: React.FC = () => {
 
         {/* ── Premium Glassmorphic Header Card ── */}
         <div className="pb-4">
-          <div className={`relative overflow-hidden backdrop-blur-xl p-2 flex items-center justify-between gap-3 border-b transition-all duration-300 shadow-[0_3px_1px_rgba(0,0,0,7%)] dark:shadow-[0_12px_40px_rgba(0,0,0,0.2)] ${isDark
+          <div className={`relative overflow-hidden backdrop-blur-xl p-3 flex items-center justify-between gap-3 border-b transition-all duration-300 shadow-[0_3px_1px_rgba(0,0,0,7%)] dark:shadow-[0_12px_40px_rgba(0,0,0,0.2)] ${isDark
             ? "bg-gradient-to-br from-[#2B2B2B]/40 to-[#191919]/30 border-white/[0.06]"
             : "bg-brand-gradient border-[#dfa208]/30"
             }`}>
@@ -314,7 +314,7 @@ const TournamentHistory: React.FC = () => {
               <div>
                 <button
                   onClick={() => navigate(-1)}
-                  className={`w-10 h-10 rounded-xl flex items-center justify-center shadow-md active:scale-95 transition-all pointer-events-auto cursor-pointer shrink-0 ${isDark ? "bg-[#32323299] backdrop-blur-md border border-white/10 text-white hover:bg-black/75" : "bg-white/40 border border-[#dfa208]/30 text-black hover:bg-white/60"}`}
+                  className={`w-12 h-12 rounded-xl flex items-center justify-center shadow-md active:scale-95 transition-all pointer-events-auto cursor-pointer shrink-0 ${isDark ? "bg-[#32323299] backdrop-blur-md border border-white/10 text-white hover:bg-black/75" : "bg-white/40 border border-[#dfa208]/30 text-black hover:bg-white/60"}`}
                   title="Back"
                 >
                   <ArrowLeft className="w-5 h-5" />
@@ -322,10 +322,10 @@ const TournamentHistory: React.FC = () => {
               </div>
               <div >
 
-                <h1 className={`text-base sm:text-lg font-black tracking-wide uppercase leading-tight ${isDark ? "text-white" : "text-black"}`}>
+                <h1 className={`text-lg font-bold leading-tight tracking-[1px] ${isDark ? "text-white" : "text-black"}`}>
                   Tournament History
                 </h1>
-                <p className={`text-[11px] sm:text-xs font-bold mt-1 leading-none ${isDark ? "text-slate-500 dark:text-muted-foreground" : "text-black/70"}`}>
+                <p className={`text-sm sm:text-xs font-semibold mt-1 leading-none ${isDark ? "text-slate-500 dark:text-muted-foreground" : "text-black/70"}`}>
                   Your past battles & rewards
                 </p>
 
@@ -478,12 +478,12 @@ const TournamentHistory: React.FC = () => {
                   </div>
 
                   {/* Middle: Value */}
-                  <span className={`text-sm sm:text-base font-black ${valColor} tracking-wide leading-none truncate max-w-full px-1`}>
+                  <span className={`text-sm sm:text-base font-bold ${valColor} tracking-wide leading-none truncate max-w-full px-1`}>
                     {val}
                   </span>
 
                   {/* Bottom: Label */}
-                  <span className="text-[10px] sm:text-[10px] font-black text-muted-foreground dark:text-slate-400 uppercase tracking-wider">
+                  <span className="text-[11px] font-bold text-muted-foreground dark:text-slate-400 uppercase tracking-wider">
                     {label}
                   </span>
 
@@ -569,7 +569,7 @@ const TournamentHistory: React.FC = () => {
                       <div className={`relative w-24 h-24 sm:w-28 sm:h-28 flex-shrink-0 overflow-visible rounded-2xl flex items-center justify-center p-1.5 transition-all duration-300 border ${LIGHT_BANNER_GRADIENTS[index % LIGHT_BANNER_GRADIENTS.length]
                         }`}>
                         {/* Soft yellow ambient backdrop glow */}
-                        <div className="absolute top-[50%] left-[50%] -translate-x-[50%] -translate-y-[50%] w-[90%] aspect-square rounded-full bg-[#FFCA20]/20 blur-[16px] pointer-events-none z-0" />
+                        <div className="absolute top-[50%] left-[50%] -translate-x-[50%] -translate-y-[50%] w-[90%] aspect-square rounded-full blur-[16px] pointer-events-none z-0" />
 
                         <img
                           src={LOCAL_IMAGES[index % LOCAL_IMAGES.length]}
@@ -585,7 +585,7 @@ const TournamentHistory: React.FC = () => {
                       {/* Right: Info details */}
                       <div className="flex-1 flex flex-col justify-between min-w-0">
                         <div className="flex items-start justify-between gap-2">
-                          <div className="min-w-0 flex flex-col gap-1.5 text-[11px] sm:text-xs text-slate-600 dark:text-white font-semibold tracking-wide">
+                          <div className="min-w-0 flex flex-col gap-1.5 text-[12px] sm:text-xs text-slate-600 dark:text-white font-semibold tracking-wide">
                             <div className="flex items-center gap-1.5 truncate">
                               <Calendar className="w-3.5 h-3.5 text-yellow-main flex-shrink-0" />
                               <span>Starts: {startDateText} | {startTimeText}</span>

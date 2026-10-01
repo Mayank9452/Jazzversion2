@@ -76,22 +76,22 @@ export default function TermsPageNew() {
 
         {/* ── Premium Glassmorphic Header Card ── */}
         <div className="pb-4 relative z-10">
-          <div className={`relative overflow-hidden p-2 flex items-center justify-between gap-3 border-b transition-all duration-300 ${isDark ? "bg-gradient-to-br from-[#2B2B2B]/40 to-[#191919]/30 border-white/[0.06] shadow-[0_12px_40px_rgba(0,0,0,0.2)]" : "bg-brand-gradient border-[#dfa208]/30 shadow-sm"} backdrop-blur-xl`}>
+          <div className={`relative overflow-hidden p-3 flex items-center justify-between gap-3 border-b transition-all duration-300 ${isDark ? "bg-gradient-to-br from-[#2B2B2B]/40 to-[#191919]/30 border-white/[0.06] shadow-[0_12px_40px_rgba(0,0,0,0.2)]" : "bg-brand-gradient border-[#dfa208]/30 shadow-sm"} backdrop-blur-xl`}>
             <div className="w-full flex justify-between items-center gap-5">
               <div>
                 <button
                   onClick={() => navigate(-1)}
-                  className={`w-10 h-10 rounded-xl flex items-center justify-center shadow-md active:scale-95 transition-all pointer-events-auto cursor-pointer shrink-0 ${isDark ? "bg-[#32323299] backdrop-blur-md border border-white/10 text-white hover:bg-black/75" : "bg-white/40 border border-[#dfa208]/30 text-black hover:bg-white/60"}`}
+                  className={`w-12 h-12 rounded-xl flex items-center justify-center shadow-md active:scale-95 transition-all pointer-events-auto cursor-pointer shrink-0 ${isDark ? "bg-[#32323299] backdrop-blur-md border border-white/10 text-white hover:bg-black/75" : "bg-white/40 border border-[#dfa208]/30 text-black hover:bg-white/60"}`}
                   title="Back"
                 >
                   <ArrowLeft className="w-5 h-5" />
                 </button>
               </div>
               <div className="flex-1 text-center">
-                <h1 className={`text-base sm:text-lg font-black tracking-wide uppercase leading-tight ${isDark ? "text-white" : "text-black"}`}>
+                <h1 className={`text-lg sm:text-lg font-bold tracking-wide  leading-tight ${isDark ? "text-white" : "text-black"}`}>
                   Terms of Use
                 </h1>
-                <p className={`text-[11px] sm:text-xs font-bold mt-1 leading-none ${isDark ? "text-slate-500 dark:text-muted-foreground" : "text-black/70"}`}>
+                <p className={`text-sm sm:text-xs font-semibold mt-1 leading-none ${isDark ? "text-slate-500 dark:text-muted-foreground" : "text-black/70"}`}>
                   Terms, conditions & agreement
                 </p>
               </div>
@@ -113,7 +113,7 @@ export default function TermsPageNew() {
 
         <div className="px-2 max-w-md mx-auto relative z-10">
           {/* Scrollable Terms Content Card */}
-          <div className={`rounded-3xl backdrop-blur-md p-5 shadow-lg max-h-[calc(100vh-150px)] overflow-y-auto relative text-sm leading-relaxed transition-all duration-300 border ${isDark
+          <div className={`rounded-xl backdrop-blur-md p-5 shadow-lg max-h-[calc(100vh-150px)] overflow-y-auto relative text-sm leading-relaxed transition-all duration-300 border ${isDark
             ? "bg-[#282828]/50 border-white/[0.06] text-white/90 shadow-[0_12px_40px_rgba(0,0,0,0.25)]"
             : "bg-white/90 border-slate-200/60 text-slate-700 shadow-[0_8px_32px_rgba(0,0,0,0.06)]"
             }`}>

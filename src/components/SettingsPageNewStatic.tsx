@@ -125,7 +125,7 @@ export default function SettingsPageNewStatic() {
                 <div className="relative z-10">
                     {/* Navigation and Top Bar Icons */}
                     <div className="pt-4 px-4 flex items-center justify-center">
-                        <h1 className="font-extrabold text-base tracking-wider select-none text-slate-800 text-white relative flex flex-col items-center">
+                        <h1 className="font-bold text-lg tracking-wider select-none text-slate-800 text-white relative flex flex-col items-center">
                             {t?.myProfile || "My Profile"}
                             <span className="w-8 h-1 bg-[#fecb13] mt-1.5 rounded-full" />
                         </h1>
@@ -159,7 +159,7 @@ export default function SettingsPageNewStatic() {
                             ? "bg-[#ffffff14] backdrop-blur-md border-[#ffffff52] shadow-[0_4px_24px_rgba(0,0,0,0.2)]"
                             : "bg-white border-slate-100 shadow-[0_1px_2px_rgba(0,0,0,0.26)]"
                             }`}>
-                            <div className={`p-2 shrink-0 ${isDark ? "rounded-xl bg-amber-500/10" : "rounded-full text-yellow-main"}`}>
+                            <div className={`p-2 shrink-0 ${isDark ? "rounded-xl bg-yellow-main/10 text-yellow-main" : "rounded-full text-yellow-main"}`}>
                                 {/* <img
                                     src="/assets/images/img/gold-coin.png"
                                     alt="coin"
@@ -168,8 +168,8 @@ export default function SettingsPageNewStatic() {
                                 <Coins className="h-5 w-5" />
                             </div>
                             <div className="text-left flex flex-col justify-center leading-none">
-                                <p className="text-[10px] font-bold text-muted-foreground uppercase tracking-wide">Coins</p>
-                                <p className="text-base font-black text-foreground mt-1">{userCoins}</p>
+                                <p className="text-sm font-bold text-muted-foreground tracking-wide">Coins</p>
+                                <p className="text-base font-bold text-foreground">{userCoins}</p>
                             </div>
                         </div>
 
@@ -182,8 +182,8 @@ export default function SettingsPageNewStatic() {
                                 <Calendar className="w-4 h-4" />
                             </div>
                             <div className="text-left flex flex-col justify-center leading-none">
-                                <p className="text-[10px] font-bold text-muted-foreground uppercase tracking-wide">Joined Date</p>
-                                <p className="text-sm font-black text-foreground mt-1 whitespace-nowrap">12 Jun 2025</p>
+                                <p className="text-sm font-bold text-muted-foreground tracking-wide">Joined Date</p>
+                                <p className="text-base font-bold text-foreground whitespace-nowrap">12 Jun 2025</p>
                             </div>
                         </div>
                     </div>
@@ -194,7 +194,7 @@ export default function SettingsPageNewStatic() {
                             ? "bg-[#ffffff14] backdrop-blur-md border-[#ffffff52] shadow-[0_4px_30px_rgba(0,0,0,0.2)]"
                             : "bg-white border-slate-100 shadow-[0_1px_2px_rgba(0,0,0,0.26)]"
                             }`}>
-                            <h3 className="text-center text-xs font-black tracking-[1.5px] uppercase text-muted-foreground mb-4">
+                            <h3 className="text-center text-base font-bold tracking-[1px] text-muted-foreground mb-4">
                                 Account Information
                             </h3>
 
@@ -202,7 +202,7 @@ export default function SettingsPageNewStatic() {
                                 {/* Subscription Pack */}
                                 <div className="flex items-center justify-between gap-4">
                                     <div>
-                                        <p className="text-sm font-bold text-foreground">Subscription Pack</p>
+                                        <p className="text-sm font-semibold text-foreground">Subscription Pack</p>
                                         <p className="text-xs font-medium text-muted-foreground mt-0.5">Your active billing cycle</p>
                                     </div>
                                     {/* Pack Selection Buttons */}
@@ -232,13 +232,13 @@ export default function SettingsPageNewStatic() {
                                 {/* Subscription Status */}
                                 <div className="flex items-center justify-between gap-4">
                                     <div>
-                                        <p className="text-sm font-bold text-foreground">Subscription Status</p>
+                                        <p className="text-sm font-semibold text-foreground">Subscription Status</p>
                                         <p className="text-xs font-medium text-muted-foreground mt-0.5">Current access status</p>
                                     </div>
                                     {/* Status Toggle Badge */}
                                     <button
                                         onClick={() => setSubStatus(subStatus === "Subscribed" ? "Unsubscribed" : "Subscribed")}
-                                        className={`px-4 py-1.5 rounded-full text-xs font-black tracking-wider border transition-all flex-shrink-0 ${subStatus === "Subscribed"
+                                        className={`px-4 py-1.5 rounded-full text-xs font-semibold tracking-wider border transition-all flex-shrink-0 ${subStatus === "Subscribed"
                                             ? (isDark ? "bg-yellow-main/10 border-yellow-main/20 text-yellow-main" : "bg-white border-[#fecb13] text-[#fecb13] shadow-sm")
                                             : (isDark ? "bg-neutral-500/10 border-neutral-500/20 text-neutral-500" : "bg-white border-slate-300 text-slate-500 shadow-sm")
                                             }`}
@@ -266,8 +266,8 @@ export default function SettingsPageNewStatic() {
                                     <LogOut className="w-5 h-5" />
                                 </div>
                                 <div className="text-left">
-                                    <p className={`text-sm font-bold tracking-wide transition-colors duration-200 ${isDark ? "text-yellow-main" : "text-slate-800"}`}>Unsubscribe</p>
-                                    <p className={`text-xs font-medium mt-0.5 ${isDark ? "text-yellow-main/70" : "text-muted-foreground"}`}>Leave the gaming service</p>
+                                    <p className={`text-base font-semibold tracking-wide transition-colors duration-200 ${isDark ? "text-yellow-main" : "text-slate-800"}`}>Unsubscribe</p>
+                                    <p className={`text-sm font-medium mt-0.5 ${isDark ? "text-yellow-main/70" : "text-muted-foreground"}`}>Leave the gaming service</p>
                                 </div>
                             </div>
                             <ChevronRight className={`w-5 h-5 transition-transform duration-200 group-hover:translate-x-0.5 ${isDark ? "text-yellow-main/70" : "text-slate-400"}`} />
@@ -287,8 +287,8 @@ export default function SettingsPageNewStatic() {
                                     <Bell className="w-5 h-5" />
                                 </div>
                                 <div className="text-left">
-                                    <p className="text-sm font-bold tracking-wide text-foreground">Notifications</p>
-                                    <p className="text-xs font-medium text-muted-foreground mt-0.5">Rewards and winnings</p>
+                                    <p className="text-base font-semibold tracking-wide text-foreground">Notifications</p>
+                                    <p className="text-sm font-medium text-muted-foreground mt-0.5">Rewards and winnings</p>
                                 </div>
                             </div>
                             <ChevronRight className="w-5 h-5 text-slate-400 dark:text-muted-foreground transition-transform duration-200 group-hover:translate-x-0.5" />
@@ -307,8 +307,8 @@ export default function SettingsPageNewStatic() {
                                     <Trophy className="w-5 h-5" />
                                 </div>
                                 <div className="text-left">
-                                    <p className="text-sm font-bold tracking-wide text-foreground">Tournament History</p>
-                                    <p className="text-xs font-medium text-muted-foreground mt-0.5">Your past match records</p>
+                                    <p className="text-base font-semibold tracking-wide text-foreground">Tournament History</p>
+                                    <p className="text-sm font-medium text-muted-foreground mt-0.5">Your past match records</p>
                                 </div>
                             </div>
                             <ChevronRight className="w-5 h-5 text-slate-400 dark:text-muted-foreground transition-transform duration-200 group-hover:translate-x-0.5" />
@@ -327,8 +327,8 @@ export default function SettingsPageNewStatic() {
                                     <Shield className="w-5 h-5" />
                                 </div>
                                 <div className="text-left">
-                                    <p className="text-sm font-bold tracking-wide text-foreground">Privacy Policy</p>
-                                    <p className="text-xs font-medium text-muted-foreground mt-0.5">Guidelines & user rules</p>
+                                    <p className="text-base font-semibold tracking-wide text-foreground">Privacy Policy</p>
+                                    <p className="text-sm font-medium text-muted-foreground mt-0.5">Guidelines & user rules</p>
                                 </div>
                             </div>
                             <ChevronRight className="w-5 h-5 text-slate-400 dark:text-muted-foreground transition-transform duration-200 group-hover:translate-x-0.5" />
@@ -347,8 +347,8 @@ export default function SettingsPageNewStatic() {
                                     <FileText className="w-5 h-5" />
                                 </div>
                                 <div className="text-left">
-                                    <p className="text-sm font-bold tracking-wide text-foreground">Terms & Conditions</p>
-                                    <p className="text-xs font-medium text-muted-foreground mt-0.5">User agreement documentation</p>
+                                    <p className="text-base font-semibold tracking-wide text-foreground">Terms & Conditions</p>
+                                    <p className="text-sm font-medium text-muted-foreground mt-0.5">User agreement documentation</p>
                                 </div>
                             </div>
                             <ChevronRight className="w-5 h-5 text-muted-foreground transition-transform duration-200 group-hover:translate-x-0.5" />
