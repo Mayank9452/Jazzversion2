@@ -136,7 +136,7 @@ const targetGames: TargetGame[] = [
     {
         id: "3",
         name: "Tropical Slicer",
-        image: "/assets/images/9.png",
+        image: "/assets/images/Alien Galaxy.png",
         target: "45000",
         prize: "Rs 100000 Topup",
     },
@@ -150,7 +150,7 @@ const targetGames: TargetGame[] = [
     {
         id: "5",
         name: "Knife Ninja",
-        image: "/assets/images/knife ninja.jpeg",
+        image: "/assets/images/5fruit/285-380-1.png",
         target: "40000",
         prize: "Rs 100000 Giftkarte",
     },

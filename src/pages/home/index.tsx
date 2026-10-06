@@ -253,7 +253,7 @@ const LoadingSkeleton: React.FC = () => (
 
 const categories = [
   { id: "all", label: "Friends Cricket", image: "/assets/images/SquareWithTitle.jpg" },
-  { id: "action", label: "Zombie Uprising", image: "/assets/images/Zombie Uprising.png" },
+  { id: "action", label: "Zombie Uprising", image: "/assets/images/5fruit/square.jpg" },
   { id: "moba", label: "Tropical Slicer", image: "/assets/images/Tropical Slicer name.png" },
   { id: "racing", label: "Road Racer", image: "/assets/images/Road Racer name.png" },
   { id: "sports", label: "Sports", image: "/assets/images/friend cricket.png" },

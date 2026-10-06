@@ -157,6 +157,13 @@ const THREE_TOURNAMENT_BANNERS = [
         rewardType: 2,
         prize: "100,000",
     },
+    {
+        id: "5 Fruit",
+        image: "/assets/images/5fruit/285-380-2.png",
+        name: "Alien Galaxy War",
+        rewardType: 2,
+        prize: "100,000",
+    },
 ];
 
 const DailyTournamentMixedTesting2: React.FC<DailyTournament> = ({

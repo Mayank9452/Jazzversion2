@@ -123,7 +123,7 @@ const getGameImage = (gameName: string, defaultImage: string, index: number) => 
     if (name.includes("stick monkey")) {
         return "/assets/images/Stick Monkey.png";
     }
-    const images = ["/assets/images/285-380.png", "/assets/images/6.png", "/assets/images/9.png"];
+    const images = ["/assets/images/285-380.png", "/assets/images/6.png", "/assets/images/5fruit/285-380-1.png"];
     return images[index % images.length];
 };
 
