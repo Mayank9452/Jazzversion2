@@ -115,15 +115,70 @@ const TopupIcon = ({ className = "w-6 h-6" }: { className?: string }) => {
     );
 };
 
-const getGameImage = (gameName: string, defaultImage: string, index: number) => {
-    const name = gameName?.toLowerCase() || "";
+const STATIC_DAILY_TOURNAMENTS = [
+    {
+        tournament_id: "5 fruit",
+        tournament_name: "5 fruit",
+        tournament_game_image: "/assets/images/5fruit/285-380-1.png",
+        tournament_end: new Date(Date.now() + 1 * 24 * 60 * 60 * 1000).toISOString(),
+        fee_prize_1: "10,000",
+        reward_type: 0
+    },
+    {
+        tournament_id: "Color Up",
+        tournament_name: "Color Up",
+        tournament_game_image: "/assets/images/Color Up/285-380.png",
+        tournament_end: new Date(Date.now() + 2 * 24 * 60 * 60 * 1000).toISOString(),
+        fee_prize_1: "100,000",
+        reward_type: 1
+    },
+    {
+        tournament_id: "Pistol Bottles",
+        tournament_name: "Pistol Bottles",
+        tournament_game_image: "/assets/images/Pistol Bottles/285-380.png",
+        tournament_end: new Date(Date.now() + 3 * 24 * 60 * 60 * 1000).toISOString(),
+        fee_prize_1: "100,000",
+        reward_type: 2
+    },
+    {
+        tournament_id: "Smart Surfer",
+        tournament_name: "Smart Surfer",
+        tournament_game_image: "/assets/images/smartsurfer/285-380.webp",
+        tournament_end: new Date(Date.now() + 4 * 24 * 60 * 60 * 1000).toISOString(),
+        fee_prize_1: "100,000",
+        reward_type: 0
+    },
+    {
+        tournament_id: "alien-galaxy-war",
+        tournament_name: "Alien Galaxy War",
+        tournament_game_image: "/assets/images/aliengalaxywar/Alien Galaxy.png",
+        tournament_end: new Date(Date.now() + 5 * 24 * 60 * 60 * 1000).toISOString(),
+        fee_prize_1: "100,000",
+        reward_type: 1
+    },
+
+];
+
+const getGameImage = (game: any, index: number) => {
+    if (game?.tournament_game_image) {
+        return game.tournament_game_image;
+    }
+    const name = game?.tournament_name?.toLowerCase() || "";
     if (name.includes("alien galaxy war")) {
         return "/assets/images/Alien Galaxy.png";
     }
     if (name.includes("stick monkey")) {
         return "/assets/images/Stick Monkey.png";
     }
-    const images = ["/assets/images/285-380.png", "/assets/images/6.png", "/assets/images/5fruit/285-380-1.png"];
+    const images = [
+        "/assets/images/knideNinja-portrait.png",
+        "/assets/images/285-380-element.png",
+        "/assets/images/character.png",
+        "/assets/images/Color Up/285-380-2.png",
+        "/assets/images/Pistol Bottles/285-380-2.png",
+        "/assets/images/5fruit/285-380-1.png",
+        "/assets/images/285-380.png"
+    ];
     return images[index % images.length];
 };
 
@@ -132,12 +187,20 @@ const formatNumberInText = (text: string) => {
     return text.replace(/\d+/g, (match) => Number(match).toLocaleString('en-IN'));
 };
 
-const DailyTournamentMixedTesting: React.FC<DailyTournament> = ({
+interface DailyTournamentProps {
+    dailyTournaments?: any[];
+}
+
+const DailyTournamentMixedTesting: React.FC<DailyTournamentProps> = ({
     dailyTournaments,
 }) => {
     const navigate = useNavigate();
     const { resolvedTheme } = useTheme();
     const isDark = resolvedTheme === "dark";
+
+    const displayTournaments = (dailyTournaments && dailyTournaments.length > 3)
+        ? dailyTournaments
+        : STATIC_DAILY_TOURNAMENTS;
 
     const [countdowns, setCountdowns] = useState<Record<string, string>>({});
 
@@ -166,17 +229,17 @@ const DailyTournamentMixedTesting: React.FC<DailyTournament> = ({
     useEffect(() => {
         const timer = setInterval(() => {
             const updated: Record<string, string> = {};
-            dailyTournaments?.forEach((t: any) => {
+            displayTournaments?.forEach((t: any) => {
                 updated[t.tournament_id] = calculateCountdown(t.tournament_end);
             });
             setCountdowns(updated);
         }, 1000);
         return () => clearInterval(timer);
-    }, [dailyTournaments]);
+    }, [displayTournaments]);
 
     return (
         <>
-            {dailyTournaments && dailyTournaments?.length > 0 && (
+            {displayTournaments && displayTournaments?.length > 0 && (
                 <div className="rounded-2xl">
                     <div className="mb-1 px-1 text-center">
                         <Swiper
@@ -188,7 +251,7 @@ const DailyTournamentMixedTesting: React.FC<DailyTournament> = ({
                             modules={[Pagination, Navigation, Autoplay]}
                             className="tiny-slider-one flex justify-center items-center overflow-visible"
                         >
-                            {dailyTournaments?.map((game: any, index: any) => {
+                            {displayTournaments?.map((game: any, index: any) => {
                                 const rewardType = index % 3; // 0 = Coins, 1 = Voucher, 2 = Talktime
                                 return (
                                     <SwiperSlide
@@ -202,7 +265,7 @@ const DailyTournamentMixedTesting: React.FC<DailyTournament> = ({
                                             {/* Game Image Banner */}
                                             <div className="relative w-full aspect-[285/380] rounded-xl overflow-hidden shadow-sm">
                                                 <img
-                                                    src={getGameImage(game?.tournament_name, game?.tournament_game_image, index)}
+                                                    src={getGameImage(game, index)}
                                                     loading="eager"
                                                     decoding="async"
                                                     className="w-full h-full block object-cover transition-transform duration-500 group-hover:scale-105"

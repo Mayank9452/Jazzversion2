@@ -164,6 +164,20 @@ const THREE_TOURNAMENT_BANNERS = [
         rewardType: 2,
         prize: "100,000",
     },
+    {
+        id: "Color Up",
+        image: "/assets/images/Color Up/285-380-2.png",
+        name: "Color Up",
+        rewardType: 2,
+        prize: "100,000",
+    },
+    {
+        id: "Color Up",
+        image: "/assets/images/Pistol Bottles/285-380-2.png",
+        name: "Color Up",
+        rewardType: 2,
+        prize: "100,000",
+    },
 ];
 
 const DailyTournamentMixedTesting2: React.FC<DailyTournament> = ({

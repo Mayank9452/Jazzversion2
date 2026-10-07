@@ -40,6 +40,8 @@ import { DailyLoginBonusPopupOld } from "@/components/DailyLoginBonusPopupOld";
 import { TopBarUpdatedNew } from "@/components/TopBarUpdatedNew";
 import { BottomNavBarNew } from "@/components/BottomNavBarNew";
 import LowBalancePopup from "@/components/LowBalancePopup";
+import HeroSliderTwoNewTesting2 from "./HeroSliderTwoNewTesting2";
+import JazzPremiumZone2 from "./JazzPremiumZone2";
 
 /* ─── Instant Image Cache Warmer & Preloader ─────────────────────────────── */
 
@@ -252,12 +254,13 @@ const LoadingSkeleton: React.FC = () => (
 /* ─── Category Navigation ────────────────────────────────────────────────── */
 
 const categories = [
-  { id: "all", label: "Friends Cricket", image: "/assets/images/SquareWithTitle.jpg" },
-  { id: "action", label: "Zombie Uprising", image: "/assets/images/5fruit/square.jpg" },
-  { id: "moba", label: "Tropical Slicer", image: "/assets/images/Tropical Slicer name.png" },
-  { id: "racing", label: "Road Racer", image: "/assets/images/Road Racer name.png" },
-  { id: "sports", label: "Sports", image: "/assets/images/friend cricket.png" },
-  { id: "puzzle", label: "Puzzle", image: "/assets/images/SquareWithoutTitle.jpg" }
+  { id: "all", label: "Friends Cricket", image: "/assets/images/5fruit/square.jpg" },
+  { id: "action", label: "Zombie Uprising", image: "/assets/images/Color Up/square.jpg" },
+  { id: "moba", label: "Tropical Slicer", image: "/assets/images/Pistol Bottles/square.jpg" },
+  { id: "racing", label: "Road Racer", image: "/assets/images/smartsurfer/SquareWithoutTitle.webp" },
+  { id: "sports", label: "Sports", image: "/assets/images/smartsurfer/SquareWithTitle.webp" },
+  { id: "puzzle", label: "Puzzle", image: "/assets/images/aliengalaxywar/SquareWithTitle.png" },
+  { id: "puzzle", label: "Puzzle", image: "/assets/images/aliengalaxywar/SquareWithoutTitle.png" }
 ];
 
 const trendingCategories = [
@@ -1103,8 +1106,7 @@ const Home = () => {
                   )
                 }
               />
-              <HeroSliderTwoNewTesting
-                heroGames={heroGames}
+              <HeroSliderTwoNewTesting2
                 onCountdownChange={setVipCountdown}
               />
             </Section>
@@ -1135,7 +1137,7 @@ const Home = () => {
                   )
                 }
               />
-              <JazzPremiumZone
+              <JazzPremiumZone2
                 heroGames={heroGames}
                 onCountdownChange={setPremiumCountdown}
               />
