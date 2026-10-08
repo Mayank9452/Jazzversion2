@@ -145,7 +145,7 @@ const THREE_TOURNAMENT_BANNERS = [
     },
     {
         id: "target-challenge",
-        image: "/assets/images/285-380-element.png",
+        image: "/assets/images/smartsurfer/285-380-element.png",
         name: "Target Challenge",
         rewardType: 1,
         prize: "100,000",
