@@ -260,7 +260,9 @@ const categories = [
   { id: "racing", label: "Road Racer", image: "/assets/images/smartsurfer/SquareWithoutTitle.webp" },
   { id: "sports", label: "Sports", image: "/assets/images/smartsurfer/SquareWithTitle.webp" },
   { id: "puzzle", label: "Puzzle", image: "/assets/images/aliengalaxywar/SquareWithTitle.png" },
-  { id: "puzzle", label: "Puzzle", image: "/assets/images/aliengalaxywar/SquareWithoutTitle.png" }
+  { id: "puzzle", label: "Puzzle", image: "/assets/images/aliengalaxywar/SquareWithoutTitle.png" },
+  { id: "all", label: "Snake Color Break", image: "/assets/images/SnakeColorBreak/Square.jpg" },
+  { id: "all", label: "Air Warfare", image: "/assets/images/Air Warfare/Square.jpg" },
 ];
 
 const trendingCategories = [

@@ -154,6 +154,20 @@ const targetGames: TargetGame[] = [
         target: "40000",
         prize: "Rs 100000 Giftkarte",
     },
+    {
+        id: "6",
+        name: "Alien Galaxy War",
+        image: "/assets/images/SnakeColorBreak/285-380.png",
+        target: "40000",
+        prize: "Rs 100000 Giftkarte",
+    },
+    {
+        id: "7",
+        name: "Air Warfare",
+        image: "/assets/images/Air Warfare/285-380.png",
+        target: "40000",
+        prize: "Rs 100000 Giftkarte",
+    },
 ];
 
 const formatNumberInText = (text: string) => {
