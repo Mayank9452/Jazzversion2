@@ -31,7 +31,7 @@ export const JAZZ_PREMIUM_GAMES: PremiumGameItem[] = [
     {
         id: "premium-7",
         title: "Snake Color Break",
-        image: "/assets/images/SnakeColorBreak/Hero-Tournament.png",
+        image: "/assets/images/SnakeColorBreak/Hero-tournament.png",
         prizePool: "10,000 Coins",
         rank: "4",
     },
