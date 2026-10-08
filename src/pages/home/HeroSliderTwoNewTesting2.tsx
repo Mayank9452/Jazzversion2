@@ -209,13 +209,13 @@ const HeroSliderTwoNewTesting2: React.FC<HeroSliderTwoTesting2Props> = ({
                     768: { slidesPerView: slidesPerView || 2.5, spaceBetween: 18 },
                     1024: { slidesPerView: slidesPerView || 3.2, spaceBetween: 20 },
                 }}
-                pagination={{
-                    clickable: true,
-                    dynamicBullets: true,
-                }}
+                // pagination={{
+                //     clickable: true,
+                //     dynamicBullets: true,
+                // }}
                 modules={[Pagination, Navigation]}
                 onSlideChange={(swiper) => setActiveIndex(swiper.realIndex)}
-                className="w-full rounded-2xl pb-7"
+                className="w-full rounded-2xl"
             >
                 {displayList.map((item, index) => {
                     const borderClass = isDark
