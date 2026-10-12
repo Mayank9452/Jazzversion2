@@ -137,6 +137,13 @@ const TopupIcon = ({ className = "w-6 h-6" }: { className?: string }) => {
 
 const THREE_TOURNAMENT_BANNERS = [
     {
+        id: "2-cars",
+        image: "/assets/images/2cars/285-380-2.png",
+        name: "2 cars",
+        rewardType: 0,
+        prize: "10,000",
+    },
+    {
         id: "Air Warfare",
         image: "/assets/images/Air Warfare/285-380-2.png",
         name: "Knife Ninja",

@@ -168,6 +168,13 @@ const targetGames: TargetGame[] = [
         target: "40000",
         prize: "Rs 100000 Giftkarte",
     },
+    {
+        id: "8",
+        name: "2 cars",
+        image: "/assets/images/2cars/285-380.png",
+        target: "40000",
+        prize: "Rs 100000 Giftkarte",
+    },
 ];
 
 const formatNumberInText = (text: string) => {

@@ -263,6 +263,8 @@ const categories = [
   { id: "puzzle", label: "Puzzle", image: "/assets/images/aliengalaxywar/SquareWithoutTitle.png" },
   { id: "all", label: "Snake Color Break", image: "/assets/images/SnakeColorBreak/Square.jpg" },
   { id: "all", label: "Air Warfare", image: "/assets/images/Air Warfare/Square.jpg" },
+  { id: "all", label: "2 cars", image: "/assets/images/2cars/Square.jpg" },
+
 ];
 
 const trendingCategories = [
