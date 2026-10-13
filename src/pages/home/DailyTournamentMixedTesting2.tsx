@@ -137,6 +137,20 @@ const TopupIcon = ({ className = "w-6 h-6" }: { className?: string }) => {
 
 const THREE_TOURNAMENT_BANNERS = [
     {
+        id: "Jago",
+        image: "/assets/images/Jago/285-380-2.png",
+        name: "Jago",
+        rewardType: 0,
+        prize: "10,000",
+    },
+    {
+        id: "Gogi Adventure",
+        image: "/assets/images/Gogi Adventure/285-380-2.png",
+        name: "Gogi Adventure",
+        rewardType: 0,
+        prize: "10,000",
+    },
+    {
         id: "2-cars",
         image: "/assets/images/2cars/285-380-2.png",
         name: "2 cars",

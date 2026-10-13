@@ -117,6 +117,30 @@ const TopupIcon = ({ className = "w-6 h-6" }: { className?: string }) => {
 
 const STATIC_DAILY_TOURNAMENTS = [
     {
+        tournament_id: "Jago",
+        tournament_name: "Jago",
+        tournament_game_image: "/assets/images/Jago/285-380.png",
+        tournament_end: new Date(Date.now() + 1 * 24 * 60 * 60 * 1000).toISOString(),
+        fee_prize_1: "10,000",
+        reward_type: 0
+    },
+    {
+        tournament_id: "Gogi Adventure",
+        tournament_name: "Gogi Adventure",
+        tournament_game_image: "/assets/images/Gogi Adventure/285-380.png",
+        tournament_end: new Date(Date.now() + 1 * 24 * 60 * 60 * 1000).toISOString(),
+        fee_prize_1: "10,000",
+        reward_type: 0
+    },
+    {
+        tournament_id: "2 cars",
+        tournament_name: "2 cars",
+        tournament_game_image: "/assets/images/2cars/285-380.png",
+        tournament_end: new Date(Date.now() + 1 * 24 * 60 * 60 * 1000).toISOString(),
+        fee_prize_1: "10,000",
+        reward_type: 0
+    },
+    {
         tournament_id: "2 cars",
         tournament_name: "2 cars",
         tournament_game_image: "/assets/images/2cars/285-380.png",

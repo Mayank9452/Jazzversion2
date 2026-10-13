@@ -175,6 +175,20 @@ const targetGames: TargetGame[] = [
         target: "40000",
         prize: "Rs 100000 Giftkarte",
     },
+    {
+        id: "9",
+        name: "Jago",
+        image: "/assets/images/Jago/285-380.png",
+        target: "40000",
+        prize: "Rs 100000 Giftkarte",
+    },
+    {
+        id: "10",
+        name: "Gogi Adventure",
+        image: "/assets/images/Gogi Adventure/285-380.png",
+        target: "40000",
+        prize: "Rs 100000 Giftkarte",
+    },
 ];
 
 const formatNumberInText = (text: string) => {

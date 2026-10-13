@@ -261,10 +261,11 @@ const categories = [
   { id: "sports", label: "Sports", image: "/assets/images/smartsurfer/SquareWithTitle.webp" },
   { id: "puzzle", label: "Puzzle", image: "/assets/images/aliengalaxywar/SquareWithTitle.png" },
   { id: "puzzle", label: "Puzzle", image: "/assets/images/aliengalaxywar/SquareWithoutTitle.png" },
-  { id: "all", label: "Snake Color Break", image: "/assets/images/SnakeColorBreak/Square.jpg" },
-  { id: "all", label: "Air Warfare", image: "/assets/images/Air Warfare/Square.jpg" },
-  { id: "all", label: "2 cars", image: "/assets/images/2cars/Square.jpg" },
-
+  { id: "action", label: "Snake Color Break", image: "/assets/images/SnakeColorBreak/Square.jpg" },
+  { id: "moba", label: "Air Warfare", image: "/assets/images/Air Warfare/Square.jpg" },
+  { id: "racing", label: "2 cars", image: "/assets/images/2cars/Square.jpg" },
+  { id: "puzzle", label: "Jago", image: "/assets/images/Jago/Square.jpg" },
+  { id: "all", label: "Gogi Adventure", image: "/assets/images/Gogi Adventure/Square.jpg" },
 ];
 
 const trendingCategories = [
