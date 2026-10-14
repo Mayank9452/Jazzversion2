@@ -117,6 +117,22 @@ const TopupIcon = ({ className = "w-6 h-6" }: { className?: string }) => {
 
 const STATIC_DAILY_TOURNAMENTS = [
     {
+        tournament_id: "KnifeNinja",
+        tournament_name: "KnifeNinja",
+        tournament_game_image: "/assets/images/KnifeNinja/285-380.png",
+        tournament_end: new Date(Date.now() + 1 * 24 * 60 * 60 * 1000).toISOString(),
+        fee_prize_1: "10,000",
+        reward_type: 0
+    },
+    {
+        tournament_id: "NinjaDragon",
+        tournament_name: "NinjaDragon",
+        tournament_game_image: "/assets/images/NinjaDragon/285-380.png",
+        tournament_end: new Date(Date.now() + 1 * 24 * 60 * 60 * 1000).toISOString(),
+        fee_prize_1: "10,000",
+        reward_type: 0
+    },
+    {
         tournament_id: "Jago",
         tournament_name: "Jago",
         tournament_game_image: "/assets/images/Jago/285-380.png",

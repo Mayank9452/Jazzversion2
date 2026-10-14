@@ -189,6 +189,20 @@ const targetGames: TargetGame[] = [
         target: "40000",
         prize: "Rs 100000 Giftkarte",
     },
+    {
+        id: "11",
+        name: "KnifeNinja",
+        image: "/assets/images/KnifeNinja/285-380.png",
+        target: "40000",
+        prize: "Rs 100000 Giftkarte",
+    },
+    {
+        id: "12",
+        name: "NinjaDragon",
+        image: "/assets/images/NinjaDragon/285-380.png",
+        target: "40000",
+        prize: "Rs 100000 Giftkarte",
+    },
 ];
 
 const formatNumberInText = (text: string) => {
