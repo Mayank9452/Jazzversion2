@@ -260,12 +260,14 @@ const categories = [
   { id: "racing", label: "Road Racer", image: "/assets/images/smartsurfer/SquareWithoutTitle.webp" },
   { id: "sports", label: "Sports", image: "/assets/images/smartsurfer/SquareWithTitle.webp" },
   { id: "puzzle", label: "Puzzle", image: "/assets/images/aliengalaxywar/SquareWithTitle.png" },
-  { id: "puzzle", label: "Puzzle", image: "/assets/images/aliengalaxywar/SquareWithoutTitle.png" },
+  { id: "all", label: "Puzzle", image: "/assets/images/aliengalaxywar/SquareWithoutTitle.png" },
   { id: "action", label: "Snake Color Break", image: "/assets/images/SnakeColorBreak/Square.jpg" },
   { id: "moba", label: "Air Warfare", image: "/assets/images/Air Warfare/Square.jpg" },
   { id: "racing", label: "2 cars", image: "/assets/images/2cars/Square.jpg" },
   { id: "puzzle", label: "Jago", image: "/assets/images/Jago/Square.jpg" },
-  { id: "all", label: "Gogi Adventure", image: "/assets/images/Gogi Adventure/Square.jpg" },
+  { id: "sports", label: "Gogi Adventure", image: "/assets/images/Gogi Adventure/Square.jpg" },
+  { id: "all", label: "Ninja Dragon", image: "/assets/images/NinjaDragon/Square.jpg" },
+  { id: "action", label: "Knife Ninja", image: "/assets/images/KnifeNinja/Square.jpg" },
 ];
 
 const trendingCategories = [
