@@ -137,6 +137,27 @@ const TopupIcon = ({ className = "w-6 h-6" }: { className?: string }) => {
 
 const THREE_TOURNAMENT_BANNERS = [
     {
+        id: "Barbarian",
+        image: "/assets/images/Barbarian/285-380-2.png",
+        name: "Barbarian",
+        rewardType: 0,
+        prize: "10,000",
+    },
+    {
+        id: "Samurai Panda",
+        image: "/assets/images/Samurai Panda/285-380-2.png",
+        name: "Samurai Panda",
+        rewardType: 0,
+        prize: "10,000",
+    },
+    {
+        id: "Traffic",
+        image: "/assets/images/Traffic/285-380-2.png",
+        name: "Traffic",
+        rewardType: 0,
+        prize: "10,000",
+    },
+    {
         id: "KnifeNinja",
         image: "/assets/images/KnifeNinja/285-380-2.png",
         name: "KnifeNinja",

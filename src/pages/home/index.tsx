@@ -268,6 +268,10 @@ const categories = [
   { id: "sports", label: "Gogi Adventure", image: "/assets/images/Gogi Adventure/Square.jpg" },
   { id: "all", label: "Ninja Dragon", image: "/assets/images/NinjaDragon/Square.jpg" },
   { id: "action", label: "Knife Ninja", image: "/assets/images/KnifeNinja/Square.jpg" },
+  { id: "moba", label: "Barbarian", image: "/assets/images/Barbarian/Square.jpg" },
+  { id: "racing", label: "Traffic", image: "/assets/images/Traffic/Square.jpg" },
+  { id: "sports", label: "Samurai Panda", image: "/assets/images/Samurai Panda/Square.jpg" },
+
 ];
 
 const trendingCategories = [

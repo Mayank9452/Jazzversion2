@@ -22,6 +22,27 @@ export interface PremiumGameItem {
 // ─── Static internal list of N Jazz Premium Zone games ───
 export const JAZZ_PREMIUM_GAMES: PremiumGameItem[] = [
     {
+        id: "premium-15",
+        title: "Barbarian",
+        image: "/assets/images/Barbarian/Hero-Tournament.png",
+        prizePool: "10,000 Coins",
+        rank: "4",
+    },
+    {
+        id: "premium-14",
+        title: "Samurai Panda",
+        image: "/assets/images/Samurai Panda/Hero-Tournament.png",
+        prizePool: "10,000 Coins",
+        rank: "4",
+    },
+    {
+        id: "premium-13",
+        title: "Traffic",
+        image: "/assets/images/Traffic/Hero-Tournament.png",
+        prizePool: "10,000 Coins",
+        rank: "4",
+    },
+    {
         id: "premium-12",
         title: "KnifeNinja",
         image: "/assets/images/KnifeNinja/Hero-Tournament.png",

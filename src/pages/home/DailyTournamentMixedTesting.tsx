@@ -117,6 +117,30 @@ const TopupIcon = ({ className = "w-6 h-6" }: { className?: string }) => {
 
 const STATIC_DAILY_TOURNAMENTS = [
     {
+        tournament_id: "Barbarian",
+        tournament_name: "Barbarian",
+        tournament_game_image: "/assets/images/Barbarian/285-380.png",
+        tournament_end: new Date(Date.now() + 1 * 24 * 60 * 60 * 1000).toISOString(),
+        fee_prize_1: "10,000",
+        reward_type: 0
+    },
+    {
+        tournament_id: "Samurai Panda",
+        tournament_name: "Samurai Panda",
+        tournament_game_image: "/assets/images/Samurai Panda/285-380.png",
+        tournament_end: new Date(Date.now() + 1 * 24 * 60 * 60 * 1000).toISOString(),
+        fee_prize_1: "10,000",
+        reward_type: 0
+    },
+    {
+        tournament_id: "Traffic",
+        tournament_name: "Traffic",
+        tournament_game_image: "/assets/images/Traffic/285-380.png",
+        tournament_end: new Date(Date.now() + 1 * 24 * 60 * 60 * 1000).toISOString(),
+        fee_prize_1: "10,000",
+        reward_type: 0
+    },
+    {
         tournament_id: "KnifeNinja",
         tournament_name: "KnifeNinja",
         tournament_game_image: "/assets/images/KnifeNinja/285-380.png",
