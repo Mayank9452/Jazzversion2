@@ -271,7 +271,18 @@ const categories = [
   { id: "moba", label: "Barbarian", image: "/assets/images/Barbarian/Square.jpg" },
   { id: "racing", label: "Traffic", image: "/assets/images/Traffic/Square.jpg" },
   { id: "sports", label: "Samurai Panda", image: "/assets/images/Samurai Panda/Square.jpg" },
-
+  { id: "moba", label: "Barbarian", image: "/assets/images/Barbarian/Square.jpg" },
+  { id: "racing", label: "Traffic", image: "/assets/images/Traffic/Square.jpg" },
+  { id: "sports", label: "Samurai Panda", image: "/assets/images/Samurai Panda/Square.jpg" },
+  { id: "moba", label: "Barbarian", image: "/assets/images/Barbarian/Square.jpg" },
+  { id: "racing", label: "Traffic", image: "/assets/images/Traffic/Square.jpg" },
+  { id: "sports", label: "Samurai Panda", image: "/assets/images/Samurai Panda/Square.jpg" },
+  { id: "moba", label: "Swing Robber", image: "/assets/images/Swing Robber/Square.jpg" },
+  { id: "racing", label: "Chase Racing", image: "/assets/images/Chase Racing/Square.jpg" },
+  { id: "sports", label: "Box Tower", image: "/assets/images/Box Tower/Square.jpg" },
+  { id: "moba", label: "Swing Robber", image: "/assets/images/Swing Robber/Square.jpg" },
+  { id: "racing", label: "Chase Racing", image: "/assets/images/Chase Racing/Square.jpg" },
+  { id: "sports", label: "Box Tower", image: "/assets/images/Box Tower/Square.jpg" },
 ];
 
 const trendingCategories = [
@@ -350,7 +361,7 @@ const CategoryNavigationTesting = ({ categoriesList = categories }: { categories
     <div className="relative overflow-hidden py-2">
       <div
         className="flex gap-3 w-max px-2 animate-slide-right hover:[animation-play-state:paused] will-change-transform"
-        style={{ animationDuration: "15s" }}
+        style={{ animationDuration: "40s" }}
       >
         {[...categoriesList, ...categoriesList, ...categoriesList].map((cat, index) => {
           const imageUrl = cat.image;
@@ -748,7 +759,7 @@ const CategoryNavigationIcon = () => {
     <div className="relative overflow-hidden py-1">
       <div
         className="flex gap-4 w-max px-2 animate-slide-right hover:[animation-play-state:paused] will-change-transform"
-        style={{ animationDuration: "20s" }}
+        style={{ animationDuration: "40s" }}
       >
         {[...categories, ...categories, ...categories].map((cat, index) => {
           const isActive = true;
