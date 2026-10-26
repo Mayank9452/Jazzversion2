@@ -117,6 +117,22 @@ const TopupIcon = ({ className = "w-6 h-6" }: { className?: string }) => {
 
 const STATIC_DAILY_TOURNAMENTS = [
     {
+        tournament_id: "2Cars Adventure",
+        tournament_name: "2Cars Adventure",
+        tournament_game_image: "/assets/images/2Cars Adventures/285-380.png",
+        tournament_end: new Date(Date.now() + 1 * 24 * 60 * 60 * 1000).toISOString(),
+        fee_prize_1: "10,000",
+        reward_type: 0
+    },
+    {
+        tournament_id: "Tiny Defender",
+        tournament_name: "Tiny Defender",
+        tournament_game_image: "/assets/images/Tiny Defender/285-380.png",
+        tournament_end: new Date(Date.now() + 1 * 24 * 60 * 60 * 1000).toISOString(),
+        fee_prize_1: "10,000",
+        reward_type: 0
+    },
+    {
         tournament_id: "Swing Robber",
         tournament_name: "Swing Robber",
         tournament_game_image: "/assets/images/Swing Robber/285-380.png",

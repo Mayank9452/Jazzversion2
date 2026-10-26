@@ -245,6 +245,20 @@ const targetGames: TargetGame[] = [
         target: "40000",
         prize: "Rs 100000 Giftkarte",
     },
+    {
+        id: "19",
+        name: "2Cars Adventures",
+        image: "/assets/images/2Cars Adventures/285-380.png",
+        target: "40000",
+        prize: "Rs 100000 Giftkarte",
+    },
+    {
+        id: "20",
+        name: "Tiny Defender",
+        image: "/assets/images/Tiny Defender/285-380.png",
+        target: "40000",
+        prize: "Rs 100000 Giftkarte",
+    },
 ];
 
 const formatNumberInText = (text: string) => {

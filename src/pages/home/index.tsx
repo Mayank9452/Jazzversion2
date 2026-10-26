@@ -283,6 +283,8 @@ const categories = [
   { id: "moba", label: "Swing Robber", image: "/assets/images/Swing Robber/Square.jpg" },
   { id: "racing", label: "Chase Racing", image: "/assets/images/Chase Racing/Square.jpg" },
   { id: "sports", label: "Box Tower", image: "/assets/images/Box Tower/Square.jpg" },
+  { id: "moba", label: "Tiny Defender", image: "/assets/images/Tiny Defender/Square.jpg" },
+  { id: "racing", label: "2Cars Adventure", image: "/assets/images/2Cars Adventures/Square.jpg" },
 ];
 
 const trendingCategories = [
