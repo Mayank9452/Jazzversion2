@@ -137,6 +137,27 @@ const TopupIcon = ({ className = "w-6 h-6" }: { className?: string }) => {
 
 const THREE_TOURNAMENT_BANNERS = [
     {
+        id: "Tropical Slasher",
+        image: "/assets/images/Tropical Slasher/285-380-2.png",
+        name: "Tropical Slasher",
+        rewardType: 0,
+        prize: "10,000",
+    },
+    {
+        id: "TurnOn",
+        image: "/assets/images/TurnOn/285-380-2.png",
+        name: "TurnOn",
+        rewardType: 0,
+        prize: "10,000",
+    },
+    {
+        id: "Halloween Bubble",
+        image: "/assets/images/Halloween Bubble/285-380-2.png",
+        name: "Halloween Bubble",
+        rewardType: 0,
+        prize: "10,000",
+    },
+    {
         id: "2Cars Adventure",
         image: "/assets/images/2Cars Adventures/285-380-2.png",
         name: "2Cars Adventure",

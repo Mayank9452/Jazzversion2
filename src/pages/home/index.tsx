@@ -285,6 +285,9 @@ const categories = [
   { id: "sports", label: "Box Tower", image: "/assets/images/Box Tower/Square.jpg" },
   { id: "moba", label: "Tiny Defender", image: "/assets/images/Tiny Defender/Square.jpg" },
   { id: "racing", label: "2Cars Adventure", image: "/assets/images/2Cars Adventures/Square.jpg" },
+  { id: "puzzle", label: "Tropical Slasher", image: "/assets/images/Tropical Slasher/Square.jpg" },
+  { id: "sports", label: "TurnOn", image: "/assets/images/TurnOn/Square.jpg" },
+  { id: "all", label: "Halloween Bubble", image: "/assets/images/Halloween Bubble/Square.jpg" },
 ];
 
 const trendingCategories = [

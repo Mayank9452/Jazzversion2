@@ -259,6 +259,27 @@ const targetGames: TargetGame[] = [
         target: "40000",
         prize: "Rs 100000 Giftkarte",
     },
+    {
+        id: "21",
+        name: "Tropical Slasher",
+        image: "/assets/images/Tropical Slasher/285-380.png",
+        target: "40000",
+        prize: "Rs 100000 Giftkarte",
+    },
+    {
+        id: "22",
+        name: "TurnOn",
+        image: "/assets/images/TurnOn/285-380.png",
+        target: "40000",
+        prize: "Rs 100000 Giftkarte",
+    },
+    {
+        id: "23",
+        name: "Halloween Bubble",
+        image: "/assets/images/Halloween Bubble/285-380.png",
+        target: "40000",
+        prize: "Rs 100000 Giftkarte",
+    },
 ];
 
 const formatNumberInText = (text: string) => {

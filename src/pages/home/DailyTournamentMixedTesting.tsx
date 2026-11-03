@@ -117,6 +117,30 @@ const TopupIcon = ({ className = "w-6 h-6" }: { className?: string }) => {
 
 const STATIC_DAILY_TOURNAMENTS = [
     {
+        tournament_id: "Tropical Slasher",
+        tournament_name: "Tropical Slasher",
+        tournament_game_image: "/assets/images/Tropical Slasher/285-380.png",
+        tournament_end: new Date(Date.now() + 1 * 24 * 60 * 60 * 1000).toISOString(),
+        fee_prize_1: "10,000",
+        reward_type: 0
+    },
+    {
+        tournament_id: "TurnOn",
+        tournament_name: "TurnOn",
+        tournament_game_image: "/assets/images/TurnOn/285-380.png",
+        tournament_end: new Date(Date.now() + 1 * 24 * 60 * 60 * 1000).toISOString(),
+        fee_prize_1: "10,000",
+        reward_type: 0
+    },
+    {
+        tournament_id: "Halloween Bubble",
+        tournament_name: "Halloween Bubble",
+        tournament_game_image: "/assets/images/Halloween Bubble/285-380.png",
+        tournament_end: new Date(Date.now() + 1 * 24 * 60 * 60 * 1000).toISOString(),
+        fee_prize_1: "10,000",
+        reward_type: 0
+    },
+    {
         tournament_id: "2Cars Adventure",
         tournament_name: "2Cars Adventure",
         tournament_game_image: "/assets/images/2Cars Adventures/285-380.png",
