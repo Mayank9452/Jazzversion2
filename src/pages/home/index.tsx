@@ -288,6 +288,8 @@ const categories = [
   { id: "puzzle", label: "Tropical Slasher", image: "/assets/images/Tropical Slasher/Square.jpg" },
   { id: "sports", label: "TurnOn", image: "/assets/images/TurnOn/Square.jpg" },
   { id: "all", label: "Halloween Bubble", image: "/assets/images/Halloween Bubble/Square.jpg" },
+  { id: "action", label: "Leap and Jump", image: "/assets/images/Leap and Jump/Square.jpg" },
+  { id: "moba", label: "Dunk Ball", image: "/assets/images/Dunk Ball/Square.jpg" },
 ];
 
 const trendingCategories = [

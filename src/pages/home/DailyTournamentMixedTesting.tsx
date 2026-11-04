@@ -117,6 +117,22 @@ const TopupIcon = ({ className = "w-6 h-6" }: { className?: string }) => {
 
 const STATIC_DAILY_TOURNAMENTS = [
     {
+        tournament_id: "Leap and Jump",
+        tournament_name: "Leap and Jump",
+        tournament_game_image: "/assets/images/Leap and Jump/285-380.png",
+        tournament_end: new Date(Date.now() + 1 * 24 * 60 * 60 * 1000).toISOString(),
+        fee_prize_1: "10,000",
+        reward_type: 0
+    },
+    {
+        tournament_id: "Dunk Ball",
+        tournament_name: "Dunk Ball",
+        tournament_game_image: "/assets/images/Dunk Ball/285-380.png",
+        tournament_end: new Date(Date.now() + 1 * 24 * 60 * 60 * 1000).toISOString(),
+        fee_prize_1: "10,000",
+        reward_type: 0
+    },
+    {
         tournament_id: "Tropical Slasher",
         tournament_name: "Tropical Slasher",
         tournament_game_image: "/assets/images/Tropical Slasher/285-380.png",

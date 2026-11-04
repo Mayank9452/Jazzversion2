@@ -280,6 +280,20 @@ const targetGames: TargetGame[] = [
         target: "40000",
         prize: "Rs 100000 Giftkarte",
     },
+    {
+        id: "24",
+        name: "Leap and Jump",
+        image: "/assets/images/Leap and Jump/285-380.png",
+        target: "40000",
+        prize: "Rs 100000 Giftkarte",
+    },
+    {
+        id: "25",
+        name: "Dunk Ball",
+        image: "/assets/images/Dunk Ball/285-380.png",
+        target: "40000",
+        prize: "Rs 100000 Giftkarte",
+    },
 ];
 
 const formatNumberInText = (text: string) => {
