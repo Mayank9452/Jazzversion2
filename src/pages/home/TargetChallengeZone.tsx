@@ -294,6 +294,20 @@ const targetGames: TargetGame[] = [
         target: "40000",
         prize: "Rs 100000 Giftkarte",
     },
+    {
+        id: "26",
+        name: "Cube Dash",
+        image: "/assets/images/Cube Dash/285-380.png",
+        target: "40000",
+        prize: "Rs 100000 Giftkarte",
+    },
+    {
+        id: "27",
+        name: "Friends Cricket",
+        image: "/assets/images/Friends Cricket/285-380.png",
+        target: "40000",
+        prize: "Rs 100000 Giftkarte",
+    },
 ];
 
 const formatNumberInText = (text: string) => {

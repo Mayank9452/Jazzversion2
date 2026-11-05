@@ -290,6 +290,8 @@ const categories = [
   { id: "all", label: "Halloween Bubble", image: "/assets/images/Halloween Bubble/Square.jpg" },
   { id: "action", label: "Leap and Jump", image: "/assets/images/Leap and Jump/Square.jpg" },
   { id: "moba", label: "Dunk Ball", image: "/assets/images/Dunk Ball/Square.jpg" },
+  { id: "racing", label: "Friends Cricket", image: "/assets/images/Friends Cricket/Square.jpg" },
+  { id: "sports", label: "Cube Dash", image: "/assets/images/Cube Dash/Square.jpg" },
 ];
 
 const trendingCategories = [

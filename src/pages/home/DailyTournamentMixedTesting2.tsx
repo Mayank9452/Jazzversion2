@@ -137,6 +137,20 @@ const TopupIcon = ({ className = "w-6 h-6" }: { className?: string }) => {
 
 const THREE_TOURNAMENT_BANNERS = [
     {
+        id: "Friends Cricket",
+        image: "/assets/images/Friends Cricket/285-380-2.png",
+        name: "Leap and Jump",
+        rewardType: 0,
+        prize: "10,000",
+    },
+    {
+        id: "Cube Dash",
+        image: "/assets/images/Cube Dash/285-380-2.png",
+        name: "Leap and Jump",
+        rewardType: 0,
+        prize: "10,000",
+    },
+    {
         id: "Leap and Jump",
         image: "/assets/images/Leap and Jump/285-380-2.png",
         name: "Leap and Jump",
