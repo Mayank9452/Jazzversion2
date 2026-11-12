@@ -292,6 +292,8 @@ const categories = [
   { id: "moba", label: "Dunk Ball", image: "/assets/images/Dunk Ball/Square.jpg" },
   { id: "racing", label: "Friends Cricket", image: "/assets/images/Friends Cricket/Square.jpg" },
   { id: "sports", label: "Cube Dash", image: "/assets/images/Cube Dash/Square.jpg" },
+  { id: "moba", label: "Number Snake", image: "/assets/images/Number Snake/Square.jpg" },
+  { id: "racing", label: "Leaves Boy", image: "/assets/images/Leaves Boy/Square.jpg" },
 ];
 
 const trendingCategories = [
@@ -370,7 +372,7 @@ const CategoryNavigationTesting = ({ categoriesList = categories }: { categories
     <div className="relative overflow-hidden py-2">
       <div
         className="flex gap-3 w-max px-2 animate-slide-right hover:[animation-play-state:paused] will-change-transform"
-        style={{ animationDuration: "40s" }}
+        style={{ animationDuration: "60s" }}
       >
         {[...categoriesList, ...categoriesList, ...categoriesList].map((cat, index) => {
           const imageUrl = cat.image;
@@ -768,7 +770,7 @@ const CategoryNavigationIcon = () => {
     <div className="relative overflow-hidden py-1">
       <div
         className="flex gap-4 w-max px-2 animate-slide-right hover:[animation-play-state:paused] will-change-transform"
-        style={{ animationDuration: "40s" }}
+        style={{ animationDuration: "60s" }}
       >
         {[...categories, ...categories, ...categories].map((cat, index) => {
           const isActive = true;

@@ -117,6 +117,22 @@ const TopupIcon = ({ className = "w-6 h-6" }: { className?: string }) => {
 
 const STATIC_DAILY_TOURNAMENTS = [
     {
+        tournament_id: "Number Snake",
+        tournament_name: "Number Snake",
+        tournament_game_image: "/assets/images/Number Snake/285-380.png",
+        tournament_end: new Date(Date.now() + 1 * 24 * 60 * 60 * 1000).toISOString(),
+        fee_prize_1: "10,000",
+        reward_type: 0
+    },
+    {
+        tournament_id: "Leaves Boy",
+        tournament_name: "Leaves Boy",
+        tournament_game_image: "/assets/images/Leaves Boy/285-380.png",
+        tournament_end: new Date(Date.now() + 1 * 24 * 60 * 60 * 1000).toISOString(),
+        fee_prize_1: "10,000",
+        reward_type: 0
+    },
+    {
         tournament_id: "Firends Cricket",
         tournament_name: "Friends Cricket",
         tournament_game_image: "/assets/images/Friends Cricket/285-380.png",

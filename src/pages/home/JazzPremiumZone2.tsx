@@ -22,6 +22,20 @@ export interface PremiumGameItem {
 // ─── Static internal list of N Jazz Premium Zone games ───
 export const JAZZ_PREMIUM_GAMES: PremiumGameItem[] = [
     {
+        id: "Number Snake",
+        title: "Number Snake",
+        image: "/assets/images/Number Snake/Hero-Tournament.png",
+        prizePool: "10,000 Coins",
+        rank: "6",
+    },
+    {
+        id: "Leaves Boy",
+        title: "Leaves Boy",
+        image: "/assets/images/Leaves Boy/Hero-Tournament.png",
+        prizePool: "10,000 Coins",
+        rank: "6",
+    },
+    {
         id: "Friends Cricket",
         title: "Friends Cricket",
         image: "/assets/images/Friends Cricket/Hero-Tournament.png",

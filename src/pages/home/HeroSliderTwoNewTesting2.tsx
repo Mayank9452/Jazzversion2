@@ -22,6 +22,20 @@ export interface GameBannerItem {
 // ─── Default internal list of N game banners (independent of heroGames prop) ───
 export const HERO_SLIDER_GAMES: GameBannerItem[] = [
     {
+        id: "Number Snake",
+        title: "Number Snake",
+        image: "/assets/images/Number Snake/VIP-Tournament.png",
+        prizePool: "10,000 Coins",
+        rank: "4",
+    },
+    {
+        id: "Leaves Boy",
+        title: "Leaves Boy",
+        image: "/assets/images/Leaves Boy/VIP-Tournament.png",
+        prizePool: "10,000 Coins",
+        rank: "4",
+    },
+    {
         id: "Friends Cricket",
         title: "Friends Cricket",
         image: "/assets/images/Friends Cricket/VIP-Tournament.png",
